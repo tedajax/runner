@@ -1,0 +1,33 @@
+#ifndef RUNNER_DEBUG_H
+#define RUNNER_DEBUG_H
+
+void _internal_print_assert(const char* expr,
+    const char* file,
+    int line,
+    const char* msg);
+
+#endif
+
+#ifdef WIN32
+    #define DEBUG_BREAKPOINT() __debugBreak();
+#else
+    #define DEBUG_BREAKPOINT() __asm__("int $3");
+#endif
+
+#define MULTILINE_MACRO_BEGIN() do {
+#define MULTILINE_MACRO_END() } while (0);
+
+#define ASSERT_ALWAYS(expr, msg) MULTILINE_MACRO_BEGIN()            \
+    static bool _skipAssert = false;                                \
+    if (!_skipAssert && !(expr)) {                                  \
+        _internal_print_assert(#expr, __FILE__, __LINE__, msg);     \
+        DEBUG_BREAKPOINT(); \
+    }                                                               \
+    MULTILINE_MACRO_END();
+
+#ifdef DEBUG
+    #define ASSERT ASSERT_ALWAYS
+#else
+    #define ASSERT(expr, msg) ((void)0)
+#endif
+

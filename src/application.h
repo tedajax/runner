@@ -9,6 +9,7 @@
 #include "types.h"
 #include "debug.h"
 #include "log.h"
+#include "window.h"
 
 int app_run(int argc, char* argv[]);
 

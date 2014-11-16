@@ -37,6 +37,12 @@ f32 vec2_length(const Vec2* vec);
 f32 vec2_lengthSqr(const Vec2* vec);
 f32 vec2_dist(const Vec2* lhs, const Vec2* rhs);
 f32 vec2_distSqr(const Vec2* lhs, const Vec2* rhs);
+
+Vec2 vec2_zero();
+Vec2 vec2_one();
+Vec2 vec2_unit_x();
+Vec2 vec2_unit_y();
+
 // } Vec2
 
 #endif

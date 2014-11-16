@@ -4,6 +4,11 @@
 #include "types.h"
 #include <stdlib.h>
 
+// Really barebones key, value store
+// Keys must be uint32_t, values are stored in a void*
+
+extern const u32 DICT_INVALID_KEY;
+
 typedef struct dict_node_t {
     u32 key;
     void* element;

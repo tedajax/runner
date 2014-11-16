@@ -16,6 +16,10 @@ rm			= rm -f
 
 all: $(BINDIR)/$(TARGET)
 
+.PHONEY: asm
+asm: 
+	@$(CC) -std=c99 -Wall -I. `pkg-config --clfags luajit` -S -c $(SRCDIR)/*.c
+
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(LINKER) $@ $(LFLAGS) $(OBJECTS)
 

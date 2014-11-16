@@ -1,5 +1,20 @@
 #include "entitymanager.h"
 
+void entity_list_init(EntityList* self, size_t capacity) {
+    self->list = (Entity *)calloc(capacity, sizeof(Entity));
+    self->capacity = capacity;
+    self->size = 0;
+}
+
+void entity_list_resize(EntityList* self, size_t capacity) {
+    self->capacity = capacity;
+    self->list = (Entity *)realloc(self->list, capacity * sizeof(Entity));
+
+    if (capacity < self->size) {
+        self->size = capacity;
+    }
+}
+
 EntityManager* entity_manager_new() {
     EntityManager* self = (EntityManager*)calloc(1, sizeof(EntityManager));
 
@@ -54,24 +69,26 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
     }
 }
 
-Vector* entities_get_all_of(EntityManager* self, ComponentType type) {
+void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest) {
     Dictionary* components = self->componentsMap[type];
 
+    dest->size = 0;
+
     if (components) {
-        Vector* result = vector_new(components->size, NULL);
+        size_t index = 0;
 
         for (size_t b = 0; b < components->bucketCount; ++b) {
             DictionaryNode* node = &components->buckets[b];
-            while (node != NULL) {
+            while (node != NULL && node->key != DICT_INVALID_KEY) {
                 if (node->element != NULL) {
-                    vector_add(result, node->element);
+                    if (dest->size >= dest->capacity) {
+                        entity_list_resize(dest, dest->capacity * 2);
+                    }
+                    dest->list[index++].id = node->key;
+                    ++dest->size;
                 }
                 node = node->next;
             }
         }
-
-        return result;
-    } else {
-        return NULL;
     }
 }

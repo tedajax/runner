@@ -110,3 +110,27 @@ f32 vec2_dist(const Vec2* lhs, const Vec2* rhs) {
 f32 vec2_distSqr(const Vec2* lhs, const Vec2* rhs) {
     return sqrf(rhs->x - lhs->x) + sqrf(rhs->y - lhs->y);
 }
+
+Vec2 vec2_zero() {
+    Vec2 result;
+    vec2_set(&result, 0.f, 0.f);
+    return result;
+}
+
+Vec2 vec2_one() {
+    Vec2 result;
+    vec2_set(&result, 1.f, 1.f);
+    return result;
+}
+
+Vec2 vec2_unit_x() {
+    Vec2 result;
+    vec2_set(&result, 1.f, 0.f);
+    return result;
+}
+
+Vec2 vec2_unit_y() {
+    Vec2 result;
+    vec2_set(&result, 0.f, 1.f);
+    return result;
+}

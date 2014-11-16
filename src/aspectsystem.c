@@ -14,6 +14,6 @@ void aspect_system_init(AspectSystem* self, EntityManager* entityManager, Compon
     self->systemType = type;
 }
 
-Vector* aspect_system_entities(AspectSystem* self) {
-    return entities_get_all_of(self->entityManager, self->systemType);
+void aspect_system_entities(AspectSystem* self, EntityList* dest) {
+    entities_get_all_of(self->entityManager, self->systemType, dest);
 }

@@ -10,6 +10,6 @@ typedef struct aspect_system_t {
 } AspectSystem;
 
 void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type);
-Vector* aspect_system_entities(AspectSystem* self);
+void aspect_system_entities(AspectSystem* self, EntityList* dest);
 
 #endif

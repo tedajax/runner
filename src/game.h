@@ -6,10 +6,13 @@
 #include "component.h"
 #include "healthcomponent.h"
 #include "healthsystem.h"
+#include "spritecomponent.h"
+#include "spritesystem.h"
 
 typedef struct game_t {
     EntityManager* entityManager;
     HealthSystem* healthSystem;
+    SpriteSystem* spriteSystem;
     Entity* player;
 } Game;
 

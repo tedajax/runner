@@ -11,6 +11,13 @@ Vector *vector_new(u32 capacity, free_func freeFunc) {
 	return self;
 }
 
+void vector_init(Vector* self, u32 capacity, free_func freeFunc) {
+	self->size = 0;
+	self->freeFunc = freeFunc;
+	self->data = NULL;
+	_vector_resize(self, capacity);
+}
+
 void vector_free(Vector *self) {
 	assert(self);
 

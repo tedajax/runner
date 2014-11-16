@@ -5,6 +5,7 @@
 #include "debug.h"
 #include "log.h"
 
+#include <stdlib.h>
 #include <math.h>
 
 extern const f32 DEG_TO_RAD;

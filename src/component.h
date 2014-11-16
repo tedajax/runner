@@ -3,16 +3,16 @@
 
 #include "core.h"
 
-typedef enum component_types_e {
+typedef enum component_type_e {
     COMPONENT_TRANSFORM,
     COMPONENT_HEALTH,
     COMPONENT_SPRITE_RENDERER,
 
     COMPONENT_LAST,
-} ComponentTypes;
+} ComponentType;
 
 typedef struct component_t {
-    ComponentTypes type;
+    ComponentType type;
 } Component;
 
 #endif

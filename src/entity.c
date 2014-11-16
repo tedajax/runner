@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity* entity_new(i32 id) {
+Entity* entity_new(u32 id) {
     Entity* self = (Entity*)calloc(1, sizeof(Entity));
 
     self->id = id;

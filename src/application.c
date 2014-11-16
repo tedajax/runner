@@ -1,20 +1,60 @@
 #include "application.h"
 
 int app_run(int argc, char* argv[]) {
-    ASSERT(app_initialize(), "Application failed to initialize");
+    App* self = _app_new();
 
-    SDL_SetRenderDrawColor(globals.renderer, 0, 0, 0, 255);
-    SDL_RenderClear(globals.renderer);
-    SDL_RenderPresent(globals.renderer);
+    ASSERT(_app_initialize(self), "Application failed to initialize");
 
-    SDL_Delay(2000);
+    while (!self->shouldQuit) {
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            _app_handle_event(self, &event);
+        }
 
-    app_terminate();
+        _app_update(self);
+        _app_render(self);
+    }
+
+    _app_terminate(self);
 
     return 0;
 }
 
-bool app_initialize() {
+void _app_handle_event(App* self, SDL_Event* event) {
+    switch (event->type) {
+        case SDL_QUIT:
+            self->shouldQuit = true;
+            break;
+
+        case SDL_KEYDOWN:
+        case SDL_KEYUP:
+            input_handle_event(&event->key);
+            break;
+    }
+}
+
+void _app_update(App* self) {
+    game_time_update(&globals.time);
+    
+    if (input_key_down(SDL_SCANCODE_ESCAPE)) {
+        self->shouldQuit = true;
+    }
+
+    input_update();
+}
+
+void _app_render(App* self) {
+    SDL_SetRenderDrawColor(globals.renderer, 31, 31, 31, 255);
+    SDL_RenderClear(globals.renderer);
+}
+
+void app_quit(App* self) {
+    ASSERT(self, "NULL application structure passed to app_quit");
+
+    self->shouldQuit = true;
+}
+
+bool _app_initialize(App* self) {
     globals.randomSeed = time(NULL);
     srand(globals.randomSeed);
 
@@ -43,11 +83,36 @@ bool app_initialize() {
         return false;
     }
 
+    self->shouldQuit = false;
+
+    input_initialize();
+
+    globals.time.on_second = _app_print_fps;
+
     return true;
 }
 
-void app_terminate() {
+void _app_terminate(App* self) {
     SDL_DestroyWindow(globals.window);
+    SDL_DestroyRenderer(globals.renderer);
 
     SDL_Quit();
+
+    _app_free(self);
+}
+
+App* _app_new() {
+    App* self = (App*)calloc(1, sizeof(App));
+
+    self->shouldQuit = false;
+
+    return self;
+}
+
+void _app_free(App* self) {
+    free(self);
+}
+
+void _app_print_fps() {
+    printf("FPS: %d\n", globals.time.fps);
 }

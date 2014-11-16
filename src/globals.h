@@ -2,6 +2,7 @@
 #define RUNNER_GLOBALS_H
 
 #include "types.h"
+#include "gametime.h"
 
 #include <SDL2/SDL.h>
 
@@ -15,6 +16,8 @@ typedef struct globals {
         u32 width;
         u32 height;
     } screen;
+
+    GameTime time;
 
     SDL_Window* window;
     SDL_Renderer* renderer;

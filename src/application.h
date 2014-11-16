@@ -5,15 +5,33 @@
 
 #include <time.h>
 
-#include "globals.h"
-#include "types.h"
-#include "debug.h"
-#include "log.h"
+#include "core.h"
 #include "window.h"
+#include "input.h"
+#include "gametime.h"
 
+typedef struct app_t {
+    bool shouldQuit;
+} App;
+
+
+//Public:
 int app_run(int argc, char* argv[]);
+void app_quit(App* self);
 
-bool app_initialize();
-void app_terminate();
+
+//Private:
+bool _app_initialize(App* self);
+void _app_terminate(App* self);
+
+void _app_handle_event(App* self, SDL_Event* event);
+
+void _app_update(App* self);
+void _app_render(App* self);
+
+App* _app_new();
+void _app_free(App* self);
+
+void _app_print_fps();
 
 #endif

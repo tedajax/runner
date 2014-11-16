@@ -23,7 +23,6 @@ void game_time_update(GameTime* self) {
         diff *= SECONDS_TO_NANOSECONDS;
         diff /= frequency;
 
-
         self->delta_ns = diff;
         self->last_frame_ticks = ticks;
     }

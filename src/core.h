@@ -2,3 +2,4 @@
 #include "debug.h"
 #include "log.h"
 #include "globals.h"
+#include "algebra.h"

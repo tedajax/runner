@@ -1,7 +1,5 @@
 #include "component.h"
 
-Component* component_new(ComponentType type) {
-    Component* self = (Component*)calloc(1, sizeof(Component));
+void component_init(Component* self, ComponentType type) {
     self->type = type;
-    return self;
 }

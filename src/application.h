@@ -9,9 +9,11 @@
 #include "window.h"
 #include "input.h"
 #include "gametime.h"
+#include "game.h"
 
 typedef struct app_t {
     bool shouldQuit;
+    Game game;
 } App;
 
 

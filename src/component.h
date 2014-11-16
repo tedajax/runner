@@ -15,4 +15,6 @@ typedef struct component_t {
     ComponentType type;
 } Component;
 
+Component* component_new(ComponentType type);
+
 #endif

@@ -63,7 +63,9 @@ Vector* entities_get_all_of(EntityManager* self, ComponentType type) {
         for (size_t b = 0; b < components->bucketCount; ++b) {
             DictionaryNode* node = &components->buckets[b];
             while (node != NULL) {
-                vector_add(result, node->element);
+                if (node->element != NULL) {
+                    vector_add(result, node->element);
+                }
                 node = node->next;
             }
         }

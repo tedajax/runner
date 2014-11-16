@@ -40,12 +40,18 @@ void _app_update(App* self) {
         self->shouldQuit = true;
     }
 
+    game_update(&self->game);
+
     input_update();
 }
 
 void _app_render(App* self) {
     SDL_SetRenderDrawColor(globals.renderer, 31, 31, 31, 255);
     SDL_RenderClear(globals.renderer);
+
+    game_render(&self->game);
+
+    SDL_RenderPresent(globals.renderer);
 }
 
 void app_quit(App* self) {
@@ -88,6 +94,8 @@ bool _app_initialize(App* self) {
     input_initialize();
 
     globals.time.on_second = _app_print_fps;
+
+    game_init(&self->game);
 
     return true;
 }

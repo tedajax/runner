@@ -5,7 +5,7 @@
 #include "component.h"
 
 typedef struct transform_component_t {
-    Component* super;
+    Component super;
     Vec2 position;
     Vec2 scale;
     f32 rotation;

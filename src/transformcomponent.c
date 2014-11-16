@@ -5,6 +5,8 @@ TransformComponent* transform_component_new(Vec2 position,
     Vec2 scale) {
     TransformComponent* self = (TransformComponent*)calloc(1, sizeof(TransformComponent));
 
+    component_init(&self->super, COMPONENT_TRANSFORM);
+
     self->position = position;
     self->rotation = rotation;
     self->scale = scale;

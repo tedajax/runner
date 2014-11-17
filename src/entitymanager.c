@@ -40,6 +40,8 @@ Entity* entities_create_entity(EntityManager* self) {
 }
 
 void entities_add_component(EntityManager* self, Component* component, Entity* entity) {
+    ASSERT(component->type != COMPONENT_INVALID, "Invalid component, did you remember to set the component type in the component constructor?");
+
     Dictionary* components = self->componentsMap[component->type];
 
     if (!components) {

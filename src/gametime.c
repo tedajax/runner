@@ -19,6 +19,10 @@ void game_time_update(GameTime* self) {
         u64 ticks = SDL_GetPerformanceCounter();
         u64 frequency = SDL_GetPerformanceFrequency();
 
+        if (self->last_frame_ticks == 0) {
+            self->last_frame_ticks = ticks;
+        }
+
         u64 diff = ticks - self->last_frame_ticks;
         diff *= SECONDS_TO_NANOSECONDS;
         diff /= frequency;

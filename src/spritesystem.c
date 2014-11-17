@@ -40,8 +40,6 @@ void sprite_system_render(SpriteSystem* self) {
     for (u32 i = 0; i < entities.size; ++i) {
         Entity entity = entities.list[i];
 
-        printf("Entity %d\n", entity.id);
-
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_TRANSFORM,
@@ -54,10 +52,13 @@ void sprite_system_render(SpriteSystem* self) {
 
         if (transform && sprite) {
             if (sprite->texture) {
+                SDL_Rect dest;
+                sprite_component_destination(sprite, transform, &dest);
+
                 SDL_RenderCopyEx(globals.renderer,
                     sprite->texture,
                     NULL, //source
-                    NULL, //destination
+                    &dest, //destination
                     transform->rotation,
                     NULL,
                     SDL_FLIP_NONE);

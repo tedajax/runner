@@ -4,7 +4,11 @@
 #include "core.h"
 
 typedef enum component_type_e {
+    COMPONENT_INVALID,
+
     COMPONENT_TRANSFORM,
+    COMPONENT_MOVEMENT,
+    
     COMPONENT_HEALTH,
     COMPONENT_SPRITE,
 
@@ -14,7 +18,5 @@ typedef enum component_type_e {
 typedef struct component_t {
     ComponentType type;
 } Component;
-
-void component_init(Component* self, ComponentType type);
 
 #endif

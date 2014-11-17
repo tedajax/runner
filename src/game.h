@@ -8,11 +8,14 @@
 #include "healthsystem.h"
 #include "spritecomponent.h"
 #include "spritesystem.h"
+#include "movementcomponent.h"
+#include "movementsystem.h"
 
 typedef struct game_t {
     EntityManager* entityManager;
     HealthSystem* healthSystem;
     SpriteSystem* spriteSystem;
+    MovementSystem* movementSystem;
     Entity* player;
 } Game;
 

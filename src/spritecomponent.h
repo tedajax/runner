@@ -3,15 +3,19 @@
 
 #include "core.h"
 #include "component.h"
+#include "transformcomponent.h"
 
 #include <SDL2/SDL.h>
 
 typedef struct sprite_component_t {
     Component super;
     SDL_Texture* texture;
+    int width;
+    int height;
     SDL_Rect srcRect;
 } SpriteComponent;
 
 SpriteComponent* sprite_component_new(SDL_Texture* texture);
+void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest);
 
 #endif

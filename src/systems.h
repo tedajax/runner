@@ -1,0 +1,5 @@
+#include "aspectsystem.h"
+#include "movementsystem.h"
+#include "controllersystem.h"
+#include "healthsystem.h"
+#include "spritesystem.h"

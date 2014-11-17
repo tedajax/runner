@@ -9,33 +9,11 @@ void game_init(Game* self) {
     self->movementSystem = movement_system_new(self->entityManager);
     self->controllerSystem = controller_system_new(self->entityManager);
 
-    self->player = entities_create_entity(self->entityManager);
-
-    entities_add_component(self->entityManager,
-        (Component *)transform_component_new(vec2_zero(), 0.f, vec2_one()),
-        self->player);
-
-    entities_add_component(self->entityManager,
-        (Component *)movement_component_new(vec2_zero(), 0.f),
-        self->player);
-
-    entities_add_component(self->entityManager,
-        (Component *)controller_component_new(100.f),
-        self->player);
-
-    entities_add_component(self->entityManager,
-        (Component *)health_component_new(100),
-        self->player);
-
     SDL_Surface* surface = IMG_Load("assets/test.png");
     SDL_Texture* texture = SDL_CreateTextureFromSurface(globals.renderer,
         surface);
 
-    //SDL_FreeSurface(surface);
-
-    entities_add_component(self->entityManager,
-        (Component *)sprite_component_new(texture),
-        self->player);
+    self->player = entity_create_player(self->entityManager, vec2_zero(), texture);
 }
 
 void game_update(Game* self) {

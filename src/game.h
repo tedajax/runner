@@ -3,15 +3,9 @@
 
 #include "core.h"
 #include "entitymanager.h"
-#include "component.h"
-#include "healthcomponent.h"
-#include "healthsystem.h"
-#include "spritecomponent.h"
-#include "spritesystem.h"
-#include "movementcomponent.h"
-#include "movementsystem.h"
-#include "controllercomponent.h"
-#include "controllersystem.h"
+#include "entityfactory.h"
+#include "components.h"
+#include "systems.h"
 
 typedef struct game_t {
     EntityManager* entityManager;

@@ -1,0 +1,6 @@
+#include "component.h"
+#include "transformcomponent.h"
+#include "movementcomponent.h"
+#include "controllercomponent.h"
+#include "healthcomponent.h"
+#include "spritecomponent.h"

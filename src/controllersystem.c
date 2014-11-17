@@ -48,7 +48,7 @@ void controller_system_update(ControllerSystem* self) {
         x *= controller->moveSpeed;
         y *= controller->moveSpeed;
 
-        vec2_set(&movement->velocity, x, y);
+//        vec2_set(&movement->velocity, x, y);
     }
 
     free(entities.list);

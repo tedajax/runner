@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "gametime.h"
+#include "algebra.h"
 
 #include <SDL2/SDL.h>
 
@@ -16,6 +17,8 @@ typedef struct globals {
         u32 width;
         u32 height;
     } screen;
+
+    Vec2 gravity;
 
     GameTime time;
 

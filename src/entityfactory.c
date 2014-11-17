@@ -9,6 +9,10 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
         entity);
 
     entities_add_component(entityManager,
+        (Component*)gravity_component_world(),
+        entity);
+
+    entities_add_component(entityManager,
         (Component*)movement_component_new(vec2_zero(), 0.f),
         entity);
 

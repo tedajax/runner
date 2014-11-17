@@ -10,7 +10,8 @@ typedef enum component_type_e {
     COMPONENT_MOVEMENT,
 
     COMPONENT_CONTROLLER,
-    
+    COMPONENT_GRAVITY,
+
     COMPONENT_HEALTH,
     COMPONENT_SPRITE,
 

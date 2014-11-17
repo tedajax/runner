@@ -9,10 +9,11 @@
 
 typedef struct game_t {
     EntityManager* entityManager;
-    HealthSystem* healthSystem;
-    SpriteSystem* spriteSystem;
     MovementSystem* movementSystem;
     ControllerSystem* controllerSystem;
+    GravitySystem* gravitySystem;
+    HealthSystem* healthSystem;
+    SpriteSystem* spriteSystem;
     Entity* player;
 } Game;
 

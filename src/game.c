@@ -7,6 +7,7 @@ void game_init(Game* self) {
     self->healthSystem = health_system_new(self->entityManager);
     self->spriteSystem = sprite_system_new(self->entityManager);
     self->movementSystem = movement_system_new(self->entityManager);
+    self->gravitySystem = gravity_system_new(self->entityManager);
     self->controllerSystem = controller_system_new(self->entityManager);
 
     SDL_Surface* surface = IMG_Load("assets/test.png");
@@ -14,16 +15,13 @@ void game_init(Game* self) {
         surface);
 
     self->player = entity_create_player(self->entityManager, vec2_zero(), texture);
-
-    for (u32 i = 0; i < 1000; ++i) {
-        entity_create_player(self->entityManager, vec2_init(randf(800.f), randf(600.f)), texture);
-    }
 }
 
 void game_update(Game* self) {
     health_system_update(self->healthSystem);
     sprite_system_update(self->spriteSystem);
     controller_system_update(self->controllerSystem);
+    gravity_system_update(self->gravitySystem);
     movement_system_update(self->movementSystem);
 }
 

@@ -53,6 +53,11 @@ void vec2_set(Vec2* self, const f32 x, const f32 y) {
     self->y = y;
 }
 
+void vec2_copy_to(const Vec2* source, Vec2* dest) {
+    dest->x = source->x;
+    dest->y = source->y;
+}
+
 void vec2_add(const Vec2* lhs, const Vec2* rhs, Vec2* dest) {
     ASSERT(lhs && rhs && dest, "");
 

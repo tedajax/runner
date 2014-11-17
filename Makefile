@@ -1,9 +1,17 @@
-TARGET		= runner
-CC			= clang
-CFLAGS		= -std=c99 -Wall -I. -g -DDEBUG
+ifeq ($(OS),Windows_NT) # If windows
+	LIB_ROOT = C:/dev/lib/x86
+	INC_ROOT = C:/dev/include
+	SDL_LFLAGS = -L$(LIB_ROOT) -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
+else
+	SDL_LFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image
+endif
 
-LINKER		= clang -o
-LFLAGS		= -Wall -I. -lm -lSDL2 -lSDL2_image #-rdynamic -pagezero_size 10000 -image_base 10000000
+TARGET		= runner
+CC			= gcc
+CFLAGS		= -std=c99 -Wall -I. -I$(INC_ROOT) -g $(SDL_LFLAGS)
+
+LINKER		= gcc -o
+LFLAGS		= -Wall -I. -lm
 
 SRCDIR		= src
 OBJDIR		= obj
@@ -12,24 +20,19 @@ BINDIR		= .
 SOURCES		:= $(wildcard $(SRCDIR)/*.c)
 INCLUDES	:= $(wildcard $(SRCDIR)/*.h)
 OBJECTS		:= $(SOURCES:$(SRCDIR)%.c=$(OBJDIR)/%.o)
-rm			= rm -f
 
 all: $(BINDIR)/$(TARGET)
 
-.PHONEY: asm
-asm: 
-	@$(CC) -std=c99 -Wall -I. `pkg-config --clfags luajit` -S -c $(SRCDIR)/*.c
-
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ $(LFLAGS) $(OBJECTS)
+	@$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONEY: clean
 clean:
-	@$(rm) $(OBJECTS)
+	@$(RM) $(OBJECTS)
 
 .PHONEY: remove
 remove: clean
-	@$(rm) $(BINDIR)/$(TARGET)
+	@$(RM) $(BINDIR)/$(TARGET)

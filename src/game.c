@@ -7,6 +7,7 @@ void game_init(Game* self) {
     self->healthSystem = health_system_new(self->entityManager);
     self->spriteSystem = sprite_system_new(self->entityManager);
     self->movementSystem = movement_system_new(self->entityManager);
+    self->controllerSystem = controller_system_new(self->entityManager);
 
     self->player = entities_create_entity(self->entityManager);
 
@@ -15,7 +16,11 @@ void game_init(Game* self) {
         self->player);
 
     entities_add_component(self->entityManager,
-        (Component *)movement_component_new(vec2_init(1.f, 1.f), 90.f),
+        (Component *)movement_component_new(vec2_zero(), 0.f),
+        self->player);
+
+    entities_add_component(self->entityManager,
+        (Component *)controller_component_new(10.f),
         self->player);
 
     entities_add_component(self->entityManager,
@@ -36,6 +41,7 @@ void game_init(Game* self) {
 void game_update(Game* self) {
     health_system_update(self->healthSystem);
     sprite_system_update(self->spriteSystem);
+    controller_system_update(self->controllerSystem);
     movement_system_update(self->movementSystem);
 }
 

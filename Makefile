@@ -1,9 +1,9 @@
 TARGET		= runner
 CC			= clang
-CFLAGS		= -std=c99 -Wall -I. `pkg-config --cflags luajit` -g -DDEBUG
+CFLAGS		= -std=c99 -Wall -I. -g -DDEBUG
 
 LINKER		= clang -o
-LFLAGS		= -Wall -I. -lm -lSDL2 -lSDL2_image `pkg-config --libs luajit` #-rdynamic -pagezero_size 10000 -image_base 10000000
+LFLAGS		= -Wall -I. -lm -lSDL2 -lSDL2_image #-rdynamic -pagezero_size 10000 -image_base 10000000
 
 SRCDIR		= src
 OBJDIR		= obj

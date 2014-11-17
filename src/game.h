@@ -10,12 +10,15 @@
 #include "spritesystem.h"
 #include "movementcomponent.h"
 #include "movementsystem.h"
+#include "controllercomponent.h"
+#include "controllersystem.h"
 
 typedef struct game_t {
     EntityManager* entityManager;
     HealthSystem* healthSystem;
     SpriteSystem* spriteSystem;
     MovementSystem* movementSystem;
+    ControllerSystem* controllerSystem;
     Entity* player;
 } Game;
 

@@ -3,3 +3,4 @@
 #include "log.h"
 #include "globals.h"
 #include "algebra.h"
+#include "input.h"

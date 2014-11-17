@@ -21,6 +21,16 @@ f32 sqrf(f32 n) {
     return n * n;
 }
 
+f32 randf(f32 max) {
+    f32 r = (f32)rand() / (f32)RAND_MAX;
+    return r * max;
+}
+
+f32 randf_range(f32 min, f32 max) {
+    f32 r = (f32)rand() / (f32)RAND_MAX;
+    return lerpf(min, max, r);
+}
+
 Vec2* vec2_new(const f32 x, const f32 y) {
     Vec2* self = (Vec2 *)calloc(1, sizeof(Vec2));
 

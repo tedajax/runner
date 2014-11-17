@@ -30,6 +30,8 @@ void sprite_system_update(SpriteSystem* self) {
             // do some things
         }
     }
+
+    free(entities.list);
 }
 
 void sprite_system_render(SpriteSystem* self) {
@@ -65,4 +67,6 @@ void sprite_system_render(SpriteSystem* self) {
             }
         }
     }
+
+    free(entities.list);
 }

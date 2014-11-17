@@ -17,6 +17,8 @@ extern const f32 TWO_PI;
 f32 clampf(f32 value, f32 min, f32 max);
 f32 lerpf(f32 start, f32 end, f32 t);
 f32 sqrf(f32 n);
+f32 randf(f32 max);
+f32 randf_range(f32 min, f32 max);
 
 // Vec2 {
 typedef struct vec2_t {

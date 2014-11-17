@@ -21,6 +21,8 @@ void health_system_update(HealthSystem* self) {
         //     COMPONENT_HEALTH,
         //     entity);
     }
+
+    free(entities.list);
 }
 
 void health_system_render(HealthSystem* self) {

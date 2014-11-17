@@ -14,6 +14,10 @@ void game_init(Game* self) {
         surface);
 
     self->player = entity_create_player(self->entityManager, vec2_zero(), texture);
+
+    for (u32 i = 0; i < 1000; ++i) {
+        entity_create_player(self->entityManager, vec2_init(randf(800.f), randf(600.f)), texture);
+    }
 }
 
 void game_update(Game* self) {

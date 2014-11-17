@@ -28,4 +28,6 @@ void movement_system_update(MovementSystem* self) {
             transform->rotation += movement->angularVelocity * globals.time.delta;
         }
     }
+
+    free(entities.list);
 }

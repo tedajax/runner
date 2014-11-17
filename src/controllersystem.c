@@ -50,4 +50,6 @@ void controller_system_update(ControllerSystem* self) {
 
         vec2_set(&movement->velocity, x, y);
     }
+
+    free(entities.list);
 }

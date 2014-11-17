@@ -5,7 +5,7 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
 
     // Transform
     entities_add_component(entityManager,
-        (Component*)transform_component_new(vec2_zero(), 0.f, vec2_one()),
+        (Component*)transform_component_new(position, 0.f, vec2_one()),
         entity);
 
     entities_add_component(entityManager,

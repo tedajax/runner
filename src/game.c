@@ -20,7 +20,7 @@ void game_init(Game* self) {
         self->player);
 
     entities_add_component(self->entityManager,
-        (Component *)controller_component_new(10.f),
+        (Component *)controller_component_new(100.f),
         self->player);
 
     entities_add_component(self->entityManager,

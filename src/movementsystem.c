@@ -23,7 +23,7 @@ void movement_system_update(MovementSystem* self) {
         if (transform && movement) {
             Vec2 timeVel;
             vec2_scale(&movement->velocity, globals.time.delta, &timeVel);
-            vec2_add(&transform->position, &movement->velocity, &transform->position);
+            vec2_add(&transform->position, &timeVel, &transform->position);
 
             transform->rotation += movement->angularVelocity * globals.time.delta;
         }

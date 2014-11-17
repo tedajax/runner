@@ -5,8 +5,8 @@
 
 #include "core.h"
 
-static bool oldKeyStates[SDL_NUM_SCANCODES];
-static bool newKeyStates[SDL_NUM_SCANCODES];
+bool oldKeyStates[SDL_NUM_SCANCODES];
+bool newKeyStates[SDL_NUM_SCANCODES];
 
 void input_initialize();
 

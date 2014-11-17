@@ -1,7 +1,6 @@
 #include "input.h"
 
-// bool oldKeyStates[SDL_NUM_SCANCODES];
-// bool newKeyStates[SDL_NUM_SCANCODES];
+
 
 void input_initialize() {
     for (u32 i = 0; i < SDL_NUM_SCANCODES; ++i) {
@@ -21,7 +20,7 @@ void input_handle_event(SDL_KeyboardEvent* event) {
 
 bool input_key(u32 scancode) {
     ASSERT(scancode < SDL_NUM_SCANCODES, "Scancode out of range.");
-    
+
     return newKeyStates[scancode];
 }
 

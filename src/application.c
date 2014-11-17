@@ -35,7 +35,7 @@ void _app_handle_event(App* self, SDL_Event* event) {
 
 void _app_update(App* self) {
     game_time_update(&globals.time);
-    
+
     if (input_key_down(SDL_SCANCODE_ESCAPE)) {
         self->shouldQuit = true;
     }
@@ -73,8 +73,8 @@ bool _app_initialize(App* self) {
     globals.screen.height = 600;
 
     globals.window = window_create("Runner",
-        0,
-        16,
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
         globals.screen.width,
         globals.screen.height,
         SDL_WINDOW_SHOWN);

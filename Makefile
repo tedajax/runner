@@ -3,14 +3,14 @@ ifeq ($(OS),Windows_NT) # If windows
 	INC_ROOT = C:/dev/include
 	SDL_LFLAGS = -L$(LIB_ROOT) -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
 else
-	SDL_LFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image
+	SDL_LFLAGS = -lSDL2 -lSDL2_image
 endif
 
 TARGET		= runner
-CC			= gcc
-CFLAGS		= -std=c99 -Wall -I. -I$(INC_ROOT) -g $(SDL_LFLAGS)
+CC			= clang
+CFLAGS		= -std=c99 -Wall -I. -I$(INC_ROOT) -g -DDEBUG
 
-LINKER		= gcc -o
+LINKER		= $(CC) -o
 LFLAGS		= -Wall -I. -lm
 
 SRCDIR		= src

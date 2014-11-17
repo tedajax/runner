@@ -1,2 +1,4 @@
 obj/*.o
+runner.exe
 runner
+

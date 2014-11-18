@@ -9,7 +9,7 @@ else
 endif
 
 TARGET		= runner
-CFLAGS		= -std=c99 -Wall -I. -I$(INC_ROOT) -g -DDEBUG
+CFLAGS		= -std=c99 -O2 -Wall -I. -I$(INC_ROOT) -g -DDEBUG
 
 LINKER		= $(CC) -o
 LFLAGS		= -Wall -I. -lm

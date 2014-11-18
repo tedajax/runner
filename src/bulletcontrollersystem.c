@@ -9,13 +9,11 @@ BulletControllerSystem* bullet_controller_system_new(EntityManager* entityManage
     return self;
 }
 
-void bullet_controller_system_update(BulletControllerSystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
@@ -37,7 +35,9 @@ void bullet_controller_system_update(BulletControllerSystem* self) {
         }
 
         vec2_set(&movement->velocity, bullet->speed, 0.f);
-    }
 
-    free(entities.list);
+        if (transform->position.x > 1000.f) {
+            entities_remove_entity(self->super.entityManager, &entity);
+        }
+    }
 }

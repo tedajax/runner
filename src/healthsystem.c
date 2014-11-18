@@ -8,12 +8,10 @@ HealthSystem* health_system_new(EntityManager* entityManager) {
     return self;
 }
 
-void health_system_update(HealthSystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void health_system_update(HealthSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
+    for (u32 i = 0; i < entities->size; ++i) {
         // Entity* entity = (Entity*)vector_index(entities, i);
 
         // HealthComponent* health = (HealthComponent*)entities_get_component(
@@ -21,10 +19,8 @@ void health_system_update(HealthSystem* self) {
         //     COMPONENT_HEALTH,
         //     entity);
     }
-
-    free(entities.list);
 }
 
-void health_system_render(HealthSystem* self) {
+void health_system_render(HealthSystem* self, EntityList* entities) {
     // todo
 }

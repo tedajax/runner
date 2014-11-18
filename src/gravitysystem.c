@@ -8,13 +8,11 @@ GravitySystem* gravity_system_new(EntityManager* entityManager) {
     return self;
 }
 
-void gravity_system_update(GravitySystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void gravity_system_update(GravitySystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
         MovementComponent* movement = (MovementComponent*)entities_get_component(
             self->super.entityManager,
@@ -37,6 +35,4 @@ void gravity_system_update(GravitySystem* self) {
         vec2_add(&movement->velocity, &gravScale, &movement->velocity);
         //printf("%f\n", movement->velocity.y);
     }
-
-    free(entities.list);
 }

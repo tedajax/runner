@@ -11,7 +11,7 @@ typedef struct sprite_system_t {
 } SpriteSystem;
 
 SpriteSystem* sprite_system_new(EntityManager* entityManager);
-void sprite_system_update(SpriteSystem* self);
-void sprite_system_render(SpriteSystem* self);
+void sprite_system_update(SpriteSystem* self, EntityList* entities);
+void sprite_system_render(SpriteSystem* self, EntityList* entities);
 
 #endif

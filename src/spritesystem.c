@@ -8,13 +8,11 @@ SpriteSystem* sprite_system_new(EntityManager* entityManager) {
     return self;
 }
 
-void sprite_system_update(SpriteSystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void sprite_system_update(SpriteSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
@@ -30,17 +28,13 @@ void sprite_system_update(SpriteSystem* self) {
             // do some things
         }
     }
-
-    free(entities.list);
 }
 
-void sprite_system_render(SpriteSystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void sprite_system_render(SpriteSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
@@ -67,6 +61,4 @@ void sprite_system_render(SpriteSystem* self) {
             }
         }
     }
-
-    free(entities.list);
 }

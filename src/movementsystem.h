@@ -11,6 +11,6 @@ typedef struct movement_system_t {
 } MovementSystem;
 
 MovementSystem* movement_system_new(EntityManager* entityManager);
-void movement_system_update(MovementSystem* self);
+void movement_system_update(MovementSystem* self, EntityList* entities);
 
 #endif

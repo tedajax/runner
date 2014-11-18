@@ -20,18 +20,20 @@ void game_init(Game* self) {
     SDL_Surface* bulletSurface = IMG_Load("assets/bullet.png");
     globals.bulletTexture = SDL_CreateTextureFromSurface(globals.renderer,
         bulletSurface);
+
+    entity_list_init(&self->entities, 64);
 }
 
 void game_update(Game* self) {
-    health_system_update(self->healthSystem);
-    sprite_system_update(self->spriteSystem);
-    controller_system_update(self->controllerSystem);
-    bullet_controller_system_update(self->bulletControllerSystem);
-    gravity_system_update(self->gravitySystem);
-    movement_system_update(self->movementSystem);
+    health_system_update(self->healthSystem, &self->entities);
+    sprite_system_update(self->spriteSystem, &self->entities);
+    controller_system_update(self->controllerSystem, &self->entities);
+    bullet_controller_system_update(self->bulletControllerSystem, &self->entities);
+    gravity_system_update(self->gravitySystem, &self->entities);
+    movement_system_update(self->movementSystem, &self->entities);
 }
 
 void game_render(Game* self) {
-    health_system_render(self->healthSystem);
-    sprite_system_render(self->spriteSystem);
+    health_system_render(self->healthSystem, &self->entities);
+    sprite_system_render(self->spriteSystem, &self->entities);
 }

@@ -12,6 +12,6 @@ typedef struct controller_system_t {
 } ControllerSystem;
 
 ControllerSystem* controller_system_new(EntityManager* entityManager);
-void controller_system_update(ControllerSystem* self);
+void controller_system_update(ControllerSystem* self, EntityList* entities);
 
 #endif

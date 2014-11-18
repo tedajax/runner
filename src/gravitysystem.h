@@ -11,6 +11,6 @@ typedef struct gravity_system_t {
 } GravitySystem;
 
 GravitySystem* gravity_system_new(EntityManager* entityManager);
-void gravity_system_update(GravitySystem* self);
+void gravity_system_update(GravitySystem* self, EntityList* entities);
 
 #endif

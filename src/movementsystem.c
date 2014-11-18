@@ -8,13 +8,11 @@ MovementSystem* movement_system_new(EntityManager* entityManager) {
     return self;
 }
 
-void movement_system_update(MovementSystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void movement_system_update(MovementSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
         TransformComponent* transform = GET_COMPONENT(TransformComponent, COMPONENT_TRANSFORM, entity);
 
@@ -28,6 +26,4 @@ void movement_system_update(MovementSystem* self) {
             transform->rotation += movement->angularVelocity * globals.time.delta;
         }
     }
-
-    free(entities.list);
 }

@@ -16,6 +16,8 @@ typedef struct game_t {
     HealthSystem* healthSystem;
     SpriteSystem* spriteSystem;
     Entity* player;
+
+    EntityList entities;
 } Game;
 
 void game_init(Game* self);

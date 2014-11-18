@@ -9,19 +9,19 @@ ControllerSystem* controller_system_new(EntityManager* entityManager) {
     return self;
 }
 
-void controller_system_update(ControllerSystem* self) {
-    EntityList entities;
-    entity_list_init(&entities, 64);
-    aspect_system_entities((AspectSystem*)self, &entities);
+void controller_system_update(ControllerSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
 
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
+
+        TransformComponent* transform = GET_COMPONENT(TransformComponent, COMPONENT_TRANSFORM, entity);
 
         MovementComponent* movement = GET_COMPONENT(MovementComponent, COMPONENT_MOVEMENT, entity);
 
         ControllerComponent* controller = GET_COMPONENT(ControllerComponent, COMPONENT_CONTROLLER, entity);
 
-        if (!movement || !controller) {
+        if (!movement || !controller || !transform) {
             continue;
         }
 
@@ -51,12 +51,18 @@ void controller_system_update(ControllerSystem* self) {
 
         vec2_set(&movement->velocity, x, y);
 
-        if (input_key_down(SDL_SCANCODE_Z)) {
+        if (controller->fireTimer > 0.f) {
+            controller->fireTimer -= globals.time.delta;
+        }
+
+        if (input_key(SDL_SCANCODE_Z) && controller->fireTimer <= 0.f) {
+            Vec2 pos = vec2_clone(&transform->position);
+            pos.x += 64;
+            pos.x += 32;
             entity_create_bullet(self->super.entityManager,
-                vec2_init(100.f, 200.f),
+                vec2_clone(&transform->position),
                 globals.bulletTexture);
+            controller->fireTimer = controller->fireDelay;
         }
     }
-
-    free(entities.list);
 }

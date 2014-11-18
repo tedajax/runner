@@ -46,6 +46,12 @@ Vec2 vec2_init(const f32 x, const f32 y) {
     return self;
 }
 
+Vec2 vec2_clone(const Vec2* vec) {
+    Vec2 result;
+    vec2_set(&result, vec->x, vec->y);
+    return result;
+}
+
 void vec2_set(Vec2* self, const f32 x, const f32 y) {
     ASSERT(self, "");
 

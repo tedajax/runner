@@ -27,6 +27,7 @@ typedef struct vec2_t {
 
 Vec2* vec2_new(const f32 x, const f32 y);
 Vec2 vec2_init(const f32 x, const f32 y);
+Vec2 vec2_clone(const Vec2* vec);
 void vec2_set(Vec2* self, const f32 x, const f32 y);
 void vec2_copy_to(const Vec2* source, Vec2* dest);
 void vec2_add(const Vec2* lhs, const Vec2* rhs, Vec2* dest);

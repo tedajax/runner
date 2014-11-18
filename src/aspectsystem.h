@@ -9,8 +9,8 @@
     entity_list_init(&entities, 64);                            \
     aspect_system_entities((AspectSystem*)self, &entities);
 
-#define GET_COMPONENT(type, comptype, entity)   \
-    (type*)entities_get_component(              \
+#define GET_COMPONENT(entity, comptype)         \
+        entities_get_component(                 \
         self->super.entityManager,              \
         comptype,                               \
         &entity);                               \

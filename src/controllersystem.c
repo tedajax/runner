@@ -15,11 +15,13 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
     for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
 
-        TransformComponent* transform = GET_COMPONENT(TransformComponent, COMPONENT_TRANSFORM, entity);
+        MovementComponent* movement =
+            (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
-        MovementComponent* movement = GET_COMPONENT(MovementComponent, COMPONENT_MOVEMENT, entity);
+        ControllerComponent* controller =
+            (ControllerComponent*)GET_COMPONENT(entity, COMPONENT_CONTROLLER);
 
-        ControllerComponent* controller = GET_COMPONENT(ControllerComponent, COMPONENT_CONTROLLER, entity);
+        TransformComponent* transform = controller->transform;
 
         if (!movement || !controller || !transform) {
             continue;
@@ -58,9 +60,9 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
         if (input_key(SDL_SCANCODE_Z) && controller->fireTimer <= 0.f) {
             Vec2 pos = vec2_clone(&transform->position);
             pos.x += 64;
-            pos.x += 32;
+            pos.y += 42;
             entity_create_bullet(self->super.entityManager,
-                vec2_clone(&transform->position),
+                vec2_clone(&pos),
                 globals.bulletTexture);
             controller->fireTimer = controller->fireDelay;
         }

@@ -9,7 +9,7 @@ Dictionary* dict_new(size_t buckets) {
     self->buckets = (DictionaryNode*)calloc(buckets, sizeof(DictionaryNode));
     for (u32 i = 0; i < self->bucketCount; ++i) {
         self->buckets[i].key = DICT_INVALID_KEY;
-        self->buckets[i].element = NULL;
+        self->buckets[i].list = NULL;
         self->buckets[i].next = NULL;
     }
     self->size = 0;
@@ -22,7 +22,7 @@ void dict_init(Dictionary* self, size_t buckets) {
     self->buckets = (DictionaryNode*)calloc(buckets, sizeof(DictionaryNode));
     for (u32 i = 0; i < self->bucketCount; ++i) {
         self->buckets[i].key = DICT_INVALID_KEY;
-        self->buckets[i].element = NULL;
+        self->buckets[i].list = NULL;
         self->buckets[i].next = NULL;
     }
     self->size = 0;
@@ -46,7 +46,7 @@ void dict_set(Dictionary* self, u32 key, void* element) {
         DictionaryNode* newNode = (DictionaryNode*)calloc(1, sizeof(DictionaryNode));
         self->buckets[index] = *newNode;
         newNode->key = key;
-        newNode->element = element;
+        newNode->list = (DictListNode*)calloc(1, sizeof(DictListNode));
         newNode->next = NULL;
 
         ++self->size;
@@ -54,7 +54,14 @@ void dict_set(Dictionary* self, u32 key, void* element) {
 
     while (node != NULL && node->key != DICT_INVALID_KEY) {
         if (node->key == key) {
-            node->element = element;
+            DictListNode* prev = NULL;
+            DictListNode* lnode = node->list;
+            while (lnode->element != NULL) {
+                prev = lnode;
+                lnode = lnode->next;
+            }
+            lnode->element = element;
+            lnode->prev = prev;
             return;
         }
         prev = node;
@@ -64,13 +71,14 @@ void dict_set(Dictionary* self, u32 key, void* element) {
     DictionaryNode* newNode = (DictionaryNode*)calloc(1, sizeof(DictionaryNode));
     prev->next = newNode;
     newNode->key = key;
-    newNode->element = element;
+    newNode->list = (DictListNode*)calloc(1, sizeof(DictListNode));
+    newNode->list->element = element;
     newNode->next = NULL;
 
     ++self->size;
 }
 
-void* dict_remove(Dictionary* self, u32 key) {
+DictListNode* dict_remove(Dictionary* self, u32 key) {
     if (!self) {
         return NULL;
     }
@@ -84,7 +92,7 @@ void* dict_remove(Dictionary* self, u32 key) {
 
     while (node != NULL) {
         if (node->key == key) {
-            result = node->element;
+            result = node->list;
             if (prev == NULL) {
                 self->buckets[index] = *node->next;
             } else {
@@ -100,7 +108,23 @@ void* dict_remove(Dictionary* self, u32 key) {
     return result;
 }
 
-void* dict_get(Dictionary* self, u32 key) {
+void* dict_get(Dictionary* self, u32 key, u32 index) {
+    DictListNode* list = dict_get_all(self, key);
+
+    if (list) {
+        u32 i = 0;
+        while (list != NULL && i < index) {
+            list = list->next;
+            ++i;
+        }
+
+        return list->element;
+    }
+
+    return NULL;
+}
+
+DictListNode* dict_get_all(Dictionary* self, u32 key) {
     if (!self) {
         return NULL;
     }
@@ -111,10 +135,22 @@ void* dict_get(Dictionary* self, u32 key) {
 
     while (node != NULL) {
         if (node->key == key) {
-            return node->element;
+            return node->list;
         }
         node = node->next;
     }
 
     return NULL;
+}
+
+void dict_list_free(DictListNode* self) {
+    DictListNode* prev = NULL;
+    DictListNode* node = self;
+    while (node != NULL) {
+        prev = node;
+        node = node->next;
+        if (prev) {
+            free(prev);
+        }
+    }
 }

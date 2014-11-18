@@ -9,5 +9,6 @@
 #include <SDL2/SDL.h>
 
 Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture);
+Entity* entity_create_bullet(EntityManager* entityManager, Vec2 position, SDL_Texture* texture);
 
 #endif

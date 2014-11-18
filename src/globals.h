@@ -24,6 +24,9 @@ typedef struct globals {
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    //TODO texture management of some sort
+    SDL_Texture* bulletTexture;
 } Globals;
 
 // Sets all the values in globals to reasonable defaults (0 most likely)

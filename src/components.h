@@ -3,5 +3,6 @@
 #include "movementcomponent.h"
 #include "gravitycomponent.h"
 #include "controllercomponent.h"
+#include "bulletcontrollercomponent.h"
 #include "healthcomponent.h"
 #include "spritecomponent.h"

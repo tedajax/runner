@@ -1,4 +1,5 @@
 #include "controllersystem.h"
+#include "entityfactory.h"
 
 ControllerSystem* controller_system_new(EntityManager* entityManager) {
     ControllerSystem* self = (ControllerSystem*)calloc(1, sizeof(ControllerSystem));
@@ -48,7 +49,13 @@ void controller_system_update(ControllerSystem* self) {
         x *= controller->moveSpeed;
         y *= controller->moveSpeed;
 
-//        vec2_set(&movement->velocity, x, y);
+        vec2_set(&movement->velocity, x, y);
+
+        if (input_key_down(SDL_SCANCODE_Z)) {
+            entity_create_bullet(self->super.entityManager,
+                vec2_init(100.f, 200.f),
+                globals.bulletTexture);
+        }
     }
 
     free(entities.list);

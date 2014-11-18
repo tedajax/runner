@@ -27,6 +27,7 @@ u32 entities_gen_entity_id(EntityManager* self);
 Entity* entities_create_entity(EntityManager* self);
 void entities_add_component(EntityManager* self, Component* component, Entity* entity);
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity* entity);
+DictListNode* entities_get_componetns(EntityManager* self, ComponentType type, Entity* entity);
 void entities_remove_entity(EntityManager* self, Entity* entity);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
 

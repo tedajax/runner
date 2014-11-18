@@ -53,7 +53,11 @@ void entities_add_component(EntityManager* self, Component* component, Entity* e
 }
 
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity* entity) {
-    return dict_get(self->componentsMap[type], entity->id);
+    return dict_get(self->componentsMap[type], entity->id, 0);
+}
+
+DictListNode* entities_get_componetns(EntityManager* self, ComponentType type, Entity* entity) {
+    return dict_get_all(self->componentsMap[type], entity->id);
 }
 
 void entities_remove_entity(EntityManager* self, Entity* entity) {
@@ -83,7 +87,7 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
         for (size_t b = 0; b < components->bucketCount; ++b) {
             DictionaryNode* node = &components->buckets[b];
             while (node != NULL && node->key != DICT_INVALID_KEY) {
-                if (node->element != NULL) {
+                if (node->list != NULL) {
                     if (dest->size >= dest->capacity) {
                         entity_list_resize(dest, dest->capacity * 2);
                     }

@@ -15,4 +15,6 @@ void globals_init() {
 
     globals.window = NULL;
     globals.renderer = NULL;
+
+    globals.bulletTexture = NULL;
 }

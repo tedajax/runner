@@ -11,6 +11,7 @@ typedef struct game_t {
     EntityManager* entityManager;
     MovementSystem* movementSystem;
     ControllerSystem* controllerSystem;
+    BulletControllerSystem* bulletControllerSystem;
     GravitySystem* gravitySystem;
     HealthSystem* healthSystem;
     SpriteSystem* spriteSystem;

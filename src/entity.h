@@ -3,6 +3,8 @@
 
 #include "core.h"
 
+typedef struct transform_component_t TransformComponent;
+
 typedef struct entity_t {
     u32 id;
 } Entity;

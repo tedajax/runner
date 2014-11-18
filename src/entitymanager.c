@@ -49,6 +49,7 @@ void entities_add_component(EntityManager* self, Component* component, Entity* e
         components = dict_new(64);
         self->componentsMap[component->type] = components;
     }
+
     dict_set(components, entity->id, component);
 }
 

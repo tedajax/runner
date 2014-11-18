@@ -14,9 +14,11 @@ void movement_system_update(MovementSystem* self, EntityList* entities) {
     for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
 
-        TransformComponent* transform = GET_COMPONENT(TransformComponent, COMPONENT_TRANSFORM, entity);
+        TransformComponent* transform =
+            (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
-        MovementComponent* movement = GET_COMPONENT(MovementComponent, COMPONENT_MOVEMENT, entity);
+        MovementComponent* movement =
+            (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
         if (transform && movement) {
             Vec2 timeVel;

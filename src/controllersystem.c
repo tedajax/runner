@@ -21,7 +21,8 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
         ControllerComponent* controller =
             (ControllerComponent*)GET_COMPONENT(entity, COMPONENT_CONTROLLER);
 
-        TransformComponent* transform = controller->transform;
+        TransformComponent* transform =
+            (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
         if (!movement || !controller || !transform) {
             continue;

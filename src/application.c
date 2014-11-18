@@ -71,8 +71,11 @@ bool _app_initialize(App* self) {
         return false;
     }
 
-    globals.screen.width = 800;
-    globals.screen.height = 600;
+    globals.world.width = 1280;
+    globals.world.height = 720;
+
+    globals.screen.width = 640;
+    globals.screen.height = 360;
 
     globals.window = window_create("Runner",
         SDL_WINDOWPOS_CENTERED,

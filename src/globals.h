@@ -18,6 +18,11 @@ typedef struct globals {
         u32 height;
     } screen;
 
+    struct world_t {
+        u32 width;
+        u32 height;
+    } world;
+
     Vec2 gravity;
 
     GameTime time;

@@ -95,6 +95,9 @@ bool _app_initialize(App* self) {
         return false;
     }
 
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+    SDL_RenderSetLogicalSize(globals.renderer, globals.world.width, globals.world.height);
+
     self->shouldQuit = false;
 
     input_initialize();

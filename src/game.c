@@ -61,8 +61,8 @@ void game_render(Game* self) {
         SDL_Rect r = {
             (i16)(self->stars[i].x - globals.camera.position.x),
             (i16)(self->stars[i].y - globals.camera.position.y),
-            1,
-            1
+            2,
+            2
         };
         SDL_RenderCopy(globals.renderer,
             globals.bulletTexture,

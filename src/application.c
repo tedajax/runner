@@ -64,7 +64,7 @@ void app_quit(App* self) {
 bool _app_initialize(App* self) {
     globals_init();
 
-    globals.randomSeed = time(NULL);
+    globals.randomSeed = (u32)time(NULL);
     srand(globals.randomSeed);
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {

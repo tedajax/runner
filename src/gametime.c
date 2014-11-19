@@ -34,7 +34,7 @@ void game_time_update(GameTime* self) {
     self->last_frame_ns = self->since_start_ns;
     self->since_start_ns += self->delta_ns;
 
-    self->seconds_timer_ns += self->delta_ns;
+    self->seconds_timer_ns += (u32)self->delta_ns;
     if (self->seconds_timer_ns >= (1 * SECONDS_TO_NANOSECONDS)) {
         self->seconds_timer_ns = 0;
         self->fps = self->frames_this_second;

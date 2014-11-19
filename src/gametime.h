@@ -9,7 +9,7 @@
 
 extern const u32 SECONDS_TO_NANOSECONDS;
 
-typedef void (*time_cb)(void);
+typedef void (*time_cb)();
 
 typedef struct game_time_t {
     u64 last_frame_ticks;

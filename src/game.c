@@ -36,10 +36,10 @@ void game_init(Game* self) {
             self->player);
 
     SDL_Rect cameraConstraints = {
-        32.f,
-        32.f,
-        400.f,
-        563.f
+        32,
+        32,
+        400,
+        563
     };
 
     camera_init(&globals.camera, &playerTransform->position, &cameraConstraints);
@@ -59,8 +59,8 @@ void game_update(Game* self) {
 void game_render(Game* self) {
     for (u32 i = 0; i < MAX_STARS; ++i) {
         SDL_Rect r = {
-            self->stars[i].x - globals.camera.position.x,
-            self->stars[i].y - globals.camera.position.y,
+            (i16)(self->stars[i].x - globals.camera.position.x),
+            (i16)(self->stars[i].y - globals.camera.position.y),
             1,
             1
         };

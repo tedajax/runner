@@ -65,7 +65,7 @@ bool vector_remove(Vector *self, void *element) {
 	assert(self);
 	assert(element);
 
-	for (int i = 0; i < self->size; ++i) {
+	for (u32 i = 0; i < self->size; ++i) {
 		if (self->data[i] == element) {
 			return vector_removeAt(self, i);;
 		}

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "gametime.h"
 #include "algebra.h"
+#include "camera.h"
 
 #include <SDL2/SDL.h>
 
@@ -29,6 +30,8 @@ typedef struct globals {
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    Camera camera;
 
     //TODO texture management of some sort
     SDL_Texture* bulletTexture;

@@ -7,6 +7,8 @@
 #include "components.h"
 #include "systems.h"
 
+#define MAX_STARS 1000
+
 typedef struct game_t {
     EntityManager* entityManager;
     MovementSystem* movementSystem;
@@ -18,6 +20,8 @@ typedef struct game_t {
     Entity* player;
 
     EntityList entities;
+
+    SDL_Point stars[MAX_STARS];
 } Game;
 
 void game_init(Game* self);

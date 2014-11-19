@@ -3,7 +3,8 @@
 int app_run(int argc, char* argv[]) {
     App* self = _app_new();
 
-    ASSERT(_app_initialize(self), "Application failed to initialize");
+    bool appInit = _app_initialize(self);
+    ASSERT(appInit, "Application failed to initialize");
 
     while (!self->shouldQuit) {
         SDL_Event event;

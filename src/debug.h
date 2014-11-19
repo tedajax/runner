@@ -8,8 +8,8 @@ void _internal_print_assert(const char* expr,
 
 #endif
 
-#ifdef WIN32
-    #define DEBUG_BREAKPOINT() __debugBreak();
+#ifdef _WIN32
+    #define DEBUG_BREAKPOINT() __debugbreak();
 #else
     #define DEBUG_BREAKPOINT() __asm__("int $3");
 #endif
@@ -25,7 +25,7 @@ void _internal_print_assert(const char* expr,
     }                                                               \
     MULTILINE_MACRO_END();
 
-#ifdef DEBUG
+#if defined(DEBUG) || defined(_DEBUG)
     #define ASSERT ASSERT_ALWAYS
 #else
     #define ASSERT(expr, msg) ((void)0)

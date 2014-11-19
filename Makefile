@@ -9,7 +9,7 @@ else
 endif
 
 TARGET		= runner
-CFLAGS		= -std=c99 -O2 -Wall -I. -I$(INC_ROOT) -g -DDEBUG -pg
+CFLAGS		= -std=c99 -O2 -Wall -I. -I$(INC_ROOT) -g -DDEBUG
 
 LINKER		= $(CC) -o
 LFLAGS		= -Wall -I. -lm
@@ -25,7 +25,7 @@ OBJECTS		:= $(SOURCES:$(SRCDIR)%.c=$(OBJDIR)/%.o)
 all: $(BINDIR)/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ -pg $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
+	@$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@

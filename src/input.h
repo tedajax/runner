@@ -5,6 +5,9 @@
 
 #include "core.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 bool oldKeyStates[SDL_NUM_SCANCODES];
 bool newKeyStates[SDL_NUM_SCANCODES];
 

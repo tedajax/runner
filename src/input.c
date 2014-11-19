@@ -1,7 +1,5 @@
 #include "input.h"
 
-
-
 void input_initialize() {
     for (u32 i = 0; i < SDL_NUM_SCANCODES; ++i) {
         oldKeyStates[i] = false;

@@ -1,4 +1,9 @@
 obj/*.o
 runner.exe
 runner
-
+Debug/
+Release/
+*.opensdf
+*.sdf
+*.psess
+*.vsp

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1A8CB70E-2989-48F0-855A-B4B436FBD60A}</ProjectGuid>
+    <RootNamespace>runner</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>.\External\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\External\Lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>.\External\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\External\Lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\algebra.c" />
+    <ClCompile Include="src\application.c" />
+    <ClCompile Include="src\aspectsystem.c" />
+    <ClCompile Include="src\bulletcontrollercomponent.c" />
+    <ClCompile Include="src\bulletcontrollersystem.c" />
+    <ClCompile Include="src\camera.c" />
+    <ClCompile Include="src\controllercomponent.c" />
+    <ClCompile Include="src\controllersystem.c" />
+    <ClCompile Include="src\debug.c" />
+    <ClCompile Include="src\dict.c" />
+    <ClCompile Include="src\entity.c" />
+    <ClCompile Include="src\entityfactory.c" />
+    <ClCompile Include="src\entitymanager.c" />
+    <ClCompile Include="src\game.c" />
+    <ClCompile Include="src\gametime.c" />
+    <ClCompile Include="src\globals.c" />
+    <ClCompile Include="src\gravitycomponent.c" />
+    <ClCompile Include="src\gravitysystem.c" />
+    <ClCompile Include="src\hashset.c" />
+    <ClCompile Include="src\hashtable.c" />
+    <ClCompile Include="src\healthcomponent.c" />
+    <ClCompile Include="src\healthsystem.c" />
+    <ClCompile Include="src\input.c" />
+    <ClCompile Include="src\log.c" />
+    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\movementcomponent.c" />
+    <ClCompile Include="src\movementsystem.c" />
+    <ClCompile Include="src\spritecomponent.c" />
+    <ClCompile Include="src\spritesystem.c" />
+    <ClCompile Include="src\transformcomponent.c" />
+    <ClCompile Include="src\vector.c" />
+    <ClCompile Include="src\window.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\algebra.h" />
+    <ClInclude Include="src\application.h" />
+    <ClInclude Include="src\aspectsystem.h" />
+    <ClInclude Include="src\bulletcontrollercomponent.h" />
+    <ClInclude Include="src\bulletcontrollersystem.h" />
+    <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\components.h" />
+    <ClInclude Include="src\controllercomponent.h" />
+    <ClInclude Include="src\controllersystem.h" />
+    <ClInclude Include="src\core.h" />
+    <ClInclude Include="src\debug.h" />
+    <ClInclude Include="src\dict.h" />
+    <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\entityfactory.h" />
+    <ClInclude Include="src\entitymanager.h" />
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gametime.h" />
+    <ClInclude Include="src\globals.h" />
+    <ClInclude Include="src\gravitycomponent.h" />
+    <ClInclude Include="src\gravitysystem.h" />
+    <ClInclude Include="src\hashset.h" />
+    <ClInclude Include="src\hashtable.h" />
+    <ClInclude Include="src\healthcomponent.h" />
+    <ClInclude Include="src\healthsystem.h" />
+    <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\log.h" />
+    <ClInclude Include="src\movementcomponent.h" />
+    <ClInclude Include="src\movementsystem.h" />
+    <ClInclude Include="src\spritecomponent.h" />
+    <ClInclude Include="src\spritesystem.h" />
+    <ClInclude Include="src\systems.h" />
+    <ClInclude Include="src\transformcomponent.h" />
+    <ClInclude Include="src\types.h" />
+    <ClInclude Include="src\vector.h" />
+    <ClInclude Include="src\window.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -66,7 +66,7 @@ void log_panic_format(const char* context, const char* format, ...) {
 // Private
 void _log_formatv(LogLevel level, const char* context, const char* format, va_list args) {
     const size_t MAX_LENGTH = 256;
-    char msg[MAX_LENGTH];
+    char msg[256];
 
     vsnprintf(&msg[0], MAX_LENGTH, format, args);
 

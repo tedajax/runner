@@ -39,7 +39,7 @@ void game_init(Game* self) {
         32.f,
         32.f,
         400.f,
-        656.f
+        563.f
     };
 
     camera_init(&globals.camera, &playerTransform->position, &cameraConstraints);

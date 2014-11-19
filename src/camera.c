@@ -24,14 +24,14 @@ void camera_update(Camera* self) {
     f32 bottom = self->position.y + self->constraints.y + self->constraints.h;
 
     if (self->target->x < left) {
-        self->position.x = self->target->x;
+        self->position.x = self->target->x - self->constraints.x;
     } else if (self->target->x > right) {
-        self->position.x = self->target->x - (self->target->x - self->position.x);
+        self->position.x = self->target->x - (self->constraints.x + self->constraints.w);
     }
 
     if (self->target->y < top) {
-        self->position.y = self->target->y + top;
+        self->position.y = self->target->y - self->constraints.y;
     } else if (self->target->y > bottom) {
-        self->position.y = self->target->y - bottom;
+        self->position.y = self->target->y - (self->constraints.y + self->constraints.h);
     }
 }

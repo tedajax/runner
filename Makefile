@@ -37,3 +37,7 @@ clean:
 .PHONEY: remove
 remove: clean
 	@$(RM) $(BINDIR)/$(TARGET)
+
+.PHONEY: run
+run: all
+	./$(TARGET)

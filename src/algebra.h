@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+typedef struct SDL_Rect SDL_Rect;
+
 extern const f32 DEG_TO_RAD;
 extern const f32 RAD_TO_DEG;
 extern const f32 PI;
@@ -49,5 +51,37 @@ Vec2 vec2_unit_x();
 Vec2 vec2_unit_y();
 
 // } Vec2
+
+// Rect {
+typedef struct rect_t {
+    Vec2 position;
+    f32 width, height;
+} Rect;
+
+Rect* rect_new(const Vec2* pos, const f32 w, const f32 h);
+Rect rect_init(const Vec2* pos, const f32 w, const f32 h);
+Rect rect_clone(const Rect* rect);
+void rect_set(Rect* self, const Vec2* pos, const f32 w, const f32 h);
+void rect_copy_to(const Rect* source, Rect* dest);
+void rect_to_sdl_rect(const Rect* source, SDL_Rect* dest);
+bool rect_contains(const Rect* self, const Vec2* point);
+bool rect_intersects(const Rect* self, const Rect* other);
+
+__inline f32 rect_left(const Rect* self) {
+    return self->position.x;
+}
+
+__inline f32 rect_right(const Rect* self) {
+    return self->position.x + self->width;
+}
+
+__inline f32 rect_top(const Rect* self) {
+    return self->position.y;
+}
+
+__inline f32 rect_bottom(const Rect* self) {
+    return self->position.y + self->height;
+}
+// } Rect
 
 #endif

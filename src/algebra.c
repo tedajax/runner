@@ -1,5 +1,7 @@
 #include "algebra.h"
 
+#include <SDL2/SDL_rect.h>
+
 const f32 DEG_TO_RAD =  0.017453f;
 const f32 RAD_TO_DEG =  57.29578f;
 const f32 PI =          3.141593f;
@@ -160,4 +162,75 @@ Vec2 vec2_unit_y() {
     Vec2 result;
     vec2_set(&result, 0.f, 1.f);
     return result;
+}
+
+//////////////////////////////////////////////////////////////////////////
+///////////////////         Rect          ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+Rect* rect_new(const Vec2* pos, const f32 w, const f32 h) {
+    Rect* self = (Rect*)calloc(1, sizeof(Rect));
+
+    vec2_copy_to(pos, &self->position);
+
+    self->width = w;
+    self->height = h;
+
+    return self;
+}
+Rect rect_init(const Vec2* pos, const f32 w, const f32 h) {
+    Rect result;
+
+    vec2_copy_to(pos, &result.position);
+
+    result.width = w;
+    result.height = h;
+
+    return result;
+}
+
+Rect rect_clone(const Rect* rect) {
+    return rect_init(&rect->position, rect->width, rect->height);
+}
+
+void rect_set(Rect* self, const Vec2* pos, const f32 w, const f32 h) {
+    vec2_copy_to(pos, &self->position);
+    self->width = w;
+    self->height = h;
+}
+
+void rect_copy_to(const Rect* source, Rect* dest) {
+    vec2_copy_to(&source->position, &dest->position);
+    dest->width = source->width;
+    dest->height = source->height;
+}
+
+void rect_to_sdl_rect(const Rect* source, SDL_Rect* dest) {
+    dest->x = (i16)source->position.x;
+    dest->y = (i16)source->position.y;
+    dest->w = (i16)source->width;
+    dest->h = (i16)source->height;
+}
+
+bool rect_contains(const Rect* self, const Vec2* point) {
+    f32 l = rect_left(self);
+    f32 r = rect_right(self);
+    f32 t = rect_top(self);
+    f32 b = rect_bottom(self);
+
+    return point->x >= l && point->x <= r && point->y >= t && point->y <= b;
+}
+
+bool rect_intersects(const Rect* self, const Rect* other) {
+    f32 l1 = rect_left(self);
+    f32 r1 = rect_right(self);
+    f32 t1 = rect_top(self);
+    f32 b1 = rect_bottom(self);
+
+    f32 l2 = rect_left(other);
+    f32 r2 = rect_right(other);
+    f32 t2 = rect_top(other);
+    f32 b2 = rect_bottom(other);
+
+    return l2 <= r1 && r2 >= l1 && t2 <= b1 && b2 >= t1;
 }

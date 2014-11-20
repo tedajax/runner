@@ -5,7 +5,7 @@ void texture_manager_init(TextureManager* self, const char* rootDir) {
     self->rootDir = (char*)calloc(rootLen + 1, sizeof(char));
     strcpy(self->rootDir, rootDir);
 
-    hashtable_init(&self->textureTable, 128, SDL_DestroyTexture);
+    hashtable_init(&self->textureTable, 128, _free_void_sdl_texture);
 }
 
 void texture_manager_free(TextureManager* self) {
@@ -60,4 +60,8 @@ void _path_concat(const char* p1, const char* p2, char* dest) {
     strcpy(dest, p1);
     dest[l1] = '/';
     strcpy(&dest[l1 + 1], p2);
+}
+
+void _free_void_sdl_texture(void* ptr) {
+    SDL_DestroyTexture((SDL_Texture*)ptr);
 }

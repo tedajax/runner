@@ -19,13 +19,13 @@ void game_init(Game* self) {
     self->bulletControllerSystem = bullet_controller_system_new(self->entityManager);
     self->bgManagerSystem = bg_manager_system_new(self->entityManager);
 
-    u32 bgTextureWidth;
-    u32 bgTextureHeight;
+    int bgTextureWidth;
+    int bgTextureHeight;
     SDL_QueryTexture(textures_get("darkPurple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
 
     Entity* bgManagerEntity = entity_create_bg_manager(self->entityManager,
-        bgTextureWidth,
-        bgTextureHeight);
+        (u32)bgTextureWidth,
+        (u32)bgTextureHeight);
 
     BgManagerComponent* bgManager = 
         (BgManagerComponent*)entities_get_component(self->entityManager,

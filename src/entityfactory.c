@@ -25,7 +25,7 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(texture),
+        (Component*)sprite_component_new(texture, 1),
         entity);
 
     return entity;
@@ -47,7 +47,7 @@ Entity* entity_create_bullet(EntityManager* entityManager, Vec2 position, SDL_Te
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(texture),
+        (Component*)sprite_component_new(texture, 1),
         entity);
 
     return entity;
@@ -61,7 +61,7 @@ Entity* entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(texture),
+        (Component*)sprite_component_new(texture, 0),
         entity);
 
     return entity;

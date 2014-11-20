@@ -10,12 +10,13 @@
 typedef struct sprite_component_t {
     Component super;
     SDL_Texture* texture;
+    u32 layer;
     int width;
     int height;
     SDL_Rect srcRect;
 } SpriteComponent;
 
-SpriteComponent* sprite_component_new(SDL_Texture* texture);
+SpriteComponent* sprite_component_new(SDL_Texture* texture, u32 layer);
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest);
 
 #endif

@@ -7,6 +7,7 @@ void game_init(Game* self) {
 
     textures_load("test.png");
     textures_load("bullet.png");
+    textures_load("darkPurple.png");
 
     self->entityManager = entity_manager_new();
     self->healthSystem = health_system_new(self->entityManager);
@@ -15,17 +16,38 @@ void game_init(Game* self) {
     self->gravitySystem = gravity_system_new(self->entityManager);
     self->controllerSystem = controller_system_new(self->entityManager);
     self->bulletControllerSystem = bullet_controller_system_new(self->entityManager);
+    self->bgManagerSystem = bg_manager_system_new(self->entityManager);
+
+    u32 bgTextureWidth;
+    u32 bgTextureHeight;
+    SDL_QueryTexture(textures_get("darkPurple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
+
+    Entity* bgManagerEntity = entity_create_bg_manager(self->entityManager,
+        bgTextureWidth,
+        bgTextureHeight);
+
+    BgManagerComponent* bgManager = 
+        (BgManagerComponent*)entities_get_component(self->entityManager,
+        COMPONENT_BG_MANAGER,
+        bgManagerEntity);
+
+    for (u32 i = 0; i < bgManager->capacity; ++i) {
+        Entity* tile = entity_create_bg_tile(self->entityManager,
+            textures_get("darkPurple.png"));
+
+        TransformComponent* tx =
+            (TransformComponent*)entities_get_component(self->entityManager,
+            COMPONENT_TRANSFORM,
+            tile);
+
+        bg_manager_component_add_entity(bgManager, tx);
+    }
 
     self->player = entity_create_player(self->entityManager,
         vec2_init(32.f, 320.f),
         textures_get("test.png"));
 
     entity_list_init(&self->entities, 64);
-
-    for (u32 i = 0; i < MAX_STARS; ++i) {
-        self->stars[i].x = (rand() % 2000) - 1000;
-        self->stars[i].y = (rand() % 2000) - 1000;
-    }
 
     TransformComponent* playerTransform =
         (TransformComponent*)entities_get_component(self->entityManager,
@@ -42,6 +64,10 @@ void game_init(Game* self) {
     camera_init(&globals.camera, &playerTransform->position, &cameraConstraints);
 }
 
+void game_start(Game* self) {
+    bg_manager_system_start(self->bgManagerSystem, &self->entities);
+}
+
 void game_update(Game* self) {
     health_system_update(self->healthSystem, &self->entities);
     sprite_system_update(self->spriteSystem, &self->entities);
@@ -49,24 +75,12 @@ void game_update(Game* self) {
     bullet_controller_system_update(self->bulletControllerSystem, &self->entities);
     gravity_system_update(self->gravitySystem, &self->entities);
     movement_system_update(self->movementSystem, &self->entities);
+    bg_manager_system_update(self->bgManagerSystem, &self->entities);
 
     camera_update(&globals.camera);
 }
 
 void game_render(Game* self) {
-    for (u32 i = 0; i < MAX_STARS; ++i) {
-        SDL_Rect r = {
-            (i16)(self->stars[i].x - globals.camera.position.x),
-            (i16)(self->stars[i].y - globals.camera.position.y),
-            2,
-            2
-        };
-        SDL_RenderCopy(globals.renderer,
-            textures_get("bullet.png"),
-            NULL,
-            &r);
-    }
-
     health_system_render(self->healthSystem, &self->entities);
     sprite_system_render(self->spriteSystem, &self->entities);
 }

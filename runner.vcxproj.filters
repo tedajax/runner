@@ -117,6 +117,12 @@
     <ClCompile Include="src\texturemanager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\bgmanagercomponent.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bgmanagersystem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -231,6 +237,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\texturemanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bgmanagercomponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bgmanagersystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

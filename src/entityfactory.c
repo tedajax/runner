@@ -52,3 +52,28 @@ Entity* entity_create_bullet(EntityManager* entityManager, Vec2 position, SDL_Te
 
     return entity;
 }
+
+Entity* entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture) {
+    Entity* entity = entities_create_entity(entityManager);
+
+    entities_add_component(entityManager,
+        (Component*)transform_component_new(vec2_zero(), 0.f, vec2_one()),
+        entity);
+
+    entities_add_component(entityManager,
+        (Component*)sprite_component_new(texture),
+        entity);
+
+    return entity;
+}
+
+Entity* entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 theight) {
+    Entity* entity = entities_create_entity(entityManager);
+
+    entities_add_component(entityManager,
+        (Component*)bg_manager_component_new(twidth, theight),
+        entity);
+
+    return entity;
+}
+

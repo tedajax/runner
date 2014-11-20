@@ -6,6 +6,8 @@ int app_run(int argc, char* argv[]) {
     IF_DEBUG(bool appInit = )_app_initialize(self);
     ASSERT(appInit, "Application failed to initialize");
 
+    game_start(&self->game);
+
     while (!self->shouldQuit) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {

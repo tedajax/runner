@@ -58,7 +58,7 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
             controller->fireTimer -= globals.time.delta;
         }
 
-        if (input_key(SDL_SCANCODE_Z) && controller->fireTimer <= 0.f) {
+        if (input_key(SDL_SCANCODE_Z) && controller ->fireTimer <= 0.f) {
             Vec2 pos = vec2_clone(&transform->position);
             pos.x += 64;
             pos.y += 42;

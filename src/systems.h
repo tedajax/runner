@@ -5,3 +5,4 @@
 #include "gravitysystem.h"
 #include "healthsystem.h"
 #include "spritesystem.h"
+#include "bgmanagersystem.h"

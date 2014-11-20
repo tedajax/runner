@@ -160,6 +160,8 @@
     <ClCompile Include="src\algebra.c" />
     <ClCompile Include="src\application.c" />
     <ClCompile Include="src\aspectsystem.c" />
+    <ClCompile Include="src\bgmanagercomponent.c" />
+    <ClCompile Include="src\bgmanagersystem.c" />
     <ClCompile Include="src\bulletcontrollercomponent.c" />
     <ClCompile Include="src\bulletcontrollersystem.c" />
     <ClCompile Include="src\camera.c" />
@@ -196,6 +198,8 @@
     <ClInclude Include="src\algebra.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\aspectsystem.h" />
+    <ClInclude Include="src\bgmanagercomponent.h" />
+    <ClInclude Include="src\bgmanagersystem.h" />
     <ClInclude Include="src\bulletcontrollercomponent.h" />
     <ClInclude Include="src\bulletcontrollersystem.h" />
     <ClInclude Include="src\camera.h" />

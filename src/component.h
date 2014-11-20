@@ -16,6 +16,8 @@ typedef enum component_type_e {
     COMPONENT_HEALTH,
     COMPONENT_SPRITE,
 
+    COMPONENT_BG_MANAGER,
+
     COMPONENT_LAST,
 } ComponentType;
 

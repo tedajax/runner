@@ -36,3 +36,5 @@ void _internal_print_assert(const char* expr,
 #else
     #define IF_DEBUG(x) ((void)0)
 #endif
+
+#define CALLOC(count, type) (type*)calloc(count, sizeof(type))

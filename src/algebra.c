@@ -234,3 +234,55 @@ bool rect_intersects(const Rect* self, const Rect* other) {
 
     return l2 <= r1 && r2 >= l1 && t2 <= b1 && b2 >= t1;
 }
+
+//////////////////////////////////////////////////////////////////////////
+///////////////////         Circle        ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+Circle* circle_new(const Vec2* pos, const f32 r) {
+    Circle* self = (Circle*)calloc(1, sizeof(Circle));
+
+    vec2_copy_to(pos, &self->position);
+    self->radius = r;
+
+    return self;
+}
+
+Circle circle_init(const Vec2* pos, const f32 r) {
+    Circle result;
+    vec2_copy_to(pos, &result.position);
+    result.radius = r;
+    return result;
+}
+
+Circle circle_clone(const Circle* circle) {
+    return circle_init(&circle->position, circle->radius);
+}
+
+void circle_set(Circle* self, const Vec2* pos, const f32 r) {
+    vec2_copy_to(pos, &self->position);
+    self->radius = r;
+}
+
+void circle_copy_to(const Circle* source, Circle* dest) {
+    vec2_copy_to(&source->position, &dest->position);
+    dest->radius = source->radius;
+}
+
+void circle_bounds(const Circle* self, Rect* dest) {
+    f32 r = self->radius;
+    f32 d = r * 2.f;
+    vec2_set(&dest->position, self->position.x - r, self->position.y - r);
+    dest->width = d;
+    dest->height = d;
+}
+
+bool circle_contains(const Circle* self, const Vec2* point) {
+    f32 d = vec2_dist(&self->position, point);
+    return d <= self->radius;
+}
+
+bool circle_intersects(const Circle* self, const Circle* other) {
+    f32 d = vec2_dist(&self->position, &other->position);
+    return d <= (self->radius + other->radius);
+}

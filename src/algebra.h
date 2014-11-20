@@ -84,4 +84,20 @@ __inline f32 rect_bottom(const Rect* self) {
 }
 // } Rect
 
+// Circle {
+typedef struct circle_t {
+    Vec2 position;
+    f32 radius;
+} Circle;
+
+Circle* circle_new(const Vec2* pos, const f32 r);
+Circle circle_init(const Vec2* pos, const f32 r);
+Circle circle_clone(const Circle* circle);
+void circle_set(Circle* self, const Vec2* pos, const f32 r);
+void circle_copy_to(const Circle* source, Circle* dest);
+void circle_bounds(const Circle* self, Rect* dest);
+bool circle_contains(const Circle* self, const Vec2* point);
+bool circle_intersects(const Circle* self, const Circle* other);
+// } Circle
+
 #endif

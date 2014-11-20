@@ -64,7 +64,7 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
             pos.y += 42;
             entity_create_bullet(self->super.entityManager,
                 vec2_clone(&pos),
-                globals.bulletTexture);
+                textures_get("bullet.png"));
             controller->fireTimer = controller->fireDelay;
         }
     }

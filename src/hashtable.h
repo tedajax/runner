@@ -11,17 +11,18 @@
 typedef void(*hashtable_free_f)(void *);
 
 typedef struct hashtable_node_t {
-	u64 key;
-	void *value;
+    u64 key;
+    void *value;
 } HashtableNode;
 
 typedef struct hashtable_t {
-	u32 bucketCount;
+    u32 bucketCount;
     hashtable_free_f freeFunc;
-	Vector **buckets;
+    Vector **buckets;
 } Hashtable;
 
 Hashtable *hashtable_new(u32 buckets, hashtable_free_f freeFunc);
+void hashtable_init(Hashtable* self, u32 buckets, hashtable_free_f freeFunc);
 
 //insert data into hashtable with given key
 //if key does not exist in hash table, inserts value with key and returns true
@@ -33,6 +34,8 @@ void *hashtable_get(Hashtable *self, const char *key);
 
 //removes value stored at key and returns it
 void *hashtable_remove(Hashtable *self, const char *key);
+
+void hashtable_clear(Hashtable* self);
 
 void hashtable_free(Hashtable *self);
 

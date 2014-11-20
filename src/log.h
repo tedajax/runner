@@ -1,10 +1,6 @@
 #ifndef RUNNER_LOG_H
 #define RUNNER_LOG_H
 
-#ifdef _WIN32
-    #define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <stdarg.h>
 #include <stdio.h>
 

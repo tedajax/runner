@@ -31,3 +31,8 @@ void _internal_print_assert(const char* expr,
     #define ASSERT(expr, msg) ((void)0)
 #endif
 
+#if defined(DEBUG) || defined(_DEBUG)
+    #define IF_DEBUG(x) x
+#else
+    #define IF_DEBUG(x) ((void)0)
+#endif

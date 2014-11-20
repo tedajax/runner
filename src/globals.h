@@ -5,6 +5,7 @@
 #include "gametime.h"
 #include "algebra.h"
 #include "camera.h"
+#include "texturemanager.h"
 
 #include <SDL2/SDL.h>
 
@@ -33,13 +34,19 @@ typedef struct globals {
 
     Camera camera;
 
-    //TODO texture management of some sort
-    SDL_Texture* bulletTexture;
+    TextureManager textures;
 } Globals;
 
 // Sets all the values in globals to reasonable defaults (0 most likely)
 // Not intended to use as a configuration step.
 void globals_init();
+
+void textures_init(const char* rootDir);
+void textures_free();
+bool textures_load(const char* filename);
+bool textures_unload(const char* filename);
+bool textures_unload_all();
+SDL_Texture* textures_get(const char* name);
 
 extern Globals globals;
 

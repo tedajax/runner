@@ -18,6 +18,11 @@ void globals_init() {
 
     globals.window = NULL;
     globals.renderer = NULL;
-
-    globals.bulletTexture = NULL;
 }
+
+void textures_init(const char* rootDir) { texture_manager_init(&globals.textures, rootDir); }
+void textures_free() { texture_manager_free(&globals.textures); }
+bool textures_load(const char* filename) { return texture_manager_load(&globals.textures, globals.renderer, filename); }
+bool textures_unload(const char* filename) { return texture_manager_unload(&globals.textures, filename); }
+bool textures_unload_all() { return texture_manager_unload_all(&globals.textures); }
+SDL_Texture* textures_get(const char* name) { return texture_manager_get(&globals.textures, name); }

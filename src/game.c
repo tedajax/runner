@@ -3,6 +3,11 @@
 #include <SDL2/SDL_image.h>
 
 void game_init(Game* self) {
+    textures_init("assets");
+
+    textures_load("test.png");
+    textures_load("bullet.png");
+
     self->entityManager = entity_manager_new();
     self->healthSystem = health_system_new(self->entityManager);
     self->spriteSystem = sprite_system_new(self->entityManager);
@@ -11,17 +16,9 @@ void game_init(Game* self) {
     self->controllerSystem = controller_system_new(self->entityManager);
     self->bulletControllerSystem = bullet_controller_system_new(self->entityManager);
 
-    SDL_Surface* surface = IMG_Load("assets/test.png");
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(globals.renderer,
-        surface);
-
     self->player = entity_create_player(self->entityManager,
         vec2_init(32.f, 320.f),
-        texture);
-
-    SDL_Surface* bulletSurface = IMG_Load("assets/bullet.png");
-    globals.bulletTexture = SDL_CreateTextureFromSurface(globals.renderer,
-        bulletSurface);
+        textures_get("test.png"));
 
     entity_list_init(&self->entities, 64);
 
@@ -65,7 +62,7 @@ void game_render(Game* self) {
             2
         };
         SDL_RenderCopy(globals.renderer,
-            globals.bulletTexture,
+            textures_get("bullet.png"),
             NULL,
             &r);
     }

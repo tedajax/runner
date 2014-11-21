@@ -77,3 +77,28 @@ Entity* entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 t
     return entity;
 }
 
+Entity* entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
+    Entity* entity = entities_create_entity(entityManager);
+
+    entities_add_component(entityManager,
+        (Component*)transform_component_new(position, 0.f, vec2_one()),
+        entity);
+
+    entities_add_component(entityManager,
+        (Component*)movement_component_new(vec2_zero(), 0.f),
+        entity);
+
+    entities_add_component(entityManager,
+        (Component*)enemy_component_new(ENEMY_TYPE_BASIC),
+        entity);
+
+    entities_add_component(entityManager,
+        (Component*)health_component_new(100),
+        entity);
+
+    entities_add_component(entityManager,
+        (Component*)sprite_component_new(textures_get("enemy_red_1.png"), 1),
+        entity);
+
+    return entity;
+}

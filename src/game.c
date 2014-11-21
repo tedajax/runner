@@ -5,9 +5,10 @@
 void game_init(Game* self) {
     textures_init("assets");
 
-    textures_load("test.png");
-    textures_load("bullet.png");
-    textures_load("darkPurple.png");
+    textures_load("player_ship.png");
+    textures_load("player_bullet_1.png");
+    textures_load("bg_dark_purple.png");
+    textures_load("enemy_red_1.png");
 
     self->entityManager = entity_manager_new();
     self->healthSystem = health_system_new(self->entityManager);
@@ -18,10 +19,11 @@ void game_init(Game* self) {
     self->controllerSystem = controller_system_new(self->entityManager);
     self->bulletControllerSystem = bullet_controller_system_new(self->entityManager);
     self->bgManagerSystem = bg_manager_system_new(self->entityManager);
+    self->enemySystem = enemy_system_new(self->entityManager);
 
     int bgTextureWidth;
     int bgTextureHeight;
-    SDL_QueryTexture(textures_get("darkPurple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
+    SDL_QueryTexture(textures_get("bg_dark_purple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
 
     Entity* bgManagerEntity = entity_create_bg_manager(self->entityManager,
         (u32)bgTextureWidth,
@@ -34,7 +36,7 @@ void game_init(Game* self) {
 
     for (u32 i = 0; i < bgManager->capacity; ++i) {
         Entity* tile = entity_create_bg_tile(self->entityManager,
-            textures_get("darkPurple.png"));
+            textures_get("bg_dark_purple.png"));
 
         TransformComponent* tx =
             (TransformComponent*)entities_get_component(self->entityManager,
@@ -46,7 +48,9 @@ void game_init(Game* self) {
 
     self->player = entity_create_player(self->entityManager,
         vec2_init(32.f, 320.f),
-        textures_get("test.png"));
+        textures_get("player_ship.png"));
+
+    globals.player = self->player;
 
     entity_list_init(&self->entities, 64);
 
@@ -62,6 +66,10 @@ void game_init(Game* self) {
         563
     };
 
+    for (u32 i = 0; i < 50; ++i) {
+        entity_create_basic_enemy(self->entityManager, vec2_init(i * 100.f, randf((f32)globals.world.width)));
+    }
+
     camera_init(&globals.camera, &playerTransform->position, &cameraConstraints);
 }
 
@@ -76,6 +84,7 @@ void game_update(Game* self) {
     controller_system_update(self->controllerSystem, &self->entities);
     bullet_controller_system_update(self->bulletControllerSystem, &self->entities);
     gravity_system_update(self->gravitySystem, &self->entities);
+    enemy_system_update(self->enemySystem, &self->entities);
     movement_system_update(self->movementSystem, &self->entities);
     bg_manager_system_update(self->bgManagerSystem, &self->entities);
 

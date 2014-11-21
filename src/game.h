@@ -17,6 +17,7 @@ typedef struct game_t {
     SpriteSystem* spriteSystem;
     SpriteSystem* backgroundSpriteSystem;
     BgManagerSystem* bgManagerSystem;
+    EnemySystem* enemySystem;
     Entity* player;
 
     EntityList entities;

@@ -12,5 +12,6 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
 Entity* entity_create_bullet(EntityManager* entityManager, Vec2 position, SDL_Texture* texture);
 Entity* entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture);
 Entity* entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 theight);
+Entity* entity_create_basic_enemy(EntityManager* entityManager, Vec2 position);
 
 #endif

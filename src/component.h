@@ -18,6 +18,8 @@ typedef enum component_type_e {
 
     COMPONENT_BG_MANAGER,
 
+    COMPONENT_ENEMY,
+
     COMPONENT_LAST,
 } ComponentType;
 

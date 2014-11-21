@@ -15,6 +15,10 @@
         comptype,                               \
         &entity);                               \
 
+#define REQUIRED_COMPONENTS(compexpr) MULTILINE_MACRO_BEGIN()                 \
+    ASSERT(compexpr, "Entity does not have required components for system."); \
+    MULTILINE_MACRO_END()
+
 typedef struct aspect_system_t {
     EntityManager* entityManager;
     ComponentType systemType;

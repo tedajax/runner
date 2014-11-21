@@ -7,3 +7,4 @@
 #include "healthcomponent.h"
 #include "spritecomponent.h"
 #include "bgmanagercomponent.h"
+#include "enemycomponent.h"

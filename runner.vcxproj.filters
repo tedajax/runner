@@ -123,6 +123,12 @@
     <ClCompile Include="src\bgmanagersystem.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\enemycomponent.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemysystem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -243,6 +249,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\bgmanagersystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemycomponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemysystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

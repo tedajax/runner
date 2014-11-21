@@ -1,6 +1,8 @@
 #ifndef RUNNER_DEBUG_H
 #define RUNNER_DEBUG_H
 
+#include <stdbool.h>
+
 void _internal_print_assert(const char* expr,
     const char* file,
     int line,

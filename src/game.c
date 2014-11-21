@@ -54,10 +54,10 @@ void game_init(Game* self) {
 
     entity_list_init(&self->entities, 64);
 
-    TransformComponent* playerTransform =
-        (TransformComponent*)entities_get_component(self->entityManager,
-            COMPONENT_TRANSFORM,
-            self->player);
+    //TransformComponent* playerTransform =
+    //    (TransformComponent*)entities_get_component(self->entityManager,
+    //        COMPONENT_TRANSFORM,
+    //        self->player);
 
     SDL_Rect cameraConstraints = {
         32,
@@ -67,10 +67,12 @@ void game_init(Game* self) {
     };
 
     for (u32 i = 0; i < 50; ++i) {
-        entity_create_basic_enemy(self->entityManager, vec2_init(i * 100.f, randf((f32)globals.world.width)));
+        entity_create_basic_enemy(self->entityManager, vec2_init(i * 250.f, randf((f32)globals.world.height - 100.f)));
     }
 
-    camera_init(&globals.camera, &playerTransform->position, &cameraConstraints);
+    camera_init(&globals.camera, NULL, &cameraConstraints);
+    
+    globals.scrollSpeed = 100.f;
 }
 
 void game_start(Game* self) {
@@ -87,6 +89,12 @@ void game_update(Game* self) {
     enemy_system_update(self->enemySystem, &self->entities);
     movement_system_update(self->movementSystem, &self->entities);
     bg_manager_system_update(self->bgManagerSystem, &self->entities);
+
+    if (input_key_down(SDL_SCANCODE_Z)) {
+        Message m;
+        m.type = MESSAGE_DAMAGE;
+        entities_send_message(self->entityManager, globals.player, &m);
+    }
 
     camera_update(&globals.camera);
 }

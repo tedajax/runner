@@ -57,7 +57,7 @@ Component* entities_get_component(EntityManager* self, ComponentType type, Entit
     return dict_get(self->componentsMap[type], entity->id, 0);
 }
 
-DictListNode* entities_get_componetns(EntityManager* self, ComponentType type, Entity* entity) {
+DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity* entity) {
     return dict_get_all(self->componentsMap[type], entity->id);
 }
 
@@ -97,6 +97,21 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
                 }
                 node = node->next;
             }
+        }
+    }
+}
+
+void entities_send_message(EntityManager* self, Entity* entity, Message* message) {
+    game_time_tick();
+
+    for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
+        DictListNode* node = entities_get_components(self, type, entity);
+
+        while (node) {
+            if (node->element) {
+                component_send_message((Component*)node->element, message);
+            }
+            node = node->next;
         }
     }
 }

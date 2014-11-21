@@ -22,11 +22,21 @@ f32 sqrf(f32 n);
 f32 randf(f32 max);
 f32 randf_range(f32 min, f32 max);
 
-// Vec2 {
 typedef struct vec2_t {
     f32 x, y;
 } Vec2;
 
+typedef struct circle_t {
+    Vec2 position;
+    f32 radius;
+} Circle;
+
+typedef struct rect_t {
+    Vec2 position;
+    f32 width, height;
+} Rect;
+
+// Vec2 {
 Vec2* vec2_new(const f32 x, const f32 y);
 Vec2 vec2_init(const f32 x, const f32 y);
 Vec2 vec2_clone(const Vec2* vec);
@@ -53,11 +63,6 @@ Vec2 vec2_unit_y();
 // } Vec2
 
 // Rect {
-typedef struct rect_t {
-    Vec2 position;
-    f32 width, height;
-} Rect;
-
 Rect* rect_new(const Vec2* pos, const f32 w, const f32 h);
 Rect rect_init(const Vec2* pos, const f32 w, const f32 h);
 Rect rect_clone(const Rect* rect);
@@ -67,6 +72,7 @@ void rect_copy_to(const Rect* source, Rect* dest);
 void rect_to_sdl_rect(const Rect* source, SDL_Rect* dest);
 bool rect_contains(const Rect* self, const Vec2* point);
 bool rect_intersects(const Rect* self, const Rect* other);
+bool rect_intersects_circle(const Rect* self, const Circle* other);
 
 __inline f32 rect_left(const Rect* self) {
     return self->position.x;
@@ -86,11 +92,6 @@ __inline f32 rect_bottom(const Rect* self) {
 // } Rect
 
 // Circle {
-typedef struct circle_t {
-    Vec2 position;
-    f32 radius;
-} Circle;
-
 Circle* circle_new(const Vec2* pos, const f32 r);
 Circle circle_init(const Vec2* pos, const f32 r);
 Circle circle_clone(const Circle* circle);
@@ -99,6 +100,7 @@ void circle_copy_to(const Circle* source, Circle* dest);
 void circle_bounds(const Circle* self, Rect* dest);
 bool circle_contains(const Circle* self, const Vec2* point);
 bool circle_intersects(const Circle* self, const Circle* other);
+bool circle_intersects_rect(const Circle* self, const Rect* other);
 // } Circle
 
 #endif

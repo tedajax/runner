@@ -40,6 +40,8 @@ typedef struct globals {
 
     //TODO: some sort of named entity system
     Entity* player;
+
+    f32 scrollSpeed;
 } Globals;
 
 // Sets all the values in globals to reasonable defaults (0 most likely)

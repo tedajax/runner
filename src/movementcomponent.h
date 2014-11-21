@@ -8,6 +8,7 @@ typedef struct movement_component_t {
     Component super;
     Vec2 velocity;
     f32 angularVelocity;
+    bool constrainToCamera;
 } MovementComponent;
 
 MovementComponent* movement_component_new_zero();

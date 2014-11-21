@@ -4,3 +4,7 @@
 #include "globals.h"
 #include "algebra.h"
 #include "input.h"
+
+#if !(__cplusplus)
+    #define inline __inline
+#endif

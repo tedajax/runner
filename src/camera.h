@@ -18,6 +18,7 @@ typedef struct camera_t {
 } Camera;
 
 void camera_init(Camera* self, Vec2* target, SDL_Rect* constraints);
+void camera_contrain(Camera* self, Vec2* point);
 void camera_update(Camera* self);
 
 #endif

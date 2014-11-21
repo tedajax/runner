@@ -3,7 +3,7 @@
 SpriteComponent* sprite_component_new(SDL_Texture* texture, u32 layer) {
     SpriteComponent* self = (SpriteComponent*)calloc(1, sizeof(SpriteComponent));
 
-    self->super.type = COMPONENT_SPRITE;
+    component_init((Component*)self, COMPONENT_SPRITE);
     self->texture = texture;
 
     self->layer = layer;

@@ -20,12 +20,17 @@ void movement_system_update(MovementSystem* self, EntityList* entities) {
         MovementComponent* movement =
             (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
-        if (transform && movement) {
-            Vec2 timeVel;
-            vec2_scale(&movement->velocity, globals.time.delta, &timeVel);
-            vec2_add(&transform->position, &timeVel, &transform->position);
+        REQUIRED_COMPONENTS(transform && movement);
 
-            transform->rotation += movement->angularVelocity * globals.time.delta;
+        Vec2 timeVel;
+        vec2_scale(&movement->velocity, globals.time.delta, &timeVel);
+        vec2_add(&transform->position, &timeVel, &transform->position);
+
+        transform->rotation += movement->angularVelocity * globals.time.delta;
+
+        if (movement->constrainToCamera) {
+            camera_contrain(&globals.camera, &transform->position);
+            transform->position.x += globals.scrollSpeed * globals.time.delta;
         }
     }
 }

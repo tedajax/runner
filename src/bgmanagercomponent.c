@@ -3,7 +3,7 @@
 BgManagerComponent* bg_manager_component_new(u32 twidth, u32 theight) {
     BgManagerComponent* self = CALLOC(1, BgManagerComponent);
 
-    self->super.type = COMPONENT_BG_MANAGER;
+    component_init((Component*)self, COMPONENT_BG_MANAGER);
 
     self->tileWidth = twidth;
     self->tileHeight = theight;

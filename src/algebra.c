@@ -241,6 +241,18 @@ bool rect_intersects(const Rect* self, const Rect* other) {
     return l2 <= r1 && r2 >= l1 && t2 <= b1 && b2 >= t1;
 }
 
+bool rect_intersects_circle(const Rect* self, const Circle* other) {
+    f32 l = rect_left(self) - other->radius;
+    f32 r = rect_right(self) + other->radius;
+    f32 t = rect_top(self) - other->radius;
+    f32 b = rect_bottom(self) + other->radius;
+
+    f32 px = other->position.x;
+    f32 py = other->position.y;
+
+    return px >= l && px <= r && py >= t && py <= b;
+}
+
 //////////////////////////////////////////////////////////////////////////
 ///////////////////         Circle        ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -291,4 +303,8 @@ bool circle_contains(const Circle* self, const Vec2* point) {
 bool circle_intersects(const Circle* self, const Circle* other) {
     f32 d = vec2_dist(&self->position, &other->position);
     return d <= (self->radius + other->radius);
+}
+
+bool circle_intersects_rect(const Circle* self, const Rect* other) {
+    return rect_intersects_circle(other, self);
 }

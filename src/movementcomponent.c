@@ -7,10 +7,11 @@ MovementComponent* movement_component_new_zero() {
 MovementComponent* movement_component_new(Vec2 velocity, f32 angularVelocity) {
     MovementComponent* self = (MovementComponent*)calloc(1, sizeof(MovementComponent));
 
-    self->super.type = COMPONENT_MOVEMENT;
+    component_init((Component*)self, COMPONENT_MOVEMENT);
 
     self->velocity = velocity;
     self->angularVelocity = angularVelocity;
+    self->constrainToCamera = false;
 
     return self;
 }

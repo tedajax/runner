@@ -18,8 +18,21 @@ void camera_init(Camera* self, Vec2* target, SDL_Rect* constraints) {
         (f32)globals.world.height);
 }
 
+void camera_contrain(Camera* self, Vec2* point) {
+    f32 left = self->position.x + self->constraints.x;
+    f32 right = self->position.x + self->constraints.x + self->constraints.w;
+    f32 top = self->position.y + self->constraints.y;
+    f32 bottom = self->position.y + self->constraints.y + self->constraints.h;
+
+    if (point->x < left) { point->x = left; }
+    else if (point->x > right) { point->x = right; }
+
+    if (point->y < top) { point->y = top; }
+    else if (point->y > bottom) { point->y = bottom; }
+}
+
 void camera_update(Camera* self) {
-    if (!self->target) {
+    /*if (!self->target) {
         return;
     }
 
@@ -38,5 +51,7 @@ void camera_update(Camera* self) {
         self->position.y = self->target->y - self->constraints.y;
     } else if (self->target->y > bottom) {
         self->position.y = self->target->y - (self->constraints.y + self->constraints.h);
-    }
+    }*/
+
+    self->position.x += globals.scrollSpeed * globals.time.delta;
 }

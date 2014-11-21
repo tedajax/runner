@@ -23,7 +23,15 @@ typedef struct game_time_t {
     time_cb on_second;
 } GameTime;
 
+//static u64 game_time_ticker;
+
 void game_time_initialize(GameTime* self);
 void game_time_update(GameTime* self);
+u64 game_time_now();
+u64 game_time_nano_to_micro(u64 ns);
+u64 game_time_nano_to_milli(u64 ns);
+
+u64 game_time_tick();
+u64 game_time_tock();
 
 #endif

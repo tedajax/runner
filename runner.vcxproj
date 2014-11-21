@@ -165,6 +165,8 @@
     <ClCompile Include="src\bulletcontrollercomponent.c" />
     <ClCompile Include="src\bulletcontrollersystem.c" />
     <ClCompile Include="src\camera.c" />
+    <ClCompile Include="src\collidercomponent.c" />
+    <ClCompile Include="src\component.c" />
     <ClCompile Include="src\controllercomponent.c" />
     <ClCompile Include="src\controllersystem.c" />
     <ClCompile Include="src\debug.c" />
@@ -184,6 +186,7 @@
     <ClCompile Include="src\healthcomponent.c" />
     <ClCompile Include="src\healthsystem.c" />
     <ClCompile Include="src\input.c" />
+    <ClCompile Include="src\list.c" />
     <ClCompile Include="src\log.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\movementcomponent.c" />
@@ -205,6 +208,7 @@
     <ClInclude Include="src\bulletcontrollercomponent.h" />
     <ClInclude Include="src\bulletcontrollersystem.h" />
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\collidercomponent.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\components.h" />
     <ClInclude Include="src\controllercomponent.h" />
@@ -227,7 +231,9 @@
     <ClInclude Include="src\healthcomponent.h" />
     <ClInclude Include="src\healthsystem.h" />
     <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\list.h" />
     <ClInclude Include="src\log.h" />
+    <ClInclude Include="src\messaging.h" />
     <ClInclude Include="src\movementcomponent.h" />
     <ClInclude Include="src\movementsystem.h" />
     <ClInclude Include="src\spritecomponent.h" />

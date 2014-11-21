@@ -12,4 +12,6 @@ typedef struct health_component_t {
 
 HealthComponent* health_component_new(i32 maxHealth);
 
+void health_component_on_damage(Component* component, const Message* msg);
+
 #endif

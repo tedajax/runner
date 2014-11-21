@@ -102,8 +102,6 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
 }
 
 void entities_send_message(EntityManager* self, Entity* entity, Message* message) {
-    game_time_tick();
-
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
         DictListNode* node = entities_get_components(self, type, entity);
 

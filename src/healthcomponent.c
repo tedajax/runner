@@ -1,7 +1,7 @@
 #include "healthcomponent.h"
 
 HealthComponent* health_component_new(i32 maxHealth) {
-    HealthComponent* self = (HealthComponent*)calloc(1, sizeof(HealthComponent));
+    HealthComponent* self = CALLOC(1, HealthComponent);
 
     component_init((Component*)self, COMPONENT_HEALTH);
 

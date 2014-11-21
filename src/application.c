@@ -6,6 +6,7 @@ int app_run(int argc, char* argv[]) {
     IF_DEBUG(bool appInit = )_app_initialize(self);
     ASSERT(appInit, "Application failed to initialize");
 
+    game_init(&self->game);
     game_start(&self->game);
 
     while (!self->shouldQuit) {
@@ -18,6 +19,7 @@ int app_run(int argc, char* argv[]) {
         _app_render(self);
     }
 
+    game_quit(&self->game);
     _app_terminate(self);
 
     return 0;
@@ -77,8 +79,8 @@ bool _app_initialize(App* self) {
     globals.world.width = 1280;
     globals.world.height = 720;
 
-    globals.screen.width = 1280;
-    globals.screen.height = 720;
+    globals.screen.width = globals.world.width / 2;
+    globals.screen.height = globals.world.height / 2;
 
     globals.window = window_create("Runner",
         SDL_WINDOWPOS_CENTERED,
@@ -105,8 +107,6 @@ bool _app_initialize(App* self) {
     input_initialize();
 
     globals.time.on_second = _app_print_fps;
-
-    game_init(&self->game);
 
     return true;
 }

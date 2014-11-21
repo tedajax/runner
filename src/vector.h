@@ -22,7 +22,7 @@ void vector_setFreeFunc(Vector *self, free_func freeFunc);
 void vector_add(Vector *self, void *element);
 void *vector_index(Vector *self, u32 index);
 bool vector_remove(Vector *self, void *element);
-bool vector_removeAt(Vector *self, u32 index);
+void* vector_removeAt(Vector *self, u32 index);
 void vector_clear(Vector *self);
 
 void _vector_resize(Vector *self, u32 capacity);

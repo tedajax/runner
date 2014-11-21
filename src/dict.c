@@ -2,7 +2,7 @@
 
 const u32 DICT_INVALID_KEY = 0xFFFFFFFF;
 
-Dictionary* dict_new(size_t buckets) {
+Dictionary* dict_new(size_t buckets, dict_free_f freeFunc) {
     Dictionary* self = (Dictionary*)calloc(1, sizeof(Dictionary));
 
     self->bucketCount = buckets;
@@ -14,10 +14,12 @@ Dictionary* dict_new(size_t buckets) {
     }
     self->size = 0;
 
+    self->freeFunc = freeFunc;
+
     return self;
 }
 
-void dict_init(Dictionary* self, size_t buckets) {
+void dict_init(Dictionary* self, size_t buckets, dict_free_f freeFunc) {
     self->bucketCount = buckets;
     self->buckets = (DictionaryNode*)calloc(buckets, sizeof(DictionaryNode));
     for (u32 i = 0; i < self->bucketCount; ++i) {
@@ -26,6 +28,7 @@ void dict_init(Dictionary* self, size_t buckets) {
         self->buckets[i].next = NULL;
     }
     self->size = 0;
+    self->freeFunc = freeFunc;
 }
 
 void dict_set(Dictionary* self, u32 key, void* element) {
@@ -48,6 +51,7 @@ void dict_set(Dictionary* self, u32 key, void* element) {
         newNode->key = key;
         newNode->list = (DictListNode*)calloc(1, sizeof(DictListNode));
         newNode->next = NULL;
+        free(newNode);
 
         ++self->size;
     }
@@ -98,14 +102,38 @@ DictListNode* dict_remove(Dictionary* self, u32 key) {
             } else {
                 prev->next = node->next;
             }
-
+            free(node);
             --self->size;
+            break;
         }
         prev = node;
         node = node->next;
     }
 
     return result;
+}
+
+void dict_clear(Dictionary* self) {
+    for (size_t i = 0; i < self->bucketCount; ++i) {
+        DictionaryNode* node = &self->buckets[i];
+
+        while (node != NULL) {
+            DictListNode* lnode = node->list;
+            while (lnode != NULL) {
+                if (lnode->element) {
+                    if (self->freeFunc) {
+                        self->freeFunc(lnode->element);
+                    } else {
+                        free(lnode->element);
+                    }
+                }
+                lnode = lnode->next;
+            }
+            node = node->next;
+        }
+    }
+
+    free(self->buckets);
 }
 
 void* dict_get(Dictionary* self, u32 key, u32 index) {

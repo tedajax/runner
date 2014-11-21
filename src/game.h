@@ -24,6 +24,7 @@ typedef struct game_t {
 } Game;
 
 void game_init(Game* self);
+void game_quit(Game* self);
 void game_start(Game* self);
 void game_update(Game* self);
 void game_render(Game* self);

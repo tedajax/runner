@@ -74,17 +74,17 @@ bool vector_remove(Vector *self, void *element) {
 	return false;
 }
 
-bool vector_removeAt(Vector *self, u32 index) {
+void* vector_removeAt(Vector *self, u32 index) {
 	assert(self);
 
 	if (index >= self->size) {
-		return false;
+		return NULL;
 	}
+
+    void* result = self->data[index];
 
 	if (self->freeFunc != NULL) {
 		self->freeFunc(self->data[index]);
-	} else {
-		free(self->data[index]);
 	}
 
 	u32 i = index;
@@ -95,7 +95,7 @@ bool vector_removeAt(Vector *self, u32 index) {
 
 	--self->size;
 
-	return true;
+	return result;
 }
 
 void vector_clear(Vector *self) {

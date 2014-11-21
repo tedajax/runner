@@ -34,6 +34,8 @@ typedef struct component_t {
 } Component;
 
 void component_init(Component* self, ComponentType type);
+void component_free(Component* self);
+void component_free_void(void* self);
 void component_send_message(Component* self, Message* message);
 
 #endif

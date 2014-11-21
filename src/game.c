@@ -75,6 +75,21 @@ void game_init(Game* self) {
     globals.scrollSpeed = 100.f;
 }
 
+void game_quit(Game* self) {
+    free(self->healthSystem);
+    free(self->backgroundSpriteSystem);
+    free(self->spriteSystem);
+    free(self->controllerSystem);
+    free(self->bulletControllerSystem);
+    free(self->gravitySystem);
+    free(self->enemySystem);
+    free(self->movementSystem);
+    free(self->bgManagerSystem);
+
+    entity_list_free(&self->entities);
+    entity_manager_free(self->entityManager);
+}
+
 void game_start(Game* self) {
     bg_manager_system_start(self->bgManagerSystem, &self->entities);
 }

@@ -21,16 +21,20 @@ typedef struct dict_node_t {
     struct dict_node_t* next;
 } DictionaryNode;
 
+typedef void(*dict_free_f)(void*);
+
 typedef struct dict_t {
     DictionaryNode* buckets;
+    dict_free_f freeFunc;
     size_t bucketCount;
     size_t size;
 } Dictionary;
 
-Dictionary* dict_new(size_t buckets);
-void dict_init(Dictionary* self, size_t buckets);
+Dictionary* dict_new(size_t buckets, dict_free_f freeFunc);
+void dict_init(Dictionary* self, size_t buckets, dict_free_f freeFunc);
 void dict_set(Dictionary* self, u32 key, void* element);
 DictListNode* dict_remove(Dictionary* self, u32 key);
+void dict_clear(Dictionary* self);
 void* dict_get(Dictionary* self, u32 key, u32 index);
 DictListNode* dict_get_all(Dictionary* self, u32 key);
 

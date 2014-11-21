@@ -5,7 +5,7 @@ HealthComponent* health_component_new(i32 maxHealth) {
 
     component_init((Component*)self, COMPONENT_HEALTH);
 
-    self->super.handlers[MESSAGE_DAMAGE] = health_component_on_damage;
+    REGISTER_HANDLER(MESSAGE_DAMAGE, health_component_on_damage);
 
     self->maxHealth = maxHealth;
     self->currentHealth = maxHealth;

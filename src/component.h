@@ -26,6 +26,8 @@ typedef enum component_type_e {
     COMPONENT_LAST,
 } ComponentType;
 
+#define REGISTER_HANDLER(type, func) ((Component*)self)->handlers[type] = func
+
 typedef struct component_t {
     ComponentType type;
     message_cb handlers[MESSAGE_LAST];

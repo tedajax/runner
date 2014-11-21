@@ -23,11 +23,14 @@ INCLUDES	:= $(wildcard $(SRCDIR)/*.h)
 OBJECTS		:= $(SOURCES:$(SRCDIR)%.c=$(OBJDIR)/%.o)
 
 all: $(BINDIR)/$(TARGET)
+	@echo Done!
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
+	@echo @$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
 	@$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@echo @$(CC) $(CFLAGS) -c $< -o $@
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONEY: clean

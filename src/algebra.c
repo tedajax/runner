@@ -193,6 +193,12 @@ Rect rect_clone(const Rect* rect) {
     return rect_init(&rect->position, rect->width, rect->height);
 }
 
+void rect_copy_sdl_rect(const SDL_Rect* source, Rect* dest) {
+    vec2_set(&dest->position, (f32)source->x, (f32)source->y);
+    dest->width = (f32)source->w;
+    dest->height = (f32)source->h;
+}
+
 void rect_set(Rect* self, const Vec2* pos, const f32 w, const f32 h) {
     vec2_copy_to(pos, &self->position);
     self->width = w;

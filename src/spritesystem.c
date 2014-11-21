@@ -62,6 +62,13 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
             SDL_Rect dest;
             sprite_component_destination(sprite, transform, &dest);
 
+            Rect spriteRect;
+            rect_copy_sdl_rect(&dest, &spriteRect);
+            
+            if (!rect_intersects(&globals.camera.cameraView, &spriteRect)) {
+                continue;
+            }
+
             SDL_RenderCopyEx(globals.renderer,
                 sprite->texture,
                 NULL, //source

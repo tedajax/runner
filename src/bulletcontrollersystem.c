@@ -30,9 +30,7 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
             COMPONENT_BULLET_CONTROLLER,
             &entity);
 
-        if (!transform || !movement || !bullet) {
-            continue;
-        }
+        REQUIRED_COMPONENTS(transform && movement && bullet);
 
         vec2_set(&movement->velocity, bullet->speed, 0.f);
 

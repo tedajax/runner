@@ -61,6 +61,7 @@ typedef struct rect_t {
 Rect* rect_new(const Vec2* pos, const f32 w, const f32 h);
 Rect rect_init(const Vec2* pos, const f32 w, const f32 h);
 Rect rect_clone(const Rect* rect);
+void rect_copy_sdl_rect(const SDL_Rect* source, Rect* dest);
 void rect_set(Rect* self, const Vec2* pos, const f32 w, const f32 h);
 void rect_copy_to(const Rect* source, Rect* dest);
 void rect_to_sdl_rect(const Rect* source, SDL_Rect* dest);

@@ -39,8 +39,4 @@ void camera_update(Camera* self) {
     } else if (self->target->y > bottom) {
         self->position.y = self->target->y - (self->constraints.y + self->constraints.h);
     }
-
-    rect_set(&self->cameraView, &self->position,
-        (f32)globals.world.width,
-        (f32)globals.world.height);
 }

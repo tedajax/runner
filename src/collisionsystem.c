@@ -35,6 +35,19 @@ void collision_system_unregister_collider(CollisionSystem* self, i32 id) {
     }
 }
 
+void collision_system_start(CollisionSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
+
+    for (size_t i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
+
+        ColliderComponent* collider =
+            (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
+
+        collider->collider.colliderId = collision_system_gen_id(self);
+    }
+}
+
 void collision_system_update(CollisionSystem* self, EntityList* entities) {
     aspect_system_entities((AspectSystem*)self, entities);
 
@@ -53,15 +66,27 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             ColliderComponent* cc2 =
                 (ColliderComponent*)GET_COMPONENT(*e2, COMPONENT_COLLIDER);
 
-            Collider c1 = cc1->collider;
-            Collider c2 = cc2->collider;
+            Collider* c1 = &cc1->collider;
+            Collider* c2 = &cc2->collider;
 
-            if (!layerMatrix[c1.layer][c2.layer]) {
+            if (!layerMatrix[c1->layer][c2->layer]) {
                 continue;
             }
 
-            if (collider_is_colliding(&c1, &c2)) {
-                printf("collision bitches\n");
+            if (collider_is_colliding(c1, c2)) {
+                bool inContact = collider_in_contact(c1, c2);
+
+                if (!inContact) {
+                    collider_set_in_contact(c1, c2, true);
+                    printf("collision\n");
+                }
+            } else {
+                bool inContact = collider_in_contact(c1, c2);
+
+                if (inContact) {
+                    collider_set_in_contact(c1, c2, false);
+                    printf("end collision\n");
+                }
             }
         }
     }

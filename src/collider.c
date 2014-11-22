@@ -1,27 +1,26 @@
 #include "collider.h"
 
-void collider_init_circle(Collider* self, ColliderLayer layer, Vec2 offset, f32 radius, Vec2* anchor) {
+void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor) {
     self->colliderId = -1;
-    
     self->layer = layer;
+    self->anchor = anchor;
+    self->inContactCount = 0;
+
+    for (size_t i = 0; i < COLLIDER_MAX_COLLISIONS; ++i) {
+        self->inContact[i] = -1;
+    }
+}
+
+void collider_init_circle(Collider* self, ColliderLayer layer, Vec2 offset, f32 radius, Vec2* anchor) {
+    collider_init(self, layer, anchor);
     self->shape = COLLIDER_SHAPE_CIRCLE;
     circle_set(&self->circle, &offset, radius);
-
-    self->anchor = anchor;
-
-    self->inContactCount = 0;
 }
 
 void collider_init_rectangle(Collider* self, ColliderLayer layer, Vec2 offset, f32 width, f32 height, Vec2* anchor) {
-    self->colliderId = -1;
-
-    self->layer = layer;
+    collider_init(self, layer, anchor);
     self->shape = COLLIDER_SHAPE_RECTANGLE;
     rect_set(&self->rectangle, &offset, width, height);
-
-    self->anchor = anchor;
-
-    self->inContactCount = 0;
 }
 
 void collider_copy(const Collider* source, Collider* dest) {
@@ -86,6 +85,52 @@ bool collider_is_colliding(Collider* c1, Collider* c2) {
 
         default:
             return false;
+    }
+}
+
+bool collider_in_contact(Collider* self, Collider* other) {
+    for (size_t i = 0; i < self->inContactCount; ++i) {
+        if (self->inContact[i] == other->colliderId) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
+    if (inContact) {
+        ASSERT(c1->inContactCount < COLLIDER_MAX_COLLISIONS, "Max collision count reached.");
+        ASSERT(c2->inContactCount < COLLIDER_MAX_COLLISIONS, "Max collision count reached.");
+
+        c1->inContact[c1->inContactCount] = c2->colliderId;
+        c2->inContact[c2->inContactCount] = c1->colliderId;
+
+        ++c1->inContactCount;
+        ++c2->inContactCount;
+    } else {
+        ASSERT(c1->inContactCount > 0, "Trying to remove more contacts than are there.");
+        ASSERT(c2->inContactCount > 0, "Trying to remove more contacts than are there.");
+
+        for (size_t i = 0; i < c1->inContactCount; ++i) {
+            if (c1->inContact[i] == c2->colliderId) {
+                //remove by overwriting
+                for (size_t j = i + 1; j < c1->inContactCount; ++j) {
+                    c1->inContact[j - 1] = c1->inContact[j];
+                }
+                --c1->inContactCount;
+            }
+        }
+
+        for (size_t i = 0; i < c2->inContactCount; ++i) {
+            if (c2->inContact[i] == c1->colliderId) {
+                //remove by overwriting
+                for (size_t j = i + 1; j < c2->inContactCount; ++j) {
+                    c2->inContact[j - 1] = c2->inContact[j];
+                }
+                --c2->inContactCount;
+            }
+        }
     }
 }
 

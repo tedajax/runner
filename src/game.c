@@ -93,6 +93,7 @@ void game_quit(Game* self) {
 
 void game_start(Game* self) {
     bg_manager_system_start(self->bgManagerSystem, &self->entities);
+    collision_system_start(&self->collisionSystem, &self->entities);
 }
 
 void game_update(Game* self) {

@@ -3,7 +3,7 @@
 
 #include "core.h"
 #include "component.h"
-#include "collision.h"
+#include "collider.h"
 
 typedef struct collider_component_t {
     Component super;

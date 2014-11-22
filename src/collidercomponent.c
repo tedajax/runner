@@ -6,4 +6,6 @@ ColliderComponent* collider_component_new(Collider* collider) {
     component_init((Component*)self, COMPONENT_COLLIDER);
 
     collider_copy(collider, &self->collider);
+
+    return self;
 }

@@ -20,6 +20,7 @@ void game_init(Game* self) {
     self->bulletControllerSystem = bullet_controller_system_new(self->entityManager);
     self->bgManagerSystem = bg_manager_system_new(self->entityManager);
     self->enemySystem = enemy_system_new(self->entityManager);
+    collision_system_init(&self->collisionSystem, self->entityManager);
 
     int bgTextureWidth;
     int bgTextureHeight;
@@ -104,6 +105,7 @@ void game_update(Game* self) {
     enemy_system_update(self->enemySystem, &self->entities);
     movement_system_update(self->movementSystem, &self->entities);
     bg_manager_system_update(self->bgManagerSystem, &self->entities);
+    collision_system_update(&self->collisionSystem, &self->entities);
 
     if (input_key_down(SDL_SCANCODE_Z)) {
         Message m;

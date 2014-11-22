@@ -8,3 +8,4 @@
 #include "spritecomponent.h"
 #include "bgmanagercomponent.h"
 #include "enemycomponent.h"
+#include "collidercomponent.h"

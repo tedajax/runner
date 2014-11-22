@@ -3,9 +3,13 @@
 Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture) {
     Entity* entity = entities_create_entity(entityManager);
 
+    TransformComponent* transform = transform_component_new(position,
+        0.f,
+        vec2_one());
+
     // Transform
     entities_add_component(entityManager,
-        (Component*)transform_component_new(position, 0.f, vec2_one()),
+        (Component*)transform,
         entity);
 
     // entities_add_component(entityManager,
@@ -29,6 +33,13 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
 
     entities_add_component(entityManager,
         (Component*)sprite_component_new(texture, 1),
+        entity);
+
+    Collider collider;
+    collider_init_rectangle(&collider, vec2_zero(), 75.f, 112.f, &transform->position);
+
+    entities_add_component(entityManager,
+        (Component*)collider_component_new(&collider),
         entity);
 
     return entity;
@@ -83,8 +94,12 @@ Entity* entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 t
 Entity* entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
     Entity* entity = entities_create_entity(entityManager);
 
+    TransformComponent* transform = transform_component_new(position,
+        0.f,
+        vec2_one());
+
     entities_add_component(entityManager,
-        (Component*)transform_component_new(position, 0.f, vec2_one()),
+        (Component*)transform,
         entity);
 
     entities_add_component(entityManager,
@@ -101,6 +116,13 @@ Entity* entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
 
     entities_add_component(entityManager,
         (Component*)sprite_component_new(textures_get("enemy_red_1.png"), 1),
+        entity);
+
+    Collider collider;
+    collider_init_rectangle(&collider, vec2_zero(), 84.f, 103.f, &transform->position);
+
+    entities_add_component(entityManager,
+        (Component*)collider_component_new(&collider),
         entity);
 
     return entity;

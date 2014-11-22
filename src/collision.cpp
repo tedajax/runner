@@ -47,7 +47,7 @@ void collision_init(CollisionManager* self, EntityManager* entityManager) {
     self->currentId = 0;
     self->capacity = 256;
     self->count = 0;
-    self->colliders = CALLOC(self->capacity, Collider);
+    self->colliders = CALLOC(self->capacity, Collider*);
 }
 
 i32 collision_gen_id(CollisionManager* self) {
@@ -60,14 +60,24 @@ void collision_register_collider(CollisionManager* self, Collider* collider) {
         //want to support and I want to be aware of this reallocation
         DEBUG_BREAKPOINT();
         self->capacity <<= 1;
-        self->colliders = (Collider*)realloc(self->colliders, self->capacity * sizeof(Collider));
+        self->colliders = (Collider**)realloc(self->colliders, self->capacity * sizeof(Collider*));
     }
 
-
+    collider->colliderId = collision_gen_id(self);
+    self->colliders[self->count] = collider;
+    ++self->count;
 }
 
 void collision_unregister_collider(CollisionManager* self, i32 id) {
-
+    for (size_t i = 0; i < self->count; ++i) {
+        if (self->colliders[i]->colliderId == id) {
+            for (size_t j = i + 1; j < self->count; ++j) {
+                self->colliders[j - 1] = self->colliders[j];
+            }
+            --self->count;
+            break;
+        }
+    }
 }
 
 void collision_update(CollisionManager* self) {

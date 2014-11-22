@@ -33,7 +33,7 @@ typedef struct collision_manager_t {
     i32 currentId;
     size_t capacity;
     size_t count;
-    Collider* colliders;
+    Collider** colliders;
 } CollisionManager;
 
 void collision_init(CollisionManager* self, EntityManager* entityManager);

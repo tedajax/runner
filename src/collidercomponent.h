@@ -3,23 +3,13 @@
 
 #include "core.h"
 #include "component.h"
-
-typedef enum collider_shape_e {
-    COLLIDER_SHAPE_INVALID,
-    COLLIDER_SHAPE_CIRCLE,
-    COLLIDER_SHAPE_RECTANGLE,
-    COLLIDER_SHAPE_LAST,
-} ColliderShape;
+#include "collision.h"
 
 typedef struct collider_component_t {
     Component super;
-    ColliderShape shape;
-    i32 colliderId;
-    Circle circle;
-    Rect rectangle;
+    Collider collider;
 } ColliderComponent;
 
-ColliderComponent* collider_component_new_circle(Vec2* offset, f32 radius);
-ColliderComponent* collider_component_new_rectangle(Vec2* offset, f32 width, f32 height);
+ColliderComponent* collider_component_new(Collider* collider);
 
 #endif

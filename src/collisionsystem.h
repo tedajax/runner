@@ -21,4 +21,6 @@ void collision_system_register_collider(CollisionSystem* self, Collider* collide
 void collision_system_unregister_collider(CollisionSystem* self, i32 id);
 void collision_system_update(CollisionSystem* self, EntityList* entities);
 
+void _layer_matrix_set(ColliderLayer l1, ColliderLayer l2, bool value);
+
 #endif

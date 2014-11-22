@@ -165,7 +165,9 @@
     <ClCompile Include="src\bulletcontrollercomponent.c" />
     <ClCompile Include="src\bulletcontrollersystem.c" />
     <ClCompile Include="src\camera.c" />
+    <ClCompile Include="src\collider.c" />
     <ClCompile Include="src\collidercomponent.c" />
+    <ClCompile Include="src\collisionsystem.c" />
     <ClCompile Include="src\component.c" />
     <ClCompile Include="src\controllercomponent.c" />
     <ClCompile Include="src\controllersystem.c" />
@@ -191,7 +193,6 @@
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\movementcomponent.c" />
     <ClCompile Include="src\movementsystem.c" />
-    <ClCompile Include="src\collision.cpp" />
     <ClCompile Include="src\spritecomponent.c" />
     <ClCompile Include="src\spritesystem.c" />
     <ClCompile Include="src\stackallocator.c" />
@@ -209,8 +210,10 @@
     <ClInclude Include="src\bulletcontrollercomponent.h" />
     <ClInclude Include="src\bulletcontrollersystem.h" />
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\collider.h" />
     <ClInclude Include="src\collidercomponent.h" />
     <ClInclude Include="src\collision.h" />
+    <ClInclude Include="src\collisionsystem.h" />
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\components.h" />
     <ClInclude Include="src\controllercomponent.h" />

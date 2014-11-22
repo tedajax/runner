@@ -1,7 +1,11 @@
 #include "collisionsystem.h"
 
+static bool layerMatrix[COLLIDER_LAYER_LAST][COLLIDER_LAYER_LAST];
+
 void collision_system_init(CollisionSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_COLLIDER);
+
+    _layer_matrix_set(COLLIDER_LAYER_PLAYER, COLLIDER_LAYER_ENEMY, true);
 
     self->currentId = 0;
     self->count = 0;
@@ -52,9 +56,18 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             Collider c1 = cc1->collider;
             Collider c2 = cc2->collider;
 
+            if (!layerMatrix[c1.layer][c2.layer]) {
+                continue;
+            }
+
             if (collider_is_colliding(&c1, &c2)) {
                 printf("collision bitches\n");
             }
         }
     }
+}
+
+void _layer_matrix_set(ColliderLayer l1, ColliderLayer l2, bool value) {
+    layerMatrix[l1][l2] = value;
+    layerMatrix[l2][l1] = value;
 }

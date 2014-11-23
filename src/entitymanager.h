@@ -8,6 +8,9 @@
 #include "component.h"
 #include "messaging.h"
 
+// Forward declared
+typedef struct collision_system_t CollisionSystem;
+
 typedef struct entity_id_list_t {
     Entity* list;
     size_t size;
@@ -24,6 +27,11 @@ typedef struct entity_manager_t {
     Vector entities;
     Dictionary componentsMap[COMPONENT_LAST];
     u32 lowestEId;
+    
+    // The entity manager doesn't need to be aware of most component systems
+    // but this one is a special case because the component system needs to update
+    // contact info when an entity with a collider is removed
+    CollisionSystem* collisionSystem;
 } EntityManager;
 
 EntityManager* entity_manager_new();
@@ -36,6 +44,7 @@ DictListNode* entities_get_components(EntityManager* self, ComponentType type, E
 void entities_remove_entity(EntityManager* self, Entity* entity);
 void entities_remove_all_entities(EntityManager* self);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
-void entities_send_message(EntityManager* self, Entity* entity, Message* message);
+void entities_send_message(EntityManager* self, Entity* entity, Message message);
+u32 entities_entity_count(EntityManager* self);
 
 #endif

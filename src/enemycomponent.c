@@ -10,3 +10,8 @@ EnemyComponent* enemy_component_new(EnemyType enemyType) {
 
     return self;
 }
+
+void enemy_component_on_collision_enter(Component* component, const Message msg) {
+    //EnemyComponent* self = (EnemyComponent*)component;
+
+}

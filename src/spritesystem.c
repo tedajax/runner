@@ -26,12 +26,17 @@ void sprite_system_update(SpriteSystem* self, EntityList* entities) {
             COMPONENT_SPRITE,
             &entity);
 
+        REQUIRED_COMPONENTS(transform && sprite);
+
         if (sprite->layer != self->layer) {
             continue;
         }
 
-        if (transform && sprite) {
-            // do some things
+        if (sprite->redTimer > 0.f) {
+            sprite->redTimer -= globals.time.delta;
+        }
+        if (sprite->greenTimer > 0.f) {
+            sprite->greenTimer -= globals.time.delta;
         }
     }
 }
@@ -69,6 +74,14 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
                 continue;
             }
 
+            if (sprite->redTimer > 0.f) {
+                SDL_SetTextureColorMod(sprite->texture, 255, 0, 0);
+            }
+
+            if (sprite->greenTimer > 0.f) {
+                SDL_SetTextureColorMod(sprite->texture, 0, 255, 0);
+            }
+
             SDL_RenderCopyEx(globals.renderer,
                 sprite->texture,
                 NULL, //source
@@ -76,6 +89,10 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
                 transform->rotation,
                 NULL,
                 SDL_FLIP_NONE);
+
+            if (sprite->redTimer > 0.f || sprite->greenTimer > 0.f) {
+                SDL_SetTextureColorMod(sprite->texture, 255, 255, 255);
+            }            
         }
     }
 }

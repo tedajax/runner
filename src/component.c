@@ -26,8 +26,8 @@ void component_free_void(void* self) {
     component_free((Component*)self);
 }
 
-void component_send_message(Component* self, Message* message) {
-    if (self->handlers[message->type]) {
-        self->handlers[message->type](self, message);
+void component_send_message(Component* self, Message message) {
+    if (self->handlers[message.type]) {
+        self->handlers[message.type](self, message);
     }
 }

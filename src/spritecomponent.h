@@ -14,9 +14,13 @@ typedef struct sprite_component_t {
     int width;
     int height;
     SDL_Rect srcRect;
+    f32 redTimer;
+    f32 greenTimer;
 } SpriteComponent;
 
 SpriteComponent* sprite_component_new(SDL_Texture* texture, u32 layer);
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest);
+void sprite_component_on_collision_enter(Component* component, Message message);
+void sprite_component_on_collision_exit(Component* component, Message message);
 
 #endif

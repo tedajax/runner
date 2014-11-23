@@ -1,4 +1,6 @@
 #include "entitymanager.h"
+#include "collidercomponent.h"
+#include "collisionsystem.h"
 
 void entity_list_init(EntityList* self, size_t capacity) {
     self->list = (Entity *)calloc(capacity, sizeof(Entity));
@@ -75,6 +77,12 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
         DictListNode* clist = (DictListNode*)dict_remove(&components, entity->id);
         
         while (clist != NULL) {
+            // This seems pretty gross but I haven't come up with anything better yet
+            if (t == COMPONENT_COLLIDER) {
+                ColliderComponent* collider = (ColliderComponent*)clist->element;
+                collision_system_remove_collider(self->collisionSystem, collider);
+            }
+
             component_free_void(clist->element);
             DictListNode* prev = clist;
             clist = clist->next;
@@ -121,7 +129,7 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
     }
 }
 
-void entities_send_message(EntityManager* self, Entity* entity, Message* message) {
+void entities_send_message(EntityManager* self, Entity* entity, Message message) {
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
         DictListNode* node = entities_get_components(self, type, entity);
 
@@ -132,4 +140,8 @@ void entities_send_message(EntityManager* self, Entity* entity, Message* message
             node = node->next;
         }
     }
+}
+
+u32 entities_entity_count(EntityManager* self) {
+    return self->entities.size;
 }

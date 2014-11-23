@@ -3,6 +3,7 @@
 
 #include "core.h"
 #include "entitymanager.h"
+#include "messaging.h"
 
 #define GET_ENTITY_LIST()                                       \
     EntityList entities;                                        \

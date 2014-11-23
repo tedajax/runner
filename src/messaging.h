@@ -20,7 +20,7 @@ typedef struct message_t {
 } Message;
 
 typedef struct component_t Component;
-typedef void(*message_cb)(Component*, const Message*);
+typedef void(*message_cb)(Component*, const Message);
 
 inline void message_copy(const Message* source, Message* dest) {
     dest->type = source->type;

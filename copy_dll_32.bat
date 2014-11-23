@@ -1,0 +1,1 @@
+xcopy External\Lib\Win32\*.dll . /y

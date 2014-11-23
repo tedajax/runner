@@ -35,6 +35,10 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
         vec2_set(&movement->velocity, bullet->speed, 0.f);
 
         if (transform->position.x > globals.camera.position.x + globals.world.width) {
+            bullet->destroy = true;
+        }
+
+        if (bullet->destroy) {
             entities_remove_entity(self->super.entityManager, &entity);
         }
     }

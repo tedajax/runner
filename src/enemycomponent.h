@@ -19,5 +19,6 @@ typedef struct enemy_component_t {
 } EnemyComponent;
 
 EnemyComponent* enemy_component_new(EnemyType enemyType);
+void enemy_component_on_collision_enter(Component* component, const Message msg);
 
 #endif

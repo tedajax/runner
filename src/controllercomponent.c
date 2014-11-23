@@ -6,7 +6,7 @@ ControllerComponent* controller_component_new(f32 moveSpeed) {
     component_init((Component*)self, COMPONENT_CONTROLLER);
 
     self->moveSpeed = moveSpeed;
-    self->fireDelay = 0.2f;
+    self->fireDelay = 0.02f;
     self->fireTimer = 0.f;
 
     return self;

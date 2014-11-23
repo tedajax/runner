@@ -13,7 +13,7 @@ HealthComponent* health_component_new(i32 maxHealth) {
     return self;
 }
 
-void health_component_on_damage(Component* component, const Message* msg) {
+void health_component_on_damage(Component* component, const Message msg) {
     HealthComponent* self = (HealthComponent*)component;
     --self->currentHealth;
     printf("HEALTH DAMAGE! %d\n", self->currentHealth);

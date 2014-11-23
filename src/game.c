@@ -22,6 +22,10 @@ void game_init(Game* self) {
     self->enemySystem = enemy_system_new(self->entityManager);
     collision_system_init(&self->collisionSystem, self->entityManager);
 
+    // Give the entity manager a ref to the collision system so it can gracefully
+    // handle removing colliders that are currently colliding with things.
+    self->entityManager->collisionSystem = &self->collisionSystem;
+
     int bgTextureWidth;
     int bgTextureHeight;
     SDL_QueryTexture(textures_get("bg_dark_purple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
@@ -108,10 +112,14 @@ void game_update(Game* self) {
     bg_manager_system_update(self->bgManagerSystem, &self->entities);
     collision_system_update(&self->collisionSystem, &self->entities);
 
+    if (input_key_down(SDL_SCANCODE_E)) {
+        printf("Entities: %u\n", entities_entity_count(self->entityManager));
+    }
+
     if (input_key_down(SDL_SCANCODE_Z)) {
         Message m;
         m.type = MESSAGE_DAMAGE;
-        entities_send_message(self->entityManager, globals.player, &m);
+        entities_send_message(self->entityManager, globals.player, m);
     }
 
     camera_update(&globals.camera);

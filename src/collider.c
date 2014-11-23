@@ -109,26 +109,27 @@ void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
         ++c1->inContactCount;
         ++c2->inContactCount;
     } else {
-        ASSERT(c1->inContactCount > 0, "Trying to remove more contacts than are there.");
-        ASSERT(c2->inContactCount > 0, "Trying to remove more contacts than are there.");
-
-        for (size_t i = 0; i < c1->inContactCount; ++i) {
-            if (c1->inContact[i] == c2->colliderId) {
-                //remove by overwriting
-                for (size_t j = i + 1; j < c1->inContactCount; ++j) {
-                    c1->inContact[j - 1] = c1->inContact[j];
+        if (c1->inContactCount > 0) {
+            for (size_t i = 0; i < c1->inContactCount; ++i) {
+                if (c1->inContact[i] == c2->colliderId) {
+                    //remove by overwriting
+                    for (size_t j = i + 1; j < c1->inContactCount; ++j) {
+                        c1->inContact[j - 1] = c1->inContact[j];
+                    }
+                    --c1->inContactCount;
                 }
-                --c1->inContactCount;
             }
         }
 
-        for (size_t i = 0; i < c2->inContactCount; ++i) {
-            if (c2->inContact[i] == c1->colliderId) {
-                //remove by overwriting
-                for (size_t j = i + 1; j < c2->inContactCount; ++j) {
-                    c2->inContact[j - 1] = c2->inContact[j];
+        if (c2->inContactCount > 0) {
+            for (size_t i = 0; i < c2->inContactCount; ++i) {
+                if (c2->inContact[i] == c1->colliderId) {
+                    //remove by overwriting
+                    for (size_t j = i + 1; j < c2->inContactCount; ++j) {
+                        c2->inContact[j - 1] = c2->inContact[j];
+                    }
+                    --c2->inContactCount;
                 }
-                --c2->inContactCount;
             }
         }
     }

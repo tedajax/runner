@@ -77,7 +77,7 @@ void game_init(Game* self) {
     }
 
     camera_init(&globals.camera, NULL, &cameraConstraints);
-    
+
     globals.scrollSpeed = 100.f;
 }
 

@@ -59,7 +59,7 @@ Entity* entity_create_bullet(EntityManager* entityManager, Vec2 position, SDL_Te
         entity);
 
     entities_add_component(entityManager,
-        (Component*)bullet_controller_component_new(150.f),
+        (Component*)bullet_controller_component_new(1000.f),
         entity);
 
     entities_add_component(entityManager,

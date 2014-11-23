@@ -35,9 +35,6 @@ void sprite_system_update(SpriteSystem* self, EntityList* entities) {
         if (sprite->redTimer > 0.f) {
             sprite->redTimer -= globals.time.delta;
         }
-        if (sprite->greenTimer > 0.f) {
-            sprite->greenTimer -= globals.time.delta;
-        }
     }
 }
 
@@ -78,10 +75,6 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
                 SDL_SetTextureColorMod(sprite->texture, 255, 0, 0);
             }
 
-            if (sprite->greenTimer > 0.f) {
-                SDL_SetTextureColorMod(sprite->texture, 0, 255, 0);
-            }
-
             SDL_RenderCopyEx(globals.renderer,
                 sprite->texture,
                 NULL, //source
@@ -90,7 +83,7 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
                 NULL,
                 SDL_FLIP_NONE);
 
-            if (sprite->redTimer > 0.f || sprite->greenTimer > 0.f) {
+            if (sprite->redTimer > 0.f ) {
                 SDL_SetTextureColorMod(sprite->texture, 255, 255, 255);
             }            
         }

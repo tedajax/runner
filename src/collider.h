@@ -29,7 +29,7 @@ typedef struct collider_t {
     Rect rectangle;
     Vec2* anchor;
     i32 inContact[COLLIDER_MAX_COLLISIONS];
-    size_t inContactCount;
+    u32 inContactCount;
 } Collider;
 
 void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor);

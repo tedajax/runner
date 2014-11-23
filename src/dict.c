@@ -2,7 +2,7 @@
 
 const u32 DICT_INVALID_KEY = 0xFFFFFFFF;
 
-Dictionary* dict_new(size_t buckets, dict_free_f freeFunc) {
+Dictionary* dict_new(u32 buckets, dict_free_f freeFunc) {
     Dictionary* self = (Dictionary*)calloc(1, sizeof(Dictionary));
 
     self->bucketCount = buckets;
@@ -19,7 +19,7 @@ Dictionary* dict_new(size_t buckets, dict_free_f freeFunc) {
     return self;
 }
 
-void dict_init(Dictionary* self, size_t buckets, dict_free_f freeFunc) {
+void dict_init(Dictionary* self, u32 buckets, dict_free_f freeFunc) {
     self->bucketCount = buckets;
     self->buckets = (DictionaryNode*)calloc(buckets, sizeof(DictionaryNode));
     for (u32 i = 0; i < self->bucketCount; ++i) {
@@ -40,7 +40,7 @@ void dict_set(Dictionary* self, u32 key, void* element) {
         return;
     }
 
-    size_t index = key % self->bucketCount;
+    u32 index = key % self->bucketCount;
 
     DictionaryNode* prev = NULL;
     DictionaryNode* node = &self->buckets[index];
@@ -87,7 +87,7 @@ DictListNode* dict_remove(Dictionary* self, u32 key) {
         return NULL;
     }
 
-    size_t index = key % self->bucketCount;
+    u32 index = key % self->bucketCount;
 
     DictionaryNode* node = &self->buckets[index];
     DictionaryNode* prev = NULL;
@@ -114,7 +114,7 @@ DictListNode* dict_remove(Dictionary* self, u32 key) {
 }
 
 void dict_clear(Dictionary* self) {
-    for (size_t i = 0; i < self->bucketCount; ++i) {
+    for (u32 i = 0; i < self->bucketCount; ++i) {
         DictionaryNode* node = &self->buckets[i];
 
         while (node != NULL) {
@@ -157,7 +157,7 @@ DictListNode* dict_get_all(Dictionary* self, u32 key) {
         return NULL;
     }
 
-    size_t index = key % self->bucketCount;
+    u32 index = key % self->bucketCount;
 
     DictionaryNode* node = &self->buckets[index];
 

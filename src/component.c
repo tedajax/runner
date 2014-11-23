@@ -4,7 +4,7 @@
 void component_init(Component* self, ComponentType type) {
     self->type = type;
 
-    for (size_t i = 0; i < MESSAGE_LAST; ++i) {
+    for (u32 i = 0; i < MESSAGE_LAST; ++i) {
         self->handlers[i] = NULL;
     }
 }

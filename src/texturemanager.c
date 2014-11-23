@@ -1,7 +1,7 @@
 #include "texturemanager.h"
 
 void texture_manager_init(TextureManager* self, const char* rootDir) {
-    size_t rootLen = strlen(rootDir);
+    u32 rootLen = strlen(rootDir);
     self->rootDir = (char*)calloc(rootLen + 1, sizeof(char));
     strcpy(self->rootDir, rootDir);
 
@@ -55,7 +55,7 @@ SDL_Texture* texture_manager_get(TextureManager* self, const char* name) {
 }
 
 void _path_concat(const char* p1, const char* p2, char* dest) {
-    size_t l1 = strlen(p1);
+    u32 l1 = strlen(p1);
 
     strcpy(dest, p1);
     dest[l1] = '/';

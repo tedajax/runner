@@ -26,12 +26,12 @@ typedef void(*dict_free_f)(void*);
 typedef struct dict_t {
     DictionaryNode* buckets;
     dict_free_f freeFunc;
-    size_t bucketCount;
-    size_t size;
+    u32 bucketCount;
+    u32 size;
 } Dictionary;
 
-Dictionary* dict_new(size_t buckets, dict_free_f freeFunc);
-void dict_init(Dictionary* self, size_t buckets, dict_free_f freeFunc);
+Dictionary* dict_new(u32 buckets, dict_free_f freeFunc);
+void dict_init(Dictionary* self, u32 buckets, dict_free_f freeFunc);
 void dict_set(Dictionary* self, u32 key, void* element);
 DictListNode* dict_remove(Dictionary* self, u32 key);
 void dict_clear(Dictionary* self);

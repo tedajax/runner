@@ -12,12 +12,18 @@ void health_system_update(HealthSystem* self, EntityList* entities) {
     aspect_system_entities((AspectSystem*)self, entities);
 
     for (u32 i = 0; i < entities->size; ++i) {
-        // Entity* entity = (Entity*)vector_index(entities, i);
+        Entity* entity = &entities->list[i];
 
-        // HealthComponent* health = (HealthComponent*)entities_get_component(
-        //     self->super.entityManager,
-        //     COMPONENT_HEALTH,
-        //     entity);
+        HealthComponent* health = (HealthComponent*)entities_get_component(
+            self->super.entityManager,
+            COMPONENT_HEALTH,
+            entity);
+
+        REQUIRED_COMPONENTS(health);
+
+        if (health->currentHealth <= 0) {
+            entities_remove_entity(self->super.entityManager, entity);
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 #define RUNNER_LIST_H
 
 #include <stdlib.h>
+#include "types.h"
 
 //double linked list
 
@@ -14,7 +15,7 @@ typedef struct list_node_t {
 typedef struct list_t {
     ListNode* head;
     ListNode* tail;
-    size_t size;
+    u32 size;
 } List;
 
 ListNode* list_node_new(void* element, ListNode* prev, ListNode* next);
@@ -28,6 +29,6 @@ void* list_pop_back(List* self);
 void* list_pop_front(List* self);
 void* list_peek_back(List* self);
 void* list_peek_front(List* self);
-void* list_index(List* self, size_t index);
+void* list_index(List* self, u32 index);
 
 #endif

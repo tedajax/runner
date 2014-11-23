@@ -6,7 +6,7 @@ void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor) {
     self->anchor = anchor;
     self->inContactCount = 0;
 
-    for (size_t i = 0; i < COLLIDER_MAX_COLLISIONS; ++i) {
+    for (u32 i = 0; i < COLLIDER_MAX_COLLISIONS; ++i) {
         self->inContact[i] = -1;
     }
 }
@@ -31,7 +31,7 @@ void collider_copy(const Collider* source, Collider* dest) {
     rect_copy_to(&source->rectangle, &dest->rectangle);
     dest->anchor = source->anchor;
     dest->inContactCount = source->inContactCount;
-    for (size_t i = 0; i < dest->inContactCount; ++i) {
+    for (u32 i = 0; i < dest->inContactCount; ++i) {
         dest->inContact[i] = source->inContact[i];
     }
 }
@@ -89,7 +89,7 @@ bool collider_is_colliding(Collider* c1, Collider* c2) {
 }
 
 bool collider_in_contact(Collider* self, Collider* other) {
-    for (size_t i = 0; i < self->inContactCount; ++i) {
+    for (u32 i = 0; i < self->inContactCount; ++i) {
         if (self->inContact[i] == other->colliderId) {
             return true;
         }
@@ -110,10 +110,10 @@ void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
         ++c2->inContactCount;
     } else {
         if (c1->inContactCount > 0) {
-            for (size_t i = 0; i < c1->inContactCount; ++i) {
+            for (u32 i = 0; i < c1->inContactCount; ++i) {
                 if (c1->inContact[i] == c2->colliderId) {
                     //remove by overwriting
-                    for (size_t j = i + 1; j < c1->inContactCount; ++j) {
+                    for (u32 j = i + 1; j < c1->inContactCount; ++j) {
                         c1->inContact[j - 1] = c1->inContact[j];
                     }
                     --c1->inContactCount;
@@ -122,10 +122,10 @@ void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
         }
 
         if (c2->inContactCount > 0) {
-            for (size_t i = 0; i < c2->inContactCount; ++i) {
+            for (u32 i = 0; i < c2->inContactCount; ++i) {
                 if (c2->inContact[i] == c1->colliderId) {
                     //remove by overwriting
-                    for (size_t j = i + 1; j < c2->inContactCount; ++j) {
+                    for (u32 j = i + 1; j < c2->inContactCount; ++j) {
                         c2->inContact[j - 1] = c2->inContact[j];
                     }
                     --c2->inContactCount;

@@ -13,12 +13,12 @@ typedef struct collision_system_t CollisionSystem;
 
 typedef struct entity_id_list_t {
     Entity* list;
-    size_t size;
-    size_t capacity;
+    u32 size;
+    u32 capacity;
 } EntityList;
 
-void entity_list_init(EntityList* self, size_t capacity);
-void entity_list_resize(EntityList* self, size_t capacity);
+void entity_list_init(EntityList* self, u32 capacity);
+void entity_list_resize(EntityList* self, u32 capacity);
 void entity_list_free(EntityList* self);
 
 #define ENTITY_MANAGER_MESSAGE_QUEUE_CAPACITY 100

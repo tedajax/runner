@@ -28,7 +28,7 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
         entity);
 
     entities_add_component(entityManager,
-        (Component*)health_component_new(100),
+        (Component*)health_component_new(100000),
         entity);
 
     entities_add_component(entityManager,

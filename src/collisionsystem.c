@@ -27,9 +27,9 @@ void collision_system_register_collider(CollisionSystem* self, Collider* collide
 }
 
 void collision_system_unregister_collider(CollisionSystem* self, i32 id) {
-    for (size_t i = 0; i < self->count; ++i) {
+    for (u32 i = 0; i < self->count; ++i) {
         if (self->colliders[i]->colliderId == id) {
-            for (size_t j = i + 1; j < self->count; ++j) {
+            for (u32 j = i + 1; j < self->count; ++j) {
                 self->colliders[j - 1] = self->colliders[j];
             }
             --self->count;
@@ -41,7 +41,7 @@ void collision_system_unregister_collider(CollisionSystem* self, i32 id) {
 void collision_system_start(CollisionSystem* self, EntityList* entities) {
     aspect_system_entities((AspectSystem*)self, entities);
 
-    for (size_t i = 0; i < entities->size; ++i) {
+    for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
         collision_system_start_single(self, &entity);
     }
@@ -63,8 +63,8 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
         return;
     }
 
-    for (size_t i = 0; i < entities->size - 1; ++i) {
-        for (size_t j = i + 1; j < entities->size; ++j) {
+    for (u32 i = 0; i < entities->size - 1; ++i) {
+        for (u32 j = i + 1; j < entities->size; ++j) {
             Entity* e1 = &entities->list[i];
             Entity* e2 = &entities->list[j];
 
@@ -128,7 +128,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
 void collision_system_render(CollisionSystem* self, EntityList* entities) {
     aspect_system_entities((AspectSystem*)self, entities);
 
-    for (size_t i = 0; i < entities->size; ++i) {
+    for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
 
         ColliderComponent* collider =
@@ -157,13 +157,13 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
     entities.list = (Entity*)calloc(entities.capacity, sizeof(Entity));
     aspect_system_entities((AspectSystem*)self, &entities);
     
-    for (size_t i = 0; i < entities.size; ++i) {
+    for (u32 i = 0; i < entities.size; ++i) {
         Entity* entity = &entities.list[i];
 
         ColliderComponent* entityCollider =
             (ColliderComponent*)GET_COMPONENT(*entity, COMPONENT_COLLIDER);
 
-        for (size_t j = 0; j < collider->collider.inContactCount; ++j) {
+        for (u32 j = 0; j < collider->collider.inContactCount; ++j) {
             if (entityCollider->collider.colliderId == collider->collider.inContact[j]) {
                 collider_set_in_contact(&entityCollider->collider,
                     &collider->collider,

@@ -127,12 +127,12 @@ void* list_peek_front(List* self) {
     }
 }
 
-void* list_index(List* self, size_t index) {
+void* list_index(List* self, u32 index) {
     ASSERT(index >= 0 && index < self->size, "Index out of bounds.");
 
     ListNode* slider = self->head;
 
-    for (size_t i = 0; i < index; ++i) {
+    for (u32 i = 0; i < index; ++i) {
         slider = slider->next;
     }
 

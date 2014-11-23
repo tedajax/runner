@@ -14,8 +14,8 @@ typedef struct bg_manager_component_t {
     u32 tileWidth;
     u32 tileHeight;
     TransformComponent** transforms;
-    size_t capacity;
-    size_t count;
+    u32 capacity;
+    u32 count;
 } BgManagerComponent;
 
 BgManagerComponent* bg_manager_component_new(u32 twidth, u32 theight);

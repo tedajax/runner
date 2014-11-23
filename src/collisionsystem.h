@@ -11,7 +11,7 @@
 typedef struct collision_system_t {
     AspectSystem super;
     i32 currentId;
-    size_t count;
+    u32 count;
     Collider* colliders[COLLISION_MAX_COLLIDERS];
 } CollisionSystem;
 

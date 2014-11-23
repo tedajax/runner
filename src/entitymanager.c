@@ -2,13 +2,13 @@
 #include "collidercomponent.h"
 #include "collisionsystem.h"
 
-void entity_list_init(EntityList* self, size_t capacity) {
+void entity_list_init(EntityList* self, u32 capacity) {
     self->list = (Entity *)calloc(capacity, sizeof(Entity));
     self->capacity = capacity;
     self->size = 0;
 }
 
-void entity_list_resize(EntityList* self, size_t capacity) {
+void entity_list_resize(EntityList* self, u32 capacity) {
     self->capacity = capacity;
     self->list = (Entity *)realloc(self->list, capacity * sizeof(Entity));
 
@@ -35,7 +35,7 @@ EntityManager* entity_manager_new() {
 
 void entity_manager_free(EntityManager* self) {
     entities_remove_all_entities(self);
-    for (size_t i = 0; i < COMPONENT_LAST; ++i) {
+    for (u32 i = 0; i < COMPONENT_LAST; ++i) {
         dict_clear(&self->componentsMap[i]);
     }
     free(self->entities.data);
@@ -112,9 +112,9 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
 
     dest->size = 0;
 
-    size_t index = 0;
+    u32 index = 0;
 
-    for (size_t b = 0; b < components.bucketCount; ++b) {
+    for (u32 b = 0; b < components.bucketCount; ++b) {
         DictionaryNode* node = &components.buckets[b];
         while (node != NULL && node->key != DICT_INVALID_KEY) {
             if (node->list != NULL) {

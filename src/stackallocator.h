@@ -7,15 +7,15 @@
 
 typedef struct stack_allocator_t {
     void* block;
-    size_t size;
-    size_t head;
+    u32 size;
+    u32 head;
 } StackAllocator;
 
-void stackor_init(StackAllocator* self, size_t bytes);
+void stackor_init(StackAllocator* self, u32 bytes);
 void stackor_delete(StackAllocator* self);
-void* stackor_alloc(StackAllocator* self, size_t bytes);
-void* stackor_get(StackAllocator* self, size_t offset);
-void stackor_free(StackAllocator* self, size_t bytes);
+void* stackor_alloc(StackAllocator* self, u32 bytes);
+void* stackor_get(StackAllocator* self, u32 offset);
+void stackor_free(StackAllocator* self, u32 bytes);
 void stackor_free_to(StackAllocator* self, void* location);
 void stackor_clear(StackAllocator* self);
 

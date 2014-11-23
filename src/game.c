@@ -1,7 +1,6 @@
 #include "game.h"
 
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
 
 void game_init(Game* self) {
     textures_init("assets");
@@ -130,6 +129,5 @@ void game_render(Game* self) {
     health_system_render(self->healthSystem, &self->entities);
     sprite_system_render(self->backgroundSpriteSystem, &self->entities);
     sprite_system_render(self->spriteSystem, &self->entities);
-
-    lineColor(globals.renderer, 0, 0, 500, 500, 0xFF0000FF);
+    collision_system_render(&self->collisionSystem, &self->entities);
 }

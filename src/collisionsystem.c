@@ -1,5 +1,7 @@
 #include "collisionsystem.h"
 
+#include <SDL2/SDL2_gfxPrimitives.h>
+
 static bool layerMatrix[COLLIDER_LAYER_LAST][COLLIDER_LAYER_LAST];
 
 void collision_system_init(CollisionSystem* self, EntityManager* entityManager) {
@@ -120,6 +122,32 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                 }
             }
         }
+    }
+}
+
+void collision_system_render(CollisionSystem* self, EntityList* entities) {
+    aspect_system_entities((AspectSystem*)self, entities);
+
+    for (size_t i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
+
+        ColliderComponent* collider =
+            (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
+
+        REQUIRED_COMPONENTS(collider);
+
+        u32 color = 0xFF00FF00;
+        if (collider->collider.inContactCount > 0) {
+            color = 0xFF0000FF;
+        }
+
+        Rect anchoredRect;
+        collider_anchored_rectangle(&collider->collider, &anchoredRect);
+        i16 x1 = (i16)(rect_left(&anchoredRect) - globals.camera.position.x);
+        i16 y1 = (i16)(rect_top(&anchoredRect) - globals.camera.position.y);
+        i16 x2 = (i16)(rect_right(&anchoredRect) - globals.camera.position.x);
+        i16 y2 = (i16)(rect_bottom(&anchoredRect) - globals.camera.position.y);
+        rectangleColor(globals.renderer, x1, y1, x2, y2, color);
     }
 }
 

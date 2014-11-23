@@ -8,3 +8,4 @@ Release/
 *.psess
 *.vsp
 *.suo
+./*.dll

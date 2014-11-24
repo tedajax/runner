@@ -11,7 +11,7 @@ typedef struct bullet_controller_system_t {
     AspectSystem super;
 } BulletControllerSystem;
 
-BulletControllerSystem* bullet_controller_system_new(EntityManager* entityManager);
+void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* entityManager);
 void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities);
 
 #endif

@@ -1,11 +1,7 @@
 #include "gravitysystem.h"
 
-GravitySystem* gravity_system_new(EntityManager* entityManager) {
-    GravitySystem* self = (GravitySystem*)calloc(1, sizeof(GravitySystem));
-
+void gravity_system_init(GravitySystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_GRAVITY);
-
-    return self;
 }
 
 void gravity_system_update(GravitySystem* self, EntityList* entities) {

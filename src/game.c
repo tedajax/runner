@@ -11,15 +11,15 @@ void game_init(Game* self) {
     textures_load("enemy_red_1.png");
 
     self->entityManager = entity_manager_new();
-    self->healthSystem = health_system_new(self->entityManager);
-    self->spriteSystem = sprite_system_new(self->entityManager, 1);
-    self->backgroundSpriteSystem = sprite_system_new(self->entityManager, 0);
-    self->movementSystem = movement_system_new(self->entityManager);
-    self->gravitySystem = gravity_system_new(self->entityManager);
-    self->controllerSystem = controller_system_new(self->entityManager);
-    self->bulletControllerSystem = bullet_controller_system_new(self->entityManager);
-    self->bgManagerSystem = bg_manager_system_new(self->entityManager);
-    self->enemySystem = enemy_system_new(self->entityManager);
+    health_system_init(&self->healthSystem, self->entityManager);
+    sprite_system_init(&self->spriteSystem, self->entityManager, 1);
+    sprite_system_init(&self->backgroundSpriteSystem, self->entityManager, 0);
+    movement_system_init(&self->movementSystem, self->entityManager);
+    gravity_system_init(&self->gravitySystem, self->entityManager);
+    controller_system_init(&self->controllerSystem, self->entityManager);
+    bullet_controller_system_init(&self->bulletControllerSystem, self->entityManager);
+    bg_manager_system_init(&self->bgManagerSystem, self->entityManager);
+    enemy_system_init(&self->enemySystem, self->entityManager);
     collision_system_init(&self->collisionSystem, self->entityManager);
 
     // Give the entity manager a ref to the collision system so it can gracefully
@@ -81,35 +81,25 @@ void game_init(Game* self) {
 }
 
 void game_quit(Game* self) {
-    free(self->healthSystem);
-    free(self->backgroundSpriteSystem);
-    free(self->spriteSystem);
-    free(self->controllerSystem);
-    free(self->bulletControllerSystem);
-    free(self->gravitySystem);
-    free(self->enemySystem);
-    free(self->movementSystem);
-    free(self->bgManagerSystem);
-
     entity_list_free(&self->entities);
     entity_manager_free(self->entityManager);
 }
 
 void game_start(Game* self) {
-    bg_manager_system_start(self->bgManagerSystem, &self->entities);
+    bg_manager_system_start(&self->bgManagerSystem, &self->entities);
     collision_system_start(&self->collisionSystem, &self->entities);
 }
 
 void game_update(Game* self) {
-    health_system_update(self->healthSystem, &self->entities);
-    sprite_system_update(self->backgroundSpriteSystem, &self->entities);
-    sprite_system_update(self->spriteSystem, &self->entities);
-    controller_system_update(self->controllerSystem, &self->entities);
-    bullet_controller_system_update(self->bulletControllerSystem, &self->entities);
-    gravity_system_update(self->gravitySystem, &self->entities);
-    enemy_system_update(self->enemySystem, &self->entities);
-    movement_system_update(self->movementSystem, &self->entities);
-    bg_manager_system_update(self->bgManagerSystem, &self->entities);
+    health_system_update(&self->healthSystem, &self->entities);
+    sprite_system_update(&self->backgroundSpriteSystem, &self->entities);
+    sprite_system_update(&self->spriteSystem, &self->entities);
+    controller_system_update(&self->controllerSystem, &self->entities);
+    bullet_controller_system_update(&self->bulletControllerSystem, &self->entities);
+    gravity_system_update(&self->gravitySystem, &self->entities);
+    enemy_system_update(&self->enemySystem, &self->entities);
+    movement_system_update(&self->movementSystem, &self->entities);
+    bg_manager_system_update(&self->bgManagerSystem, &self->entities);
     collision_system_update(&self->collisionSystem, &self->entities);
 
     if (input_key_down(SDL_SCANCODE_E)) {
@@ -126,8 +116,8 @@ void game_update(Game* self) {
 }
 
 void game_render(Game* self) {
-    health_system_render(self->healthSystem, &self->entities);
-    sprite_system_render(self->backgroundSpriteSystem, &self->entities);
-    sprite_system_render(self->spriteSystem, &self->entities);
+    health_system_render(&self->healthSystem, &self->entities);
+    sprite_system_render(&self->backgroundSpriteSystem, &self->entities);
+    sprite_system_render(&self->spriteSystem, &self->entities);
     collision_system_render(&self->collisionSystem, &self->entities);
 }

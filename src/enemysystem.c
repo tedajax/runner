@@ -1,11 +1,7 @@
 #include "enemysystem.h"
 
-EnemySystem* enemy_system_new(EntityManager* entityManager) {
-    EnemySystem* self = CALLOC(1, EnemySystem);
-
+void enemy_system_init(EnemySystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_ENEMY);
-
-    return self;
 }
 
 void enemy_system_update(EnemySystem* self, EntityList* entities) {

@@ -13,7 +13,8 @@ void _internal_print_assert(const char* expr,
 #ifdef _WIN32
     #define DEBUG_BREAKPOINT() __debugbreak();
 #else
-    #define DEBUG_BREAKPOINT() __asm__("int $3");
+    #include <signal.h>
+    #define DEBUG_BREAKPOINT() raise(SIGTRAP);
 #endif
 
 #define MULTILINE_MACRO_BEGIN() do {

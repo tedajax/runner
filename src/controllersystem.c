@@ -1,12 +1,8 @@
 #include "controllersystem.h"
 #include "entityfactory.h"
 
-ControllerSystem* controller_system_new(EntityManager* entityManager) {
-    ControllerSystem* self = (ControllerSystem*)calloc(1, sizeof(ControllerSystem));
-
+void controller_system_init(ControllerSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_CONTROLLER);
-
-    return self;
 }
 
 void controller_system_update(ControllerSystem* self, EntityList* entities) {

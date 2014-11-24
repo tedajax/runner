@@ -1,11 +1,7 @@
 #include "healthsystem.h"
 
-HealthSystem* health_system_new(EntityManager* entityManager) {
-    HealthSystem* self = (HealthSystem*)calloc(1, sizeof(HealthSystem));
-
+void health_system_init(HealthSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_HEALTH);
-
-    return self;
 }
 
 void health_system_update(HealthSystem* self, EntityList* entities) {

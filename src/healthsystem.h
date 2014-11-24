@@ -8,7 +8,7 @@ typedef struct health_system_t {
     AspectSystem super;
 } HealthSystem;
 
-HealthSystem* health_system_new(EntityManager* entityManager);
+void health_system_init(HealthSystem* self, EntityManager* entityManager);
 void health_system_update(HealthSystem* self, EntityList* entities);
 void health_system_render(HealthSystem* self, EntityList* entities);
 

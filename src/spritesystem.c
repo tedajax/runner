@@ -1,13 +1,8 @@
 #include "spritesystem.h"
 
-SpriteSystem* sprite_system_new(EntityManager* entityManager, u32 layer) {
-    SpriteSystem* self = (SpriteSystem*)calloc(1, sizeof(SpriteSystem));
-
+void sprite_system_init(SpriteSystem* self, EntityManager* entityManager, u32 layer) {
     aspect_system_init(&self->super, entityManager, COMPONENT_SPRITE);
-
     self->layer = layer;
-
-    return self;
 }
 
 void sprite_system_update(SpriteSystem* self, EntityList* entities) {

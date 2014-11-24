@@ -1,11 +1,7 @@
 #include "bgmanagersystem.h"
 
-BgManagerSystem* bg_manager_system_new(EntityManager* entityManager) {
-    BgManagerSystem* self = CALLOC(1, BgManagerSystem);
-
+void bg_manager_system_init(BgManagerSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_BG_MANAGER);
-
-    return self;
 }
 
 void bg_manager_system_start(BgManagerSystem* self, EntityList* entities) {

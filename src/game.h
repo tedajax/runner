@@ -9,15 +9,15 @@
 
 typedef struct game_t {
     EntityManager* entityManager;
-    MovementSystem* movementSystem;
-    ControllerSystem* controllerSystem;
-    BulletControllerSystem* bulletControllerSystem;
-    GravitySystem* gravitySystem;
-    HealthSystem* healthSystem;
-    SpriteSystem* spriteSystem;
-    SpriteSystem* backgroundSpriteSystem;
-    BgManagerSystem* bgManagerSystem;
-    EnemySystem* enemySystem;
+    MovementSystem movementSystem;
+    ControllerSystem controllerSystem;
+    BulletControllerSystem bulletControllerSystem;
+    GravitySystem gravitySystem;
+    HealthSystem healthSystem;
+    SpriteSystem spriteSystem;
+    SpriteSystem backgroundSpriteSystem;
+    BgManagerSystem bgManagerSystem;
+    EnemySystem enemySystem;
     CollisionSystem collisionSystem;
     Entity* player;
 

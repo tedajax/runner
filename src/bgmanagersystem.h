@@ -10,7 +10,7 @@ typedef struct bg_manager_system_t {
     AspectSystem super;
 } BgManagerSystem;
 
-BgManagerSystem* bg_manager_system_new(EntityManager* entityManager);
+void bg_manager_system_init(BgManagerSystem* self, EntityManager* entityManager);
 void bg_manager_system_start(BgManagerSystem* self, EntityList* entities);
 void bg_manager_system_update(BgManagerSystem* self, EntityList* entities);
 

@@ -1,11 +1,7 @@
 #include "movementsystem.h"
 
-MovementSystem* movement_system_new(EntityManager* entityManager) {
-    MovementSystem* self = (MovementSystem*)calloc(1, sizeof(MovementSystem));
-
+void movement_system_init(MovementSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_MOVEMENT);
-
-    return self;
 }
 
 void movement_system_update(MovementSystem* self, EntityList* entities) {

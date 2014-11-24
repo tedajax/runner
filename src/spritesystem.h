@@ -11,7 +11,7 @@ typedef struct sprite_system_t {
     u32 layer;
 } SpriteSystem;
 
-SpriteSystem* sprite_system_new(EntityManager* entityManager, u32 layer);
+void sprite_system_init(SpriteSystem* self, EntityManager* entityManager, u32 layer);
 void sprite_system_update(SpriteSystem* self, EntityList* entities);
 void sprite_system_render(SpriteSystem* self, EntityList* entities);
 

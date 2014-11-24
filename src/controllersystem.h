@@ -11,7 +11,7 @@ typedef struct controller_system_t {
     AspectSystem super;
 } ControllerSystem;
 
-ControllerSystem* controller_system_new(EntityManager* entityManager);
+void controller_system_init(ControllerSystem* self, EntityManager* entityManager);
 void controller_system_update(ControllerSystem* self, EntityList* entities);
 
 #endif

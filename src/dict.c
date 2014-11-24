@@ -49,7 +49,7 @@ void dict_set(Dictionary* self, u32 key, void* element) {
         DictionaryNode* newNode = (DictionaryNode*)calloc(1, sizeof(DictionaryNode));
         self->buckets[index] = *newNode;
         newNode->key = key;
-        newNode->list = (DictListNode*)calloc(1, sizeof(DictListNode));
+        newNode->list = NULL;
         newNode->next = NULL;
         free(newNode);
 
@@ -129,6 +129,7 @@ void dict_clear(Dictionary* self) {
                 }
                 lnode = lnode->next;
             }
+            free(node->list);
             node = node->next;
         }
     }

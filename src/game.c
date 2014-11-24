@@ -57,7 +57,7 @@ void game_init(Game* self) {
 
     globals.player = self->player;
 
-    entity_list_init(&self->entities, 64);
+    entity_list_init(&self->entities, 512);
 
     //TransformComponent* playerTransform =
     //    (TransformComponent*)entities_get_component(self->entityManager,

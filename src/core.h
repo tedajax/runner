@@ -6,5 +6,9 @@
 #include "input.h"
 
 #if !(__cplusplus)
-    #define inline __inline
+	#ifdef WIN32
+	    #define inline __inline
+	#else
+		#define inline __inline__
+	#endif
 #endif

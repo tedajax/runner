@@ -74,19 +74,19 @@ bool rect_contains(const Rect* self, const Vec2* point);
 bool rect_intersects(const Rect* self, const Rect* other);
 bool rect_intersects_circle(const Rect* self, const Circle* other);
 
-__inline f32 rect_left(const Rect* self) {
+static inline f32 rect_left(const Rect* self) {
     return self->position.x;
 }
 
-__inline f32 rect_right(const Rect* self) {
+static inline f32 rect_right(const Rect* self) {
     return self->position.x + self->width;
 }
 
-__inline f32 rect_top(const Rect* self) {
+static inline f32 rect_top(const Rect* self) {
     return self->position.y;
 }
 
-__inline f32 rect_bottom(const Rect* self) {
+static inline f32 rect_bottom(const Rect* self) {
     return self->position.y + self->height;
 }
 // } Rect

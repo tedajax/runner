@@ -6,12 +6,16 @@ AspectSystem* aspect_system_new(EntityManager* entityManager, ComponentType type
     self->entityManager = entityManager;
     self->systemType = type;
 
+    REGISTER_SYSTEM(self->entityManager, self);
+
     return self;
 }
 
 void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type) {
     self->entityManager = entityManager;
     self->systemType = type;
+
+    REGISTER_SYSTEM(self->entityManager, self);
 }
 
 void aspect_system_entities(AspectSystem* self, EntityList* dest) {

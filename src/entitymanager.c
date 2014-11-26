@@ -1,11 +1,13 @@
 #include "entitymanager.h"
 #include "collidercomponent.h"
 #include "collisionsystem.h"
+#include "aspectsystem.h"
 
 void entity_list_init(EntityList* self, u32 capacity) {
     self->list = (Entity *)calloc(capacity, sizeof(Entity));
     self->capacity = capacity;
     self->size = 0;
+
 }
 
 void entity_list_resize(EntityList* self, u32 capacity) {
@@ -30,6 +32,14 @@ EntityManager* entity_manager_new() {
     }
     self->lowestEId = 1;
 
+
+    for (u32 c = 0; c < COMPONENT_LAST; ++c) {
+        for (u32 i = 0; i < ENTITY_MANAGER_MAX_SYSTEM_COUNT; ++i) {
+            self->systems[c][i] = NULL;
+        }
+        self->systemCounts[c] = 0;
+    }
+
     return self;
 }
 
@@ -40,6 +50,18 @@ void entity_manager_free(EntityManager* self) {
     }
     free(self->entities.data);
     free(self);
+}
+
+void entity_manager_register_system(EntityManager* self, AspectSystem* system) {
+    ASSERT(self && system, "");
+    
+    ComponentType type = system->systemType;
+
+    ASSERT(self->systemCounts[type] < ENTITY_MANAGER_MAX_SYSTEM_COUNT - 1, "");
+
+    u32 count = self->systemCounts[type];
+    self->systems[type][count] = system;
+    ++self->systemCounts[type];
 }
 
 u32 entities_gen_entity_id(EntityManager* self) {
@@ -78,9 +100,14 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
         
         while (clist != NULL) {
             // This seems pretty gross but I haven't come up with anything better yet
+            // probably should fire events when an entity is removed!
             if (t == COMPONENT_COLLIDER) {
                 ColliderComponent* collider = (ColliderComponent*)clist->element;
-                collision_system_remove_collider(self->collisionSystem, collider);
+                for (int i = 0; i < ENTITY_MANAGER_MAX_SYSTEM_COUNT; ++i) {
+                    if (self->systems[t][i] != NULL) {
+                        collision_system_remove_collider((CollisionSystem*)self->systems[t][i], collider);
+                    }
+                }                
             }
 
             component_free_void(clist->element);

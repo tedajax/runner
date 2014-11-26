@@ -22,10 +22,6 @@ void game_init(Game* self) {
     enemy_system_init(&self->enemySystem, self->entityManager);
     collision_system_init(&self->collisionSystem, self->entityManager);
 
-    // Give the entity manager a ref to the collision system so it can gracefully
-    // handle removing colliders that are currently colliding with things.
-    self->entityManager->collisionSystem = &self->collisionSystem;
-
     int bgTextureWidth;
     int bgTextureHeight;
     SDL_QueryTexture(textures_get("bg_dark_purple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);

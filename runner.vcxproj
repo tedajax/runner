@@ -247,6 +247,7 @@
     <ClInclude Include="src\hashtable.h" />
     <ClInclude Include="src\healthcomponent.h" />
     <ClInclude Include="src\healthsystem.h" />
+    <ClInclude Include="src\inline.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\list.h" />
     <ClInclude Include="src\log.h" />

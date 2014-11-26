@@ -4,6 +4,7 @@
 #include "types.h"
 #include "debug.h"
 #include "log.h"
+#include "inline.h"
 
 #include <stdlib.h>
 #include <math.h>

@@ -20,12 +20,17 @@
     ASSERT(compexpr, "Entity does not have required components for system."); \
     MULTILINE_MACRO_END()
 
+#define REGISTER_SYSTEM_HANDLER(type, func) \
+    ((AspectSystem*)self)->handlers[type] = func
+
 typedef struct aspect_system_t {
     EntityManager* entityManager;
     ComponentType systemType;
+    system_message_cb handlers[MESSAGE_LAST];
 } AspectSystem;
 
 void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type);
 void aspect_system_entities(AspectSystem* self, EntityList* dest);
+void aspect_system_send_message(AspectSystem* self, const Message message);
 
 #endif

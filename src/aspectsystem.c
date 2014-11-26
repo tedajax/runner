@@ -8,6 +8,10 @@ AspectSystem* aspect_system_new(EntityManager* entityManager, ComponentType type
 
     REGISTER_SYSTEM(self->entityManager, self);
 
+    for (u32 i = 0; i < MESSAGE_LAST; ++i) {
+        self->handlers[i] = NULL;
+    }
+
     return self;
 }
 
@@ -20,4 +24,10 @@ void aspect_system_init(AspectSystem* self, EntityManager* entityManager, Compon
 
 void aspect_system_entities(AspectSystem* self, EntityList* dest) {
     entities_get_all_of(self->entityManager, self->systemType, dest);
+}
+
+void aspect_system_send_message(AspectSystem* self, const Message message) {
+    if (self->handlers[message.type]) {
+        self->handlers[message.type](self, message);
+    }
 }

@@ -94,22 +94,20 @@ DictListNode* entities_get_components(EntityManager* self, ComponentType type, E
 }
 
 void entities_remove_entity(EntityManager* self, Entity* entity) {
+    Message msg;
+    msg.type = MESSAGE_ENTITY_REMOVED;
+    msg.params[0] = (void*)entity;
+
     for (u32 t = 0; t < COMPONENT_LAST; ++t) {
+        for (u32 i = 0; i < self->systemCounts[t]; ++i) {
+            aspect_system_send_message((AspectSystem*)self->systems[t][i],
+                msg);
+        }
+
         Dictionary components = self->componentsMap[t];
         DictListNode* clist = (DictListNode*)dict_remove(&components, entity->id);
         
         while (clist != NULL) {
-            // This seems pretty gross but I haven't come up with anything better yet
-            // probably should fire events when an entity is removed!
-            if (t == COMPONENT_COLLIDER) {
-                ColliderComponent* collider = (ColliderComponent*)clist->element;
-                for (int i = 0; i < ENTITY_MANAGER_MAX_SYSTEM_COUNT; ++i) {
-                    if (self->systems[t][i] != NULL) {
-                        collision_system_remove_collider((CollisionSystem*)self->systems[t][i], collider);
-                    }
-                }                
-            }
-
             component_free_void(clist->element);
             DictListNode* prev = clist;
             clist = clist->next;

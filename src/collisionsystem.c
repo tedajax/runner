@@ -13,6 +13,9 @@ void collision_system_init(CollisionSystem* self, EntityManager* entityManager) 
     self->currentId = 0;
     self->count = 0;
     memset(self->colliders, 0, sizeof(Collider*) * COLLISION_MAX_COLLIDERS);
+
+    REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED,
+        collision_system_on_entity_removed);
 }
 
 i32 collision_system_gen_id(CollisionSystem* self) {
@@ -180,6 +183,20 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
     }
 
     free(entities.list);
+}
+
+void collision_system_on_entity_removed(AspectSystem* system, const Message msg) {
+    CollisionSystem* self = (CollisionSystem*)system;
+
+    Entity* removed = (Entity*)msg.params[0];
+    ColliderComponent* collider = 
+        (ColliderComponent*)entities_get_component(self->super.entityManager,
+        COMPONENT_COLLIDER,
+        removed);
+
+    if (collider) {
+        collision_system_remove_collider(self, collider);
+    }
 }
 
 void _layer_matrix_set(ColliderLayer l1, ColliderLayer l2, bool value) {

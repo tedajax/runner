@@ -8,11 +8,11 @@ else
 	CC = clang
 endif
 
-OPTIMIZATION =
+OPTIMIZATION = 3
 STD = c11
 
 TARGET		= runner
-CFLAGS		= -std=$(STD) -Wall -I. -I$(INC_ROOT) -g -DDEBUG
+CFLAGS		= -std=$(STD) -O$(OPTIMIZATION) -Wall -I. -I$(INC_ROOT) -g -DDEBUG
 
 LINKER		= $(CC) -o
 LFLAGS		= -Wall -I. -lm

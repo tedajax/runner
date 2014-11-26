@@ -39,9 +39,9 @@ void _internal_print_assert(const char* expr,
     #define ASSERT ASSERT_ALWAYS
     #define DEBUG_ON_KEY ALWAYS_DEBUG_ON_KEY
 #else
-    #define IF_DEBUG(x) ((void)0)
+    #define IF_DEBUG(x) ((void)0);
     #define ASSERT(expr, msg) ((void)0)
-    #define DEBUG_ON_KEY ((void)0)
+    #define DEBUG_ON_KEY(key) ((void)0)
 #endif
 
 #define CALLOC(count, type) (type*)calloc(count, sizeof(type))

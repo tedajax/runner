@@ -41,6 +41,7 @@ Entity* entities_create_entity(EntityManager* self);
 void entities_add_component(EntityManager* self, Component* component, Entity* entity);
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity* entity);
 DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity* entity);
+bool entities_has_component(EntityManager* self, ComponentType type, Entity* entity);
 void entities_remove_entity(EntityManager* self, Entity* entity);
 void entities_remove_all_entities(EntityManager* self);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);

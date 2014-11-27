@@ -3,10 +3,6 @@
 
 void component_init(Component* self, ComponentType type) {
     self->type = type;
-
-    for (u32 i = 0; i < MESSAGE_LAST; ++i) {
-        self->handlers[i] = NULL;
-    }
 }
 
 void component_free(Component* self) {
@@ -24,10 +20,4 @@ void component_free(Component* self) {
 
 void component_free_void(void* self) {
     component_free((Component*)self);
-}
-
-void component_send_message(Component* self, Message message) {
-    if (self->handlers[message.type]) {
-        self->handlers[message.type](self, message);
-    }
 }

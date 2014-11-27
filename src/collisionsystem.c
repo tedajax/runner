@@ -93,22 +93,26 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                 continue;
             }
 
+            Message msg1;
+            msg1.params[0] = e2;
+
+            Message msg2;
+            msg2.params[0] = e1;
+
             if (collider_is_colliding(c1, c2)) {
                 bool inContact = collider_in_contact(c1, c2);
 
-                Message message;
-                message.params[0] = e1;
-                message.params[1] = e2;
-
                 if (!inContact) {
                     collider_set_in_contact(c1, c2, true);
-                    message.type = MESSAGE_ON_COLLISION_ENTER;
-                    entities_send_message(self->super.entityManager, e1, message);
-                    entities_send_message(self->super.entityManager, e2, message);
+                    msg1.type = MESSAGE_ON_COLLISION_ENTER;
+                    msg2.type = MESSAGE_ON_COLLISION_ENTER;
+                    entities_send_message(self->super.entityManager, e1, msg1);
+                    entities_send_message(self->super.entityManager, e2, msg2);
                 } else {
-                    message.type = MESSAGE_ON_COLLISION_STAY;
-                    entities_send_message(self->super.entityManager, e1, message);
-                    entities_send_message(self->super.entityManager, e2, message);
+                    msg1.type = MESSAGE_ON_COLLISION_STAY;
+                    msg2.type = MESSAGE_ON_COLLISION_STAY;
+                    entities_send_message(self->super.entityManager, e1, msg1);
+                    entities_send_message(self->super.entityManager, e2, msg2);
                 }
             } else {
                 bool inContact = collider_in_contact(c1, c2);
@@ -116,12 +120,10 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                 if (inContact) {
                     collider_set_in_contact(c1, c2, false);
 
-                    Message message;
-                    message.type = MESSAGE_ON_COLLISION_EXIT;
-                    message.params[0] = e1;
-                    message.params[1] = e2;
-                    entities_send_message(self->super.entityManager, e1, message);
-                    entities_send_message(self->super.entityManager, e2, message);
+                    msg1.type = MESSAGE_ON_COLLISION_EXIT;
+                    msg2.type = MESSAGE_ON_COLLISION_EXIT;
+                    entities_send_message(self->super.entityManager, e1, msg1);
+                    entities_send_message(self->super.entityManager, e2, msg2);
                 }
             }
         }
@@ -185,14 +187,15 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
     free(entities.list);
 }
 
-void collision_system_on_entity_removed(AspectSystem* system, const Message msg) {
+
+
+void collision_system_on_entity_removed(AspectSystem* system, Entity* entity, const Message msg) {
     CollisionSystem* self = (CollisionSystem*)system;
 
-    Entity* removed = (Entity*)msg.params[0];
     ColliderComponent* collider = 
         (ColliderComponent*)entities_get_component(self->super.entityManager,
         COMPONENT_COLLIDER,
-        removed);
+        entity);
 
     if (collider) {
         collision_system_remove_collider(self, collider);

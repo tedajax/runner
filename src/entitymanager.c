@@ -93,14 +93,18 @@ DictListNode* entities_get_components(EntityManager* self, ComponentType type, E
     return dict_get_all(&self->componentsMap[type], entity->id);
 }
 
+bool entities_has_component(EntityManager* self, ComponentType type, Entity* entity) {
+    return entities_get_components(self, type, entity) != NULL;
+}
+
 void entities_remove_entity(EntityManager* self, Entity* entity) {
     Message msg;
     msg.type = MESSAGE_ENTITY_REMOVED;
-    msg.params[0] = (void*)entity;
 
-    for (u32 t = 0; t < COMPONENT_LAST; ++t) {
+    for (u32 t = COMPONENT_INVALID + 1; t < COMPONENT_LAST; ++t) {
         for (u32 i = 0; i < self->systemCounts[t]; ++i) {
             aspect_system_send_message((AspectSystem*)self->systems[t][i],
+                entity,
                 msg);
         }
 
@@ -156,13 +160,14 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
 
 void entities_send_message(EntityManager* self, Entity* entity, Message message) {
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
-        DictListNode* node = entities_get_components(self, type, entity);
+        if (!entities_has_component(self, type, entity)) {
+            continue;
+        }
 
-        while (node) {
-            if (node->element) {
-                component_send_message((Component*)node->element, message);
-            }
-            node = node->next;
+        for (u32 i = 0; i < self->systemCounts[type]; ++i) {
+            aspect_system_send_message((AspectSystem*)self->systems[type][i],
+                entity,
+                message);
         }
     }
 }

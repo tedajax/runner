@@ -25,7 +25,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities);
 void collision_system_render(CollisionSystem* self, EntityList* entities);
 void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* collider);
 
-void collision_system_on_entity_removed(AspectSystem* system, const Message msg);
+void collision_system_on_entity_removed(AspectSystem* system, Entity* entity, const Message msg);
 
 void _layer_matrix_set(ColliderLayer l1, ColliderLayer l2, bool value);
 

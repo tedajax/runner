@@ -31,6 +31,6 @@ typedef struct aspect_system_t {
 
 void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type);
 void aspect_system_entities(AspectSystem* self, EntityList* dest);
-void aspect_system_send_message(AspectSystem* self, const Message message);
+void aspect_system_send_message(AspectSystem* self, Entity* entity, const Message message);
 
 #endif

@@ -102,17 +102,10 @@ void game_update(Game* self) {
         printf("Entities: %u\n", entities_entity_count(self->entityManager));
     }
 
-    if (input_key_down(SDL_SCANCODE_Z)) {
-        Message m;
-        m.type = MESSAGE_DAMAGE;
-        entities_send_message(self->entityManager, globals.player, m);
-    }
-
     camera_update(&globals.camera);
 }
 
 void game_render(Game* self) {
-    health_system_render(&self->healthSystem, &self->entities);
     sprite_system_render(&self->backgroundSpriteSystem, &self->entities);
     sprite_system_render(&self->spriteSystem, &self->entities);
     collision_system_render(&self->collisionSystem, &self->entities);

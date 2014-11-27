@@ -5,8 +5,6 @@ SpriteComponent* sprite_component_new(SDL_Texture* texture, u32 layer) {
 
     component_init((Component*)self, COMPONENT_SPRITE);
 
-    REGISTER_HANDLER(MESSAGE_ON_COLLISION_ENTER, sprite_component_on_collision_enter);
-
     self->texture = texture;
 
     self->layer = layer;

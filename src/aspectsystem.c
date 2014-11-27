@@ -26,8 +26,8 @@ void aspect_system_entities(AspectSystem* self, EntityList* dest) {
     entities_get_all_of(self->entityManager, self->systemType, dest);
 }
 
-void aspect_system_send_message(AspectSystem* self, const Message message) {
+void aspect_system_send_message(AspectSystem* self, Entity* entity, const Message message) {
     if (self->handlers[message.type]) {
-        self->handlers[message.type](self, message);
+        self->handlers[message.type](self, entity, message);
     }
 }

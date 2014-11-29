@@ -144,6 +144,9 @@
     <ClCompile Include="src\collisionsystem.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\particles.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -291,6 +294,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

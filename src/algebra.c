@@ -164,6 +164,19 @@ Vec2 vec2_unit_y() {
     return result;
 }
 
+Vec2 vec2_rand_range(f32 minx, f32 miny, f32 maxx, f32 maxy) {
+    Vec2 result;
+    vec2_set(&result, randf_range(minx, maxx), randf_range(miny, maxy));
+    return result;
+}
+
+Vec2 vec2_rand_direction() {
+    f32 angle = randf_range(0, TWO_PI);
+    Vec2 result;
+    vec2_direction(angle, &result);
+    return result;
+}
+
 //////////////////////////////////////////////////////////////////////////
 ///////////////////         Rect          ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

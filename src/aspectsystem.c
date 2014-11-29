@@ -1,8 +1,6 @@
 #include "aspectsystem.h"
 
-AspectSystem* aspect_system_new(EntityManager* entityManager, ComponentType type) {
-    AspectSystem* self = (AspectSystem*)calloc(1, sizeof(AspectSystem));
-
+void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type) {
     self->entityManager = entityManager;
     self->systemType = type;
 
@@ -11,15 +9,6 @@ AspectSystem* aspect_system_new(EntityManager* entityManager, ComponentType type
     for (u32 i = 0; i < MESSAGE_LAST; ++i) {
         self->handlers[i] = NULL;
     }
-
-    return self;
-}
-
-void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type) {
-    self->entityManager = entityManager;
-    self->systemType = type;
-
-    REGISTER_SYSTEM(self->entityManager, self);
 }
 
 void aspect_system_entities(AspectSystem* self, EntityList* dest) {

@@ -2,6 +2,10 @@
 
 #include <SDL2/SDL_image.h>
 
+#include "particles.h"
+
+ParticleEmitter testEmitter;
+
 void game_init(Game* self) {
     textures_init("assets");
 
@@ -9,6 +13,7 @@ void game_init(Game* self) {
     textures_load("player_bullet_1.png");
     textures_load("bg_dark_purple.png");
     textures_load("enemy_red_1.png");
+    textures_load("fireparticle.png");
 
     self->entityManager = entity_manager_new();
     health_system_init(&self->healthSystem, self->entityManager);
@@ -73,7 +78,9 @@ void game_init(Game* self) {
 
     camera_init(&globals.camera, NULL, &cameraConstraints);
 
-    globals.scrollSpeed = 100.f;
+    emitter_init(&testEmitter, 1000, textures_get("fireparticle.png"));
+
+    globals.scrollSpeed = 0.f;
 }
 
 void game_quit(Game* self) {
@@ -102,6 +109,8 @@ void game_update(Game* self) {
         printf("Entities: %u\n", entities_entity_count(self->entityManager));
     }
 
+    emitter_update(&testEmitter);
+
     camera_update(&globals.camera);
 }
 
@@ -109,4 +118,9 @@ void game_render(Game* self) {
     sprite_system_render(&self->backgroundSpriteSystem, &self->entities);
     sprite_system_render(&self->spriteSystem, &self->entities);
     collision_system_render(&self->collisionSystem, &self->entities);
+
+    Vec2 position;
+    position.x = 500;
+    position.y = 300;
+    emitter_render(&testEmitter, &position);
 }

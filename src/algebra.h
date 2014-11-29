@@ -61,6 +61,9 @@ Vec2 vec2_one();
 Vec2 vec2_unit_x();
 Vec2 vec2_unit_y();
 
+Vec2 vec2_rand_range(f32 minx, f32 miny, f32 maxx, f32 maxy);
+Vec2 vec2_rand_direction();
+
 // } Vec2
 
 // Rect {

@@ -1,26 +1,27 @@
 #include "application.h"
 
 int app_run(int argc, char* argv[]) {
-    App* self = _app_new();
+    App self;
+    _app_init(&self);
 
-    IF_DEBUG(bool appInit = )_app_initialize(self);
+    IF_DEBUG(bool appInit = )_app_initialize(&self);
     ASSERT(appInit, "Application failed to initialize");
 
-    game_init(&self->game);
-    game_start(&self->game);
+    game_init(&self.game);
+    game_start(&self.game);
 
-    while (!self->shouldQuit) {
+    while (!self.shouldQuit) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
-            _app_handle_event(self, &event);
+            _app_handle_event(&self, &event);
         }
 
-        _app_update(self);
-        _app_render(self);
+        _app_update(&self);
+        _app_render(&self);
     }
 
-    game_quit(&self->game);
-    _app_terminate(self);
+    game_quit(&self.game);
+    _app_terminate(&self);
 
     return 0;
 }
@@ -116,20 +117,10 @@ void _app_terminate(App* self) {
     SDL_DestroyRenderer(globals.renderer);
 
     SDL_Quit();
-
-    _app_free(self);
 }
 
-App* _app_new() {
-    App* self = (App*)calloc(1, sizeof(App));
-
+void  _app_init(App* self) {
     self->shouldQuit = false;
-
-    return self;
-}
-
-void _app_free(App* self) {
-    free(self);
 }
 
 void _app_print_fps() {

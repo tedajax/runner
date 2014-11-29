@@ -31,8 +31,7 @@ void _app_handle_event(App* self, SDL_Event* event);
 void _app_update(App* self);
 void _app_render(App* self);
 
-App* _app_new();
-void _app_free(App* self);
+void _app_init(App* self);
 
 void _app_print_fps();
 

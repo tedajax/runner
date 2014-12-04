@@ -226,8 +226,44 @@ int ini_keys_count(Ini* self, char* section) {
     return self->sectionKeyCounts[index];
 }
 
-int ini_get_int(Ini* self, char* section, char* key, int defaultVal) {
-    char* str = ini_get_string(self, section, key, NULL);
+int ini_get_int(Ini* self, char* section, char* key) {
+    char* str = ini_get_string(self, section, key);
+
+    return strtol(str, NULL, 0);
+}
+
+float ini_get_float(Ini* self, char* section, char* key) {
+    char* str = ini_get_string(self, section, key);
+
+    return strtof(str, NULL);
+}
+
+bool ini_get_bool(Ini* self, char* section, char* key) {
+    char* str = ini_get_string(self, section, key);
+
+    char c = str[0];
+
+    if (c == 'y' || c == 'Y' || c == 't' || c == 'T' || c == '1') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+char* ini_get_string(Ini* self, char* section, char* key) {
+    int sectionIndex = ini_section_index(self, section);
+
+    ASSERT(sectionIndex > -1, "Invalid section.");
+
+    int keyIndex = ini_index(self, section, key);
+
+    ASSERT(keyIndex > -1, "Key not found in section.");
+
+    return self->table[sectionIndex][keyIndex].value;
+}
+
+int ini_try_get_int(Ini* self, char* section, char* key, int defaultVal) {
+    char* str = ini_try_get_string(self, section, key, NULL);
 
     if (!str) {
         return defaultVal;
@@ -236,8 +272,8 @@ int ini_get_int(Ini* self, char* section, char* key, int defaultVal) {
     return strtol(str, NULL, 0);
 }
 
-float ini_get_float(Ini* self, char* section, char* key, float defaultVal) {
-    char* str = ini_get_string(self, section, key, NULL);
+float ini_try_get_float(Ini* self, char* section, char* key, float defaultVal) {
+    char* str = ini_try_get_string(self, section, key, NULL);
 
     if (!str) {
         return defaultVal;
@@ -246,8 +282,8 @@ float ini_get_float(Ini* self, char* section, char* key, float defaultVal) {
     return strtof(str, NULL);
 }
 
-bool ini_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
-    char* str = ini_get_string(self, section, key, NULL);
+bool ini_try_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
+    char* str = ini_try_get_string(self, section, key, NULL);
 
     if (!str) {
         return defaultVal;
@@ -262,7 +298,7 @@ bool ini_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
     }
 }
 
-char* ini_get_string(Ini* self, char* section, char* key, char* defaultVal) {
+char* ini_try_get_string(Ini* self, char* section, char* key, char* defaultVal) {
     int sectionIndex = ini_section_index(self, section);
 
     if (sectionIndex == -1) {

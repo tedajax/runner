@@ -14,8 +14,6 @@ typedef int(*str_compare_f)(char*, char*);
 
 extern str_compare_f ini_strcmp;
 
-#define INI_
-
 typedef struct ini_tree_kvp_t {
     u64 key;
     char* value;
@@ -34,6 +32,7 @@ void ini_tree_kvp_set(IniTreeKvp* self, char* key, char* value);
 
 void ini_init(Ini* self);
 void ini_load(Ini* self, const char* filename);
+void ini_free(Ini* self);
 
 void ini_add_section(Ini* self, char* section);
 void ini_add_key(Ini* self, char* section, char* key, char* value);

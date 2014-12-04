@@ -147,9 +147,6 @@
     <ClCompile Include="src\particles.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\iniparser.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ini.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -303,9 +300,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\particles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\iniparser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ini.h">

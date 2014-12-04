@@ -200,7 +200,6 @@
     <ClCompile Include="src\healthcomponent.c" />
     <ClCompile Include="src\healthsystem.c" />
     <ClCompile Include="src\ini.c" />
-    <ClCompile Include="src\iniparser.c" />
     <ClCompile Include="src\input.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\log.c" />
@@ -251,7 +250,6 @@
     <ClInclude Include="src\healthcomponent.h" />
     <ClInclude Include="src\healthsystem.h" />
     <ClInclude Include="src\ini.h" />
-    <ClInclude Include="src\iniparser.h" />
     <ClInclude Include="src\inline.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\list.h" />

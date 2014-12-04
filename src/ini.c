@@ -226,20 +226,32 @@ int ini_keys_count(Ini* self, char* section) {
     return self->sectionKeyCounts[index];
 }
 
-int ini_get_int(Ini* self, char* section, char* key) {
-    char* str = ini_get_string(self, section, key);
+int ini_get_int(Ini* self, char* section, char* key, int defaultVal) {
+    char* str = ini_get_string(self, section, key, NULL);
+
+    if (!str) {
+        return defaultVal;
+    }
 
     return strtol(str, NULL, 0);
 }
 
-float ini_get_float(Ini* self, char* section, char* key) {
-    char* str = ini_get_string(self, section, key);
+float ini_get_float(Ini* self, char* section, char* key, float defaultVal) {
+    char* str = ini_get_string(self, section, key, NULL);
+
+    if (!str) {
+        return defaultVal;
+    }
 
     return strtof(str, NULL);
 }
 
-bool ini_get_bool(Ini* self, char* section, char* key) {
-    char* str = ini_get_string(self, section, key);
+bool ini_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
+    char* str = ini_get_string(self, section, key, NULL);
+
+    if (!str) {
+        return defaultVal;
+    }
 
     char c = str[0];
 
@@ -250,14 +262,18 @@ bool ini_get_bool(Ini* self, char* section, char* key) {
     }
 }
 
-char* ini_get_string(Ini* self, char* section, char* key) {
+char* ini_get_string(Ini* self, char* section, char* key, char* defaultVal) {
     int sectionIndex = ini_section_index(self, section);
 
-    ASSERT(sectionIndex > -1, "Section does not exist.");
+    if (sectionIndex == -1) {
+        return defaultVal;
+    }
 
     int keyIndex = ini_index(self, section, key);
 
-    ASSERT(keyIndex > -1, "Key does not exist.");
+    if (keyIndex == -1) {
+        return defaultVal;
+    }
 
     return self->table[sectionIndex][keyIndex].value;
 }

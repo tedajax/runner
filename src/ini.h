@@ -47,10 +47,10 @@ bool ini_exists(Ini* self, char* section, char* key);
 int ini_section_count(Ini* self);
 int ini_keys_count(Ini* self, char* section);
 
-int ini_get_int(Ini* self, char* section, char* key);
-float ini_get_float(Ini* self, char* section, char* key);
-bool ini_get_bool(Ini* self, char* section, char* key);
-char* ini_get_string(Ini* self, char* section, char* key);
+int ini_get_int(Ini* self, char* section, char* key, int defaultVal);
+float ini_get_float(Ini* self, char* section, char* key, float defaultVal);
+bool ini_get_bool(Ini* self, char* section, char* key, bool defaultVal);
+char* ini_get_string(Ini* self, char* section, char* key, char* defaultVal);
 
 void ini_dump(Ini* self, FILE* file);
 

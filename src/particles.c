@@ -94,8 +94,8 @@ void emitter_render(ParticleEmitter* self, Vec2* position) {
         SDL_SetTextureAlphaMod(particle->texture, (u8)(particle->alpha * 255.f));
 
         SDL_Rect dest;
-        dest.x = (int)particle->position.x + position->x;
-        dest.y = (int)particle->position.y + position->y;
+        dest.x = (int)particle->position.x + (int)position->x;
+        dest.y = (int)particle->position.y + (int)position->y;
         dest.w = w;
         dest.h = h;
 

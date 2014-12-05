@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "hashtable.h"
+#include "path.h"
 
 #include <string.h>
 
@@ -23,7 +24,6 @@ SDL_Texture* texture_manager_get(TextureManager* self, const char* name);
 
 //TODO: probably make a path handling system
 //Private
-void _path_concat(const char* p1, const char* p2, char* dest);
 void _free_void_sdl_texture(void* ptr);
 
 #endif

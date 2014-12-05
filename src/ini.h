@@ -37,6 +37,7 @@ void ini_tree_kvp_set(IniTreeKvp* self, char* key, char* value);
 void ini_init(Ini* self);
 void ini_load(Ini* self, const char* filename);
 void ini_free(Ini* self);
+void ini_free_void(void* self);
 
 void ini_add_section(Ini* self, char* section);
 void ini_add_key(Ini* self, char* section, char* key, char* value);

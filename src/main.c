@@ -1,13 +1,11 @@
 #include "application.h"
 
-#include "ini.h"
+#include "config.h"
 
 int main(int argc, char* argv[]) {
-    Ini test;
-    ini_load(&test, "test.ini");
-
-    char* a = ini_get_string(&test, NULL, "globalkey");
-    bool b = ini_get_bool(&test, "test", "key6");
+    config_init();
+    config_load("test.ini");
+    Ini* test = config_get("test.ini");
 
     return app_run(argc, argv);
 }

@@ -14,8 +14,9 @@ void texture_manager_free(TextureManager* self) {
 }
 
 bool texture_manager_load(TextureManager* self, SDL_Renderer* renderer, const char* filename) {
-    char* fullPath = (char*)calloc(256, sizeof(char));
-    _path_concat(self->rootDir, filename, fullPath);
+    char fullPath[256];
+    IF_DEBUG(bool concatResult = )path_concat(self->rootDir, filename, fullPath, 256);
+    ASSERT(concatResult, "Failed to concatenate paths, destination string not long enough.");
 
     SDL_Surface* loadedSurface = IMG_Load(fullPath);
     if (!loadedSurface) {
@@ -34,7 +35,6 @@ bool texture_manager_load(TextureManager* self, SDL_Renderer* renderer, const ch
     hashtable_insert(&self->textureTable, filename, texture);
 
     SDL_FreeSurface(loadedSurface);
-    free(fullPath);
 
     return true;
 }
@@ -52,14 +52,6 @@ bool texture_manager_unload_all(TextureManager* self) {
 
 SDL_Texture* texture_manager_get(TextureManager* self, const char* name) {
     return (SDL_Texture*)hashtable_get(&self->textureTable, name);
-}
-
-void _path_concat(const char* p1, const char* p2, char* dest) {
-    u32 l1 = (u32)strlen(p1);
-
-    strcpy(dest, p1);
-    dest[l1] = '/';
-    strcpy(&dest[l1 + 1], p2);
 }
 
 void _free_void_sdl_texture(void* ptr) {

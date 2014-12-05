@@ -83,6 +83,8 @@ void ini_load(Ini* self, const char* filename) {
     char* data = _ini_load_file(filename);
     IniLines lines = _ini_split_lines(data);
 
+    ini_add_section(self, "__global");
+
     char currentSection[INI_MAX_SECTION_NAME_LENGTH];
     strcpy(&currentSection[0], INI_DEFAULT_SECTION);
 
@@ -137,6 +139,10 @@ void ini_free(Ini* self) {
         self->sectionKeyCounts[i] = 0;
         self->sectionHashes[i] = 0;
     }
+}
+
+void ini_free_void(void* self) {
+    ini_free((Ini*)self);
 }
 
 void ini_add_section(Ini* self, char* section) {
@@ -490,8 +496,19 @@ IniLineResult _ini_parse_line(char* line) {
                             valueStart = index;
                         }
                     } else {
-                        if (_ini_isws(c) || index == len - 1 || c == '#' || c == ';') {
-                            valueEnd = index + 1;
+                        if (index == len - 1 || c == '#' || c == ';') {
+                            u32 indexAdd = 0;
+                            if (index == len - 1) {
+                                indexAdd = 1;
+                            }
+
+                            valueEnd = index + indexAdd;
+
+                            // if there's whitespace before a comment remove it.
+                            while (_ini_isws(line[valueEnd]) || line[valueEnd] == '#' || line[valueEnd] == ';') {
+                                --valueEnd;
+                            }
+                            valueEnd += 1;
                         }
                     }
                 }

@@ -83,7 +83,8 @@ void ini_load(Ini* self, const char* filename) {
     char* data = _ini_load_file(filename);
     IniLines lines = _ini_split_lines(data);
 
-    char currentSection[256];
+    char currentSection[INI_MAX_SECTION_NAME_LENGTH];
+    strcpy(&currentSection[0], INI_DEFAULT_SECTION);
 
     for (u32 i = 0; i < lines.count; ++i) {
         IniLineResult line = _ini_parse_line(lines.lines[i]);
@@ -94,7 +95,8 @@ void ini_load(Ini* self, const char* filename) {
             
             char* sectionName = calloc(end - start + 1, sizeof(char));
             strncpy(sectionName, &lines.lines[i][start], end - start);
-            strncpy(&currentSection[0], sectionName, 256);
+            memset(&currentSection[0], 0, INI_MAX_SECTION_NAME_LENGTH);
+            strncpy(&currentSection[0], sectionName, INI_MAX_SECTION_NAME_LENGTH);
             ini_add_section(self, sectionName);
             free(sectionName);
         } else if (line.type == INI_LINE_KVP) {
@@ -251,7 +253,9 @@ bool ini_get_bool(Ini* self, char* section, char* key) {
 }
 
 char* ini_get_string(Ini* self, char* section, char* key) {
-    int sectionIndex = ini_section_index(self, section);
+    char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
+
+    int sectionIndex = ini_section_index(self, targetSection);
 
     ASSERT(sectionIndex > -1, "Invalid section.");
 
@@ -299,7 +303,9 @@ bool ini_try_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
 }
 
 char* ini_try_get_string(Ini* self, char* section, char* key, char* defaultVal) {
-    int sectionIndex = ini_section_index(self, section);
+    char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
+    
+    int sectionIndex = ini_section_index(self, targetSection);
 
     if (sectionIndex == -1) {
         return defaultVal;
@@ -409,7 +415,7 @@ void _ini_free_lines(IniLines* self) {
 
 char* _ini_load_file(const char* filename) {
     long fileSize;
-    FILE* file = fopen(filename, "rb");
+    FILE* file = fopen(filename, "r");
     
     ASSERT(file, "Failed to open file.");
 

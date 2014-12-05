@@ -10,6 +10,10 @@
 #define INI_MAX_SECTIONS 128
 #define INI_MAX_KEYS_PER_SECTION 128
 
+#define INI_MAX_SECTION_NAME_LENGTH 256
+
+#define INI_DEFAULT_SECTION "__global"
+
 typedef int(*str_compare_f)(char*, char*);
 
 extern str_compare_f ini_strcmp;

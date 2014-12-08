@@ -214,6 +214,7 @@
     <ClCompile Include="src\stackallocator.c" />
     <ClCompile Include="src\texturemanager.c" />
     <ClCompile Include="src\transformcomponent.c" />
+    <ClCompile Include="src\tween.c" />
     <ClCompile Include="src\vector.c" />
     <ClCompile Include="src\window.c" />
   </ItemGroup>
@@ -236,6 +237,7 @@
     <ClInclude Include="src\controllercomponent.h" />
     <ClInclude Include="src\controllersystem.h" />
     <ClInclude Include="src\core.h" />
+    <ClInclude Include="src\curves.h" />
     <ClInclude Include="src\debug.h" />
     <ClInclude Include="src\dict.h" />
     <ClInclude Include="src\enemycomponent.h" />
@@ -268,6 +270,7 @@
     <ClInclude Include="src\systems.h" />
     <ClInclude Include="src\texturemanager.h" />
     <ClInclude Include="src\transformcomponent.h" />
+    <ClInclude Include="src\tween.h" />
     <ClInclude Include="src\types.h" />
     <ClInclude Include="src\vector.h" />
     <ClInclude Include="src\window.h" />

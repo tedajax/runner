@@ -156,6 +156,9 @@
     <ClCompile Include="src\path.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tween.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -315,6 +318,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\curves.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tween.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

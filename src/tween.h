@@ -49,9 +49,29 @@ typedef struct tween_t {
     tween_func tweenFunc; // which tweenFunction to use.
 
     f32 time;
+    u32 loopsLeft;        // how many loops are left
+
+    bool enabled;
 } Tween;
 
 void tween_init(Tween* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc);
+void tween_zero(Tween* self);
 f32 tween_evaluate(Tween* self);
+void tween_update(Tween* self, f32 dt);
+void tween_play(Tween* self);
+void tween_pause(Tween* self);
+void tween_stop(Tween* self);
+void tween_reset(Tween* self);
+
+typedef struct tween_manager_T {
+    Tween* tweens;
+    u32* freeIndices;
+    u32 capacity;
+    u32 freeHead;
+} TweenManager;
+
+void tween_manager_init(TweenManager* self, u32 capacity);
+void tween_manager_update(TweenManager* self, f32 dt);
+Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc);
 
 #endif

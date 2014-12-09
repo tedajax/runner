@@ -20,7 +20,6 @@ bool texture_manager_load(TextureManager* self, SDL_Renderer* renderer, const ch
 
     SDL_Surface* loadedSurface = IMG_Load(fullPath);
     if (!loadedSurface) {
-        free(fullPath);
         return false;
     }
 
@@ -28,7 +27,6 @@ bool texture_manager_load(TextureManager* self, SDL_Renderer* renderer, const ch
 
     if (!texture) {
         SDL_FreeSurface(loadedSurface);
-        free(fullPath);
         return false;
     }
 

@@ -1,22 +1,7 @@
 #include "tween.h"
 #include <math.h>
 
-void tween_init(Tween* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc) {
-    self->start = start;
-    self->end = end;
-    self->duration = duration;
-    self->loops = loops;
-
-    self->tweenFunc = tweenFunc;
-
-    self->time = 0.f;
-}
-
-f32 tween_evaluate(Tween* self) {
-    ASSERT(self->tweenFunc, "Attempt to evaluate tween with no tweening function.");
-
-    return self->tweenFunc(self->time, self->start, self->end, self->duration);
-}
+#pragma region Tween Functions
 
 f32 tween_linear(f32 t, f32 i, f32 f, f32 d) {
     return (f - i) * t / d + i;
@@ -130,4 +115,119 @@ f32 tween_cos_wave(f32 t, f32 i, f32 f, f32 d) {
 
 f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d) {
     return ((-4.f * (i + (f - i))) / (d * d)) * t * (t - d);
+}
+
+#pragma endregion
+
+void tween_init(Tween* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc) {
+    self->start = start;
+    self->end = end;
+    self->duration = duration;
+    self->loops = loops;
+
+    self->tweenFunc = tweenFunc;
+
+    self->time = 0.f;
+    self->loopsLeft = loops;
+}
+
+void tween_zero(Tween* self) {
+    self->start = 0.f;
+    self->end = 0.f;
+    self->duration = 0.f;
+    self->loops = 0;
+
+    self->timescale = 0.f;
+
+    self->tweenFunc = NULL;
+
+    self->time = 0.f;
+    self->loopsLeft = 0;
+
+    self->enabled = false;
+}
+
+f32 tween_evaluate(Tween* self) {
+    ASSERT(self->enabled, "Attempt to evaluate inactive tween.");
+    ASSERT(self->tweenFunc, "Attempt to evaluate tween with no tweening function.");
+
+    f32 i = self->start;
+    f32 f = self->end;
+
+    if (self->timescale < 0.f) {
+        i = self->end;
+        f = self->start;
+    }
+
+    return self->tweenFunc(self->time, i, f, self->duration);
+}
+
+void tween_update(Tween* self, f32 dt) {
+    f32 ts = fabsf(self->timescale);
+
+    self->time += dt * ts;
+
+
+}
+
+void tween_play(Tween* self) {
+    self->timescale = 1.f;
+}
+
+void tween_pause(Tween* self) {
+    self->timescale = 0.f;
+}
+
+void tween_stop(Tween* self) {
+    self->timescale = 0.f;
+    self->time = 0.f;
+}
+
+void tween_reset(Tween* self) {
+    self->time = 0.f;
+    self->loopsLeft = self->loops;
+}
+
+void tween_manager_init(TweenManager* self, u32 capacity) {
+    self->capacity = capacity;
+    
+    self->tweens = CALLOC(self->capacity, Tween);
+    self->freeIndices = CALLOC(self->capacity, u32);
+    
+    for (u32 i = self->capacity - 1; i >= 0; --i) {
+        self->freeIndices[i] = i;
+        tween_zero(&self->tweens[i]);
+    }
+
+    self->freeHead = self->capacity - 1;
+}
+
+void tween_manager_update(TweenManager* self, f32 dt) {
+    for (u32 i = 0; i < self->capacity; ++i) {
+        Tween* tween = &self->tweens[i];
+        if (tween->enabled) {
+            tween_update(tween, dt);
+
+            // If the most recent update finished
+            if (!tween->enabled) {
+                //push the index back into the free indices stack
+                ASSERT(self->freeHead < self->capacity - 1, "No room in free indices stack.");
+                tween_zero(tween);
+                ++self->freeHead;
+                self->freeIndices[self->freeHead] = i;
+            }
+        }
+    }
+}
+
+Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc) {
+    ASSERT(self->freeHead > 0, "Reached maximum tween capacity.  Consider increasing capacity of this tween manager.");
+    
+    u32 index = self->freeIndices[self->freeHead];
+    --self->freeHead;
+    Tween* tween = &self->tweens[index];
+
+    tween_init(tween, start, end, duration, loops, tweenFunc);
+
+    return tween;
 }

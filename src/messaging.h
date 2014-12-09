@@ -51,7 +51,7 @@ inline void message_init(Message* self, MessageType type) {
     }
 }
 
-inline void message_add_param(Message* self, void* param) {
+static inline void message_add_param(Message* self, void* param) {
     ASSERT(self->paramCount < MESSAGE_MAX_PARAMS, "Maximum params added to message.");
 
     self->params[self->paramCount] = param;

@@ -3,6 +3,7 @@
 
 #include "ini.h"
 #include "hashtable.h"
+#include "path.h"
 
 char* rootDir;
 Hashtable configTable;

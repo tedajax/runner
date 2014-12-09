@@ -14,7 +14,7 @@
 
 #define INI_DEFAULT_SECTION "__global"
 
-typedef int(*str_compare_f)(char*, char*);
+typedef int(*str_compare_f)(const char*, const char*);
 
 extern str_compare_f ini_strcmp;
 

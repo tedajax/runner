@@ -42,8 +42,6 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 }
 
 void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* entity, Message message) {
-    BulletControllerSystem* self = (BulletControllerSystem*)system;
-
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,
         COMPONENT_BULLET_CONTROLLER,

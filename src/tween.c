@@ -194,9 +194,9 @@ void tween_manager_init(TweenManager* self, u32 capacity) {
     self->tweens = CALLOC(self->capacity, Tween);
     self->freeIndices = CALLOC(self->capacity, u32);
     
-    for (u32 i = self->capacity - 1; i >= 0; --i) {
-        self->freeIndices[i] = i;
-        tween_zero(&self->tweens[i]);
+    for (u32 i = self->capacity; i > 0; --i) {
+        self->freeIndices[i - 1] = i;
+        tween_zero(&self->tweens[i - 1]);
     }
 
     self->freeHead = self->capacity - 1;

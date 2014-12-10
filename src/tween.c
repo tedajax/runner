@@ -167,7 +167,17 @@ void tween_update(Tween* self, f32 dt) {
 
     self->time += dt * ts;
 
-
+    if (self->time > self->duration) {
+        if (self->loopsLeft > 0) {
+            if (self->loopsLeft != TWEEN_LOOP_INFINITE) {
+                --self->loopsLeft;
+            }
+            self->time -= self->duration;
+        } else {
+            self->enabled = false;
+            self->time = self->duration;
+        }
+    }
 }
 
 void tween_play(Tween* self) {
@@ -216,6 +226,27 @@ void tween_manager_update(TweenManager* self, f32 dt) {
                 ++self->freeHead;
                 self->freeIndices[self->freeHead] = i;
             }
+        }
+    }
+}
+
+void tween_manager_remove(TweenManager* self, Tween* tween) {
+    for (u32 i = 0; i < self->capacity; ++i) {
+        if (tween == &self->tweens[i]) {
+            for (u32 j = 0; j < self->freeHead; ++j) {
+                if (self->freeIndices[j] == i) {
+                    // this tween has already been removed
+                    return;
+                }
+            }
+
+            ASSERT(self->freeHead < self->capacity - 1, "No room in free indices stack.");
+
+            tween_zero(tween);
+            ++self->freeHead;
+            self->freeIndices[self->freeHead] = i;
+
+            return;
         }
     }
 }

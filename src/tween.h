@@ -73,5 +73,6 @@ typedef struct tween_manager_T {
 void tween_manager_init(TweenManager* self, u32 capacity);
 void tween_manager_update(TweenManager* self, f32 dt);
 Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc);
+void tween_manager_remove(TweenManager* self, Tween* tween);
 
 #endif

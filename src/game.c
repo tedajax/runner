@@ -3,10 +3,14 @@
 #include <SDL2/SDL_image.h>
 
 #include "particles.h"
+#include "config.h"
 
 ParticleEmitter testEmitter;
 
 void game_init(Game* self) {
+    config_init();
+    config_load("particles.ini");
+    
     textures_init("assets");
 
     textures_load("player_ship.png");
@@ -78,7 +82,9 @@ void game_init(Game* self) {
 
     camera_init(&globals.camera, NULL, &cameraConstraints);
 
-    emitter_init(&testEmitter, 1000, textures_get("fireparticle.png"));
+
+    emitter_config(&testEmitter, "particles.ini", "fire");
+    //emitter_init(&testEmitter, 1000, textures_get("fireparticle.png"));
 
     globals.scrollSpeed = 0.f;
 }

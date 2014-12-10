@@ -184,6 +184,7 @@
     <ClCompile Include="src\config.c" />
     <ClCompile Include="src\controllercomponent.c" />
     <ClCompile Include="src\controllersystem.c" />
+    <ClCompile Include="src\curves.c" />
     <ClCompile Include="src\debug.c" />
     <ClCompile Include="src\dict.c" />
     <ClCompile Include="src\enemycomponent.c" />

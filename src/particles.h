@@ -30,6 +30,7 @@ bool particle_dead(Particle* self);
 
 // TODO: ParticleEmitterConfig struct
 void emitter_init(ParticleEmitter* self, u32 maxParticles, SDL_Texture* texture);
+void emitter_config(ParticleEmitter* self, const char* configName, const char* sectionName);
 void emitter_free(ParticleEmitter* self);
 
 void emitter_update(ParticleEmitter* self);

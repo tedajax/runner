@@ -159,6 +159,9 @@
     <ClCompile Include="src\tween.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\curves.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">

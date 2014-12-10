@@ -45,6 +45,7 @@ void _ini_striml(char* s);
 void _ini_strimr(char* s);
 void _ini_print_substr(char* s, u32 start, u32 end);
 bool _ini_isws(char c);
+bool _ini_isalnum(char c);
 IniLines _ini_split_lines(char* data);
 void _ini_free_lines(IniLines* self);
 char* _ini_load_file(const char* filename);
@@ -376,6 +377,10 @@ bool _ini_isws(char c) {
     return (c == 0x20 || c == 0x09 || c == 0xD);
 }
 
+bool _ini_isalnum(char c) {
+    return isalnum(c) || c == '_';
+}
+
 IniLines _ini_split_lines(char* data) {
     IniLines dest;
 
@@ -483,7 +488,7 @@ IniLineResult _ini_parse_line(char* line) {
 
             case INI_LINE_KVP:
                 if (keyEnd == 0) {
-                    if (isalnum(c)) {
+                    if (_ini_isalnum(c)) {
                         // nothing
                     } else if (_ini_isws(c) || c == '=') {
                         keyEnd = index;
@@ -492,7 +497,7 @@ IniLineResult _ini_parse_line(char* line) {
                     }
                 } else if (valueEnd == 0) {
                     if (valueStart == 0) {
-                        if (isalnum(c) || c == '-') {
+                        if (_ini_isalnum(c) || c == '-') {
                             valueStart = index;
                         }
                     } else {

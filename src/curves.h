@@ -17,6 +17,6 @@ typedef struct curve_t {
 
 void curve_init(Curve* self, u32 capacity, CurveType type);
 void curve_add_point(Curve* self, Vec2 point);
-void curve_evaluate()
+void curve_evaluate(Curve* self, f32 )
 
 #endif

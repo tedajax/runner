@@ -499,6 +499,9 @@ IniLineResult _ini_parse_line(char* line) {
                     if (valueStart == 0) {
                         if (_ini_isalnum(c) || c == '-') {
                             valueStart = index;
+                            if (index == len - 1) {
+                                valueEnd = valueStart + 1;
+                            }
                         }
                     } else {
                         if (index == len - 1 || c == '#' || c == ';') {

@@ -13,11 +13,27 @@ void globals_init() {
 
     game_time_initialize(&globals.time);
 
-    globals.gravity.x = 0.f;
-    globals.gravity.y = 1000.f;
-
     globals.window = NULL;
     globals.renderer = NULL;
+}
+
+void globals_config(const char* configName) {
+    Ini* config = config_get(configName);
+
+    globals.randomSeed = (u32)ini_try_get_int(config, INI_GLOBAL, "random_seed", 0);
+
+    if (globals.randomSeed == 0) {
+        globals.randomSeed = (u32)time(NULL);
+        srand(globals.randomSeed);
+    }
+
+    globals.screen.width = (u32)ini_try_get_int(config, "screen", "width", 1280);
+    globals.screen.height = (u32)ini_try_get_int(config, "screen", "height", 720);
+
+    globals.world.width = (u32)ini_try_get_int(config, "world", "width", 1280);
+    globals.world.height = (u32)ini_try_get_int(config, "world", "height", 720);
+
+    globals.scrollSpeed = ini_try_get_float(config, "game", "scroll_speed", 0.f);
 }
 
 void textures_init(const char* rootDir) { texture_manager_init(&globals.textures, rootDir); }

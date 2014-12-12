@@ -13,6 +13,7 @@
 #define INI_MAX_SECTION_NAME_LENGTH 256
 
 #define INI_DEFAULT_SECTION "__global"
+#define INI_GLOBAL INI_DEFAULT_SECTION
 
 typedef int(*str_compare_f)(const char*, const char*);
 

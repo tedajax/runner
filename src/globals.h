@@ -6,6 +6,7 @@
 #include "algebra.h"
 #include "camera.h"
 #include "texturemanager.h"
+#include "config.h"
 
 #include <SDL2/SDL.h>
 
@@ -47,6 +48,7 @@ typedef struct globals {
 // Sets all the values in globals to reasonable defaults (0 most likely)
 // Not intended to use as a configuration step.
 void globals_init();
+void globals_config(const char* configName);
 
 void textures_init(const char* rootDir);
 void textures_free();

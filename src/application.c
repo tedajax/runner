@@ -67,21 +67,17 @@ void app_quit(App* self) {
 }
 
 bool _app_initialize(App* self) {
-    globals_init();
+    config_init();
+    config_load("game.ini");
+    config_load("particles.ini");
 
-    globals.randomSeed = (u32)time(NULL);
-    srand(globals.randomSeed);
+    globals_init();
+    globals_config("game.ini");
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         log_error("SDL", SDL_GetError());
         return false;
     }
-
-    globals.world.width = 1280;
-    globals.world.height = 720;
-
-    globals.screen.width = globals.world.width / 1;
-    globals.screen.height = globals.world.height / 1;
 
     globals.window = window_create("Runner",
         SDL_WINDOWPOS_CENTERED,

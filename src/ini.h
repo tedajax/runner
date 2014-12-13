@@ -19,8 +19,27 @@ typedef int(*str_compare_f)(const char*, const char*);
 
 extern str_compare_f ini_strcmp;
 
+typedef enum ini_value_type_e {
+    INI_VALUE_NUMBER,
+    INI_VALUE_STRING,
+    INI_VALUE_BOOLEAN,
+} IniValueType;
+
+typedef union ini_kvp_value_u {
+    char* string;
+    f32 number;
+    bool boolean;
+} IniKvpValue;
+
+typedef struct ini_kvp_value_list_t {
+    IniValueType type;
+    IniKvpValue* values;
+    u32 count;
+} IniKvpValueList;
+
 typedef struct ini_tree_kvp_t {
     u64 key;
+    IniKvpValueList values;
     char* value;
 } IniTreeKvp;
 

@@ -46,10 +46,12 @@ void _ini_strimr(char* s);
 void _ini_print_substr(char* s, u32 start, u32 end);
 bool _ini_isws(char c);
 bool _ini_isalnum(char c);
+bool _ini_is_value_start(char c);
 IniLines _ini_split_lines(char* data);
 void _ini_free_lines(IniLines* self);
 char* _ini_load_file(const char* filename);
 IniLineResult _ini_parse_line(char* line);
+void _ini_parse_value(char* value, IniKvpValueList* dest);
 
 str_compare_f ini_strcmp = strcmp;
 
@@ -168,6 +170,9 @@ void ini_add_key(Ini* self, char* section, char* key, char* value) {
     u64 keyHash = _ini_djb2(key);
     int keyIndex = self->sectionKeyCounts[sectionIndex];
     self->table[sectionIndex][keyIndex].key = keyHash;
+
+    _ini_parse_value(value, &self->table[sectionIndex][keyIndex].values);
+
     self->table[sectionIndex][keyIndex].value = value;
     ++self->sectionKeyCounts[sectionIndex];
 }
@@ -381,6 +386,10 @@ bool _ini_isalnum(char c) {
     return isalnum(c) || c == '_';
 }
 
+bool _ini_is_value_start(char c) {
+    return _ini_isalnum(c) || c == '-' || c == '[';
+}
+
 IniLines _ini_split_lines(char* data) {
     IniLines dest;
 
@@ -497,7 +506,7 @@ IniLineResult _ini_parse_line(char* line) {
                     }
                 } else if (valueEnd == 0) {
                     if (valueStart == 0) {
-                        if (_ini_isalnum(c) || c == '-') {
+                        if (_ini_is_value_start(c)) {
                             valueStart = index;
                             if (index == len - 1) {
                                 valueEnd = valueStart + 1;
@@ -562,4 +571,25 @@ IniLineResult _ini_parse_line(char* line) {
 ini_parse_error:
     result.type = INI_LINE_ERROR;
     return result;
+}
+
+void _ini_parse_value(char* value, IniKvpValueList* dest) {
+    // TODO: probably unnecessary?
+    //_ini_strim(value);
+
+    // If this isn't an array everything is easy!
+    if (value[0] != '[') {
+        // TODO: figure out what type it actually is!
+        dest->type = INI_VALUE_STRING;
+        dest->count = 1;
+        dest->values = CALLOC(1, IniKvpValue);
+
+        dest->values[0].string = value;
+        return;
+    }
+
+    u32 len = strlen(value);
+    ASSERT(value[len - 1] == ']', "Failed to parse array, matching \']\' not found!");
+    
+
 }

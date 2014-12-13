@@ -1,4 +1,5 @@
 #include "globals.h"
+#include <time.h>
 
 Globals globals;
 

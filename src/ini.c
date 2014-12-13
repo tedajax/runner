@@ -43,6 +43,7 @@ u64 _ini_djb2(const char *key);
 void _ini_strim(char* s);
 void _ini_striml(char* s);
 void _ini_strimr(char* s);
+int _ini_strcasecmp(char const* a, char const* b);
 void _ini_print_substr(char* s, u32 start, u32 end);
 bool _ini_isws(char c);
 bool _ini_isalnum(char c);
@@ -240,20 +241,20 @@ int ini_keys_count(Ini* self, char* section) {
     return self->sectionKeyCounts[index];
 }
 
-int ini_get_int(Ini* self, char* section, char* key) {
-    char* str = ini_get_string(self, section, key);
+int ini_get_int_at(Ini* self, char* section, char* key, u32 index) {
+    char* str = ini_get_string_at(self, section, key, index);
 
     return strtol(str, NULL, 0);
 }
 
-float ini_get_float(Ini* self, char* section, char* key) {
-    char* str = ini_get_string(self, section, key);
+float ini_get_float_at(Ini* self, char* section, char* key, u32 index) {
+    char* str = ini_get_string_at(self, section, key, index);
 
     return strtof(str, NULL);
 }
 
-bool ini_get_bool(Ini* self, char* section, char* key) {
-    char* str = ini_get_string(self, section, key);
+bool ini_get_bool_at(Ini* self, char* section, char* key, u32 index) {
+    char* str = ini_get_string_at(self, section, key, index);
 
     char c = str[0];
 
@@ -264,7 +265,7 @@ bool ini_get_bool(Ini* self, char* section, char* key) {
     }
 }
 
-char* ini_get_string(Ini* self, char* section, char* key) {
+char* ini_get_string_at(Ini* self, char* section, char* key, u32 index) {
     char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
 
     int sectionIndex = ini_section_index(self, targetSection);
@@ -275,10 +276,15 @@ char* ini_get_string(Ini* self, char* section, char* key) {
 
     ASSERT(keyIndex > -1, "Key not found in section.");
 
-    return self->table[sectionIndex][keyIndex].value;
+    IniKvpValueList* values = &self->table[sectionIndex][keyIndex].values;
+
+    u32 i = (index >= values->count) ? values->count - 1 : index;
+    // TODO: use the type data to determine if it's the right type
+
+    return values->values[i].string;
 }
 
-int ini_try_get_int(Ini* self, char* section, char* key, int defaultVal) {
+int ini_try_get_int_at(Ini* self, char* section, char* key, u32 index, int defaultVal) {
     char* str = ini_try_get_string(self, section, key, NULL);
 
     if (!str) {
@@ -288,7 +294,7 @@ int ini_try_get_int(Ini* self, char* section, char* key, int defaultVal) {
     return strtol(str, NULL, 0);
 }
 
-float ini_try_get_float(Ini* self, char* section, char* key, float defaultVal) {
+float ini_try_get_float_at(Ini* self, char* section, char* key, u32 index, float defaultVal) {
     char* str = ini_try_get_string(self, section, key, NULL);
 
     if (!str) {
@@ -298,7 +304,7 @@ float ini_try_get_float(Ini* self, char* section, char* key, float defaultVal) {
     return strtof(str, NULL);
 }
 
-bool ini_try_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
+bool ini_try_get_bool_at(Ini* self, char* section, char* key, u32 index, bool defaultVal) {
     char* str = ini_try_get_string(self, section, key, NULL);
 
     if (!str) {
@@ -314,7 +320,7 @@ bool ini_try_get_bool(Ini* self, char* section, char* key, bool defaultVal) {
     }
 }
 
-char* ini_try_get_string(Ini* self, char* section, char* key, char* defaultVal) {
+char* ini_try_get_string_at(Ini* self, char* section, char* key, u32 index, char* defaultVal) {
     char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
     
     int sectionIndex = ini_section_index(self, targetSection);
@@ -372,6 +378,15 @@ void _ini_strimr(char* s) {
     }
 }
 
+int _ini_strcasecmp(char const* a, char const* b) {
+    for (;; a++, b++) {
+        int c = tolower(*a) - tolower(*b);
+        if (c != 0 || !*a) {
+            return c;
+        }
+    }
+}
+
 void _ini_print_substr(char* s, u32 start, u32 end) {
     for (u32 i = start; i < end; ++i) {
         printf("%c", s[i]);
@@ -379,7 +394,7 @@ void _ini_print_substr(char* s, u32 start, u32 end) {
 }
 
 bool _ini_isws(char c) {
-    return (c == 0x20 || c == 0x09 || c == 0xD);
+    return (c == ' ' || c == '\t' || c == '\r' || c == '\n');
 }
 
 bool _ini_isalnum(char c) {
@@ -588,8 +603,35 @@ void _ini_parse_value(char* value, IniKvpValueList* dest) {
         return;
     }
 
-    u32 len = strlen(value);
+    u32 len = (u32)strlen(value);
     ASSERT(value[len - 1] == ']', "Failed to parse array, matching \']\' not found!");
     
+    // start at index 1 to skip past open bracket
+    char* slide = value + 1;
+    //printf("%s\n", slide);
 
+    u32 capacity = 1;
+    for (u32 i = 0; i < len; ++i) {
+        if (value[i] == ',') {
+            ++capacity;
+        }
+    }
+
+    dest->values = CALLOC(capacity, IniKvpValue);
+    dest->count = 0;
+
+    size_t chunkLen;
+    do {
+        chunkLen = strcspn(slide, ",]");
+        
+        if (chunkLen) {
+            char* v = calloc(chunkLen + 1, sizeof(char));
+            strncpy(v, slide, chunkLen);
+            dest->values[dest->count].string = v;
+            ++dest->count;
+        }
+
+        slide = strpbrk(slide, ",]");
+        if (slide) { ++slide; _ini_striml(slide); }
+    } while (chunkLen);
 }

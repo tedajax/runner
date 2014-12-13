@@ -6,6 +6,7 @@
 #include "types.h"
 #include "debug.h"
 #include "log.h"
+#include "inline.h"
 
 #define INI_MAX_SECTIONS 128
 #define INI_MAX_KEYS_PER_SECTION 128
@@ -72,15 +73,25 @@ bool ini_exists(Ini* self, char* section, char* key);
 int ini_section_count(Ini* self);
 int ini_keys_count(Ini* self, char* section);
 
-int ini_get_int(Ini* self, char* section, char* key);
-float ini_get_float(Ini* self, char* section, char* key);
-bool ini_get_bool(Ini* self, char* section, char* key);
-char* ini_get_string(Ini* self, char* section, char* key);
+int ini_try_get_int_at(Ini* self, char* section, char* key, u32 index, int defaultVal);
+float ini_try_get_float_at(Ini* self, char* section, char* key, u32 index, float defaultVal);
+bool ini_try_get_bool_at(Ini* self, char* section, char* key, u32 index, bool defaultVal);
+char* ini_try_get_string_at(Ini* self, char* section, char* key, u32 index, char* defaultVal);
 
-int ini_try_get_int(Ini* self, char* section, char* key, int defaultVal);
-float ini_try_get_float(Ini* self, char* section, char* key, float defaultVal);
-bool ini_try_get_bool(Ini* self, char* section, char* key, bool defaultVal);
-char* ini_try_get_string(Ini* self, char* section, char* key, char* defaultVal);
+int ini_get_int_at(Ini* self, char* section, char* key, u32 index);
+float ini_get_float_at(Ini* self, char* section, char* key, u32 index);
+bool ini_get_bool_at(Ini* self, char* section, char* key, u32 index);
+char* ini_get_string_at(Ini* self, char* section, char* key, u32 index);
+
+inline int ini_try_get_int(Ini* self, char* section, char* key, int defaultVal) { return ini_try_get_int_at(self, section, key, 0, defaultVal); }
+inline float ini_try_get_float(Ini* self, char* section, char* key, float defaultVal) { return ini_try_get_float_at(self, section, key, 0, defaultVal); }
+inline bool ini_try_get_bool(Ini* self, char* section, char* key, bool defaultVal) { return ini_try_get_bool_at(self, section, key, 0, defaultVal); }
+inline char* ini_try_get_string(Ini* self, char* section, char* key, char* defaultVal) { return ini_try_get_string_at(self, section, key, 0, defaultVal); }
+
+inline int ini_get_int(Ini* self, char* section, char* key) { return ini_get_int_at(self, section, key, 0); }
+inline float ini_get_float(Ini* self, char* section, char* key) { return ini_get_float_at(self, section, key, 0); }
+inline bool ini_get_bool(Ini* self, char* section, char* key) { return ini_get_bool_at(self, section, key, 0); }
+inline char* ini_get_string(Ini* self, char* section, char* key) { return ini_get_string_at(self, section, key, 0); }
 
 void ini_dump(Ini* self, FILE* file);
 

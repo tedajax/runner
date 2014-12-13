@@ -79,7 +79,6 @@ void game_init(Game* self) {
 
     camera_init(&globals.camera, NULL, &cameraConstraints);
 
-
     emitter_config(&testEmitter, "particles.ini", "fire");
     //emitter_init(&testEmitter, 1000, textures_get("fireparticle.png"));
 }

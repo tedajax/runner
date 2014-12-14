@@ -58,16 +58,19 @@ str_compare_f ini_strcmp = strcmp;
 
 void ini_tree_kvp_clear(IniTreeKvp* self) {
     self->key = 0;
-    self->value = NULL;
+    self->values.count = 0;
+    self->values.type = INI_VALUE_STRING;
+    self->values.values = NULL;
 }
 
 void ini_tree_kvp_free(IniTreeKvp* self) {
-    free(self->value);
+    free(self->values.values);
+    self->values.values = NULL;
 }
 
 void ini_tree_kvp_set(IniTreeKvp* self, char* key, char* value) {
     self->key = _ini_djb2(key);
-    self->value = value;
+    _ini_parse_value(value, &self->values);
 }
 
 void ini_init(Ini* self) {
@@ -121,7 +124,7 @@ void ini_load(Ini* self, const char* filename) {
             ini_add_key(self, &currentSection[0], keyName, valueName);
 
             free(keyName);
-            // dont free the value since it's actually stored in the table
+            free(valueName);
         } else if (line.type == INI_LINE_ERROR) {
             log_error_format("INI", "Error parsing INI file \'%s\' on line %u.", filename, i + 1);
             return;
@@ -137,7 +140,11 @@ void ini_free(Ini* self) {
     for (u32 i = 0; i < INI_MAX_SECTIONS; ++i) {
         for (u32 j = 0; j < INI_MAX_KEYS_PER_SECTION; ++j) {
             if (self->table[i][j].key > 0) {
-                free(self->table[i][j].value);
+                for (u32 v = 0; v < self->table[i][j].values.count; ++i) {
+                    if (self->table[i][j].values.type == INI_VALUE_STRING) {
+                        free(self->table[i][j].values.values[v].string);
+                    }
+                }
             }
         }
         self->sectionKeyCounts[i] = 0;
@@ -174,7 +181,6 @@ void ini_add_key(Ini* self, char* section, char* key, char* value) {
 
     _ini_parse_value(value, &self->table[sectionIndex][keyIndex].values);
 
-    self->table[sectionIndex][keyIndex].value = value;
     ++self->sectionKeyCounts[sectionIndex];
 }
 
@@ -187,11 +193,10 @@ void ini_set_key(Ini* self, char* section, char* key, char* value) {
 
     ASSERT(keyIndex > -1, "Key does not exist.");
 
-    // TODO: automatically handle freeing of previous value???
-    self->table[sectionIndex][keyIndex].value = value;
+    _ini_parse_value(value, &self->table[sectionIndex][keyIndex].values);
 }
 
-int ini_section_index(Ini* self, char* section) {
+int ini_section_index(Ini* self, const char* section) {
     u64 hash = _ini_djb2(section);
 
     for (u32 i = 0; i < self->sectionCount; ++i) {
@@ -203,7 +208,7 @@ int ini_section_index(Ini* self, char* section) {
     return -1;
 }
 
-int ini_index(Ini* self, char* section, char* key) {
+int ini_index(Ini* self, const char* section, const char* key) {
     int index = ini_section_index(self, section);
 
     ASSERT(index > -1, "Section does not exist.");
@@ -241,19 +246,19 @@ int ini_keys_count(Ini* self, char* section) {
     return self->sectionKeyCounts[index];
 }
 
-int ini_get_int_at(Ini* self, char* section, char* key, u32 index) {
+int ini_get_int_at(Ini* self, const char* section, const char* key, u32 index) {
     char* str = ini_get_string_at(self, section, key, index);
 
     return strtol(str, NULL, 0);
 }
 
-float ini_get_float_at(Ini* self, char* section, char* key, u32 index) {
+float ini_get_float_at(Ini* self, const char* section, const char* key, u32 index) {
     char* str = ini_get_string_at(self, section, key, index);
 
     return strtof(str, NULL);
 }
 
-bool ini_get_bool_at(Ini* self, char* section, char* key, u32 index) {
+bool ini_get_bool_at(Ini* self, const char* section, const char* key, u32 index) {
     char* str = ini_get_string_at(self, section, key, index);
 
     char c = str[0];
@@ -265,8 +270,8 @@ bool ini_get_bool_at(Ini* self, char* section, char* key, u32 index) {
     }
 }
 
-char* ini_get_string_at(Ini* self, char* section, char* key, u32 index) {
-    char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
+char* ini_get_string_at(Ini* self, const char* section, const char* key, u32 index) {
+    char* targetSection = (section) ? (char*)section : INI_DEFAULT_SECTION;
 
     int sectionIndex = ini_section_index(self, targetSection);
 
@@ -284,8 +289,8 @@ char* ini_get_string_at(Ini* self, char* section, char* key, u32 index) {
     return values->values[i].string;
 }
 
-int ini_try_get_int_at(Ini* self, char* section, char* key, u32 index, int defaultVal) {
-    char* str = ini_try_get_string(self, section, key, NULL);
+int ini_try_get_int_at(Ini* self, const char* section, const char* key, u32 index, int defaultVal) {
+    char* str = ini_try_get_string_at(self, section, key, index, NULL);
 
     if (!str) {
         return defaultVal;
@@ -294,8 +299,8 @@ int ini_try_get_int_at(Ini* self, char* section, char* key, u32 index, int defau
     return strtol(str, NULL, 0);
 }
 
-float ini_try_get_float_at(Ini* self, char* section, char* key, u32 index, float defaultVal) {
-    char* str = ini_try_get_string(self, section, key, NULL);
+float ini_try_get_float_at(Ini* self, const char* section, const char* key, u32 index, float defaultVal) {
+    char* str = ini_try_get_string_at(self, section, key, index, NULL);
 
     if (!str) {
         return defaultVal;
@@ -304,8 +309,8 @@ float ini_try_get_float_at(Ini* self, char* section, char* key, u32 index, float
     return strtof(str, NULL);
 }
 
-bool ini_try_get_bool_at(Ini* self, char* section, char* key, u32 index, bool defaultVal) {
-    char* str = ini_try_get_string(self, section, key, NULL);
+bool ini_try_get_bool_at(Ini* self, const char* section, const char* key, u32 index, bool defaultVal) {
+    char* str = ini_try_get_string_at(self, section, key, index, NULL);
 
     if (!str) {
         return defaultVal;
@@ -320,8 +325,8 @@ bool ini_try_get_bool_at(Ini* self, char* section, char* key, u32 index, bool de
     }
 }
 
-char* ini_try_get_string_at(Ini* self, char* section, char* key, u32 index, char* defaultVal) {
-    char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
+char* ini_try_get_string_at(Ini* self, const char* section, const char* key, u32 index, char* defaultVal) {
+    const char* targetSection = (section) ? section : INI_DEFAULT_SECTION;
     
     int sectionIndex = ini_section_index(self, targetSection);
 
@@ -335,7 +340,7 @@ char* ini_try_get_string_at(Ini* self, char* section, char* key, u32 index, char
         return defaultVal;
     }
 
-    return self->table[sectionIndex][keyIndex].value;
+    return self->table[sectionIndex][keyIndex].values.values[index].string;
 }
 
 // Collisions entirely plausible.
@@ -589,8 +594,7 @@ ini_parse_error:
 }
 
 void _ini_parse_value(char* value, IniKvpValueList* dest) {
-    // TODO: probably unnecessary?
-    //_ini_strim(value);
+    u32 len = (u32)strlen(value);
 
     // If this isn't an array everything is easy!
     if (value[0] != '[') {
@@ -599,11 +603,12 @@ void _ini_parse_value(char* value, IniKvpValueList* dest) {
         dest->count = 1;
         dest->values = CALLOC(1, IniKvpValue);
 
-        dest->values[0].string = value;
+        char* v = calloc(len + 1, sizeof(char));
+        strncpy(v, value, len);
+        dest->values[0].string = v;
         return;
     }
-
-    u32 len = (u32)strlen(value);
+    
     ASSERT(value[len - 1] == ']', "Failed to parse array, matching \']\' not found!");
     
     // start at index 1 to skip past open bracket

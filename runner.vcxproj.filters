@@ -165,6 +165,9 @@
     <ClCompile Include="src\curves.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\range.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -330,6 +333,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tween.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\range.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

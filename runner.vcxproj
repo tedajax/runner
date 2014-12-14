@@ -210,6 +210,7 @@
     <ClCompile Include="src\movementsystem.c" />
     <ClCompile Include="src\particles.c" />
     <ClCompile Include="src\path.c" />
+    <ClCompile Include="src\range.c" />
     <ClCompile Include="src\spritecomponent.c" />
     <ClCompile Include="src\spritesystem.c" />
     <ClCompile Include="src\stackallocator.c" />
@@ -265,6 +266,7 @@
     <ClInclude Include="src\movementsystem.h" />
     <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\path.h" />
+    <ClInclude Include="src\range.h" />
     <ClInclude Include="src\spritecomponent.h" />
     <ClInclude Include="src\spritesystem.h" />
     <ClInclude Include="src\stackallocator.h" />

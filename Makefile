@@ -1,10 +1,10 @@
 ifeq ($(OS),Windows_NT) # If windows
 	LIB_ROOT = C:/dev/lib/x86
 	INC_ROOT = C:/dev/include
-	SDL_LFLAGS = -L$(LIB_ROOT) -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx
+	SDL_LFLAGS = -L$(LIB_ROOT) -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
 	CC = gcc
 else
-	SDL_LFLAGS = -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_ttf
+	SDL_LFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
 	CC = clang
 endif
 

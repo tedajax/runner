@@ -1,6 +1,5 @@
 #include "collisionsystem.h"
-
-#include <SDL2/SDL2_gfxPrimitives.h>
+#include "primitives.h"
 
 static bool layerMatrix[COLLIDER_LAYER_LAST][COLLIDER_LAYER_LAST];
 
@@ -148,11 +147,9 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
 
         Rect anchoredRect;
         collider_anchored_rectangle(&collider->collider, &anchoredRect);
-        i16 x1 = (i16)(rect_left(&anchoredRect) - globals.camera.position.x);
-        i16 y1 = (i16)(rect_top(&anchoredRect) - globals.camera.position.y);
-        i16 x2 = (i16)(rect_right(&anchoredRect) - globals.camera.position.x);
-        i16 y2 = (i16)(rect_bottom(&anchoredRect) - globals.camera.position.y);
-        rectangleColor(globals.renderer, x1, y1, x2, y2, color);
+        anchoredRect.position.x -= globals.camera.position.x;
+        anchoredRect.position.y -= globals.camera.position.y;
+        prim_rect_color(globals.renderer, &anchoredRect, color);
     }
 }
 

@@ -26,10 +26,10 @@ void sprite_component_destination(SpriteComponent* self, TransformComponent* tra
     f32 px = transform->position.x - globals.camera.position.x;
     f32 py = transform->position.y - globals.camera.position.y;
 
-    i16 x = (i16)px;
-    i16 y = (i16)py;
-    i16 w = (i16)self->width;
-    i16 h = (i16)self->height;
+    int x = (int)px;
+    int y = (int)py;
+    int w = (int)self->width;
+    int h = (int)self->height;
 
     dest->x = x;
     dest->y = y;

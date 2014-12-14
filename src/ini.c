@@ -367,7 +367,9 @@ void _ini_striml(char* s) {
         ++index;
     }
 
-    memmove(s, &s[index], strlen(s) - index);
+    size_t len = strlen(s);
+    memmove(s, &s[index], len - index);
+    s[len - index] = 0x0;
 }
 
 void _ini_strimr(char* s) {
@@ -418,21 +420,28 @@ IniLines _ini_split_lines(char* data) {
     dest.lines = (char**)calloc(capacity, sizeof(char*));
     dest.count = 0;
 
+    bool arrayOpened = false;
     size_t len = strlen(data);  
     size_t index = 0;
     for (size_t i = 0; i < len; ++i) {
         if (data[i] == '\n') {
-            dest.lines[dest.count] = (char*)calloc(i - index + 1, sizeof(char));
-            strncpy(dest.lines[dest.count], &data[index], i - index);
-            dest.lines[dest.count][i - index] = '\0';
-            ++dest.count;
+            if (!arrayOpened) {
+                dest.lines[dest.count] = (char*)calloc(i - index + 1, sizeof(char));
+                strncpy(dest.lines[dest.count], &data[index], i - index);
+                dest.lines[dest.count][i - index] = '\0';
+                ++dest.count;
 
-            if (dest.count >= capacity) {
-                capacity <<= 1;
-                dest.lines = (char**)realloc(dest.lines, sizeof(char*) * capacity);
+                if (dest.count >= capacity) {
+                    capacity <<= 1;
+                    dest.lines = (char**)realloc(dest.lines, sizeof(char*) * capacity);
+                }
+
+                index = i + 1;
             }
-
-            index = i + 1;
+        } else if (data[i] == '[') {
+            arrayOpened = true;
+        } else if (data[i] == ']') {
+            arrayOpened = false;
         }
     }
 

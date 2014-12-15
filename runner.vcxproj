@@ -94,7 +94,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -112,7 +112,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
@@ -136,7 +136,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -158,7 +158,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
@@ -186,6 +186,7 @@
     <ClCompile Include="src\controllersystem.c" />
     <ClCompile Include="src\curves.c" />
     <ClCompile Include="src\debug.c" />
+    <ClCompile Include="src\debughud.c" />
     <ClCompile Include="src\dict.c" />
     <ClCompile Include="src\enemycomponent.c" />
     <ClCompile Include="src\enemysystem.c" />
@@ -242,6 +243,7 @@
     <ClInclude Include="src\core.h" />
     <ClInclude Include="src\curves.h" />
     <ClInclude Include="src\debug.h" />
+    <ClInclude Include="src\debughud.h" />
     <ClInclude Include="src\dict.h" />
     <ClInclude Include="src\enemycomponent.h" />
     <ClInclude Include="src\enemysystem.h" />
@@ -269,6 +271,7 @@
     <ClInclude Include="src\path.h" />
     <ClInclude Include="src\primitives.h" />
     <ClInclude Include="src\range.h" />
+    <ClInclude Include="src\snprintf.h" />
     <ClInclude Include="src\spritecomponent.h" />
     <ClInclude Include="src\spritesystem.h" />
     <ClInclude Include="src\stackallocator.h" />

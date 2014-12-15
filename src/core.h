@@ -5,3 +5,10 @@
 #include "algebra.h"
 #include "input.h"
 #include "inline.h"
+
+#ifdef _MSC_VER
+
+
+
+
+#endif

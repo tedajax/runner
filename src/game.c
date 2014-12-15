@@ -4,8 +4,10 @@
 
 #include "particles.h"
 #include "config.h"
+#include "debughud.h"
 
 ParticleEmitter testEmitter;
+DebugHud debugHud;
 
 void game_init(Game* self) {  
     textures_init("assets");
@@ -81,6 +83,11 @@ void game_init(Game* self) {
 
     emitter_config(&testEmitter, "particles.ini", "fire");
     //emitter_init(&testEmitter, 1000, textures_get("fireparticle.png"));
+
+    debug_hud_init(&debugHud, "assets/fonts/terminus.ttf", 12);
+    debug_hud_add_watch(&debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
+    debug_hud_add_watch(&debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.size);
+    debug_hud_add_watch(&debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
 }
 
 void game_quit(Game* self) {
@@ -112,6 +119,8 @@ void game_update(Game* self) {
     emitter_update(&testEmitter);
 
     camera_update(&globals.camera);
+
+    debug_hud_update_surfaces(&debugHud, globals.renderer);
 }
 
 void game_render(Game* self) {
@@ -123,4 +132,6 @@ void game_render(Game* self) {
     position.x = 500;
     position.y = 300;
     emitter_render(&testEmitter, &position);
+
+    debug_hud_render(&debugHud, globals.renderer, 5, 5);
 }

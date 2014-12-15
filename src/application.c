@@ -79,6 +79,11 @@ bool _app_initialize(App* self) {
         return false;
     }
 
+    if (TTF_Init() < 0) {
+        log_error("SDL_TTF", TTF_GetError());
+        return false;
+    }
+
     globals.window = window_create("Runner",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
@@ -103,8 +108,6 @@ bool _app_initialize(App* self) {
 
     input_initialize();
 
-    globals.time.on_second = _app_print_fps;
-
     return true;
 }
 
@@ -112,6 +115,7 @@ void _app_terminate(App* self) {
     SDL_DestroyWindow(globals.window);
     SDL_DestroyRenderer(globals.renderer);
 
+    TTF_Quit();
     SDL_Quit();
 }
 

@@ -171,6 +171,9 @@
     <ClCompile Include="src\primitives.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\debughud.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -342,6 +345,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\primitives.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debughud.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snprintf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,6 +21,7 @@ typedef struct game_time_t {
     u32 fps;
     u64 per_frame_ms;
     f32 delta;
+    f32 timescale;
     time_cb on_second;
 } GameTime;
 

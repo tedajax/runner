@@ -13,6 +13,7 @@ void game_time_initialize(GameTime* self) {
     self->fps = 0;
     self->per_frame_ms = 0;
     self->delta = 0.f;
+    self->timescale = 1.f;
     self->on_second = NULL;
 }
 
@@ -51,6 +52,7 @@ void game_time_update(GameTime* self) {
     }
 
     self->delta = ((f32)self->since_start_ns - (f32)self->last_frame_ns) / SECONDS_TO_NANOSECONDS;
+    self->delta *= self->timescale;
 }
 
 u64 game_time_now() {

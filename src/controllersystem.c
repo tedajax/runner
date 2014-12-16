@@ -48,6 +48,17 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
 
         vec2_set(&movement->velocity, x, y);
 
+        if (input_key_down(SDL_SCANCODE_Z)) {
+            controller->bulletSource.active = true;
+        }
+        if (input_key_up(SDL_SCANCODE_Z)) {
+            controller->bulletSource.active = false;
+        }
+
+        if (bullet_source_update(&controller->bulletSource, globals.time.delta)) {
+            bullet_source_fire(&controller->bulletSource, self->super.entityManager, &transform->position);
+        }
+
         //if (controller->fireTimer > 0.f) {
         //    controller->fireTimer -= globals.time.delta;
         //}

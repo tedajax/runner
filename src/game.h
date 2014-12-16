@@ -6,6 +6,7 @@
 #include "entityfactory.h"
 #include "components.h"
 #include "systems.h"
+#include "debughud.h"
 
 typedef struct game_t {
     EntityManager* entityManager;
@@ -22,6 +23,8 @@ typedef struct game_t {
     Entity* player;
 
     EntityList entities;
+
+    DebugHud debugHud;
 } Game;
 
 void game_init(Game* self);

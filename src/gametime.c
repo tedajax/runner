@@ -11,6 +11,7 @@ void game_time_initialize(GameTime* self) {
     self->seconds_timer_ns = 0;
     self->frames_this_second = 0;
     self->fps = 0;
+    self->per_frame_ms = 0;
     self->delta = 0.f;
     self->on_second = NULL;
 }
@@ -34,6 +35,8 @@ void game_time_update(GameTime* self) {
 
     self->last_frame_ns = self->since_start_ns;
     self->since_start_ns += self->delta_ns;
+
+    self->per_frame_ms = game_time_nano_to_milli(self->delta_ns);
 
     self->seconds_timer_ns += (u32)self->delta_ns;
     if (self->seconds_timer_ns >= (1 * SECONDS_TO_NANOSECONDS)) {

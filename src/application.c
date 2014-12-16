@@ -70,6 +70,7 @@ bool _app_initialize(App* self) {
     config_init();
     config_load("game.ini");
     config_load("particles.ini");
+    config_load("player.ini");
 
     globals_init();
     globals_config("game.ini");

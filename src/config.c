@@ -28,5 +28,7 @@ void config_load(const char* filename) {
 }
 
 Ini* config_get(const char* name) {
-    return (Ini*)hashtable_get(&configTable, name);
+    Ini* cfg = (Ini*)hashtable_get(&configTable, name);
+    ASSERT(cfg, "Config has not been loaded");
+    return cfg;
 }

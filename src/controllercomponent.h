@@ -3,14 +3,14 @@
 
 #include "core.h"
 #include "component.h"
+#include "bulletsource.h"
 
 typedef struct controller_component_t {
     Component super;
     f32 moveSpeed;
-    f32 fireDelay;
-    f32 fireTimer;
+    BulletSource bulletSource;
 } ControllerComponent;
 
-ControllerComponent* controller_component_new(f32 moveSpeed);
+ControllerComponent* controller_component_new(char* config, char* section);
 
 #endif

@@ -176,6 +176,7 @@
     <ClCompile Include="src\bgmanagersystem.c" />
     <ClCompile Include="src\bulletcontrollercomponent.c" />
     <ClCompile Include="src\bulletcontrollersystem.c" />
+    <ClCompile Include="src\bulletsource.c" />
     <ClCompile Include="src\camera.c" />
     <ClCompile Include="src\collider.c" />
     <ClCompile Include="src\collidercomponent.c" />
@@ -230,6 +231,7 @@
     <ClInclude Include="src\bgmanagersystem.h" />
     <ClInclude Include="src\bulletcontrollercomponent.h" />
     <ClInclude Include="src\bulletcontrollersystem.h" />
+    <ClInclude Include="src\bulletsource.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\collider.h" />
     <ClInclude Include="src\collidercomponent.h" />
@@ -286,6 +288,7 @@
   <ItemGroup>
     <None Include="assets\data\game.ini" />
     <None Include="assets\data\particles.ini" />
+    <None Include="assets\data\player.ini" />
     <None Include="assets\data\test.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -289,6 +289,20 @@ char* ini_get_string_at(Ini* self, const char* section, const char* key, u32 ind
     return values->values[i].string;
 }
 
+Vec2 ini_get_vec2_at(Ini* self, const char* section, const char* key, u32 index) {
+    f32 x = ini_get_float_at(self, section, key, index * 2 + 0);
+    f32 y = ini_get_float_at(self, section, key, index * 2 + 1);
+    return vec2_init(x, y);
+}
+
+Range ini_get_range_at(Ini* self, const char* section, const char* key, u32 index) {
+    f32 min = ini_get_float_at(self, section, key, index * 2 + 0);
+    f32 max = ini_get_float_at(self, section, key, index * 2 + 1);
+    Range r;
+    range_init(&r, min, max);
+    return r;
+}
+
 int ini_try_get_int_at(Ini* self, const char* section, const char* key, u32 index, int defaultVal) {
     char* str = ini_try_get_string_at(self, section, key, index, NULL);
 
@@ -341,6 +355,20 @@ char* ini_try_get_string_at(Ini* self, const char* section, const char* key, u32
     }
 
     return self->table[sectionIndex][keyIndex].values.values[index].string;
+}
+
+Vec2 ini_try_get_vec2_at(Ini* self, const char* section, const char* key, u32 index, Vec2 defaultVal) {
+    f32 x = ini_try_get_float_at(self, section, key, index * 2 + 0, defaultVal.x);
+    f32 y = ini_try_get_float_at(self, section, key, index * 2 + 1, defaultVal.y);
+    return vec2_init(x, y);
+}
+
+Range ini_try_get_range_at(Ini* self, const char* section, const char* key, u32 index, Range defaultVal) {
+    f32 min = ini_try_get_float_at(self, section, key, index * 2 + 0, defaultVal.min);
+    f32 max = ini_try_get_float_at(self, section, key, index * 2 + 1, defaultVal.max);
+    Range r;
+    range_init(&r, min, max);
+    return r;
 }
 
 // Collisions entirely plausible.
@@ -648,4 +676,18 @@ void _ini_parse_value(char* value, IniKvpValueList* dest) {
         slide = strpbrk(slide, ",]");
         if (slide) { ++slide; _ini_striml(slide); }
     } while (chunkLen);
+}
+
+u32 ini_get_array_count(Ini* self, const char* section, const char* key) {
+    char* targetSection = (section) ? (char*)section : INI_DEFAULT_SECTION;
+
+    int sectionIndex = ini_section_index(self, targetSection);
+
+    ASSERT(sectionIndex > -1, "Invalid section.");
+
+    int keyIndex = ini_index(self, section, key);
+
+    ASSERT(keyIndex > -1, "Key not found in section.");
+
+    return self->table[sectionIndex][keyIndex].values.count;
 }

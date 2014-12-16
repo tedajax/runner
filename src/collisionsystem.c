@@ -149,7 +149,7 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
         collider_anchored_rectangle(&collider->collider, &anchoredRect);
         anchoredRect.position.x -= globals.camera.position.x;
         anchoredRect.position.y -= globals.camera.position.y;
-        prim_rect_color(globals.renderer, &anchoredRect, color);
+        prim_box_color(globals.renderer, &anchoredRect, color);
     }
 }
 

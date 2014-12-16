@@ -73,10 +73,10 @@ int prim_circle(SDL_Renderer* renderer, Circle* circle, u32 segments) {
 
     f32 degPerSegment = 360.f / segments;
 
-    f32 x0 = circle->position.x + circle->radius;
-    f32 y0 = circle->position.y + circle->radius;
+    f32 x0 = circle->position.x + cosf(0.f) * circle->radius;
+    f32 y0 = circle->position.y + sinf(0.f) * circle->radius;
 
-    for (u32 s = 1; s < segments; ++s) {
+    for (u32 s = 1; s <= segments; ++s) {
         f32 a = degPerSegment * DEG_TO_RAD * (f32)s;
         
         f32 x1 = circle->position.x + cosf(a) * circle->radius;

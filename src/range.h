@@ -1,7 +1,8 @@
 #ifndef RUNNER_RANGE_H
 #define RUNNER_RANGE_H
 
-#include "core.h"
+#include "types.h"
+#include "algebra.h"
 
 typedef struct range_t {
     f32 min;

@@ -48,18 +48,18 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
 
         vec2_set(&movement->velocity, x, y);
 
-        if (controller->fireTimer > 0.f) {
-            controller->fireTimer -= globals.time.delta;
-        }
+        //if (controller->fireTimer > 0.f) {
+        //    controller->fireTimer -= globals.time.delta;
+        //}
 
-        if (input_key(SDL_SCANCODE_Z) && controller->fireTimer <= 0.f) {
-            Vec2 pos = vec2_clone(&transform->position);
-            pos.x += 64;
-            pos.y += 52;
-            entity_create_bullet(self->super.entityManager,
-                vec2_clone(&pos),
-                textures_get("player_bullet_1.png"));
-            controller->fireTimer = controller->fireDelay;
-        }
+        //if (input_key(SDL_SCANCODE_Z) && controller->fireTimer <= 0.f) {
+        //    Vec2 pos = vec2_clone(&transform->position);
+        //    pos.x += 64;
+        //    pos.y += 52;
+        //    entity_create_bullet(self->super.entityManager,
+        //        vec2_clone(&pos),
+        //        textures_get("player_bullet_1.png"));
+        //    controller->fireTimer = controller->fireDelay;
+        //}
     }
 }

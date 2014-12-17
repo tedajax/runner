@@ -25,25 +25,23 @@ void bullet_source_config(BulletSourceConfig* self, char* config, char* section,
     self->textureName = ini_get_string_at(cfg, section, "texture_name", level);
 }
 
-bool bullet_source_update(BulletSource* self, f32 dt) {
+void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManager, Vec2* anchor) {
     if (self->fireTimer > 0.f) {
         self->fireTimer -= dt;
     }
 
     if (!self->active) {
-        return false;
+        return;
     }
 
     if (self->fireTimer <= 0.f) {
         self->fireTimer = self->config.fireDelay;
-        return true;
+        bullet_source_fire(self, entityManager, anchor);
     }
-
-    return false;
 }
 
 void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* anchor) {
     Vec2 pos;
     vec2_add(anchor, &self->offset, &pos);
-    entity_create_bullet(entityManager, pos, textures_get(self->config.textureName));
+    entity_create_bullet(entityManager, self, pos, textures_get(self->config.textureName));
 }

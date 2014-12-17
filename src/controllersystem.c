@@ -55,9 +55,7 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
             controller->bulletSource.active = false;
         }
 
-        if (bullet_source_update(&controller->bulletSource, globals.time.delta)) {
-            bullet_source_fire(&controller->bulletSource, self->super.entityManager, &transform->position);
-        }
+        bullet_source_update(&controller->bulletSource, globals.time.delta, self->super.entityManager, &transform->position);
 
         //if (controller->fireTimer > 0.f) {
         //    controller->fireTimer -= globals.time.delta;

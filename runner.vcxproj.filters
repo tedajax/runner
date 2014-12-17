@@ -177,6 +177,9 @@
     <ClCompile Include="src\bulletsource.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\physics.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -357,6 +360,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\bulletsource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

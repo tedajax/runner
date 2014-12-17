@@ -212,6 +212,7 @@
     <ClCompile Include="src\movementsystem.c" />
     <ClCompile Include="src\particles.c" />
     <ClCompile Include="src\path.c" />
+    <ClCompile Include="src\physics.c" />
     <ClCompile Include="src\primitives.c" />
     <ClCompile Include="src\range.c" />
     <ClCompile Include="src\spritecomponent.c" />
@@ -271,6 +272,7 @@
     <ClInclude Include="src\movementsystem.h" />
     <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\path.h" />
+    <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\primitives.h" />
     <ClInclude Include="src\range.h" />
     <ClInclude Include="src\snprintf.h" />

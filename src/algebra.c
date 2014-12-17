@@ -124,6 +124,10 @@ void vec2_direction(const f32 angle, Vec2* dest) {
     dest->y = sinf(angle);
 }
 
+f32 vec2_dot(const Vec2* lhs, const Vec2* rhs) {
+    return lhs->x * rhs->x + lhs->y * rhs->y;
+}
+
 f32 vec2_length(const Vec2* vec) {
     return sqrtf(vec2_lengthSqr(vec));
 }

@@ -3,15 +3,25 @@
 
 #include "core.h"
 #include "component.h"
-#include "bulletsource.h"
+
+typedef struct bullet_config_t {
+    f32 startAngle;
+    f32 startSpeed;
+    f32 acceleration;
+    f32 rotationRate;
+    f32 lifetime;
+} BulletConfig;
 
 typedef struct bullet_controller_component_t {
     Component super;
+    BulletConfig config;
     f32 speed;
+    f32 angle;
+    f32 lifeTimer;
     bool destroy;
 } BulletControllerComponent;
 
-BulletControllerComponent* bullet_controller_component_new(BulletSourceConfig* config);
+BulletControllerComponent* bullet_controller_component_new(BulletConfig* config);
 void bullet_controller_on_collision_enter(Component* component, Message message);
 
 #endif

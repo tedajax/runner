@@ -1,12 +1,15 @@
 #include "bulletcontrollercomponent.h"
 
-BulletControllerComponent* bullet_controller_component_new(BulletSourceConfig* config) {
+BulletControllerComponent* bullet_controller_component_new(BulletConfig* config) {
     BulletControllerComponent* self = (BulletControllerComponent*)calloc(1,
         sizeof(BulletControllerComponent));
 
     component_init((Component*)self, COMPONENT_BULLET_CONTROLLER);
 
-    self->speed = config->speed;
+    self->config = *config;
+    self->speed = self->config.startSpeed;
+    self->angle = self->config.startAngle;
+    self->lifeTimer = self->config.lifetime;
     self->destroy = false;
 
     return self;

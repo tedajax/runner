@@ -29,7 +29,20 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
-        vec2_set(&movement->velocity, bullet->speed, 0.f);
+        bullet->speed += bullet->config.acceleration * globals.time.delta;
+        bullet->angle += bullet->config.rotationRate * globals.time.delta;
+
+        transform->rotation = bullet->angle;
+
+        f32 bulletRadAngle = bullet->angle * DEG_TO_RAD;
+        vec2_set(&movement->velocity, bullet->speed * cosf(bulletRadAngle),
+                                      bullet->speed * sinf(bulletRadAngle));
+
+        bullet->lifeTimer -= globals.time.delta;
+
+        if (bullet->lifeTimer <= 0) {
+            bullet->destroy = true;
+        }
 
         if (transform->position.x > globals.camera.position.x + globals.world.width) {
             bullet->destroy = true;

@@ -49,10 +49,10 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
         vec2_set(&movement->velocity, x, y);
 
         if (input_key_down(SDL_SCANCODE_Z)) {
-            controller->bulletSource.active = true;
+            bullet_source_on(&controller->bulletSource);
         }
         if (input_key_up(SDL_SCANCODE_Z)) {
-            controller->bulletSource.active = false;
+            bullet_source_off(&controller->bulletSource);
         }
 
         bullet_source_update(&controller->bulletSource, globals.time.delta, self->super.entityManager, &transform->position);

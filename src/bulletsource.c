@@ -41,7 +41,14 @@ void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManag
 }
 
 void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* anchor) {
+    // TODO multiple bullets
     Vec2 pos;
     vec2_add(anchor, &self->offset, &pos);
-    entity_create_bullet(entityManager, self, pos, textures_get(self->config.textureName));
+    BulletConfig config;
+    config.startSpeed = self->config.speed;
+    config.startAngle = self->config.startAngle;
+    config.acceleration = self->config.acceleration;
+    config.rotationRate = self->config.rotationRate;
+    config.lifetime = self->config.lifetime;
+    entity_create_bullet(entityManager, &config, pos, textures_get(self->config.textureName));
 }

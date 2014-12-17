@@ -1,5 +1,4 @@
 #include "entityfactory.h"
-#include "bulletsource.h"
 
 Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture) {
     Entity* entity = entities_create_entity(entityManager);
@@ -46,7 +45,7 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
     return entity;
 }
 
-Entity* entity_create_bullet(EntityManager* entityManager, BulletSourceConfig* config, Vec2 position, SDL_Texture* texture) {
+Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* config, Vec2 position, SDL_Texture* texture) {
     Entity* entity = entities_create_entity(entityManager);
 
     TransformComponent* transform = transform_component_new(position, 0.f, vec2_one());

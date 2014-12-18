@@ -1,5 +1,26 @@
 #include "physics.h"
 
+BoundingVolume* physics_volume_new(BoundingVolumeType type) {
+    BoundingVolume* result = NULL;
+
+    switch (type) {
+        default:
+        case BOUNDING_VOLUME_AA_BOX:
+            result = (BoundingVolume*)CALLOC(1, AABoundingBox);
+            break;
+
+        case BOUNDING_VOLUME_O_BOX:
+            result = (BoundingVolume*)CALLOC(1, OBoundingBox);
+            break;
+
+        case BOUNDING_VOLUME_CIRCLE:
+            result = (BoundingVolume*)CALLOC(1, BoundingCircle);
+            break;
+    }
+
+    return result;
+}
+
 bool physics_volumes_broadphase(BoundingVolume* bv1, BoundingVolume* bv2) {
     return rect_intersects(&bv1->bounds, &bv2->bounds);
 }
@@ -60,6 +81,42 @@ bool physics_volumes_intersect(BoundingVolume* bv1, BoundingVolume* bv2) {
     }
 }
 
+void physics_volume_update(BoundingVolume* self, Vec2* center) {
+    switch (self->type) {
+        default:
+        case BOUNDING_VOLUME_AA_BOX:
+            aabbox_update((AABoundingBox*)self, center);
+            break;
+
+        case BOUNDING_VOLUME_O_BOX:
+            obbox_update((OBoundingBox*)self, center);
+            break;
+
+        case BOUNDING_VOLUME_CIRCLE:
+            bcircle_update((BoundingCircle*)self, center);
+            break;
+    }
+}
+
+void bounding_volume_copy(BoundingVolume* source, BoundingVolume* dest) {
+    dest->type = source->type;
+    rect_copy_to(&source->bounds, &dest->bounds);
+
+    switch (source->type) {
+        default:
+        case BOUNDING_VOLUME_AA_BOX:
+            aabbox_copy((AABoundingBox*)source, (AABoundingBox*)dest);
+            break;
+
+        case BOUNDING_VOLUME_O_BOX:
+            obbox_copy((OBoundingBox*)source, (OBoundingBox*)dest);
+            break;
+
+        case BOUNDING_VOLUME_CIRCLE:
+            bcircle_copy((BoundingCircle*)source, (BoundingCircle*)dest);
+            break;
+    }
+}
 
 void aabbox_init(AABoundingBox* self, Vec2 center, f32 width, f32 height) {
     self->super.type = BOUNDING_VOLUME_AA_BOX;
@@ -94,6 +151,16 @@ bool aabbox_intersect_bcircle(AABoundingBox* self, BoundingCircle* other) {
            other->center.y <= self->center.y + h;
 }
 
+void aabbox_copy(AABoundingBox* source, AABoundingBox* dest) {
+    vec2_copy_to(&source->center, &dest->center);
+    dest->width = source->width;
+    dest->height = source->height;
+}
+
+void aabbox_update(AABoundingBox* self, Vec2* center) {
+    vec2_copy_to(center, &self->center);
+    aabbox_calc_bounds(self);
+}
 
 void obbox_init(OBoundingBox* self, Vec2 center, f32 width, f32 height, f32 orientation) {
     self->super.type = BOUNDING_VOLUME_O_BOX;
@@ -210,6 +277,31 @@ bool obbox_intersect_bcircle(OBoundingBox* self, BoundingCircle* other) {
     return false;
 }
 
+void obbox_copy(OBoundingBox* source, OBoundingBox* dest) {
+    vec2_copy_to(&source->center, &dest->center);
+    dest->width = source->width;
+    dest->height = source->height;
+    dest->orientation = source->orientation;
+
+    for (u32 c = 0; c < 4; ++c) {
+        vec2_copy_to(&source->corners[c], &dest->corners[c]);
+    }
+
+    for (u32 a = 0; a < 2; ++a) {
+        vec2_copy_to(&source->axes[a], &dest->axes[a]);
+    }
+
+    dest->origins[0] = source->origins[0];
+    dest->origins[1] = source->origins[1];
+}
+
+void obbox_update(OBoundingBox* self, Vec2* center) {
+    vec2_copy_to(center, &self->center);
+    obbox_calc_corners(self);
+    obbox_calc_axes(self);
+    obbox_calc_bounds(self);
+}
+
 void bcircle_init(BoundingCircle* self, Vec2 center, f32 radius) {
     self->super.type = BOUNDING_VOLUME_CIRCLE;
     self->center = center;
@@ -235,4 +327,14 @@ bool bcircle_intersect_obbox(BoundingCircle* self, OBoundingBox* other) {
 bool bcircle_intersect_bcircle(BoundingCircle* self, BoundingCircle* other) {
     f32 d = vec2_dist(&self->center, &other->center);
     return d <= self->radius + other->radius;
+}
+
+void bcircle_copy(BoundingCircle* source, BoundingCircle* dest) {
+    vec2_copy_to(&source->center, &dest->center);
+    dest->radius = source->radius;
+}
+
+void bcircle_update(BoundingCircle* self, Vec2* center) {
+    vec2_copy_to(center, &self->center);
+    bcircle_calc_bounds(self);
 }

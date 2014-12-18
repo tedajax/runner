@@ -28,6 +28,10 @@ int prim_rect(SDL_Renderer* renderer, Rect* rect);
 int prim_rect_color(SDL_Renderer* renderer, Rect* rect, u32 color);
 int prim_rect_rgba(SDL_Renderer* renderer, Rect* rect, u8 r, u8 g, u8 b, u8 a);
 
+int prim_rect_oriented(SDL_Renderer* renderer, Rect* rect, f32 rotation);
+int prim_rect_oriented_color(SDL_Renderer* renderer, Rect* rect, f32 rotation, u32 color);
+int prim_rect_oriented_rgba(SDL_Renderer* renderer, Rect* rect, f32 rotation, u8 r, u8 g, u8 b, u8 a);
+
 int prim_box(SDL_Renderer* renderer, Rect* rect);
 int prim_box_color(SDL_Renderer* renderer, Rect* rect, u32 color);
 int prim_box_rgba(SDL_Renderer* renderer, Rect* rect, u8 r, u8 g, u8 b, u8 a);

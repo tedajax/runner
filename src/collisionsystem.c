@@ -145,11 +145,35 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
             color = 0xFF0000FF;
         }
 
-        Rect anchoredRect;
-        collider_anchored_rectangle(&collider->collider, &anchoredRect);
-        anchoredRect.position.x -= globals.camera.position.x;
-        anchoredRect.position.y -= globals.camera.position.y;
-        prim_box_color(globals.renderer, &anchoredRect, color);
+        switch (collider->collider.volume->type) {
+            case BOUNDING_VOLUME_AA_BOX: {
+                    Rect r;
+                    AABoundingBox aabb = *((AABoundingBox*)collider->collider.volume);
+                    r.position.x = aabb.center.x - aabb.width / 2.f - globals.camera.position.x;
+                    r.position.y = aabb.center.y - aabb.height / 2.f - globals.camera.position.y;
+                    r.width = aabb.width;
+                    r.height = aabb.height;
+                    prim_box_color(globals.renderer, &r, color);
+                }
+                break;
+
+            case BOUNDING_VOLUME_O_BOX: {
+                    Rect r;
+                    OBoundingBox obb = *((OBoundingBox*)collider->collider.volume);
+                    r.position.x = obb.center.x - obb.width / 2.f - globals.camera.position.x;
+                    r.position.y = obb.center.y - obb.height / 2.f - globals.camera.position.y;
+                    r.width = obb.width;
+                    r.height = obb.height;
+                    prim_rect_oriented_color(globals.renderer,
+                        &r,
+                        obb.orientation * DEG_TO_RAD,
+                        color);
+                }
+                break;
+
+            case BOUNDING_VOLUME_CIRCLE:
+                break;
+        }
     }
 }
 

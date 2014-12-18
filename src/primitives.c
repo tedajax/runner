@@ -50,6 +50,57 @@ int prim_rect_rgba(SDL_Renderer* renderer, Rect* rect, u8 r, u8 g, u8 b, u8 a) {
     return result;
 }
 
+int prim_rect_oriented(SDL_Renderer* renderer, Rect* rect, f32 rotation) {
+    Vec2 corners[4];
+
+    Vec2 x = vec2_init(cosf(rotation), sinf(rotation));
+    Vec2 y = vec2_init(-sinf(rotation), cosf(rotation));
+
+    vec2_scale(&x, rect->width / 2.f, &x);
+    vec2_scale(&y, rect->height / 2.f, &y);
+
+    Vec2 center;
+    center.x = rect->position.x + rect->width / 2.f;
+    center.y = rect->position.y + rect->height / 2.f;
+
+    for (u32 i = 0; i < 4; ++i) {
+        vec2_copy_to(&center, &corners[i]);
+    }
+
+    vec2_sub(&corners[0], &x, &corners[0]);
+    vec2_sub(&corners[0], &y, &corners[0]);
+
+    vec2_add(&corners[1], &x, &corners[1]);
+    vec2_sub(&corners[1], &y, &corners[1]);
+
+    vec2_add(&corners[2], &x, &corners[2]);
+    vec2_add(&corners[2], &y, &corners[2]);
+
+    vec2_sub(&corners[3], &x, &corners[3]);
+    vec2_add(&corners[3], &y, &corners[3]);
+
+    int result = 0;
+    for (u32 i = 0; i < 4; ++i) {
+        Vec2 c1 = corners[i];
+        Vec2 c2 = (i < 3) ? corners[i + 1] : corners[0];
+        result |= SDL_RenderDrawLine(renderer, (int)c1.x, (int)c1.y, (int)c2.x, (int)c2.y);
+    }
+
+    return result;
+}
+
+int prim_rect_oriented_color(SDL_Renderer* renderer, Rect* rect, f32 rotation, u32 color) {
+    Uint8* c = (Uint8*)&color;
+    return prim_rect_oriented_rgba(renderer, rect, rotation, c[0], c[1], c[2], c[3]);
+}
+
+int prim_rect_oriented_rgba(SDL_Renderer* renderer, Rect* rect, f32 rotation, u8 r, u8 g, u8 b, u8 a) {
+    int result = 0;
+    result |= SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    result |= prim_rect_oriented(renderer, rect, rotation);
+    return result;
+}
+
 int prim_box(SDL_Renderer* renderer, Rect* rect) {
     SDL_Rect r;
     rect_to_sdl_rect(rect, &r);

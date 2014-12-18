@@ -36,7 +36,12 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
         entity);
 
     Collider collider;
-    collider_init_rectangle(&collider, COLLIDER_LAYER_PLAYER, vec2_zero(), 75.f, 112.f, &transform->position);
+    collider_init_aabb(&collider,
+        COLLIDER_LAYER_PLAYER,
+        &transform->position,
+        vec2_init(37.5f, 56.f),
+        75.f,
+        112.f);
 
     entities_add_component(entityManager,
         (Component*)collider_component_new(&collider),
@@ -67,7 +72,13 @@ Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* config,
         entity);
 
     Collider collider;
-    collider_init_rectangle(&collider, COLLIDER_LAYER_PLAYER_PROJECTILE, vec2_zero(), 54.f, 9.f, &transform->position);
+    collider_init_obb(&collider,
+        COLLIDER_LAYER_PLAYER_PROJECTILE,
+        &transform->position,
+        vec2_init(27.5, 4.5f),
+        54.f,
+        9.f,
+        0.f);
 
     entities_add_component(entityManager,
         (Component*)collider_component_new(&collider),
@@ -128,7 +139,12 @@ Entity* entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
         entity);
 
     Collider collider;
-    collider_init_rectangle(&collider, COLLIDER_LAYER_ENEMY, vec2_zero(), 84.f, 103.f, &transform->position);
+    collider_init_aabb(&collider,
+        COLLIDER_LAYER_ENEMY,
+        &transform->position,
+        vec2_init(42.f, 51.5f),
+        84.f,
+        103.f);
 
     entities_add_component(entityManager,
         (Component*)collider_component_new(&collider),

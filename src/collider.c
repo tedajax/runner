@@ -1,34 +1,56 @@
 #include "collider.h"
 
-void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor) {
+void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2* offset) {
     self->colliderId = -1;
     self->layer = layer;
     self->anchor = anchor;
+    vec2_copy_to(offset, &self->offset);
     self->inContactCount = 0;
+
+    self->volume = NULL;
 
     for (u32 i = 0; i < COLLIDER_MAX_COLLISIONS; ++i) {
         self->inContact[i] = -1;
     }
 }
 
-void collider_init_circle(Collider* self, ColliderLayer layer, Vec2 offset, f32 radius, Vec2* anchor) {
-    collider_init(self, layer, anchor);
-    self->shape = COLLIDER_SHAPE_CIRCLE;
-    circle_set(&self->circle, &offset, radius);
+void collider_init_aabb(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 offset, f32 width, f32 height) {
+    collider_init(self, layer, anchor, &offset);
+
+    self->volume = (BoundingVolume*)CALLOC(1, AABoundingBox);
+
+    Vec2 position;
+    collider_anchored_center(self, &position);
+    aabbox_init((AABoundingBox*)self->volume, position, width, height);
 }
 
-void collider_init_rectangle(Collider* self, ColliderLayer layer, Vec2 offset, f32 width, f32 height, Vec2* anchor) {
-    collider_init(self, layer, anchor);
-    self->shape = COLLIDER_SHAPE_RECTANGLE;
-    rect_set(&self->rectangle, &offset, width, height);
+void collider_init_obb(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 offset, f32 width, f32 height, f32 orientation) {
+    collider_init(self, layer, anchor, &offset);
+
+    self->volume = (BoundingVolume*)CALLOC(1, OBoundingBox);
+
+    Vec2 position;
+    collider_anchored_center(self, &position);
+    obbox_init((OBoundingBox*)self->volume, position, width, height, orientation);
+}
+
+void collider_init_bcircle(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 offset, f32 radius) {
+    collider_init(self, layer, anchor, &offset);
+
+    self->volume = (BoundingVolume*)CALLOC(1, BoundingCircle);
+
+    Vec2 position;
+    collider_anchored_center(self, &position);
+    bcircle_init((BoundingCircle*)self->volume, position, radius);
 }
 
 void collider_copy(const Collider* source, Collider* dest) {
     dest->colliderId = source->colliderId;
     dest->layer = source->layer;
-    dest->shape = source->shape;
-    circle_copy_to(&source->circle, &dest->circle);
-    rect_copy_to(&source->rectangle, &dest->rectangle);
+    
+    vec2_copy_to(&source->offset, &dest->offset);
+    dest->volume = physics_volume_new(source->volume->type);
+    bounding_volume_copy(source->volume, dest->volume);
     dest->anchor = source->anchor;
     dest->inContactCount = source->inContactCount;
     for (u32 i = 0; i < dest->inContactCount; ++i) {
@@ -37,54 +59,20 @@ void collider_copy(const Collider* source, Collider* dest) {
 }
 
 bool collider_is_colliding(Collider* c1, Collider* c2) {
-    switch (c1->shape) {
-        case COLLIDER_SHAPE_CIRCLE: {
-            Circle shape1;
-            collider_anchored_circle(c1, &shape1);
-            switch (c2->shape) {
-                case COLLIDER_SHAPE_CIRCLE: {
-                    Circle shape2;
-                    collider_anchored_circle(c2, &shape2);
-                    return circle_intersects(&shape1, &shape2);
-                }
+    Vec2 anchored1, anchored2;
+    
+    collider_anchored_center(c1, &anchored1);
+    collider_anchored_center(c2, &anchored2);
 
-                case COLLIDER_SHAPE_RECTANGLE: {
-                    Rect shape2;
-                    collider_anchored_rectangle(c2, &shape2);
-                    return rect_intersects_circle(&shape2, &shape1);
-                }
+    physics_volume_update(c1->volume, &anchored1);
+    physics_volume_update(c2->volume, &anchored2);
 
-                default:
-                    return false;
-            }
-            break;
-        }
-
-        case COLLIDER_SHAPE_RECTANGLE: {
-            Rect shape1;
-            collider_anchored_rectangle(c1, &shape1);
-            switch (c2->shape) {
-                case COLLIDER_SHAPE_CIRCLE: {
-                    Circle shape2;
-                    collider_anchored_circle(c2, &shape2);
-                    return rect_intersects_circle(&shape1, &shape2);
-                }
-
-                case COLLIDER_SHAPE_RECTANGLE: {
-                    DEBUG_ON_KEY(SDL_SCANCODE_L);
-                    Rect shape2;
-                    collider_anchored_rectangle(c2, &shape2);
-                    return rect_intersects(&shape1, &shape2);
-                }
-
-                default:
-                    return false;
-            }
-            break;
-        }
-
-        default:
-            return false;
+    bool broadphase = physics_volumes_broadphase(c1->volume, c2->volume);
+        
+    if (broadphase) {
+        return physics_volumes_intersect(c1->volume, c2->volume);
+    } else {
+        return false;
     }
 }
 
@@ -135,17 +123,7 @@ void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
     }
 }
 
-void collider_anchored_circle(Collider* self, Circle* dest) {
-    vec2_set(&dest->position,
-        self->circle.position.x + self->anchor->x,
-        self->circle.position.y + self->anchor->y);
-    dest->radius = self->circle.radius;
-}
-
-void collider_anchored_rectangle(Collider* self, Rect* dest) {
-    vec2_set(&dest->position,
-        self->rectangle.position.x + self->anchor->x,
-        self->rectangle.position.y + self->anchor->y);
-    dest->width = self->rectangle.width;
-    dest->height = self->rectangle.height;
+void collider_anchored_center(Collider* self, Vec2* dest) {
+    dest->x = self->anchor->x + self->offset.x;
+    dest->y = self->anchor->y + self->offset.y;
 }

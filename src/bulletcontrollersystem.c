@@ -29,20 +29,12 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
             COMPONENT_BULLET_CONTROLLER,
             &entity);
 
-        ColliderComponent* collider = (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
-
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
         bullet->speed += bullet->config.acceleration * globals.time.delta;
         bullet->angle += bullet->config.rotationRate * globals.time.delta;
 
         transform->rotation = bullet->angle;
-
-        if (collider) {
-            if (collider->collider.volume->type == BOUNDING_VOLUME_O_BOX) {
-                ((OBoundingBox*)collider->collider.volume)->orientation = transform->rotation;
-            }
-        }
 
         f32 bulletRadAngle = bullet->angle * DEG_TO_RAD;
         vec2_set(&movement->velocity, bullet->speed * cosf(bulletRadAngle),

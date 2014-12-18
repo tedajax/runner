@@ -44,7 +44,7 @@ typedef struct bounding_circle_t {
 BoundingVolume* physics_volume_new(BoundingVolumeType type);
 bool physics_volumes_broadphase(BoundingVolume* bv1, BoundingVolume* bv2);
 bool physics_volumes_intersect(BoundingVolume* bv1, BoundingVolume* bv2);
-void physics_volume_update(BoundingVolume* self, Vec2* center);
+void physics_volume_update(BoundingVolume* self, Vec2* center, f32 rotation, Vec2* scale);
 
 void bounding_volume_copy(BoundingVolume* source, BoundingVolume* dest);
 
@@ -54,7 +54,7 @@ bool aabbox_intersect_aabbox(AABoundingBox* self, AABoundingBox* other);
 bool aabbox_intersect_obbox(AABoundingBox* self, OBoundingBox* other);
 bool aabbox_intersect_bcircle(AABoundingBox* self, BoundingCircle* other);
 void aabbox_copy(AABoundingBox* source, AABoundingBox* dest);
-void aabbox_update(AABoundingBox* self, Vec2* center);
+void aabbox_update(AABoundingBox* self, Vec2* center, f32 rotation, Vec2* scale);
 
 void obbox_init(OBoundingBox* self, Vec2 center, f32 width, f32 height, f32 orientation);
 void obbox_calc_bounds(OBoundingBox* self);
@@ -65,7 +65,7 @@ bool obbox_intersect_aabbox(OBoundingBox* self, AABoundingBox* other);
 bool obbox_intersect_obbox(OBoundingBox* self, OBoundingBox* other);
 bool obbox_intersect_bcircle(OBoundingBox* self, BoundingCircle* other);
 void obbox_copy(OBoundingBox* source, OBoundingBox* dest);
-void obbox_update(OBoundingBox* self, Vec2* center);
+void obbox_update(OBoundingBox* self, Vec2* center, f32 rotation, Vec2* scale);
 
 void bcircle_init(BoundingCircle* self, Vec2 center, f32 radius);
 void bcircle_calc_bounds(BoundingCircle* self);
@@ -73,6 +73,6 @@ bool bcircle_intersect_aabbox(BoundingCircle* self, AABoundingBox* other);
 bool bcircle_intersect_obbox(BoundingCircle* self, OBoundingBox* other);
 bool bcircle_intersect_bcircle(BoundingCircle* self, BoundingCircle* other);
 void bcircle_copy(BoundingCircle* source, BoundingCircle* dest);
-void bcircle_update(BoundingCircle* self, Vec2* center);
+void bcircle_update(BoundingCircle* self, Vec2* center, f32 rotation, Vec2* scale);
 
 #endif

@@ -1,6 +1,6 @@
 #include "collider.h"
 
-void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2* offset) {
+void collider_init(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2* offset) {
     self->colliderId = -1;
     self->layer = layer;
     self->anchor = anchor;
@@ -14,7 +14,7 @@ void collider_init(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2* offs
     }
 }
 
-void collider_init_aabb(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 offset, f32 width, f32 height) {
+void collider_init_aabb(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height) {
     collider_init(self, layer, anchor, &offset);
 
     self->volume = (BoundingVolume*)CALLOC(1, AABoundingBox);
@@ -24,7 +24,7 @@ void collider_init_aabb(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 
     aabbox_init((AABoundingBox*)self->volume, position, width, height);
 }
 
-void collider_init_obb(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 offset, f32 width, f32 height, f32 orientation) {
+void collider_init_obb(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height, f32 orientation) {
     collider_init(self, layer, anchor, &offset);
 
     self->volume = (BoundingVolume*)CALLOC(1, OBoundingBox);
@@ -34,7 +34,7 @@ void collider_init_obb(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 o
     obbox_init((OBoundingBox*)self->volume, position, width, height, orientation);
 }
 
-void collider_init_bcircle(Collider* self, ColliderLayer layer, Vec2* anchor, Vec2 offset, f32 radius) {
+void collider_init_bcircle(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 radius) {
     collider_init(self, layer, anchor, &offset);
 
     self->volume = (BoundingVolume*)CALLOC(1, BoundingCircle);
@@ -64,8 +64,8 @@ bool collider_is_colliding(Collider* c1, Collider* c2) {
     collider_anchored_center(c1, &anchored1);
     collider_anchored_center(c2, &anchored2);
 
-    physics_volume_update(c1->volume, &anchored1);
-    physics_volume_update(c2->volume, &anchored2);
+    physics_volume_update(c1->volume, &anchored1, c1->anchor->rotation, &c1->anchor->scale);
+    physics_volume_update(c2->volume, &anchored2, c1->anchor->rotation, &c1->anchor->scale);
 
     bool broadphase = physics_volumes_broadphase(c1->volume, c2->volume);
         
@@ -124,6 +124,6 @@ void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
 }
 
 void collider_anchored_center(Collider* self, Vec2* dest) {
-    dest->x = self->anchor->x + self->offset.x;
-    dest->y = self->anchor->y + self->offset.y;
+    dest->x = self->anchor->position.x + self->offset.x;
+    dest->y = self->anchor->position.y + self->offset.y;
 }

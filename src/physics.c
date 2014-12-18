@@ -81,19 +81,19 @@ bool physics_volumes_intersect(BoundingVolume* bv1, BoundingVolume* bv2) {
     }
 }
 
-void physics_volume_update(BoundingVolume* self, Vec2* center) {
+void physics_volume_update(BoundingVolume* self, Vec2* center, f32 orientation, Vec2* scale) {
     switch (self->type) {
         default:
         case BOUNDING_VOLUME_AA_BOX:
-            aabbox_update((AABoundingBox*)self, center);
+            aabbox_update((AABoundingBox*)self, center, orientation, scale);
             break;
 
         case BOUNDING_VOLUME_O_BOX:
-            obbox_update((OBoundingBox*)self, center);
+            obbox_update((OBoundingBox*)self, center, orientation, scale);
             break;
 
         case BOUNDING_VOLUME_CIRCLE:
-            bcircle_update((BoundingCircle*)self, center);
+            bcircle_update((BoundingCircle*)self, center, orientation, scale);
             break;
     }
 }
@@ -157,7 +157,7 @@ void aabbox_copy(AABoundingBox* source, AABoundingBox* dest) {
     dest->height = source->height;
 }
 
-void aabbox_update(AABoundingBox* self, Vec2* center) {
+void aabbox_update(AABoundingBox* self, Vec2* center, f32 rotation, Vec2* scale) {
     vec2_copy_to(center, &self->center);
     aabbox_calc_bounds(self);
 }
@@ -295,8 +295,9 @@ void obbox_copy(OBoundingBox* source, OBoundingBox* dest) {
     dest->origins[1] = source->origins[1];
 }
 
-void obbox_update(OBoundingBox* self, Vec2* center) {
+void obbox_update(OBoundingBox* self, Vec2* center, f32 rotation, Vec2* scale){
     vec2_copy_to(center, &self->center);
+    self->orientation = rotation;
     obbox_calc_corners(self);
     obbox_calc_axes(self);
     obbox_calc_bounds(self);
@@ -334,7 +335,7 @@ void bcircle_copy(BoundingCircle* source, BoundingCircle* dest) {
     dest->radius = source->radius;
 }
 
-void bcircle_update(BoundingCircle* self, Vec2* center) {
+void bcircle_update(BoundingCircle* self, Vec2* center, f32 rotation, Vec2* scale) {
     vec2_copy_to(center, &self->center);
     bcircle_calc_bounds(self);
 }

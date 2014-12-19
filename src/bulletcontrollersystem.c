@@ -31,7 +31,15 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
-        bullet->speed += bullet->config.acceleration * globals.time.delta;
+        if (input_key(SDL_SCANCODE_COMMA)) {
+            transform->rotation -= 100 * globals.time.delta;
+        }
+
+        if (input_key(SDL_SCANCODE_PERIOD)) {
+            transform->rotation += 100 * globals.time.delta;
+        }
+
+        /*bullet->speed += bullet->config.acceleration * globals.time.delta;
         bullet->angle += bullet->config.rotationRate * globals.time.delta;
 
         transform->rotation = bullet->angle;
@@ -52,7 +60,7 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
         if (bullet->destroy) {
             entities_remove_entity(self->super.entityManager, &entity);
-        }
+        }*/
     }
 }
 

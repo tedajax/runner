@@ -202,8 +202,9 @@ void obbox_calc_bounds(OBoundingBox* self) {
 }
 
 void obbox_calc_corners(OBoundingBox* self) {
-    Vec2 x = vec2_init(cosf(self->orientation), sinf(self->orientation));
-    Vec2 y = vec2_init(-sinf(self->orientation), cosf(self->orientation));
+    f32 a = self->orientation * DEG_TO_RAD;
+    Vec2 x = vec2_init(cosf(a), sinf(a));
+    Vec2 y = vec2_init(-sinf(a), cosf(a));
 
     vec2_scale(&x, self->width / 2.f, &x);
     vec2_scale(&y, self->height / 2.f, &y);

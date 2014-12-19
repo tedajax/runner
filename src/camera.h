@@ -15,6 +15,7 @@ typedef struct camera_t {
     SDL_Rect constraints;
 
     Rect cameraView;
+    Rect worldView;
 } Camera;
 
 void camera_init(Camera* self, Vec2* target, SDL_Rect* constraints);

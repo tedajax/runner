@@ -65,27 +65,51 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
         return;
     }
 
-    for (u32 i = 0; i < entities->size - 1; ++i) {
-        for (u32 j = i + 1; j < entities->size; ++j) {
-            Entity* e1 = &entities->list[i];
-            Entity* e2 = &entities->list[j];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
-            ColliderComponent* cc1 =
-                (ColliderComponent*)GET_COMPONENT(*e1, COMPONENT_COLLIDER);
+        ColliderComponent* collider =
+            (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
+
+        REQUIRED_COMPONENTS(collider);
+
+        Vec2 anchored;
+        collider_anchored_center(&collider->collider, &anchored);
+
+        physics_volume_update(collider->collider.volume, &anchored, collider->collider.anchor->rotation, &collider->collider.anchor->scale);
+    }
+
+    for (u32 i = 0; i < entities->size - 1; ++i) {
+        Entity* e1 = &entities->list[i];
+
+        ColliderComponent* cc1 =
+            (ColliderComponent*)GET_COMPONENT(*e1, COMPONENT_COLLIDER);
+
+        Collider* c1 = &cc1->collider;
+
+        // Generate new id for new collision systems
+        if (c1->colliderId < 0) {
+            c1->colliderId = collision_system_gen_id(self);
+        }
+
+        if (!collider_on_screen(c1)) {
+            continue;
+        }
+
+        for (u32 j = i + 1; j < entities->size; ++j) {
+            Entity* e2 = &entities->list[j];
 
             ColliderComponent* cc2 =
                 (ColliderComponent*)GET_COMPONENT(*e2, COMPONENT_COLLIDER);
-
-            Collider* c1 = &cc1->collider;
+            
             Collider* c2 = &cc2->collider;
-
-            // Generate new id for new collision systems
-            if (c1->colliderId < 0) {
-                c1->colliderId = collision_system_gen_id(self);
-            }
 
             if (c2->colliderId < 0) {
                 c2->colliderId = collision_system_gen_id(self);
+            }
+
+            if (!collider_on_screen(c2)) {
+                continue;
             }
 
             if (!layerMatrix[c1->layer][c2->layer]) {
@@ -140,6 +164,12 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
 
         REQUIRED_COMPONENTS(collider);
 
+        Rect bounds;
+        rect_copy_to(&collider->collider.volume->bounds, &bounds);
+        bounds.position.x -= globals.camera.position.x;
+        bounds.position.y -= globals.camera.position.y;
+        prim_rect_color(globals.renderer, &bounds, 0xFF00FFFF);
+
         u32 color = 0xFF00FF00;
         if (collider->collider.inContactCount > 0) {
             color = 0xFF0000FF;
@@ -153,7 +183,7 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
                     r.position.y = aabb.center.y - aabb.height / 2.f - globals.camera.position.y;
                     r.width = aabb.width;
                     r.height = aabb.height;
-                    prim_box_color(globals.renderer, &r, color);
+                    prim_rect_color(globals.renderer, &r, color);
                 }
                 break;
 

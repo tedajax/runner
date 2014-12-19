@@ -58,15 +58,11 @@ void collider_copy(const Collider* source, Collider* dest) {
     }
 }
 
+bool collider_on_screen(Collider* self) {
+    return rect_intersects(&self->volume->bounds, &globals.camera.worldView);
+}
+
 bool collider_is_colliding(Collider* c1, Collider* c2) {
-    Vec2 anchored1, anchored2;
-    
-    collider_anchored_center(c1, &anchored1);
-    collider_anchored_center(c2, &anchored2);
-
-    physics_volume_update(c1->volume, &anchored1, c1->anchor->rotation, &c1->anchor->scale);
-    physics_volume_update(c2->volume, &anchored2, c1->anchor->rotation, &c1->anchor->scale);
-
     bool broadphase = physics_volumes_broadphase(c1->volume, c2->volume);
         
     if (broadphase) {

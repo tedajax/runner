@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL_image.h>
 
+bool drawCollision = true;
+
 void game_init(Game* self) {  
     textures_init("assets");
 
@@ -107,6 +109,10 @@ void game_update(Game* self) {
         printf("Entities: %u\n", entities_entity_count(self->entityManager));
     }
 
+    if (input_key_down(SDL_SCANCODE_C)) {
+        drawCollision = !drawCollision;
+    }
+    
     camera_update(&globals.camera);
 
     debug_hud_update_surfaces(&self->debugHud, globals.renderer);
@@ -115,7 +121,9 @@ void game_update(Game* self) {
 void game_render(Game* self) {
     sprite_system_render(&self->backgroundSpriteSystem, &self->entities);
     sprite_system_render(&self->spriteSystem, &self->entities);
-    collision_system_render(&self->collisionSystem, &self->entities);
+    if (drawCollision) {
+        collision_system_render(&self->collisionSystem, &self->entities);
+    }
 
     debug_hud_render(&self->debugHud, globals.renderer, 5, 5);
 }

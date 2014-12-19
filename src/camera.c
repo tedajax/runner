@@ -54,4 +54,8 @@ void camera_update(Camera* self) {
     }*/
 
     self->position.x += globals.scrollSpeed * globals.time.delta;
+
+    rect_set(&self->worldView, &self->position,
+        (f32)globals.world.width,
+        (f32)globals.world.height);
 }

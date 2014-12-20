@@ -167,6 +167,7 @@ void obbox_init(OBoundingBox* self, Vec2 center, f32 width, f32 height, f32 orie
     self->center = center;
     self->width = width;
     self->height = height;
+    self->orientation = orientation;
     obbox_calc_corners(self);
     obbox_calc_axes(self);
     obbox_calc_bounds(self);
@@ -244,7 +245,7 @@ bool obbox_overlaps_axis(OBoundingBox* self, OBoundingBox* other) {
         f32 tMin = t;
         f32 tMax = t;
 
-        for (u32 c = 1; c < 3; ++c) {
+        for (u32 c = 1; c < 4; ++c) {
             t = vec2_dot(&other->corners[c], &self->axes[a]);
 
             if (t < tMin) {

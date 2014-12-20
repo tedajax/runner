@@ -30,21 +30,8 @@ void enemy_update(EnemySystem* self, Entity* entity, TransformComponent* playerT
         (MovementComponent*)GET_COMPONENT(*entity, COMPONENT_MOVEMENT);
 
     REQUIRED_COMPONENTS(enemy && transform && movement);
-
-    if (input_key(SDL_SCANCODE_J)) {
-        transform->position.x -= 100.f * globals.time.delta;
-    }
-    if (input_key(SDL_SCANCODE_L)) {
-        transform->position.x += 100.f * globals.time.delta;
-    }
-    if (input_key(SDL_SCANCODE_I)) {
-        transform->position.y -= 100.f * globals.time.delta;
-    }
-    if (input_key(SDL_SCANCODE_K)) {
-        transform->position.y += 100.f * globals.time.delta;
-    }
-
-    /*switch (enemy->enemyType) {
+    
+    switch (enemy->enemyType) {
         default:
         case ENEMY_TYPE_INVALID:
         case ENEMY_TYPE_LAST:
@@ -60,5 +47,5 @@ void enemy_update(EnemySystem* self, Entity* entity, TransformComponent* playerT
                     break;
             }
             break;
-    }*/
+    }
 }

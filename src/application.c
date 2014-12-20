@@ -21,6 +21,11 @@ int app_run(int argc, char* argv[]) {
     }
 
     game_quit(&self.game);
+
+    FILE* profileOut = fopen("profile.txt", "w");
+    profiler_dump(profileOut);
+    fclose(profileOut);
+
     _app_terminate(&self);
 
     return 0;
@@ -109,10 +114,14 @@ bool _app_initialize(App* self) {
 
     input_initialize();
 
+    profiler_init();
+
     return true;
 }
 
 void _app_terminate(App* self) {
+    profiler_terminate();
+
     SDL_DestroyWindow(globals.window);
     SDL_DestroyRenderer(globals.renderer);
 

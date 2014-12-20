@@ -103,7 +103,10 @@ void game_update(Game* self) {
     enemy_system_update(&self->enemySystem, &self->entities);
     movement_system_update(&self->movementSystem, &self->entities);
     bg_manager_system_update(&self->bgManagerSystem, &self->entities);
+
+    profiler_tick("collision");
     collision_system_update(&self->collisionSystem, &self->entities);
+    profiler_tock("collision");
 
     if (input_key_down(SDL_SCANCODE_E)) {
         printf("Entities: %u\n", entities_entity_count(self->entityManager));

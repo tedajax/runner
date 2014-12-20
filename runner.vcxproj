@@ -214,6 +214,7 @@
     <ClCompile Include="src\path.c" />
     <ClCompile Include="src\physics.c" />
     <ClCompile Include="src\primitives.c" />
+    <ClCompile Include="src\profiler.c" />
     <ClCompile Include="src\range.c" />
     <ClCompile Include="src\spritecomponent.c" />
     <ClCompile Include="src\spritesystem.c" />
@@ -274,6 +275,7 @@
     <ClInclude Include="src\path.h" />
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\primitives.h" />
+    <ClInclude Include="src\profiler.h" />
     <ClInclude Include="src\range.h" />
     <ClInclude Include="src\snprintf.h" />
     <ClInclude Include="src\spritecomponent.h" />

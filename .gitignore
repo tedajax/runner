@@ -9,3 +9,4 @@ Release/
 *.vsp
 *.suo
 /*.dll
+profile.txt

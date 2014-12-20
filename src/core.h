@@ -6,3 +6,4 @@
 #include "input.h"
 #include "inline.h"
 #include "config.h"
+#include "profiler.h"

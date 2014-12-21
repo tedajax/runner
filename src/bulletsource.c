@@ -43,7 +43,7 @@ void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManag
 void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* anchor) {
     // TODO multiple bullets
 
-    for (u32 i = 0; i < self->config.count; ++i) {
+    for (i32 i = 0; i < self->config.count; ++i) {
         Vec2 pos;
         vec2_add(anchor, &self->offset, &pos);
         BulletConfig config;        

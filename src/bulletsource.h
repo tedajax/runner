@@ -4,7 +4,7 @@
 #include "core.h"
 
 typedef struct bullet_source_config_t {
-    u32 count;          // how many bullets to fire from this source
+    i32 count;          // how many bullets to fire from this source
     f32 spread;         // the spread angle of this source
     f32 lifetime;       // how long the bullet lives before they are destroyed
     f32 speed;          // how fast the bullet moves

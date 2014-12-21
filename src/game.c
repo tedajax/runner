@@ -86,6 +86,7 @@ void game_init(Game* self) {
 void game_quit(Game* self) {
     entity_list_free(&self->entities);
     entity_manager_free(self->entityManager);
+	debug_hud_free(&self->debugHud);
 }
 
 void game_start(Game* self) {

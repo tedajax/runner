@@ -41,7 +41,6 @@ void debug_hud_free(DebugHud* self) {
             SDL_DestroyTexture(watch->texture);
             watch->texture = NULL;
         }
-        free(watch);
     }
 
     free(self->watches);

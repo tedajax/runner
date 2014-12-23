@@ -3,7 +3,8 @@
 
 #include <SDL2/SDL.h>
 
-#include "core.h"
+#include "types.h"
+#include "debug.h"
 
 #include <stdlib.h>
 #include <string.h>

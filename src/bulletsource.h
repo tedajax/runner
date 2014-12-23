@@ -4,6 +4,7 @@
 #include "core.h"
 
 typedef struct bullet_source_config_t {
+	Vec2 offset;		// offset from parent
     i32 count;          // how many bullets to fire from this source
     f32 spread;         // the spread angle of this source
     f32 lifetime;       // how long the bullet lives before they are destroyed
@@ -18,14 +19,13 @@ typedef struct bullet_source_config_t {
 typedef struct bullet_source_t {
     BulletSourceConfig config;
     f32 fireTimer;
-    Vec2 offset;
     u32 level;
     bool active;
 } BulletSource;
 
 typedef struct entity_manager_t EntityManager;
 
-void bullet_source_init(BulletSource* self, Vec2* offset, char* config, char* section);
+void bullet_source_init(BulletSource* self, char* config, char* section);
 void bullet_source_config(BulletSourceConfig* self, char* config, char* section, u32 level);
 inline void bullet_source_on(BulletSource* self) { self->active = true; }
 inline void bullet_source_off(BulletSource* self) { self->active = false; }

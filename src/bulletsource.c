@@ -3,17 +3,17 @@
 #include "entityfactory.h"
 #include "texturemanager.h"
 
-void bullet_source_init(BulletSource* self, Vec2* offset, char* config, char* section) {
+void bullet_source_init(BulletSource* self, char* config, char* section) {
     self->active = false;
     self->fireTimer = 0.f;
     self->level = 0;
-    vec2_copy_to(offset, &self->offset);
     bullet_source_config(&self->config, config, section, 0);
 }
 
 void bullet_source_config(BulletSourceConfig* self, char* config, char* section, u32 level) {
     Ini* cfg = config_get(config);
 
+	self->offset = ini_get_vec2_at(cfg, section, "offset", level);
     self->count = ini_get_int_at(cfg, section, "count", level);
     self->spread = ini_get_float_at(cfg, section, "spread", level);
     self->lifetime = ini_get_float_at(cfg, section, "lifetime", level);
@@ -41,11 +41,9 @@ void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManag
 }
 
 void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* anchor) {
-    // TODO multiple bullets
-
     for (i32 i = 0; i < self->config.count; ++i) {
         Vec2 pos;
-        vec2_add(anchor, &self->offset, &pos);
+        vec2_add(anchor, &self->config.offset, &pos);
         BulletConfig config;        
         config.startSpeed = self->config.speed;
         f32 sa = (i - (self->config.count / 2)) * self->config.spread + self->config.startAngle;
@@ -53,7 +51,6 @@ void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* 
         config.acceleration = self->config.acceleration;
         config.rotationRate = self->config.rotationRate;
         config.lifetime = self->config.lifetime;
-        //TODO creating these in place is causing problems...
         entity_create_bullet(entityManager, &config, pos, textures_get(self->config.textureName));
     }
 }

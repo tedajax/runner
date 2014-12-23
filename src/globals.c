@@ -35,6 +35,8 @@ void globals_config(const char* configName) {
     globals.world.height = (u32)ini_try_get_int(config, "world", "height", 720);
 
     globals.scrollSpeed = ini_try_get_float(config, "game", "scroll_speed", 0.f);
+
+	tween_manager_init(&globals.tweens, 512);
 }
 
 void textures_init(const char* rootDir) { texture_manager_init(&globals.textures, rootDir); }

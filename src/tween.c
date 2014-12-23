@@ -1,4 +1,5 @@
 #include "tween.h"
+#include "config.h"
 #include <math.h>
 
 #pragma region Tween Functions
@@ -199,6 +200,8 @@ void tween_reset(Tween* self) {
 }
 
 void tween_manager_init(TweenManager* self, u32 capacity) {
+	TWEEN_REGISTER_ALL();
+
     self->capacity = capacity;
     
     self->tweens = CALLOC(self->capacity, Tween);
@@ -261,4 +264,19 @@ Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration
     tween_init(tween, start, end, duration, loops, tweenFunc);
 
     return tween;
+}
+
+Tween* tween_manager_create_config(TweenManager* self, Ini* config, char* section) {
+	char* tweenFuncName = ini_get_string(config, section, "function");
+	tween_func tweenFunc = tween_parse(tweenFuncName);
+	f32 start = ini_get_float(config, section, "start");
+	f32 end = ini_get_float(config, section, "end");
+	f32 duration = ini_get_float(config, section, "duration");
+	u32 loops = ini_try_get_int(config, section, "loops", TWEEN_LOOP_INFINITE);
+
+	return tween_manager_create(self, start, end, duration, loops, tweenFunc);
+}
+
+tween_func tween_parse(char* tweenName) {
+	return TWEEN_GET_FUNCTION(tweenName);
 }

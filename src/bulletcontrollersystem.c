@@ -31,6 +31,8 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
+		transform->position.x += globals.scrollSpeed * globals.time.delta;
+
         bullet->speed += bullet->config.acceleration * globals.time.delta;
         bullet->angle += bullet->config.rotationRate * globals.time.delta;
 

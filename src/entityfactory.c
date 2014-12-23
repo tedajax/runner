@@ -75,9 +75,9 @@ Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* config,
     collider_init_obb(&collider,
         COLLIDER_LAYER_PLAYER_PROJECTILE,
         transform,
-        vec2_init(27.5, 4.5f),
-        54.f,
-        9.f,
+        vec2_init(4, 4),
+        8.f,
+        8.f,
         0.f);
 
     entities_add_component(entityManager,

@@ -1,7 +1,10 @@
 #ifndef RUNNER_TWEEN_H
 #define RUNNER_TWEEN_H
 
-#include "core.h"
+#include "types.h"
+#include "debug.h"
+#include "config.h"
+#include "hashtable.h"
 
 // Tween function take the form
 // f32 tween_function(f32 t, f32 i, f32 f, f32 d)
@@ -33,6 +36,39 @@ f32 tween_sin_wave(f32 t, f32 i, f32 f, f32 d);
 f32 tween_cos_wave(f32 t, f32 i, f32 f, f32 d);
 f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d);
 
+Hashtable tweenFunctions;
+static bool functionsRegistered = false;
+
+#define TWEEN_REGISTER_FUNCTION(func) hashtable_insert(&tweenFunctions, #func, func)
+#define TWEEN_GET_FUNCTION(func) (tween_func)hashtable_get(&tweenFunctions, func)
+
+#define TWEEN_REGISTER_ALL()							\
+MULTILINE_MACRO_BEGIN()									\
+	if (!functionsRegistered) {							\
+		functionsRegistered = true;						\
+		hashtable_init(&tweenFunctions, 32, NULL);		\
+		TWEEN_REGISTER_FUNCTION(tween_linear);			\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_quad);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_out_quad);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_quad);\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_sin);		\
+		TWEEN_REGISTER_FUNCTION(tween_ease_out_sin);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_sin);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_expo);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_out_expo);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_expo);\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_circ);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_out_circ);	\
+		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_circ);\
+		TWEEN_REGISTER_FUNCTION(tween_bounce_in);		\
+		TWEEN_REGISTER_FUNCTION(tween_bounce_out);		\
+		TWEEN_REGISTER_FUNCTION(tween_bounce_in_out);	\
+		TWEEN_REGISTER_FUNCTION(tween_sin_wave);		\
+		TWEEN_REGISTER_FUNCTION(tween_cos_wave);		\
+		TWEEN_REGISTER_FUNCTION(tween_parabolic);		\
+	}													\
+MULTILINE_MACRO_END()
+
 enum tween_loop_e {
     TWEEN_LOOP_NONE = 0,
     TWEEN_LOOP_INFINITE = 0xFFFFFFFF,
@@ -63,7 +99,7 @@ void tween_pause(Tween* self);
 void tween_stop(Tween* self);
 void tween_reset(Tween* self);
 
-typedef struct tween_manager_T {
+typedef struct tween_manager_t {
     Tween* tweens;
     u32* freeIndices;
     u32 capacity;
@@ -73,6 +109,8 @@ typedef struct tween_manager_T {
 void tween_manager_init(TweenManager* self, u32 capacity);
 void tween_manager_update(TweenManager* self, f32 dt);
 Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc);
+Tween* tween_manager_create_config(TweenManager* self, Ini* config, char* section);
 void tween_manager_remove(TweenManager* self, Tween* tween);
+tween_func tween_parse(char* tweenName);
 
 #endif

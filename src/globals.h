@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "texturemanager.h"
 #include "config.h"
+#include "tween.h"
 
 #include <SDL2/SDL.h>
 
@@ -41,6 +42,8 @@ typedef struct globals {
 
     //TODO: some sort of named entity system
     Entity* player;
+
+	TweenManager tweens;
 
     f32 scrollSpeed;
 } Globals;

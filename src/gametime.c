@@ -51,8 +51,8 @@ void game_time_update(GameTime* self) {
         ++self->frames_this_second;
     }
 
-    self->delta = ((f32)self->since_start_ns - (f32)self->last_frame_ns) / SECONDS_TO_NANOSECONDS;
-    self->delta *= self->timescale;
+    self->delta_no_scale = ((f32)self->since_start_ns - (f32)self->last_frame_ns) / SECONDS_TO_NANOSECONDS;
+    self->delta = self->delta_no_scale * self->timescale;
 }
 
 u64 game_time_now() {

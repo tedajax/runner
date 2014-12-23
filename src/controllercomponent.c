@@ -10,9 +10,13 @@ ControllerComponent* controller_component_new(char* config, char* section) {
 
     self->moveSpeed = ini_get_float(cfg, section, "movement_speed");
     
-    Vec2 sourceOffset = ini_get_vec2(cfg, section, "bullet_source_offset");
-    char* sourceName = ini_get_string(cfg, section, "bullet_source");
-    bullet_source_init(&self->bulletSource, &sourceOffset, config, sourceName);
+	self->bulletSourceCount = ini_get_array_count(cfg, section, "bullet_sources");
+	self->bulletSources = CALLOC(self->bulletSourceCount, BulletSource);
+
+	for (u32 i = 0; i < self->bulletSourceCount; ++i) {
+		char* sourceName = ini_get_string_at(cfg, section, "bullet_sources", i);
+		bullet_source_init(&self->bulletSources[i], config, sourceName);
+	}
 
     return self;
 }

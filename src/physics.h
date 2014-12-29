@@ -75,4 +75,6 @@ bool bcircle_intersect_bcircle(BoundingCircle* self, BoundingCircle* other);
 void bcircle_copy(BoundingCircle* source, BoundingCircle* dest);
 void bcircle_update(BoundingCircle* self, Vec2* center, f32 rotation, Vec2* scale);
 
+BoundingVolumeType bounding_volume_type_parse(char* str);
+
 #endif

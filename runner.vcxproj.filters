@@ -183,6 +183,9 @@
     <ClCompile Include="src\profiler.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\dynf32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -369,6 +372,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dynf32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

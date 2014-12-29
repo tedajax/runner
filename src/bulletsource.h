@@ -2,6 +2,7 @@
 #define RUNNER_BULLET_SOURCE_H
 
 #include "core.h"
+#include "collider.h"
 
 typedef struct bullet_source_config_t {
 	Vec2 offset;		// offset from parent
@@ -14,6 +15,7 @@ typedef struct bullet_source_config_t {
     f32 startAngle;     // Direction to fir
     f32 rotationRate;   // rate of rotation while in flight
     char* textureName;  // bullet texture
+	ColliderConfig colliderConfig;
 } BulletSourceConfig;
 
 typedef struct bullet_source_t {

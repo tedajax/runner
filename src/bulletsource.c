@@ -23,6 +23,9 @@ void bullet_source_config(BulletSourceConfig* self, char* config, char* section,
     self->startAngle = ini_get_float_at(cfg, section, "start_angle", level);
     self->rotationRate = ini_get_float_at(cfg, section, "rotation_rate", level);
     self->textureName = ini_get_string_at(cfg, section, "texture_name", level);
+	
+	char* collider = ini_get_string_at(cfg, section, "collider", level);
+	collider_config_init(&self->colliderConfig, config, collider);
 }
 
 void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManager, Vec2* anchor) {
@@ -51,6 +54,6 @@ void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* 
         config.acceleration = self->config.acceleration;
         config.rotationRate = self->config.rotationRate;
         config.lifetime = self->config.lifetime;
-        entity_create_bullet(entityManager, &config, pos, textures_get(self->config.textureName));
+        entity_create_bullet(entityManager, &config, &self->config.colliderConfig, pos, textures_get(self->config.textureName));
     }
 }

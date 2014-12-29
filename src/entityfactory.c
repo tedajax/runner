@@ -50,7 +50,7 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
     return entity;
 }
 
-Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* config, Vec2 position, SDL_Texture* texture) {
+Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletConfig, ColliderConfig* colliderConfig, Vec2 position, SDL_Texture* texture) {
     Entity* entity = entities_create_entity(entityManager);
 
     TransformComponent* transform = transform_component_new(position, 0.f, vec2_one());
@@ -64,7 +64,7 @@ Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* config,
         entity);
 
     entities_add_component(entityManager,
-        (Component*)bullet_controller_component_new(config),
+        (Component*)bullet_controller_component_new(bulletConfig),
         entity);
 
     entities_add_component(entityManager,
@@ -72,13 +72,7 @@ Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* config,
         entity);
 
     Collider collider;
-    collider_init_obb(&collider,
-        COLLIDER_LAYER_PLAYER_PROJECTILE,
-        transform,
-        vec2_init(4, 4),
-        8.f,
-        8.f,
-        0.f);
+	collider_init_config(&collider, colliderConfig, transform);
 
     entities_add_component(entityManager,
         (Component*)collider_component_new(&collider),

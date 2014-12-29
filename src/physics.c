@@ -341,3 +341,16 @@ void bcircle_update(BoundingCircle* self, Vec2* center, f32 rotation, Vec2* scal
     vec2_copy_to(center, &self->center);
     bcircle_calc_bounds(self);
 }
+
+BoundingVolumeType bounding_volume_type_parse(char* str) {
+	if (STR_ENUM_CMP(str, BOUNDING_VOLUME_AA_BOX)) {
+		return BOUNDING_VOLUME_AA_BOX;
+	} else if (STR_ENUM_CMP(str, BOUNDING_VOLUME_O_BOX)) {
+		return BOUNDING_VOLUME_O_BOX;
+	} else if (STR_ENUM_CMP(str, BOUNDING_VOLUME_CIRCLE)) {
+		return BOUNDING_VOLUME_CIRCLE;
+	} else {
+		ASSERT(false, "Unable to parse bounding volume type.");
+		return 0;
+	}
+}

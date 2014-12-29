@@ -189,6 +189,7 @@
     <ClCompile Include="src\debug.c" />
     <ClCompile Include="src\debughud.c" />
     <ClCompile Include="src\dict.c" />
+    <ClCompile Include="src\dynf32.c" />
     <ClCompile Include="src\enemycomponent.c" />
     <ClCompile Include="src\enemysystem.c" />
     <ClCompile Include="src\entity.c" />
@@ -249,6 +250,7 @@
     <ClInclude Include="src\debug.h" />
     <ClInclude Include="src\debughud.h" />
     <ClInclude Include="src\dict.h" />
+    <ClInclude Include="src\dynf32.h" />
     <ClInclude Include="src\enemycomponent.h" />
     <ClInclude Include="src\enemysystem.h" />
     <ClInclude Include="src\entity.h" />

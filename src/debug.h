@@ -43,7 +43,7 @@ void _internal_print_assert(const char* expr,
     #define IF_DEBUG(x) ((void)0);
     #define ASSERT(expr, msg) ((void)0)
     #define DEBUG_ON_KEY(key) ((void)0)
-    #undef TDJX_DEBUG 0
+    #define TDJX_DEBUG 0
 #endif
 
 #define CALLOC(count, type) (type*)calloc(count, sizeof(type))

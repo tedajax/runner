@@ -1,4 +1,5 @@
 #include "types.h"
+#include "dynf32.h"
 #include "debug.h"
 #include "log.h"
 #include "algebra.h"

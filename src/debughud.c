@@ -125,3 +125,14 @@ void debug_hud_render(DebugHud* self, SDL_Renderer* renderer, int x, int y) {
         wy += self->ptSize + 2;
     }
 }
+
+void debug_hud_dump(DebugHud* self, FILE* f) {
+    for (u32 i = 0; i < self->count; ++i) {
+        DebugHudWatch* watch = &self->watches[i];
+
+        char watchOut[128];
+        debug_hud_watch_build_string(watch, watchOut, 128);
+
+        fprintf(f, "%s\n", watchOut);
+    }
+}

@@ -33,14 +33,14 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
 		transform->position.x += globals.scrollSpeed * globals.time.delta;
 
-        bullet->speed += bullet->config.acceleration * globals.time.delta;
-        bullet->angle += bullet->config.rotationRate * globals.time.delta;
+        f32 speed = dynf32_get(&bullet->speed);
+        f32 angle = bullet->baseAngle + dynf32_get(&bullet->angle);
 
-        transform->rotation = bullet->angle;
+        transform->rotation = angle;
 
-        f32 bulletRadAngle = bullet->angle * DEG_TO_RAD;
-        vec2_set(&movement->velocity, bullet->speed * cosf(bulletRadAngle),
-                                      bullet->speed * sinf(bulletRadAngle));
+        f32 bulletRadAngle = angle * DEG_TO_RAD;
+        vec2_set(&movement->velocity, speed * cosf(bulletRadAngle),
+                                      speed * sinf(bulletRadAngle));
 
         bullet->lifeTimer -= globals.time.delta;
 

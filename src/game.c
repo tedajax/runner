@@ -127,9 +127,14 @@ void game_update(Game* self) {
 		globals.time.timescale += 0.1f;
 	}
 
+    if (input_key_down(SDL_SCANCODE_APOSTROPHE)) {
+        debug_hud_dump(&self->debugHud, stdout);
+    }
+
     camera_update(&globals.camera);
 
     debug_hud_update_surfaces(&self->debugHud, globals.renderer);
+    tween_manager_update(&globals.tweens, globals.time.delta);
 }
 
 void game_render(Game* self) {

@@ -5,10 +5,9 @@
 #include "component.h"
 
 typedef struct bullet_config_t {
-    f32 startAngle;
-    f32 startSpeed;
-    f32 acceleration;
-    f32 rotationRate;
+    dynf32 speed;
+    dynf32 angle;
+    f32 baseAngle;
     f32 lifetime;
 	char* colliderKey;
 } BulletConfig;
@@ -16,8 +15,9 @@ typedef struct bullet_config_t {
 typedef struct bullet_controller_component_t {
     Component super;
     BulletConfig config;
-    f32 speed;
-    f32 angle;
+    dynf32 speed;
+    dynf32 angle;
+    f32 baseAngle;
     f32 lifeTimer;
     bool destroy;
 } BulletControllerComponent;

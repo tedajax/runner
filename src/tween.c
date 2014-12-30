@@ -120,16 +120,18 @@ f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d) {
 
 #pragma endregion
 
-void tween_init(Tween* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc) {
-    self->start = start;
-    self->end = end;
-    self->duration = duration;
-    self->loops = loops;
+void tween_init(Tween* self, TweenConfig* config) {
+    self->start = config->start;
+    self->end = config->end;
+    self->duration = config->duration;
+    self->loops = config->loops;
 
-    self->tweenFunc = tweenFunc;
+    self->timescale = 1.f;
+
+    self->tweenFunc = config->function;
 
     self->time = 0.f;
-    self->loopsLeft = loops;
+    self->loopsLeft = self->loops;
 }
 
 void tween_zero(Tween* self) {
@@ -149,7 +151,6 @@ void tween_zero(Tween* self) {
 }
 
 f32 tween_evaluate(Tween* self) {
-    ASSERT(self->enabled, "Attempt to evaluate inactive tween.");
     ASSERT(self->tweenFunc, "Attempt to evaluate tween with no tweening function.");
 
     f32 i = self->start;
@@ -199,6 +200,23 @@ void tween_reset(Tween* self) {
     self->loopsLeft = self->loops;
 }
 
+void tween_config_init(TweenConfig* self, Ini* config, const char* section) {
+    char* tweenFuncName = ini_get_string(config, section, "function");
+    self->function = tween_parse(tweenFuncName);
+    self->start = ini_get_float(config, section, "start");
+    self->end = ini_get_float(config, section, "end");
+    self->duration = ini_get_float(config, section, "duration");
+    self->loops = ini_try_get_int(config, section, "loops", TWEEN_LOOP_INFINITE);
+}
+
+void tween_config_init_from_tween(TweenConfig* self, Tween* tween) {
+    self->function = tween->tweenFunc;
+    self->start = tween->start;
+    self->end = tween->end;
+    self->duration = tween->duration;
+    self->loops = tween->loops;
+}
+
 void tween_manager_init(TweenManager* self, u32 capacity) {
 	TWEEN_REGISTER_ALL();
 
@@ -207,9 +225,9 @@ void tween_manager_init(TweenManager* self, u32 capacity) {
     self->tweens = CALLOC(self->capacity, Tween);
     self->freeIndices = CALLOC(self->capacity, u32);
     
-    for (u32 i = self->capacity; i > 0; --i) {
-        self->freeIndices[i - 1] = i;
-        tween_zero(&self->tweens[i - 1]);
+    for (u32 i = 0; i < self->capacity; ++i) {
+        self->freeIndices[i] = i;
+        tween_zero(&self->tweens[i]);
     }
 
     self->freeHead = self->capacity - 1;
@@ -254,27 +272,22 @@ void tween_manager_remove(TweenManager* self, Tween* tween) {
     }
 }
 
-Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc) {
+Tween* tween_manager_create(TweenManager* self, TweenConfig* config) {
     ASSERT(self->freeHead > 0, "Reached maximum tween capacity.  Consider increasing capacity of this tween manager.");
     
     u32 index = self->freeIndices[self->freeHead];
     --self->freeHead;
     Tween* tween = &self->tweens[index];
 
-    tween_init(tween, start, end, duration, loops, tweenFunc);
+    tween_init(tween, config);
 
     return tween;
 }
 
 Tween* tween_manager_create_config(TweenManager* self, Ini* config, char* section) {
-	char* tweenFuncName = ini_get_string(config, section, "function");
-	tween_func tweenFunc = tween_parse(tweenFuncName);
-	f32 start = ini_get_float(config, section, "start");
-	f32 end = ini_get_float(config, section, "end");
-	f32 duration = ini_get_float(config, section, "duration");
-	u32 loops = ini_try_get_int(config, section, "loops", TWEEN_LOOP_INFINITE);
-
-	return tween_manager_create(self, start, end, duration, loops, tweenFunc);
+    TweenConfig tweenConfig;
+    tween_config_init(&tweenConfig, config, section);
+	return tween_manager_create(self, &tweenConfig);
 }
 
 tween_func tween_parse(char* tweenName) {

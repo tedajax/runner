@@ -41,4 +41,6 @@ void debug_hud_add_watch(DebugHud* self, char* name, DebugHudWatchType type, voi
 void debug_hud_update_surfaces(DebugHud* self, SDL_Renderer* renderer);
 void debug_hud_render(DebugHud* self, SDL_Renderer* renderer, int x, int y);
 
+void debug_hud_dump(DebugHud* self, FILE* f);
+
 #endif

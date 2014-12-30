@@ -7,13 +7,12 @@
 typedef struct bullet_source_config_t {
 	Vec2 offset;		// offset from parent
     i32 count;          // how many bullets to fire from this source
-    f32 spread;         // the spread angle of this source
-    f32 lifetime;       // how long the bullet lives before they are destroyed
-    f32 speed;          // how fast the bullet moves
-    f32 acceleration;   // how the speed of the bullet changes over its lifetime
-    f32 fireDelay;      // Time between shots
-    f32 startAngle;     // Direction to fir
-    f32 rotationRate;   // rate of rotation while in flight
+    dynf32 spread;         // the spread angle of this source
+    dynf32 lifetime;       // how long the bullet lives before they are destroyed
+    dynf32 speed;          // how fast the bullet moves
+    dynf32 angle;          // individual bullet angle adjustment (should be 0 unless it's dynamic)
+    dynf32 fireDelay;      // Time between shots
+    dynf32 startAngle;     // Direction to fire
     char* textureName;  // bullet texture
 	ColliderConfig colliderConfig;
 } BulletSourceConfig;

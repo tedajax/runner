@@ -74,6 +74,14 @@ enum tween_loop_e {
     TWEEN_LOOP_INFINITE = 0xFFFFFFFF,
 };
 
+typedef struct tween_config_t {
+    f32 start;
+    f32 end;
+    f32 duration;
+    u32 loops;
+    tween_func function;
+} TweenConfig;
+
 typedef struct tween_t {
     f32 start; // value at the start
     f32 end; // value at the end
@@ -90,7 +98,7 @@ typedef struct tween_t {
     bool enabled;
 } Tween;
 
-void tween_init(Tween* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc);
+void tween_init(Tween* self, TweenConfig* config);
 void tween_zero(Tween* self);
 f32 tween_evaluate(Tween* self);
 void tween_update(Tween* self, f32 dt);
@@ -98,6 +106,9 @@ void tween_play(Tween* self);
 void tween_pause(Tween* self);
 void tween_stop(Tween* self);
 void tween_reset(Tween* self);
+
+void tween_config_init(TweenConfig* self, Ini* config, const char* section);
+void tween_config_init_from_tween(TweenConfig* self, Tween* tween);
 
 typedef struct tween_manager_t {
     Tween* tweens;
@@ -108,7 +119,7 @@ typedef struct tween_manager_t {
 
 void tween_manager_init(TweenManager* self, u32 capacity);
 void tween_manager_update(TweenManager* self, f32 dt);
-Tween* tween_manager_create(TweenManager* self, f32 start, f32 end, f32 duration, u32 loops, tween_func tweenFunc);
+Tween* tween_manager_create(TweenManager* self, TweenConfig* config);
 Tween* tween_manager_create_config(TweenManager* self, Ini* config, char* section);
 void tween_manager_remove(TweenManager* self, Tween* tween);
 tween_func tween_parse(char* tweenName);

@@ -26,6 +26,13 @@ void dynf32_start_tween(dynf32* self, TweenManager* tweenManager) {
     }
 }
 
+void dynf32_copy(const dynf32* source, dynf32* dest) {
+	dest->type = source->type;
+	dest->tweenConfig = source->tweenConfig;
+	dest->value = source->value;
+	dest->tween = NULL;
+}
+
 f32 dynf32_get(dynf32* self) {
     switch (self->type) {
         default:

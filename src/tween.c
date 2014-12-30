@@ -176,7 +176,7 @@ void tween_update(Tween* self, f32 dt) {
             }
             self->time -= self->duration;
         } else {
-            self->enabled = false;
+            //self->enabled = false;
             self->time = self->duration;
         }
     }

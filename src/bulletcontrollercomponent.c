@@ -13,6 +13,9 @@ BulletControllerComponent* bullet_controller_component_new(BulletConfig* config)
     self->lifeTimer = self->config.lifetime;
     self->destroy = false;
 
+	dynf32_copy(&self->config.speed, &self->speed);
+	dynf32_copy(&self->config.angle, &self->angle);
+
     dynf32_start_tween(&self->speed, &globals.tweens);
     dynf32_start_tween(&self->angle, &globals.tweens);
 

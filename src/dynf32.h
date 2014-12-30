@@ -20,6 +20,7 @@ typedef struct dynamic_f32_t {
 
 void dynf32_init(dynf32* self, f32 value, Tween* tween);
 void dynf32_zero(dynf32* self);
+void dynf32_release(dynf32* self);
 void dynf32_start_tween(dynf32* self, TweenManager* tweenManager);
 void dynf32_copy(const dynf32* source, dynf32* dest);
 f32 dynf32_get(dynf32* self);

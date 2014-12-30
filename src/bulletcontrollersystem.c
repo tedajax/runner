@@ -6,6 +6,7 @@ void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* 
     aspect_system_init(&self->super, entityManager, COMPONENT_BULLET_CONTROLLER);
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_ON_COLLISION_ENTER, bullet_controller_system_on_collision_enter);
+    REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED, bullet_controller_system_on_entity_removed);
 }
 
 void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities) {
@@ -75,4 +76,16 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* e
     message_add_param(&damageMsg, &damage);
 
     entities_send_message(system->entityManager, (Entity*)message.params[0], damageMsg);
+}
+
+void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity* entity, Message message) {
+    BulletControllerComponent* bullet =
+        (BulletControllerComponent*)entities_get_component(system->entityManager,
+        COMPONENT_BULLET_CONTROLLER,
+        entity);
+
+    if (bullet) {
+        dynf32_release(&bullet->speed);
+        dynf32_release(&bullet->angle);
+    }
 }

@@ -17,12 +17,18 @@ void dynf32_zero(dynf32* self) {
 	self->tween = NULL;
 }
 
+void dynf32_release(dynf32* self) {
+    if (self->type == DYN_F32_TWEEN) {
+        tween_release(self->tween);
+    }
+}
+
 void dynf32_start_tween(dynf32* self, TweenManager* tweenManager) {
     if (self->type == DYN_F32_TWEEN) {
         ASSERT(self->tween == NULL, "Tween has already been initialized.");
         
         self->tween = tween_manager_create(tweenManager, &self->tweenConfig);
-        self->tween->enabled = true;
+        tween_play(self->tween);
     }
 }
 

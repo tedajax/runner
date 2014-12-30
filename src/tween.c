@@ -115,7 +115,7 @@ f32 tween_cos_wave(f32 t, f32 i, f32 f, f32 d) {
 }
 
 f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d) {
-    return ((-4.f * (i + (f - i))) / (d * d)) * t * (t - d);
+    return ((-4.f * (f - i)) / (d * d)) * t * (t - d) + i;
 }
 
 #pragma endregion
@@ -126,12 +126,14 @@ void tween_init(Tween* self, TweenConfig* config) {
     self->duration = config->duration;
     self->loops = config->loops;
 
-    self->timescale = 1.f;
+    self->timescale = 0.f;
 
     self->tweenFunc = config->function;
 
     self->time = 0.f;
     self->loopsLeft = self->loops;
+
+    self->state = TWEEN_STATE_ACTIVE;
 }
 
 void tween_zero(Tween* self) {
@@ -147,7 +149,7 @@ void tween_zero(Tween* self) {
     self->time = 0.f;
     self->loopsLeft = 0;
 
-    self->enabled = false;
+    self->state = TWEEN_STATE_FREE;
 }
 
 f32 tween_evaluate(Tween* self) {
@@ -165,6 +167,10 @@ f32 tween_evaluate(Tween* self) {
 }
 
 void tween_update(Tween* self, f32 dt) {
+    if (self->state != TWEEN_STATE_ACTIVE) {
+        return;
+    }
+
     f32 ts = fabsf(self->timescale);
 
     self->time += dt * ts;
@@ -176,7 +182,6 @@ void tween_update(Tween* self, f32 dt) {
             }
             self->time -= self->duration;
         } else {
-            //self->enabled = false;
             self->time = self->duration;
         }
     }
@@ -198,6 +203,10 @@ void tween_stop(Tween* self) {
 void tween_reset(Tween* self) {
     self->time = 0.f;
     self->loopsLeft = self->loops;
+}
+
+void tween_release(Tween* self) {
+    self->state = TWEEN_STATE_DESTROY;
 }
 
 void tween_config_init(TweenConfig* self, Ini* config, const char* section) {
@@ -236,11 +245,11 @@ void tween_manager_init(TweenManager* self, u32 capacity) {
 void tween_manager_update(TweenManager* self, f32 dt) {
     for (u32 i = 0; i < self->capacity; ++i) {
         Tween* tween = &self->tweens[i];
-        if (tween->enabled) {
+        if (tween->state != TWEEN_STATE_FREE) {
             tween_update(tween, dt);
 
             // If the most recent update finished
-            if (!tween->enabled) {
+            if (tween->state == TWEEN_STATE_DESTROY) {
                 //push the index back into the free indices stack
                 ASSERT(self->freeHead < self->capacity - 1, "No room in free indices stack.");
                 tween_zero(tween);

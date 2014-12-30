@@ -74,6 +74,12 @@ enum tween_loop_e {
     TWEEN_LOOP_INFINITE = 0xFFFFFFFF,
 };
 
+typedef enum tween_state_e {
+    TWEEN_STATE_FREE,   // available for the tween manager to use for a new tween
+    TWEEN_STATE_ACTIVE, // tween is currently running
+    TWEEN_STATE_DESTROY // tween is running but is done and waiting to be set to FREE
+} TweenState;
+
 typedef struct tween_config_t {
     f32 start;
     f32 end;
@@ -95,7 +101,7 @@ typedef struct tween_t {
     f32 time;
     u32 loopsLeft;        // how many loops are left
 
-    bool enabled;
+    TweenState state;
 } Tween;
 
 void tween_init(Tween* self, TweenConfig* config);
@@ -106,6 +112,7 @@ void tween_play(Tween* self);
 void tween_pause(Tween* self);
 void tween_stop(Tween* self);
 void tween_reset(Tween* self);
+void tween_release(Tween* self);
 
 void tween_config_init(TweenConfig* self, Ini* config, const char* section);
 void tween_config_init_from_tween(TweenConfig* self, Tween* tween);

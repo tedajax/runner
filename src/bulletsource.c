@@ -47,8 +47,6 @@ void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManag
         self->fireTimer = dynf32_get(&self->config.fireDelay);
         bullet_source_fire(self, entityManager, anchor);
     }
-
-    printf("%f\n", self->config.startAngle.tween->time);
 }
 
 void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* anchor) {
@@ -61,7 +59,6 @@ void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* 
         f32 sa = (i - (self->config.count / 2)) * dynf32_get(&self->config.spread);
         sa += dynf32_get(&self->config.startAngle);
         config.baseAngle = sa;
-        printf("%f\n", dynf32_get(&self->config.startAngle));
         config.lifetime = dynf32_get(&self->config.lifetime);
         entity_create_bullet(entityManager, &config, &self->config.colliderConfig, pos, textures_get(self->config.textureName));
     }

@@ -3,6 +3,8 @@
 
 void controller_system_init(ControllerSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_CONTROLLER);
+
+    REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED, controller_system_on_entity_removed);
 }
 
 void controller_system_update(ControllerSystem* self, EntityList* entities) {
@@ -76,5 +78,19 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
         //        textures_get("player_bullet_1.png"));
         //    controller->fireTimer = controller->fireDelay;
         //}
+    }
+}
+
+void controller_system_on_entity_removed(AspectSystem* system, Entity* entity, Message message) {
+    ControllerComponent* controller =
+        (ControllerComponent*)entities_get_component(system->entityManager,
+        COMPONENT_CONTROLLER,
+        entity);
+
+    if (controller) {
+        for (u32 i = 0; i < controller->bulletSourceCount; ++i) {
+            bullet_source_release(&controller->bulletSources[i]);
+        }
+        free(controller->bulletSources);
     }
 }

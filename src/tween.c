@@ -126,7 +126,7 @@ void tween_init(Tween* self, TweenConfig* config) {
     self->duration = config->duration;
     self->loops = config->loops;
 
-    self->timescale = 0.f;
+    self->timescale = config->timescale;
 
     self->tweenFunc = config->function;
 
@@ -215,6 +215,7 @@ void tween_config_init(TweenConfig* self, Ini* config, const char* section) {
     self->start = ini_get_float(config, section, "start");
     self->end = ini_get_float(config, section, "end");
     self->duration = ini_get_float(config, section, "duration");
+    self->timescale = ini_try_get_float(config, section, "timescale", 1.f);
     self->loops = ini_try_get_int(config, section, "loops", TWEEN_LOOP_INFINITE);
 }
 
@@ -255,6 +256,7 @@ void tween_manager_update(TweenManager* self, f32 dt) {
                 tween_zero(tween);
                 ++self->freeHead;
                 self->freeIndices[self->freeHead] = i;
+                --self->count;
             }
         }
     }
@@ -276,6 +278,8 @@ void tween_manager_remove(TweenManager* self, Tween* tween) {
             ++self->freeHead;
             self->freeIndices[self->freeHead] = i;
 
+            --self->count;
+
             return;
         }
     }
@@ -287,6 +291,8 @@ Tween* tween_manager_create(TweenManager* self, TweenConfig* config) {
     u32 index = self->freeIndices[self->freeHead];
     --self->freeHead;
     Tween* tween = &self->tweens[index];
+
+    ++self->count;
 
     tween_init(tween, config);
 

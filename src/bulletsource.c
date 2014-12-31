@@ -34,6 +34,15 @@ void bullet_source_config(BulletSourceConfig* self, char* config, char* section,
 	collider_config_init(&self->colliderConfig, config, collider);
 }
 
+void bullet_source_release(BulletSource* self) {
+    dynf32_release(&self->config.spread);
+    dynf32_release(&self->config.lifetime);
+    dynf32_release(&self->config.speed);
+    dynf32_release(&self->config.angle);
+    dynf32_release(&self->config.fireDelay);
+    dynf32_release(&self->config.startAngle);
+}
+
 void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManager, Vec2* anchor) {
     if (self->fireTimer > 0.f) {
         self->fireTimer -= dt;

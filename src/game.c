@@ -83,7 +83,7 @@ void game_init(Game* self) {
 	debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
     debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.size);
     debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
-    debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.freeHead);
+    debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
 }
 
 void game_quit(Game* self) {

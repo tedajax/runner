@@ -84,6 +84,7 @@ typedef struct tween_config_t {
     f32 start;
     f32 end;
     f32 duration;
+    f32 timescale;
     u32 loops;
     tween_func function;
 } TweenConfig;
@@ -122,6 +123,7 @@ typedef struct tween_manager_t {
     u32* freeIndices;
     u32 capacity;
     u32 freeHead;
+    u32 count;
 } TweenManager;
 
 void tween_manager_init(TweenManager* self, u32 capacity);

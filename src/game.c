@@ -9,10 +9,11 @@ void game_init(Game* self) {
 
     textures_load("player_ship.png");
     textures_load("player_bullet_1.png");
+    textures_load("player_bullet_2.png");
     textures_load("bg_dark_purple.png");
     textures_load("enemy_red_1.png");
     textures_load("fireparticle.png");
-	textures_load("bullet.png");
+	textures_load("bullet.png");    
 
     self->entityManager = entity_manager_new();
     health_system_init(&self->healthSystem, self->entityManager);

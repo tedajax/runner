@@ -21,6 +21,7 @@ void bullet_source_config(BulletSourceConfig* self, char* config, char* section,
     self->angle = dynf32_config_at(cfg, section, "angle", level);
     self->fireDelay = dynf32_config_at(cfg, section, "fire_delay", level);
     self->startAngle = dynf32_config_at(cfg, section, "start_angle", level);
+    self->damage = dynf32_config_at(cfg, section, "damage", level);
     self->textureName = ini_get_string_at(cfg, section, "texture_name", level);
 
     dynf32_start_tween(&self->spread, &globals.tweens);
@@ -29,6 +30,7 @@ void bullet_source_config(BulletSourceConfig* self, char* config, char* section,
     dynf32_start_tween(&self->angle, &globals.tweens);
     dynf32_start_tween(&self->fireDelay, &globals.tweens);
     dynf32_start_tween(&self->startAngle, &globals.tweens);
+    dynf32_start_tween(&self->damage, &globals.tweens);
 
 	char* collider = ini_get_string_at(cfg, section, "collider", level);
 	collider_config_init(&self->colliderConfig, config, collider);
@@ -41,6 +43,7 @@ void bullet_source_release(BulletSource* self) {
     dynf32_release(&self->config.angle);
     dynf32_release(&self->config.fireDelay);
     dynf32_release(&self->config.startAngle);
+    dynf32_release(&self->config.damage);
 }
 
 void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManager, Vec2* anchor) {
@@ -69,6 +72,7 @@ void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* 
         sa += dynf32_get(&self->config.startAngle);
         config.baseAngle = sa;
         config.lifetime = dynf32_get(&self->config.lifetime);
+        config.damage = (i32)dynf32_get(&self->config.damage);
         entity_create_bullet(entityManager, &config, &self->config.colliderConfig, pos, textures_get(self->config.textureName));
     }
 }

@@ -2,14 +2,16 @@
 #include "collidercomponent.h"
 #include "physics.h"
 
-void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* entityManager) {
+void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* entityManager)
+{
     aspect_system_init(&self->super, entityManager, COMPONENT_BULLET_CONTROLLER);
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_ON_COLLISION_ENTER, bullet_controller_system_on_collision_enter);
     REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED, bullet_controller_system_on_entity_removed);
 }
 
-void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities) {
+void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities)
+{
     aspect_system_entities((AspectSystem*)self, entities);
 
     for (u32 i = 0; i < entities->size; ++i) {
@@ -32,7 +34,7 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
-		transform->position.x += globals.scrollSpeed * globals.time.delta;
+        transform->position.x += globals.scrollSpeed * globals.time.delta;
 
         f32 speed = dynf32_get(&bullet->speed);
         f32 angle = bullet->baseAngle + dynf32_get(&bullet->angle);
@@ -41,7 +43,7 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
 
         f32 bulletRadAngle = angle * DEG_TO_RAD;
         vec2_set(&movement->velocity, speed * cosf(bulletRadAngle),
-                                      speed * sinf(bulletRadAngle));
+            speed * sinf(bulletRadAngle));
 
         bullet->lifeTimer -= globals.time.delta;
 
@@ -59,7 +61,8 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
     }
 }
 
-void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* entity, Message message) {
+void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* entity, Message message)
+{
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,
         COMPONENT_BULLET_CONTROLLER,
@@ -69,7 +72,7 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* e
 
     bullet->destroy = true;
 
-    i32 damage = 30;
+    i32 damage = bullet->config.damage;
 
     Message damageMsg;
     message_init(&damageMsg, MESSAGE_DAMAGE);
@@ -78,7 +81,8 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* e
     entities_send_message(system->entityManager, (Entity*)message.params[0], damageMsg);
 }
 
-void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity* entity, Message message) {
+void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity* entity, Message message)
+{
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,
         COMPONENT_BULLET_CONTROLLER,

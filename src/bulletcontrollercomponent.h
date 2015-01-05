@@ -9,6 +9,7 @@ typedef struct bullet_config_t {
     dynf32 angle;
     f32 baseAngle;
     f32 lifetime;
+    i32 damage;
 	char* colliderKey;
 } BulletConfig;
 

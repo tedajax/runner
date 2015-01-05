@@ -13,6 +13,7 @@ typedef struct bullet_source_config_t {
     dynf32 angle;          // individual bullet angle adjustment (should be 0 unless it's dynamic)
     dynf32 fireDelay;      // Time between shots
     dynf32 startAngle;     // Direction to fire
+    dynf32 damage;         // Damage done by bullet
     char* textureName;  // bullet texture
 	ColliderConfig colliderConfig;
 } BulletSourceConfig;

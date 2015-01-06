@@ -37,36 +37,32 @@ f32 tween_cos_wave(f32 t, f32 i, f32 f, f32 d);
 f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d);
 
 Hashtable tweenFunctions;
-static bool functionsRegistered = false;
 
 #define TWEEN_REGISTER_FUNCTION(func) hashtable_insert(&tweenFunctions, #func, func)
 #define TWEEN_GET_FUNCTION(func) (tween_func)hashtable_get(&tweenFunctions, func)
 
 #define TWEEN_REGISTER_ALL()							\
 MULTILINE_MACRO_BEGIN()									\
-	if (!functionsRegistered) {							\
-		functionsRegistered = true;						\
-		hashtable_init(&tweenFunctions, 32, NULL);		\
-		TWEEN_REGISTER_FUNCTION(tween_linear);			\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_quad);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_out_quad);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_quad);\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_sin);		\
-		TWEEN_REGISTER_FUNCTION(tween_ease_out_sin);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_sin);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_expo);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_out_expo);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_expo);\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_circ);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_out_circ);	\
-		TWEEN_REGISTER_FUNCTION(tween_ease_in_out_circ);\
-		TWEEN_REGISTER_FUNCTION(tween_bounce_in);		\
-		TWEEN_REGISTER_FUNCTION(tween_bounce_out);		\
-		TWEEN_REGISTER_FUNCTION(tween_bounce_in_out);	\
-		TWEEN_REGISTER_FUNCTION(tween_sin_wave);		\
-		TWEEN_REGISTER_FUNCTION(tween_cos_wave);		\
-		TWEEN_REGISTER_FUNCTION(tween_parabolic);		\
-	}													\
+	hashtable_init(&tweenFunctions, 32, NULL);		\
+	TWEEN_REGISTER_FUNCTION(tween_linear);			\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_quad);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_out_quad);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_quad);\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_sin);		\
+	TWEEN_REGISTER_FUNCTION(tween_ease_out_sin);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_sin);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_expo);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_out_expo);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_expo);\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_circ);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_out_circ);	\
+	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_circ);\
+	TWEEN_REGISTER_FUNCTION(tween_bounce_in);		\
+	TWEEN_REGISTER_FUNCTION(tween_bounce_out);		\
+	TWEEN_REGISTER_FUNCTION(tween_bounce_in_out);	\
+	TWEEN_REGISTER_FUNCTION(tween_sin_wave);		\
+	TWEEN_REGISTER_FUNCTION(tween_cos_wave);		\
+	TWEEN_REGISTER_FUNCTION(tween_parabolic);       \
 MULTILINE_MACRO_END()
 
 enum tween_loop_e {

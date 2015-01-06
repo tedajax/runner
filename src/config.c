@@ -66,13 +66,70 @@ time_t config_get_mtime(const char* path) {
 }
 
 CONFIG_GET_AT_PROTO_NAMED(char*, string) {
-    return ini_get_string_at(&self->data, )
+    return ini_get_string_at(&self->data, section, key, index);
 }
 
 CONFIG_TRY_GET_AT_PROTO_NAMED(char*, string) {
-
+    return ini_try_get_string_at(&self->data, section, key, index, defaultValue);
 }
 
 CONFIG_GET_AT_PROTO(int) {
+    return ini_get_int_at(&self->data, section, key, index);
+}
 
+CONFIG_TRY_GET_AT_PROTO(int)
+{
+    return ini_try_get_int_at(&self->data, section, key, index, defaultValue);
+}
+
+CONFIG_GET_AT_PROTO(float)
+{
+    return ini_get_float_at(&self->data, section, key, index);
+}
+
+CONFIG_TRY_GET_AT_PROTO(float)
+{
+    return ini_try_get_float_at(&self->data, section, key, index, defaultValue);
+}
+
+CONFIG_GET_AT_PROTO(bool)
+{
+    return ini_get_bool_at(&self->data, section, key, index);
+}
+
+CONFIG_TRY_GET_AT_PROTO(bool)
+{
+    return ini_try_get_bool_at(&self->data, section, key, index, defaultValue);
+}
+
+CONFIG_GET_AT_PROTO(Vec2)
+{
+    f32 x = ini_get_float_at(&self->data, section, key, index * 2 + 0);
+    f32 y = ini_get_float_at(&self->data, section, key, index * 2 + 1);
+    return vec2_init(x, y);
+}
+
+CONFIG_TRY_GET_AT_PROTO(Vec2)
+{
+    f32 x = ini_try_get_float_at(&self->data, section, key, index * 2 + 0, defaultValue.x);
+    f32 y = ini_try_get_float_at(&self->data, section, key, index * 2 + 1, defaultValue.y);
+    return vec2_init(x, y);
+}
+
+CONFIG_GET_AT_PROTO(Range)
+{
+    f32 min = ini_get_float_at(&self->data, section, key, index * 2 + 0);
+    f32 max = ini_get_float_at(&self->data, section, key, index * 2 + 1);
+    Range r;
+    range_init(&r, min, max);
+    return r;
+}
+
+CONFIG_TRY_GET_AT_PROTO(Range)
+{
+    f32 min = ini_try_get_float_at(&self->data, section, key, index * 2 + 0, defaultValue.min);
+    f32 max = ini_try_get_float_at(&self->data, section, key, index * 2 + 1, defaultValue.max);
+    Range r;
+    range_init(&r, min, max);
+    return r;
 }

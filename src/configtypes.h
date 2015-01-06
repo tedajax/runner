@@ -33,9 +33,9 @@ typedef enum bounding_volume_type_e BoundingVolumeType;
 
 typedef struct collider_config_t {
     TypeConfig super;
-    ColliderLayer layer;
+    i32 layer;
     Vec2 offset;
-    BoundingVolumeType type;
+    i32 type;
     f32 width;
     f32 height;
     f32 radius;

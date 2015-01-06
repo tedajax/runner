@@ -1,4 +1,5 @@
 #include "dynf32.h"
+#include "tween.h"
 
 void dynf32_init(dynf32* self, f32 value, Tween* tween) {
 	self->value = value;
@@ -6,7 +7,7 @@ void dynf32_init(dynf32* self, f32 value, Tween* tween) {
 
     if (self->tween) {
         self->type = DYN_F32_TWEEN;
-        tween_config_init_from_tween(&self->tweenConfig, tween);
+        tween_config_init_from_tween(self->tweenConfig, tween);
     } else {
         self->type = DYN_F32_VALUE;
     }
@@ -27,7 +28,7 @@ void dynf32_start_tween(dynf32* self, TweenManager* tweenManager) {
     if (self->type == DYN_F32_TWEEN) {
         ASSERT(self->tween == NULL, "Tween has already been initialized.");
         
-        self->tween = tween_manager_create(tweenManager, &self->tweenConfig);
+        self->tween = tween_manager_create(tweenManager, self->tweenConfig);
         tween_play(self->tween);
     }
 }
@@ -73,7 +74,7 @@ dynf32 dynf32_config_at(Ini* config, const char* section, const char* key, u32 i
 		return result;
 	}
 
-    tween_config_init(&result.tweenConfig, config, str);
+    tween_config_init(result.tweenConfig, config, str);
     result.tween = NULL;
     result.type = DYN_F32_TWEEN;
 	return result;

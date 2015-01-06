@@ -109,6 +109,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -131,6 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>true</PreprocessToFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -243,6 +245,7 @@
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\components.h" />
     <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\configtypes.h" />
     <ClInclude Include="src\controllercomponent.h" />
     <ClInclude Include="src\controllersystem.h" />
     <ClInclude Include="src\core.h" />

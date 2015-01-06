@@ -17,18 +17,6 @@ typedef enum collider_layer_e {
     COLLIDER_LAYER_LAST,
 } ColliderLayer;
 
-typedef struct collider_config_t {
-	ColliderLayer layer;
-	Vec2 offset;
-	BoundingVolumeType type;
-	f32 width;
-	f32 height;
-	f32 radius;
-	f32 orientation;
-} ColliderConfig;
-
-void collider_config_init(ColliderConfig* self, char* config, char* section);
-
 typedef struct collider_t {
     i32 colliderId;
     ColliderLayer layer;

@@ -80,15 +80,6 @@ typedef enum tween_state_e {
     TWEEN_STATE_DESTROY // tween is running but is done and waiting to be set to FREE
 } TweenState;
 
-typedef struct tween_config_t {
-    f32 start;
-    f32 end;
-    f32 duration;
-    f32 timescale;
-    u32 loops;
-    tween_func function;
-} TweenConfig;
-
 typedef struct tween_t {
     f32 start; // value at the start
     f32 end; // value at the end

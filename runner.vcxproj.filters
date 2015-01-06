@@ -377,6 +377,9 @@
     <ClInclude Include="src\dynf32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\configtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\data\game.ini">

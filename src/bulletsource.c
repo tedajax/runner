@@ -11,29 +11,29 @@ void bullet_source_init(BulletSource* self, char* config, char* section) {
 }
 
 void bullet_source_config(BulletSourceConfig* self, char* config, char* section, u32 level) {
-    Ini* cfg = config_get(config);
+ //   Ini* cfg = config_get(config);
 
-    self->offset = ini_get_vec2_at(cfg, section, "offset", level);
-    self->count = ini_get_int_at(cfg, section, "count", level);
-    self->spread = dynf32_config_at(cfg, section, "spread", level);
-    self->lifetime = dynf32_config_at(cfg, section, "lifetime", level);
-    self->speed = dynf32_config_at(cfg, section, "speed", level);
-    self->angle = dynf32_config_at(cfg, section, "angle", level);
-    self->fireDelay = dynf32_config_at(cfg, section, "fire_delay", level);
-    self->startAngle = dynf32_config_at(cfg, section, "start_angle", level);
-    self->damage = dynf32_config_at(cfg, section, "damage", level);
-    self->textureName = ini_get_string_at(cfg, section, "texture_name", level);
+ //   self->offset = ini_get_vec2_at(cfg, section, "offset", level);
+ //   self->count = ini_get_int_at(cfg, section, "count", level);
+ //   self->spread = dynf32_config_at(cfg, section, "spread", level);
+ //   self->lifetime = dynf32_config_at(cfg, section, "lifetime", level);
+ //   self->speed = dynf32_config_at(cfg, section, "speed", level);
+ //   self->angle = dynf32_config_at(cfg, section, "angle", level);
+ //   self->fireDelay = dynf32_config_at(cfg, section, "fire_delay", level);
+ //   self->startAngle = dynf32_config_at(cfg, section, "start_angle", level);
+ //   self->damage = dynf32_config_at(cfg, section, "damage", level);
+ //   self->textureName = ini_get_string_at(cfg, section, "texture_name", level);
 
-    dynf32_start_tween(&self->spread, &globals.tweens);
-    dynf32_start_tween(&self->lifetime, &globals.tweens);
-    dynf32_start_tween(&self->speed, &globals.tweens);
-    dynf32_start_tween(&self->angle, &globals.tweens);
-    dynf32_start_tween(&self->fireDelay, &globals.tweens);
-    dynf32_start_tween(&self->startAngle, &globals.tweens);
-    dynf32_start_tween(&self->damage, &globals.tweens);
+ //   dynf32_start_tween(&self->spread, &globals.tweens);
+ //   dynf32_start_tween(&self->lifetime, &globals.tweens);
+ //   dynf32_start_tween(&self->speed, &globals.tweens);
+ //   dynf32_start_tween(&self->angle, &globals.tweens);
+ //   dynf32_start_tween(&self->fireDelay, &globals.tweens);
+ //   dynf32_start_tween(&self->startAngle, &globals.tweens);
+ //   dynf32_start_tween(&self->damage, &globals.tweens);
 
-	char* collider = ini_get_string_at(cfg, section, "collider", level);
-	collider_config_init(&self->colliderConfig, config, collider);
+	//char* collider = ini_get_string_at(cfg, section, "collider", level);
+	//collider_config_init(&self->colliderConfig, config, collider);
 }
 
 void bullet_source_release(BulletSource* self) {

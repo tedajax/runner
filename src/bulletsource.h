@@ -4,20 +4,6 @@
 #include "core.h"
 #include "collider.h"
 
-typedef struct bullet_source_config_t {
-	Vec2 offset;		// offset from parent
-    i32 count;          // how many bullets to fire from this source
-    dynf32 spread;         // the spread angle of this source
-    dynf32 lifetime;       // how long the bullet lives before they are destroyed
-    dynf32 speed;          // how fast the bullet moves
-    dynf32 angle;          // individual bullet angle adjustment (should be 0 unless it's dynamic)
-    dynf32 fireDelay;      // Time between shots
-    dynf32 startAngle;     // Direction to fire
-    dynf32 damage;         // Damage done by bullet
-    char* textureName;  // bullet texture
-	ColliderConfig colliderConfig;
-} BulletSourceConfig;
-
 typedef struct bullet_source_t {
     BulletSourceConfig config;
     f32 fireTimer;

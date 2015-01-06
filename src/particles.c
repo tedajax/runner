@@ -28,18 +28,18 @@ void emitter_init(ParticleEmitter* self, u32 maxParticles, SDL_Texture* texture)
 }
 
 void emitter_config(ParticleEmitter* self, const char* configName, const char* sectionName) {
-    Ini* config = config_get(configName);
-    
-    self->capacity = ini_get_int(config, sectionName, "max_particles");
-    self->particles = CALLOC(self->capacity, Particle);
+    //Ini* config = config_get(configName);
+    //
+    //self->capacity = ini_get_int(config, sectionName, "max_particles");
+    //self->particles = CALLOC(self->capacity, Particle);
 
-    char* textureName = ini_get_string(config, sectionName, "texture");
-    self->texture = textures_get(textureName);
+    //char* textureName = ini_get_string(config, sectionName, "texture");
+    //self->texture = textures_get(textureName);
 
-    self->emitInterval = ini_get_float(config, sectionName, "emit_interval");
-    self->particlesPerEmit= (u32)ini_get_int(config, sectionName, "particles_per_emit");
-    
-    self->emitTimer = 0.f;
+    //self->emitInterval = ini_get_float(config, sectionName, "emit_interval");
+    //self->particlesPerEmit= (u32)ini_get_int(config, sectionName, "particles_per_emit");
+    //
+    //self->emitTimer = 0.f;
 }
 
 void emitter_free(ParticleEmitter* self) {

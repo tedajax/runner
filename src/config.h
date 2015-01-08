@@ -5,6 +5,8 @@
 #include "hashtable.h"
 #include "path.h"
 #include "inline.h"
+#include "algebra.h"
+#include "range.h"
 
 #include "configtypes.h"
 
@@ -13,6 +15,7 @@
 
 typedef struct config_t {
     Ini data;
+    Hashtable typeConfigs;
     char* path;
     time_t lastMTime; // last modification time of the file
 } Config;
@@ -57,11 +60,12 @@ Config* config_get(const char* name);
     CONFIG_GET_AT_PROTO_NAMED(type, name);CONFIG_TRY_GET_AT_PROTO_NAMED(type, name);CONFIG_GET_PROTO_NAMED(type, name);CONFIG_TRY_GET_PROTO_NAMED(type, name)
 
 CONFIG_REGISTER_TYPE(int);
-//CONFIG_REGISTER_TYPE(float);
-//CONFIG_REGISTER_TYPE(bool);
-//CONFIG_REGISTER_TYPE(Vec2);
-//CONFIG_REGISTER_TYPE(Range);
-//CONFIG_REGISTER_TYPE_NAMED(char*, string);
+CONFIG_REGISTER_TYPE(float);
+CONFIG_REGISTER_TYPE(bool);
+CONFIG_REGISTER_TYPE(Vec2);
+CONFIG_REGISTER_TYPE(Range);
+CONFIG_REGISTER_TYPE_NAMED(char*, string);
+CONFIG_REGISTER_TYPE_NAMED(ColliderConfig*, ColliderConfig);
 
 time_t config_get_mtime(const char* path);
 

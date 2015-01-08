@@ -1,6 +1,7 @@
 #include "config.h"
 
 void config_type_free(Config* self) {
+    hashtable_free(&self->typeConfigs);
     free(self->path);
     free(self);
 }
@@ -44,6 +45,8 @@ void config_load(const char* filename) {
     newConfig->path = CALLOC(strlen(fullPath) + 1, char);
     strcpy(newConfig->path, fullPath);
     newConfig->lastMTime = config_get_mtime(newConfig->path);
+
+    hashtable_init(&newConfig->typeConfigs, 32, free);
 
     hashtable_insert(&configTable, filename, (void*)newConfig);
 }
@@ -132,4 +135,32 @@ CONFIG_TRY_GET_AT_PROTO(Range)
     Range r;
     range_init(&r, min, max);
     return r;
+}
+
+CONFIG_GET_AT_PROTO_NAMED(ColliderConfig*, ColliderConfig)
+{
+    char* cfgSection = ini_get_string_at(&self->data, section, key, index);
+
+    TypeConfig* typeConfig = hashtable_get(&self->typeConfigs, cfgSection);
+    
+    if (typeConfig) {
+        ASSERT(typeConfig->type == TYPE_CONFIG_COLLIDER, "Stored config referenced by name is not a collider.");
+        return (ColliderConfig*)typeConfig;
+    }
+    
+    ColliderConfig* colliderConfig = CALLOC(1, ColliderConfig);
+    collider_config_deserialize(colliderConfig, self, cfgSection);
+    hashtable_insert(&self->typeConfigs, cfgSection, (TypeConfig*)colliderConfig);
+    return colliderConfig;
+}
+
+CONFIG_TRY_GET_AT_PROTO_NAMED(ColliderConfig*, ColliderConfig)
+{
+    char* cfgSection = ini_try_get_string_at(&self->data, section, key, index, NULL);
+
+    if (!cfgSection) {
+        return NULL;
+    }
+
+
 }

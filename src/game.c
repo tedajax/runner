@@ -4,6 +4,8 @@
 
 bool drawCollision = true;
 
+void game_debug_keys(Game* self);
+
 void game_init(Game* self) {  
     textures_init("assets");
 
@@ -113,14 +115,27 @@ void game_update(Game* self) {
     collision_system_update(&self->collisionSystem, &self->entities);
     profiler_tock("collision");
 
-    if (input_key_down(SDL_SCANCODE_E)) {
-        printf("Entities: %u\n", entities_entity_count(self->entityManager));
+    camera_update(&globals.camera);
+
+    debug_hud_update_surfaces(&self->debugHud, globals.renderer);
+    tween_manager_update(&globals.tweens, globals.time.delta);
+
+    game_debug_keys(self);
+}
+
+void game_debug_keys(Game* self) {
+    if (input_key_down(SDL_SCANCODE_F1)) {
+        debug_hud_dump(&self->debugHud, stdout);
     }
 
-    if (input_key_down(SDL_SCANCODE_C)) {
+    if (input_key_down(SDL_SCANCODE_F2)) {
+        profiler_dump(stdout);
+    }
+
+    if (input_key_down(SDL_SCANCODE_F3)) {
         drawCollision = !drawCollision;
     }
-    
+
     if (input_key_down(SDL_SCANCODE_MINUS)) {
         globals.time.timescale -= 0.1f;
     }
@@ -128,23 +143,6 @@ void game_update(Game* self) {
     if (input_key_down(SDL_SCANCODE_EQUALS)) {
         globals.time.timescale += 0.1f;
     }
-
-    if (input_key_down(SDL_SCANCODE_APOSTROPHE)) {
-        debug_hud_dump(&self->debugHud, stdout);
-    }
-
-    if (input_key_down(SDL_SCANCODE_SEMICOLON)) {
-        profiler_dump(stdout);
-    }
-
-    if (input_key_down(SDL_SCANCODE_R)) {
-        config_reload_all();
-    }
-
-    camera_update(&globals.camera);
-
-    debug_hud_update_surfaces(&self->debugHud, globals.renderer);
-    tween_manager_update(&globals.tweens, globals.time.delta);
 }
 
 void game_render(Game* self) {

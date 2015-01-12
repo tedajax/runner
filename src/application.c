@@ -115,6 +115,7 @@ bool _app_initialize(App* self) {
     input_initialize();
 
     profiler_init();
+    globals.time.on_second = config_reload_all;
 
     return true;
 }

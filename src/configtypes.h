@@ -59,6 +59,8 @@ typedef struct bullet_source_config_t {
     ColliderConfig colliderConfig;
 } BulletSourceConfig;
 
+void bullet_source_config_deserialize(TypeConfig* super, Config* config, char* table);
+
 typedef f32(*tween_func)(f32, f32, f32, f32);
 
 typedef struct tween_config_t {
@@ -70,5 +72,7 @@ typedef struct tween_config_t {
     u32 loops;
     tween_func function;
 } TweenConfig;
+
+void tween_config_deserialize(TypeConfig* super, Config* config, char* table);
 
 #endif

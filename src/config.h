@@ -66,6 +66,42 @@ CONFIG_REGISTER_TYPE(Vec2);
 CONFIG_REGISTER_TYPE(Range);
 CONFIG_REGISTER_TYPE_NAMED(char*, string);
 CONFIG_REGISTER_TYPE_NAMED(ColliderConfig*, ColliderConfig);
+CONFIG_REGISTER_TYPE_NAMED(BulletSourceConfig*, BulletSourceConfig);
+CONFIG_REGISTER_TYPE_NAMED(TweenConfig*, TweenConfig);
+
+#define CONFIG_GET_KEY(charptr, data, section, key, index) \
+    charptr = ini_get_string_at(data, section, key, index);
+
+#define CONFIG_TRY_GET_KEY(charptr, data, section, key, index) \
+    charptr = ini_try_get_string_at(data, section, key, index, NULL); \
+    if (!charptr) { return NULL; }
+
+#define CONFIG_TYPE_CONFIG_GET_AT_BODY(configtype, typeenum, istry)             \
+    char* cfgSection;                                                           \
+    if (istry) {                                                                \
+        CONFIG_TRY_GET_KEY(cfgSection, &self->data, section, key, index);       \
+    } else {                                                                    \
+        CONFIG_GET_KEY(cfgSection, &self->data, section, key, index);           \
+    }                                                                           \
+    char* cfgSection = ini_get_string_at(&self->data, section, key, index);     \
+    TypeConfig* typeConfig = hashtable_get(&self->typeConfigs, cfgSection);     \
+    if (typeConfig) {                                                           \
+        ASSERT(typeConfig->type == typeenum, "Stored config referenced by name is not proper type.");  \
+        return (configtype*)typeConfig;                                     \
+    }                                                                           \
+    configtype* colliderConfig = CALLOC(1, configtype);                 \
+    collider_config_deserialize(colliderConfig, self, cfgSection);              \
+    hashtable_insert(&self->typeConfigs, cfgSection, (TypeConfig*)colliderConfig); \
+    return colliderConfig;
+
+#define CONFIG_TYPE_CONFIG_IMPLEMENTATIONS(configtype, typeenum)        \
+    CONFIG_GET_AT_PROTO_NAMED(configtype*, configtype) {                \
+        CONFIG_TYPE_CONFIG_GET_AT_BODY(configtype, typeenum, false);    \
+    }                                                                   \
+                                                                        \
+    CONFIG_TRY_GET_AT_PROTO_NAMED(configtype*, configtype) {            \
+        CONFIG_TYPE_CONFIG_GET_AT_BODY(configtype, typeenum, true);     \
+    }
 
 time_t config_get_mtime(const char* path);
 

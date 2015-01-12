@@ -80,47 +80,39 @@ CONFIG_GET_AT_PROTO(int) {
     return ini_get_int_at(&self->data, section, key, index);
 }
 
-CONFIG_TRY_GET_AT_PROTO(int)
-{
+CONFIG_TRY_GET_AT_PROTO(int) {
     return ini_try_get_int_at(&self->data, section, key, index, defaultValue);
 }
 
-CONFIG_GET_AT_PROTO(float)
-{
+CONFIG_GET_AT_PROTO(float) {
     return ini_get_float_at(&self->data, section, key, index);
 }
 
-CONFIG_TRY_GET_AT_PROTO(float)
-{
+CONFIG_TRY_GET_AT_PROTO(float) {
     return ini_try_get_float_at(&self->data, section, key, index, defaultValue);
 }
 
-CONFIG_GET_AT_PROTO(bool)
-{
+CONFIG_GET_AT_PROTO(bool) {
     return ini_get_bool_at(&self->data, section, key, index);
 }
 
-CONFIG_TRY_GET_AT_PROTO(bool)
-{
+CONFIG_TRY_GET_AT_PROTO(bool) {
     return ini_try_get_bool_at(&self->data, section, key, index, defaultValue);
 }
 
-CONFIG_GET_AT_PROTO(Vec2)
-{
+CONFIG_GET_AT_PROTO(Vec2) {
     f32 x = ini_get_float_at(&self->data, section, key, index * 2 + 0);
     f32 y = ini_get_float_at(&self->data, section, key, index * 2 + 1);
     return vec2_init(x, y);
 }
 
-CONFIG_TRY_GET_AT_PROTO(Vec2)
-{
+CONFIG_TRY_GET_AT_PROTO(Vec2) {
     f32 x = ini_try_get_float_at(&self->data, section, key, index * 2 + 0, defaultValue.x);
     f32 y = ini_try_get_float_at(&self->data, section, key, index * 2 + 1, defaultValue.y);
     return vec2_init(x, y);
 }
 
-CONFIG_GET_AT_PROTO(Range)
-{
+CONFIG_GET_AT_PROTO(Range) {
     f32 min = ini_get_float_at(&self->data, section, key, index * 2 + 0);
     f32 max = ini_get_float_at(&self->data, section, key, index * 2 + 1);
     Range r;
@@ -128,8 +120,7 @@ CONFIG_GET_AT_PROTO(Range)
     return r;
 }
 
-CONFIG_TRY_GET_AT_PROTO(Range)
-{
+CONFIG_TRY_GET_AT_PROTO(Range) {
     f32 min = ini_try_get_float_at(&self->data, section, key, index * 2 + 0, defaultValue.min);
     f32 max = ini_try_get_float_at(&self->data, section, key, index * 2 + 1, defaultValue.max);
     Range r;
@@ -137,30 +128,4 @@ CONFIG_TRY_GET_AT_PROTO(Range)
     return r;
 }
 
-CONFIG_GET_AT_PROTO_NAMED(ColliderConfig*, ColliderConfig)
-{
-    char* cfgSection = ini_get_string_at(&self->data, section, key, index);
-
-    TypeConfig* typeConfig = hashtable_get(&self->typeConfigs, cfgSection);
-    
-    if (typeConfig) {
-        ASSERT(typeConfig->type == TYPE_CONFIG_COLLIDER, "Stored config referenced by name is not a collider.");
-        return (ColliderConfig*)typeConfig;
-    }
-    
-    ColliderConfig* colliderConfig = CALLOC(1, ColliderConfig);
-    collider_config_deserialize(colliderConfig, self, cfgSection);
-    hashtable_insert(&self->typeConfigs, cfgSection, (TypeConfig*)colliderConfig);
-    return colliderConfig;
-}
-
-CONFIG_TRY_GET_AT_PROTO_NAMED(ColliderConfig*, ColliderConfig)
-{
-    char* cfgSection = ini_try_get_string_at(&self->data, section, key, index, NULL);
-
-    if (!cfgSection) {
-        return NULL;
-    }
-
-
-}
+CONFIG_TYPE_CONFIG_IMPLEMENTATIONS(ColliderConfig, TYPE_CONFIG_COLLIDER);

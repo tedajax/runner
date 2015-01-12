@@ -2,8 +2,8 @@
 #include "tween.h"
 
 void dynf32_init(dynf32* self, f32 value, Tween* tween) {
-	self->value = value;
-	self->tween = tween;
+    self->value = value;
+    self->tween = tween;
 
     if (self->tween) {
         self->type = DYN_F32_TWEEN;
@@ -14,8 +14,8 @@ void dynf32_init(dynf32* self, f32 value, Tween* tween) {
 }
 
 void dynf32_zero(dynf32* self) {
-	self->value = 0.f;
-	self->tween = NULL;
+    self->value = 0.f;
+    self->tween = NULL;
 }
 
 void dynf32_release(dynf32* self) {
@@ -33,11 +33,23 @@ void dynf32_start_tween(dynf32* self, TweenManager* tweenManager) {
     }
 }
 
+void dynf32_restart(dynf32* self, TweenManager* tweenManager) {
+    if (self->type != DYN_F32_TWEEN) {
+        return;
+    }
+
+    if (self->tween != NULL) {
+        dynf32_release(self);
+    }
+
+    dynf32_start_tween(self, tweenManager);
+}
+
 void dynf32_copy(const dynf32* source, dynf32* dest) {
-	dest->type = source->type;
-	dest->tweenConfig = source->tweenConfig;
-	dest->value = source->value;
-	dest->tween = NULL;
+    dest->type = source->type;
+    dest->tweenConfig = source->tweenConfig;
+    dest->value = source->value;
+    dest->tween = NULL;
 }
 
 f32 dynf32_get(dynf32* self) {
@@ -55,27 +67,27 @@ bool dynf32_set(dynf32* self, f32 value) {
     if (self->type == DYN_F32_VALUE) {
         self->value = value;
         return true;
-	}
+    }
 
     return false;
 }
 
 dynf32 dynf32_config_at(Ini* config, const char* section, const char* key, u32 index) {
-	dynf32 result;
-	dynf32_zero(&result);
+    dynf32 result;
+    dynf32_zero(&result);
 
-	char* str = ini_get_string_at(config, section, key, index);
+    char* str = ini_get_string_at(config, section, key, index);
 
-	char* endptr;
-	result.value = strtof(str, &endptr);
+    char* endptr;
+    result.value = strtof(str, &endptr);
 
-	if (*endptr == '\0') {
+    if (*endptr == '\0') {
         result.type = DYN_F32_VALUE;
-		return result;
-	}
+        return result;
+    }
 
     tween_config_init(result.tweenConfig, config, str);
     result.tween = NULL;
     result.type = DYN_F32_TWEEN;
-	return result;
+    return result;
 }

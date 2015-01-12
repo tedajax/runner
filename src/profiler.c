@@ -11,7 +11,7 @@ Profile* add_profile(const char* name) {
 
     p->name = (char*)name;
 
-    p->capacity = 1024;
+    p->capacity = PROFILER_STORED_SAMPLES;
     p->recent = (u64*)calloc(p->capacity, sizeof(u64));
     p->count = 0;
 

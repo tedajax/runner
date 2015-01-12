@@ -109,6 +109,26 @@ void *hashtable_remove(Hashtable *self, const char *key) {
     return NULL;
 }
 
+size_t hashtable_get_all(Hashtable* self, void** data, size_t n) {
+    assert(self);
+    assert(data);
+    
+    size_t index = 0;
+    for (u32 i = 0; i < self->bucketCount; ++i) {
+        if (self->buckets[i]) {
+            for (u32 j = 0; j < self->buckets[i]->size; ++j) {
+                if (index >= n) { return index; }
+                void* pkvp = vector_index(self->buckets[i], j);
+                HashtableNode* kvp = (HashtableNode*)pkvp;
+                data[index] = kvp->value;
+                ++index;
+            }
+        }
+    }
+
+    return index;
+}
+
 void hashtable_clear(Hashtable* self) {
     for (u32 i = 0; i < self->bucketCount; ++i) {
         Vector *bucket = self->buckets[i];

@@ -137,6 +137,10 @@ void game_update(Game* self) {
         profiler_dump(stdout);
     }
 
+    if (input_key_down(SDL_SCANCODE_R)) {
+        config_reload_all();
+    }
+
     camera_update(&globals.camera);
 
     debug_hud_update_surfaces(&self->debugHud, globals.renderer);

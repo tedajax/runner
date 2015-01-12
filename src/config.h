@@ -22,7 +22,8 @@ typedef struct config_t {
 
 void config_type_free(Config* self);
 void config_type_free_void(void* pself);
-void config_type_update_mtime(Config* self);
+bool config_type_update_mtime(Config* self);
+void config_type_reload(Config* self);
 
 char* rootDir;
 Hashtable configTable;
@@ -30,7 +31,9 @@ Hashtable configTable;
 void config_init();
 void config_terminate();
 void config_load(const char* filename);
+void config_reload_all();
 Config* config_get(const char* name);
+time_t config_get_mtime(const char* path);
 
 #define STR_ENUM_CMP(str, enumval) (strcmp(str, #enumval) == 0)
 
@@ -95,6 +98,7 @@ CONFIG_REGISTER_TYPE_NAMED(TweenConfig*, TweenConfig);
     }                                                                           \
     configtype* config = CALLOC(1, configtype);                                 \
     config->super.type = typeenum;                                              \
+    config->super.tableName = cfgSection;                                       \
     DESERIALIZE(typeenum, (TypeConfig*)config, self, cfgSection);               \
     hashtable_insert(&self->typeConfigs, cfgSection, config);                   \
     return config;                                                              \
@@ -108,7 +112,5 @@ CONFIG_REGISTER_TYPE_NAMED(TweenConfig*, TweenConfig);
     CONFIG_TRY_GET_AT_PROTO_NAMED(configtype*, configtype) {            \
         CONFIG_TYPE_CONFIG_GET_AT_BODY(configtype, typeenum, true);     \
     }
-
-time_t config_get_mtime(const char* path);
 
 #endif

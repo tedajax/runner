@@ -35,8 +35,9 @@ void *hashtable_get(Hashtable *self, const char *key);
 //removes value stored at key and returns it
 void *hashtable_remove(Hashtable *self, const char *key);
 
-void hashtable_clear(Hashtable* self);
+size_t hashtable_get_all(Hashtable* self, void** data, size_t n);
 
+void hashtable_clear(Hashtable* self);
 void hashtable_free(Hashtable *self);
 
 u64 _hashtable_djb2(const char *key);

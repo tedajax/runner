@@ -10,12 +10,28 @@ void config_type_free_void(void* pself) {
     config_type_free((Config*)pself);
 }
 
-void config_type_update_mtime(Config* self) {
+bool config_type_update_mtime(Config* self) {
     time_t mtime = config_get_mtime(self->path);
     
     if (mtime > self->lastMTime) {
         // TODO: reload config, propagate changes to relevant config types
         self->lastMTime = mtime;
+        return true;
+    }
+
+    return false;
+}
+
+void config_type_reload(Config* self) {
+    ini_init(&self->data);
+    ini_load(&self->data, self->path);
+
+    TypeConfig* typeConfigs[128];
+    u32 count = (u32)hashtable_get_all(&self->typeConfigs, typeConfigs, 128);
+
+    for (u32 i = 0; i < count; ++i) {
+        TypeConfig* typeConfig = typeConfigs[i];
+        DESERIALIZE(typeConfig->type, typeConfig, self, typeConfig->tableName);
     }
 }
 
@@ -53,6 +69,19 @@ void config_load(const char* filename) {
     hashtable_init(&newConfig->typeConfigs, 32, free);
 
     hashtable_insert(&configTable, filename, (void*)newConfig);
+}
+
+void config_reload_all() {
+    Config* configs[128];
+    u32 count = (u32)hashtable_get_all(&configTable, configs, 128);
+
+    for (u32 i = 0; i < count; ++i) {
+        Config* config = (Config*)configs[i];
+
+        if (config_type_update_mtime(config)) {
+            config_type_reload(config);
+        }
+    }
 }
 
 Config* config_get(const char* name) {

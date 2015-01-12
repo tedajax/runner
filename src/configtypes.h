@@ -15,6 +15,7 @@ typedef enum type_config_type_e {
 
 typedef struct type_config_t {
     TypeConfigType type;
+    char* tableName;
 } TypeConfig;
 
 typedef struct config_t Config;

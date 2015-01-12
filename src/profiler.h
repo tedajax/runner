@@ -7,6 +7,8 @@
 
 #include "types.h"
 
+#define PROFILER_STORED_SAMPLES 1024
+
 typedef struct profile_t {
     char* name;
     u64* recent;

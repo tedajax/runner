@@ -7,7 +7,7 @@
 #include "dynf32.h"
 
 typedef enum type_config_type_e {
-    TYPE_CONFIG_COLLIDER,
+    TYPE_CONFIG_COLLIDER = 0,
     TYPE_CONFIG_BULLET_SOURCE,
     TYPE_CONFIG_TWEEN,
     TYPE_CONFIG_LAST

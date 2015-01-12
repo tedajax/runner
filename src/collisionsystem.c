@@ -176,6 +176,7 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
         }
 
         switch (collider->collider.volume->type) {
+            default:
             case BOUNDING_VOLUME_AA_BOX: {
                     Rect r;
                     AABoundingBox aabb = *((AABoundingBox*)collider->collider.volume);

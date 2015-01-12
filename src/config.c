@@ -27,7 +27,6 @@ void config_init() {
     REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_COLLIDER, collider_config_deserialize);
     REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_BULLET_SOURCE, bullet_source_config_deserialize);
     REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_TWEEN, tween_config_deserialize);
-    REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_LAST, NULL);
 }
 
 void config_terminate() {

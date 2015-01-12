@@ -1,6 +1,7 @@
 #ifndef RUNNER_TYPES_H
 #define RUNNER_TYPES_H
 
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdbool.h>
 

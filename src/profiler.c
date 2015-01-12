@@ -76,16 +76,18 @@ void profiler_terminate() {
     for (u32 i = 0; i < count; ++i) {
         free(profiles[i].recent);
     }
-#endif
     free(profiles);
+#endif
 }
 
 void profiler_dump(FILE* file) {
+#if TDJX_DEBUG
     fprintf(file, "Runner Profile Dump:\n\n");
 
     for (u32 i = 0; i < count; ++i) {
         profile_dump(&profiles[i], file);
     }
+#endif
 }
 
 void profiler_tick(const char* name) {

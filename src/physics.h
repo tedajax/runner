@@ -7,7 +7,7 @@ typedef enum bounding_volume_type_e {
     BOUNDING_VOLUME_AA_BOX,
     BOUNDING_VOLUME_O_BOX,
     BOUNDING_VOLUME_CIRCLE,
-    BOUNDIGN_VOLUME_LAST,
+    BOUNDING_VOLUME_LAST,
 } BoundingVolumeType;
 
 typedef struct bounding_volume_t {

@@ -1,123 +1,123 @@
 #include "vector.h"
 
 Vector *vector_new(u32 capacity, free_func freeFunc) {
-	Vector *self = (Vector *)malloc(sizeof(Vector));
+    Vector *self = (Vector *)malloc(sizeof(Vector));
 
-	self->size = 0;
-	self->freeFunc = freeFunc;
-	self->data = NULL;
-	_vector_resize(self, capacity);
+    self->size = 0;
+    self->freeFunc = freeFunc;
+    self->data = NULL;
+    _vector_resize(self, capacity);
 
-	return self;
+    return self;
 }
 
 void vector_init(Vector* self, u32 capacity, free_func freeFunc) {
-	self->size = 0;
-	self->freeFunc = freeFunc;
-	self->data = NULL;
-	_vector_resize(self, capacity);
+    self->size = 0;
+    self->freeFunc = freeFunc;
+    self->data = NULL;
+    _vector_resize(self, capacity);
 }
 
 void vector_free(Vector *self) {
-	assert(self);
+    assert(self);
 
-	if (self->freeFunc) {
-		for (u32 i = 0; i < self->size; ++i) {
-			void *element = self->data[i];
-			self->freeFunc(element);
-		}
-	}
+    if (self->freeFunc) {
+        for (u32 i = 0; i < self->size; ++i) {
+            void *element = self->data[i];
+            self->freeFunc(element);
+        }
+    }
 
-	self->freeFunc = NULL;
+    self->freeFunc = NULL;
 
-	free(self->data);
-	free(self);
+    free(self->data);
+    free(self);
 }
 
 void vector_setFreeFunc(Vector *self, free_func freeFunc) {
-	assert(self);
-	self->freeFunc = freeFunc;
+    assert(self);
+    self->freeFunc = freeFunc;
 }
 
 void vector_add(Vector *self, void *element) {
-	assert(self);
-	assert(element);
+    assert(self);
+    assert(element);
 
-	if (self->size >= self->capacity) {
-		_vector_resize(self, self->capacity * 2);
-	}
+    if (self->size >= self->capacity) {
+        _vector_resize(self, self->capacity * 2);
+    }
 
-	self->data[self->size] = element;
-	++self->size;
+    self->data[self->size] = element;
+    ++self->size;
 }
 
 void *vector_index(Vector *self, u32 index) {
-	assert(self);
+    assert(self);
 
-	if (index >= self->size) {
-		return NULL;
-	}
+    if (index >= self->size) {
+        return NULL;
+    }
 
-	return self->data[index];
+    return self->data[index];
 }
 
 bool vector_remove(Vector *self, void *element) {
-	assert(self);
-	assert(element);
+    assert(self);
+    assert(element);
 
-	for (u32 i = 0; i < self->size; ++i) {
-		if (self->data[i] == element) {
-			return vector_removeAt(self, i);;
-		}
-	}
+    for (u32 i = 0; i < self->size; ++i) {
+        if (self->data[i] == element) {
+            return vector_removeAt(self, i);;
+        }
+    }
 
-	return false;
+    return false;
 }
 
 void* vector_removeAt(Vector *self, u32 index) {
-	assert(self);
+    assert(self);
 
-	if (index >= self->size) {
-		return NULL;
-	}
+    if (index >= self->size) {
+        return NULL;
+    }
 
     void* result = self->data[index];
 
-	if (self->freeFunc != NULL) {
-		self->freeFunc(self->data[index]);
-	}
+    if (self->freeFunc != NULL) {
+        self->freeFunc(self->data[index]);
+    }
 
-	u32 i = index;
-	while (i + 1 < self->size) {
-		self->data[i] = self->data[i + 1];
-		++i;
-	}
+    u32 i = index;
+    while (i + 1 < self->size) {
+        self->data[i] = self->data[i + 1];
+        ++i;
+    }
 
-	--self->size;
+    --self->size;
 
-	return result;
+    return result;
 }
 
 void vector_clear(Vector *self) {
-	assert(self);
+    assert(self);
 
-	for (u32 i = 0; i < self->size; ++i) {
-		if (self->freeFunc) {
-			self->freeFunc(self->data[i]);
-		}
-	}
+    for (u32 i = 0; i < self->size; ++i) {
+        if (self->freeFunc) {
+            self->freeFunc(self->data[i]);
+        }
+    }
 
-	self->size = 0;
+    self->size = 0;
 }
 
 void _vector_resize(Vector *self, u32 capacity) {
-	assert(self);
+    assert(self);
 
-	if (capacity <= self->size) {
-		capacity = self->size + 1;
-	}
+    if (capacity <= self->size) {
+        capacity = self->size + 1;
+    }
 
-	self->capacity = capacity;
-	self->data = realloc(self->data, sizeof(void *) * capacity);
+    self->capacity = capacity;
+    self->data = realloc(self->data, sizeof(void *) * capacity);
 }
 

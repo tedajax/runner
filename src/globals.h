@@ -43,7 +43,7 @@ typedef struct globals {
     //TODO: some sort of named entity system
     Entity* player;
 
-	TweenManager tweens;
+    TweenManager tweens;
 
     f32 scrollSpeed;
 } Globals;

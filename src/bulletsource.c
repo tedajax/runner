@@ -32,8 +32,8 @@ void bullet_source_config(BulletSourceConfig* self, char* config, char* section,
  //   dynf32_start_tween(&self->startAngle, &globals.tweens);
  //   dynf32_start_tween(&self->damage, &globals.tweens);
 
-	//char* collider = ini_get_string_at(cfg, section, "collider", level);
-	//collider_config_init(&self->colliderConfig, config, collider);
+    //char* collider = ini_get_string_at(cfg, section, "collider", level);
+    //collider_config_init(&self->colliderConfig, config, collider);
 }
 
 void bullet_source_release(BulletSource* self) {

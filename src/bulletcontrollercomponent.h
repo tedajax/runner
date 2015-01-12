@@ -10,7 +10,7 @@ typedef struct bullet_config_t {
     f32 baseAngle;
     f32 lifetime;
     i32 damage;
-	char* colliderKey;
+    char* colliderKey;
 } BulletConfig;
 
 typedef struct bullet_controller_component_t {

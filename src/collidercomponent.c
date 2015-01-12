@@ -5,7 +5,7 @@ ColliderComponent* collider_component_new(Collider* collider) {
 
     component_init((Component*)self, COMPONENT_COLLIDER);
 
-	self->collider = *collider;
+    self->collider = *collider;
 
     return self;
 }

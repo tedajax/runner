@@ -16,7 +16,7 @@ typedef enum dynamic_f32_type_e {
 } DynamicFloatType;
 
 typedef struct dynamic_f32_t {
-	f32 value;
+    f32 value;
     DynamicFloatType type;
     Tween* tween;
     TweenConfig* tweenConfig;

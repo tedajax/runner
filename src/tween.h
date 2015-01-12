@@ -43,26 +43,26 @@ Hashtable tweenFunctions;
 
 #define TWEEN_REGISTER_ALL()							\
 MULTILINE_MACRO_BEGIN()									\
-	hashtable_init(&tweenFunctions, 32, NULL);		\
-	TWEEN_REGISTER_FUNCTION(tween_linear);			\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_quad);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_out_quad);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_quad);\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_sin);		\
-	TWEEN_REGISTER_FUNCTION(tween_ease_out_sin);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_sin);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_expo);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_out_expo);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_expo);\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_circ);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_out_circ);	\
-	TWEEN_REGISTER_FUNCTION(tween_ease_in_out_circ);\
-	TWEEN_REGISTER_FUNCTION(tween_bounce_in);		\
-	TWEEN_REGISTER_FUNCTION(tween_bounce_out);		\
-	TWEEN_REGISTER_FUNCTION(tween_bounce_in_out);	\
-	TWEEN_REGISTER_FUNCTION(tween_sin_wave);		\
-	TWEEN_REGISTER_FUNCTION(tween_cos_wave);		\
-	TWEEN_REGISTER_FUNCTION(tween_parabolic);       \
+    hashtable_init(&tweenFunctions, 32, NULL);		\
+    TWEEN_REGISTER_FUNCTION(tween_linear);			\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_quad);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_out_quad);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_out_quad);\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_sin);		\
+    TWEEN_REGISTER_FUNCTION(tween_ease_out_sin);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_out_sin);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_expo);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_out_expo);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_out_expo);\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_circ);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_out_circ);	\
+    TWEEN_REGISTER_FUNCTION(tween_ease_in_out_circ);\
+    TWEEN_REGISTER_FUNCTION(tween_bounce_in);		\
+    TWEEN_REGISTER_FUNCTION(tween_bounce_out);		\
+    TWEEN_REGISTER_FUNCTION(tween_bounce_in_out);	\
+    TWEEN_REGISTER_FUNCTION(tween_sin_wave);		\
+    TWEEN_REGISTER_FUNCTION(tween_cos_wave);		\
+    TWEEN_REGISTER_FUNCTION(tween_parabolic);       \
 MULTILINE_MACRO_END()
 
 enum tween_loop_e {

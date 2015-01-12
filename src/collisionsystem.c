@@ -235,7 +235,7 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
         }
     }
 
-	free(collider->collider.volume);
+    free(collider->collider.volume);
 
     free(entities.list);
 }

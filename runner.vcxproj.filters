@@ -323,9 +323,6 @@
     <ClInclude Include="src\list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>

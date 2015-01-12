@@ -5,7 +5,7 @@
 #include "collider.h"
 
 typedef struct bullet_source_t {
-    BulletSourceConfig config;
+    BulletSourceConfig* config;
     f32 fireTimer;
     u32 level;
     bool active;
@@ -13,8 +13,7 @@ typedef struct bullet_source_t {
 
 typedef struct entity_manager_t EntityManager;
 
-void bullet_source_init(BulletSource* self, char* config, char* section);
-void bullet_source_config(BulletSourceConfig* self, char* config, char* section, u32 level);
+void bullet_source_init(BulletSource* self, BulletSourceConfig* config);
 void bullet_source_release(BulletSource* self);
 inline void bullet_source_on(BulletSource* self) { self->active = true; }
 inline void bullet_source_off(BulletSource* self) { self->active = false; }

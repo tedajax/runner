@@ -10,7 +10,6 @@ typedef struct range_t {
 } Range;
 
 void range_init(Range* self, f32 min, f32 max);
-void range_load(Range* self, const char* config, const char* section, const char* key);
 
 inline f32 range_rand(Range* self) {
     return randf_range(self->min, self->max);

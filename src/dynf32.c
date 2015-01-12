@@ -1,21 +1,10 @@
 #include "dynf32.h"
 #include "tween.h"
 
-void dynf32_init(dynf32* self, f32 value, Tween* tween) {
-    self->value = value;
-    self->tween = tween;
-
-    if (self->tween) {
-        self->type = DYN_F32_TWEEN;
-        tween_config_init_from_tween(self->tweenConfig, tween);
-    } else {
-        self->type = DYN_F32_VALUE;
-    }
-}
-
 void dynf32_zero(dynf32* self) {
     self->value = 0.f;
     self->tween = NULL;
+    self->tweenConfig = NULL;
 }
 
 void dynf32_release(dynf32* self) {
@@ -70,24 +59,4 @@ bool dynf32_set(dynf32* self, f32 value) {
     }
 
     return false;
-}
-
-dynf32 dynf32_config_at(Ini* config, const char* section, const char* key, u32 index) {
-    dynf32 result;
-    dynf32_zero(&result);
-
-    char* str = ini_get_string_at(config, section, key, index);
-
-    char* endptr;
-    result.value = strtof(str, &endptr);
-
-    if (*endptr == '\0') {
-        result.type = DYN_F32_VALUE;
-        return result;
-    }
-
-    tween_config_init(result.tweenConfig, config, str);
-    result.tween = NULL;
-    result.type = DYN_F32_TWEEN;
-    return result;
 }

@@ -61,76 +61,6 @@ void collider_init_config(Collider* self, ColliderConfig* config, TransformCompo
     }
 }
 
-void collider_config(Collider* self, TransformComponent* anchor, char* config, char* section) {
-    //Ini* cfg = config_get(config);
-
-    //ColliderLayer layer = collider_layer_parse(ini_get_string(cfg, section, "layer"));
-    //Vec2 offset = ini_get_vec2(cfg, section, "offset");
-
-    //char* volumeStr = ini_get_string(cfg, section, "type");
-    //BoundingVolumeType volumeType;
-    //if (volumeStr) {
-    //	volumeType = bounding_volume_type_parse(volumeStr);
-    //} else {
-    //	volumeType = BOUNDING_VOLUME_AA_BOX;
-    //}
-
-    //f32 width, height, orientation, radius;
-
-    //switch (volumeType) {
-    //	default:
-    //	case BOUNDING_VOLUME_AA_BOX:
-    //		width = ini_get_float(cfg, section, "width");
-    //		height = ini_get_float(cfg, section, "height");
-    //		collider_init_aabb(self, layer, anchor, offset, width, height);
-    //		break;
-
-    //	case BOUNDING_VOLUME_O_BOX:
-    //		width = ini_get_float(cfg, section, "width");
-    //		height = ini_get_float(cfg, section, "height");
-    //		orientation = ini_get_float(cfg, section, "orientation");
-    //		collider_init_obb(self, layer, anchor, offset, width, height, orientation);
-    //		break;
-
-    //	case BOUNDING_VOLUME_CIRCLE:
-    //		radius = ini_get_float(cfg, section, "radius");
-    //		collider_init_bcircle(self, layer, anchor, offset, radius);
-    //		break;
-    //}
-}
-
-void collider_config_init(ColliderConfig* self, char* config, char* section) {
-    //Ini* cfg = config_get(config);
-
-    //self->layer = collider_layer_parse(ini_get_string(cfg, section, "layer"));
-    //self->offset = ini_get_vec2(cfg, section, "offset");
-
-    //char* volumeStr = ini_get_string(cfg, section, "type");
-    //if (volumeStr) {
-    //	self->type = bounding_volume_type_parse(volumeStr);
-    //} else {
-    //	self->type = BOUNDING_VOLUME_AA_BOX;
-    //}
-
-    //switch (self->type) {
-    //	default:
-    //	case BOUNDING_VOLUME_AA_BOX:
-    //		self->width = ini_get_float(cfg, section, "width");
-    //		self->height = ini_get_float(cfg, section, "height");
-    //		break;
-
-    //	case BOUNDING_VOLUME_O_BOX:
-    //		self->width = ini_get_float(cfg, section, "width");
-    //		self->height = ini_get_float(cfg, section, "height");
-    //		self->orientation = ini_get_float(cfg, section, "orientation");
-    //		break;
-
-    //	case BOUNDING_VOLUME_CIRCLE:
-    //		self->radius = ini_get_float(cfg, section, "radius");
-    //		break;
-    //}
-}
-
 void collider_copy(const Collider* source, Collider* dest) {
     dest->colliderId = source->colliderId;
     dest->layer = source->layer;
@@ -209,21 +139,4 @@ void collider_set_in_contact(Collider* c1, Collider* c2, bool inContact) {
 void collider_anchored_center(Collider* self, Vec2* dest) {
     dest->x = self->anchor->position.x + self->offset.x;
     dest->y = self->anchor->position.y + self->offset.y;
-}
-
-ColliderLayer collider_layer_parse(char* str) {
-    if (STR_ENUM_CMP(str, COLLIDER_LAYER_PLAYER)) {
-        return COLLIDER_LAYER_PLAYER;
-    } else if (STR_ENUM_CMP(str, COLLIDER_LAYER_ENEMY)) {
-        return COLLIDER_LAYER_ENEMY;
-    } else if (STR_ENUM_CMP(str, COLLIDER_LAYER_ENVIRONMENT)) {
-        return COLLIDER_LAYER_ENVIRONMENT;
-    } else if (STR_ENUM_CMP(str, COLLIDER_LAYER_PLAYER_PROJECTILE)) {
-        return COLLIDER_LAYER_PLAYER_PROJECTILE;
-    } else if (STR_ENUM_CMP(str, COLLIDER_LAYER_LAST)) {
-        return COLLIDER_LAYER_LAST;
-    } else {
-        ASSERT(false, "Unable to parse ColliderLayer enum.");
-        return 0;
-    }
 }

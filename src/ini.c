@@ -249,13 +249,23 @@ int ini_keys_count(Ini* self, char* section) {
 int ini_get_int_at(Ini* self, const char* section, const char* key, u32 index) {
     char* str = ini_get_string_at(self, section, key, index);
 
-    return strtol(str, NULL, 0);
+    char* endptr;
+    int result = strtol(str, &endptr, 0);
+
+    ASSERT(*endptr == '\0', "Failed to parse value as int");
+
+    return result;
 }
 
 float ini_get_float_at(Ini* self, const char* section, const char* key, u32 index) {
     char* str = ini_get_string_at(self, section, key, index);
 
-    return strtof(str, NULL);
+    char* endptr;
+    float result = strtof(str, &endptr);
+
+    ASSERT(*endptr == '\0', "Failed to parse value as float");
+
+    return result;
 }
 
 bool ini_get_bool_at(Ini* self, const char* section, const char* key, u32 index) {
@@ -296,7 +306,14 @@ int ini_try_get_int_at(Ini* self, const char* section, const char* key, u32 inde
         return defaultVal;
     }
 
-    return strtol(str, NULL, 0);
+    char* endptr;
+    int result = strtol(str, &endptr, 0);
+
+    if (*endptr == '\0') {
+        return result;
+    } else {
+        return defaultVal;
+    }
 }
 
 float ini_try_get_float_at(Ini* self, const char* section, const char* key, u32 index, float defaultVal) {
@@ -306,7 +323,14 @@ float ini_try_get_float_at(Ini* self, const char* section, const char* key, u32 
         return defaultVal;
     }
 
-    return strtof(str, NULL);
+    char* endptr;
+    float result = strtof(str, &endptr);
+
+    if (*endptr == '\0') {
+        return result;
+    } else {
+        return defaultVal;
+    }
 }
 
 bool ini_try_get_bool_at(Ini* self, const char* section, const char* key, u32 index, bool defaultVal) {

@@ -102,9 +102,6 @@ void tween_stop(Tween* self);
 void tween_reset(Tween* self);
 void tween_release(Tween* self);
 
-void tween_config_init(TweenConfig* self, Ini* config, const char* section);
-void tween_config_init_from_tween(TweenConfig* self, Tween* tween);
-
 typedef struct tween_manager_t {
     Tween* tweens;
     u32* freeIndices;
@@ -116,7 +113,6 @@ typedef struct tween_manager_t {
 void tween_manager_init(TweenManager* self, u32 capacity);
 void tween_manager_update(TweenManager* self, f32 dt);
 Tween* tween_manager_create(TweenManager* self, TweenConfig* config);
-Tween* tween_manager_create_config(TweenManager* self, Ini* config, char* section);
 void tween_manager_remove(TweenManager* self, Tween* tween);
 tween_func tween_parse(char* tweenName);
 

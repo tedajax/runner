@@ -16,8 +16,6 @@
 #define INI_DEFAULT_SECTION "__global"
 #define INI_GLOBAL INI_DEFAULT_SECTION
 
-#define STR_ENUM_CMP(str, enumval) (strcmp(str, #enumval) == 0)
-
 typedef int(*str_compare_f)(const char*, const char*);
 
 extern str_compare_f ini_strcmp;

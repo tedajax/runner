@@ -209,26 +209,8 @@ void tween_release(Tween* self) {
     self->state = TWEEN_STATE_DESTROY;
 }
 
-void tween_config_init(TweenConfig* self, Ini* config, const char* section) {
-    char* tweenFuncName = ini_get_string(config, section, "function");
-    self->function = tween_parse(tweenFuncName);
-    self->start = ini_get_float(config, section, "start");
-    self->end = ini_get_float(config, section, "end");
-    self->duration = ini_get_float(config, section, "duration");
-    self->timescale = ini_try_get_float(config, section, "timescale", 1.f);
-    self->loops = ini_try_get_int(config, section, "loops", TWEEN_LOOP_INFINITE);
-}
-
-void tween_config_init_from_tween(TweenConfig* self, Tween* tween) {
-    self->function = tween->tweenFunc;
-    self->start = tween->start;
-    self->end = tween->end;
-    self->duration = tween->duration;
-    self->loops = tween->loops;
-}
-
 void tween_manager_init(TweenManager* self, u32 capacity) {
-	TWEEN_REGISTER_ALL();
+    TWEEN_REGISTER_ALL();
 
     self->capacity = capacity;
     
@@ -299,12 +281,6 @@ Tween* tween_manager_create(TweenManager* self, TweenConfig* config) {
     return tween;
 }
 
-Tween* tween_manager_create_config(TweenManager* self, Ini* config, char* section) {
-    TweenConfig tweenConfig;
-    tween_config_init(&tweenConfig, config, section);
-	return tween_manager_create(self, &tweenConfig);
-}
-
 tween_func tween_parse(char* tweenName) {
-	return TWEEN_GET_FUNCTION(tweenName);
+    return TWEEN_GET_FUNCTION(tweenName);
 }

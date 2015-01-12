@@ -43,6 +43,7 @@ typedef struct collider_config_t {
 } ColliderConfig;
 
 void collider_config_deserialize(TypeConfig* super, Config* config, char* table);
+ColliderLayer collider_layer_parse(char* str);
 
 typedef struct bullet_source_config_t {
     TypeConfig super;
@@ -56,7 +57,7 @@ typedef struct bullet_source_config_t {
     dynf32 startAngle;     // Direction to fire
     dynf32 damage;         // Damage done by bullet
     char* textureName;  // bullet texture
-    ColliderConfig colliderConfig;
+    ColliderConfig* colliderConfig;
 } BulletSourceConfig;
 
 void bullet_source_config_deserialize(TypeConfig* super, Config* config, char* table);

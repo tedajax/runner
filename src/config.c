@@ -23,6 +23,11 @@ void config_init() {
     hashtable_init(&configTable, 32, config_type_free_void);
 
     rootDir = "assets/data/";
+
+    REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_COLLIDER, collider_config_deserialize);
+    REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_BULLET_SOURCE, bullet_source_config_deserialize);
+    REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_TWEEN, tween_config_deserialize);
+    REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_LAST, NULL);
 }
 
 void config_terminate() {
@@ -128,4 +133,32 @@ CONFIG_TRY_GET_AT_PROTO(Range) {
     return r;
 }
 
+CONFIG_GET_AT_PROTO(dynf32) {
+    dynf32 result;
+    dynf32_zero(&result);
+
+    char* str = config_get_string_at(self, section, key, index);
+
+    char* endptr;
+    result.value = strtof(str, &endptr);
+
+    if (*endptr == '\0') {
+        result.type = DYN_F32_VALUE;
+        return result;
+    }
+
+    result.tweenConfig = CONFIG_GET_AT(TweenConfig)(self, section, key, index);
+    result.tween = NULL;
+    result.type = DYN_F32_TWEEN;
+    return result;
+}
+
+CONFIG_TRY_GET_AT_PROTO(dynf32) {
+    if (!config_try_get_string_at(self, section, key, index, NULL)) { return defaultValue; }
+
+    return CONFIG_GET_AT(dynf32)(self, section, key, index);
+}
+
 CONFIG_TYPE_CONFIG_IMPLEMENTATIONS(ColliderConfig, TYPE_CONFIG_COLLIDER);
+CONFIG_TYPE_CONFIG_IMPLEMENTATIONS(BulletSourceConfig, TYPE_CONFIG_BULLET_SOURCE);
+CONFIG_TYPE_CONFIG_IMPLEMENTATIONS(TweenConfig, TYPE_CONFIG_TWEEN);

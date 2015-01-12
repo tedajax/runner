@@ -13,7 +13,7 @@ void game_init(Game* self) {
     textures_load("bg_dark_purple.png");
     textures_load("enemy_red_1.png");
     textures_load("fireparticle.png");
-	textures_load("bullet.png");    
+    textures_load("bullet.png");    
 
     self->entityManager = entity_manager_new();
     health_system_init(&self->healthSystem, self->entityManager);
@@ -81,7 +81,7 @@ void game_init(Game* self) {
     debug_hud_init(&self->debugHud, "assets/fonts/terminus.ttf", 12);
     debug_hud_add_watch(&self->debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
     debug_hud_add_watch(&self->debugHud, "Frame MS", WATCH_TYPE_INT, &globals.time.per_frame_ms);
-	debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
+    debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
     debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.size);
     debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
     debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
@@ -90,7 +90,7 @@ void game_init(Game* self) {
 void game_quit(Game* self) {
     entity_list_free(&self->entities);
     entity_manager_free(self->entityManager);
-	debug_hud_free(&self->debugHud);
+    debug_hud_free(&self->debugHud);
 }
 
 void game_start(Game* self) {
@@ -121,13 +121,13 @@ void game_update(Game* self) {
         drawCollision = !drawCollision;
     }
     
-	if (input_key_down(SDL_SCANCODE_MINUS)) {
-		globals.time.timescale -= 0.1f;
-	}
+    if (input_key_down(SDL_SCANCODE_MINUS)) {
+        globals.time.timescale -= 0.1f;
+    }
 
-	if (input_key_down(SDL_SCANCODE_EQUALS)) {
-		globals.time.timescale += 0.1f;
-	}
+    if (input_key_down(SDL_SCANCODE_EQUALS)) {
+        globals.time.timescale += 0.1f;
+    }
 
     if (input_key_down(SDL_SCANCODE_APOSTROPHE)) {
         debug_hud_dump(&self->debugHud, stdout);

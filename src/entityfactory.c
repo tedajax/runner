@@ -72,7 +72,7 @@ Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletC
         entity);
 
     Collider collider;
-	collider_init_config(&collider, colliderConfig, transform);
+    collider_init_config(&collider, colliderConfig, transform);
 
     entities_add_component(entityManager,
         (Component*)collider_component_new(&collider),

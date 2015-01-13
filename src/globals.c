@@ -36,7 +36,7 @@ void globals_config(const char* configName) {
 
     globals.scrollSpeed = config_try_get_float(config, "game", "scroll_speed", 0.f);
 
-    tween_manager_init(&globals.tweens, 512);
+    tween_manager_init(&globals.tweens, 4192);
 }
 
 void textures_init(const char* rootDir) { texture_manager_init(&globals.textures, rootDir); }

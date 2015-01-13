@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL_image.h>
 
-bool drawCollision = true;
+bool drawCollision = false;
 
 void game_debug_keys(Game* self);
 
@@ -74,8 +74,8 @@ void game_init(Game* self) {
         563
     };
 
-    for (u32 i = 0; i < 50; ++i) {
-        entity_create_basic_enemy(self->entityManager, vec2_init(i * 250.f, randf((f32)globals.world.height - 100.f)));
+    for (u32 i = 0; i < 500; ++i) {
+        entity_create_basic_enemy(self->entityManager, vec2_init(i * 500.f + 1500.f, randf((f32)globals.world.height - 100.f)));
     }
 
     camera_init(&globals.camera, NULL, &cameraConstraints);

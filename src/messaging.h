@@ -43,7 +43,7 @@ typedef struct message_t {
 typedef void(*message_cb)(Component*, const Message);
 typedef void(*system_message_cb)(AspectSystem*, Entity*, const Message);
 
-inline void message_init(Message* self, MessageType type) {
+static inline void message_init(Message* self, MessageType type) {
     self->type = type;
     self->paramCount = 0;
     for (u32 i = 0; i < MESSAGE_MAX_PARAMS; ++i) {

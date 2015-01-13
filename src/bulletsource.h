@@ -15,8 +15,8 @@ typedef struct entity_manager_t EntityManager;
 
 void bullet_source_init(BulletSource* self, BulletSourceConfig* config);
 void bullet_source_release(BulletSource* self);
-inline void bullet_source_on(BulletSource* self) { self->active = true; }
-inline void bullet_source_off(BulletSource* self) { self->active = false; }
+static inline void bullet_source_on(BulletSource* self) { self->active = true; }
+static inline void bullet_source_off(BulletSource* self) { self->active = false; }
 void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManager, Vec2* anchor);
 void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* anchor);
 

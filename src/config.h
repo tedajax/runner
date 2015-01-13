@@ -49,8 +49,8 @@ time_t config_get_mtime(const char* path);
 #define CONFIG_GET_AT_PROTO(type) CONFIG_GET_AT_PROTO_NAMED(type, type)
 #define CONFIG_TRY_GET_AT_PROTO(type) CONFIG_TRY_GET_AT_PROTO_NAMED(type, type)
 
-#define CONFIG_GET_PROTO_NAMED(type, name) inline type CONFIG_GET(name)(Config* self, const char* section, const char* key) { return CONFIG_GET_AT(name)(self, section, key, 0); }
-#define CONFIG_TRY_GET_PROTO_NAMED(type, name) inline type CONFIG_TRY_GET(name)(Config* self, const char* section, const char* key, type defaultValue) { return CONFIG_TRY_GET_AT(name)(self, section, key, 0, defaultValue); }
+#define CONFIG_GET_PROTO_NAMED(type, name) static inline type CONFIG_GET(name)(Config* self, const char* section, const char* key) { return CONFIG_GET_AT(name)(self, section, key, 0); }
+#define CONFIG_TRY_GET_PROTO_NAMED(type, name) static inline type CONFIG_TRY_GET(name)(Config* self, const char* section, const char* key, type defaultValue) { return CONFIG_TRY_GET_AT(name)(self, section, key, 0, defaultValue); }
 
 #define CONFIG_GET_PROTO(type) CONFIG_GET_PROTO_NAMED(type, type)
 #define CONFIG_TRY_GET_PROTO(type) CONFIG_TRY_GET_PROTO_NAMED(type, type)

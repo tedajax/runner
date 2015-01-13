@@ -8,11 +8,20 @@ else
 	CC = clang
 endif
 
-OPTIMIZATION = 3
+MODE = DEBUG
+
+ifeq ($(MODE),DEBUG)
+    DEBUG_FLAGS = -g -DDEBUG
+else
+    DEBUG_FLAGS =
+endif
+
+OPT_LEVEL = 0
+EXPLICIT_OPTIMIZATIONS =
 STD = c99
 
 TARGET		= runner
-CFLAGS		= -std=$(STD) -O$(OPTIMIZATION)  -Wall -I. -I$(INC_ROOT) -g -DDEBUG -Wno-unknown-pragmas
+CFLAGS		= -std=$(STD) -O$(OPT_LEVEL) $(EXPLICIT_OPTIMIZATIONS) -Wall -I. -I$(INC_ROOT) $(DEBUG_FLAGS) -Wno-unknown-pragmas
 
 LINKER		= $(CC) -o
 LFLAGS		= -Wall -I. -lm

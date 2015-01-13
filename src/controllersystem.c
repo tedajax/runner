@@ -1,5 +1,5 @@
 #include "controllersystem.h"
-#include "entityfactory.h"........
+#include "entityfactory.h"
 
 void controller_system_init(ControllerSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_CONTROLLER);

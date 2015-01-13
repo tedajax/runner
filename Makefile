@@ -9,10 +9,10 @@ else
 endif
 
 OPTIMIZATION = 3
-STD = c11
+STD = c99
 
 TARGET		= runner
-CFLAGS		= -std=$(STD) -O$(OPTIMIZATION) -Wall -I. -I$(INC_ROOT) -g -DDEBUG -Wno-unknown-pragmas
+CFLAGS		= -std=$(STD) -O$(OPTIMIZATION)  -Wall -I. -I$(INC_ROOT) -g -DDEBUG -Wno-unknown-pragmas
 
 LINKER		= $(CC) -o
 LFLAGS		= -Wall -I. -lm

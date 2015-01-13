@@ -1,5 +1,6 @@
 #include "configtypes.h"
 #include "collider.h"
+#include "config.h"
 
 void collider_config_deserialize(TypeConfig* super, Config* config, char* table) {
     ColliderConfig* self = (ColliderConfig*)super;

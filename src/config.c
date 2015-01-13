@@ -27,7 +27,7 @@ void config_type_reload(Config* self) {
     ini_load(&self->data, self->path);
 
     TypeConfig* typeConfigs[128];
-    u32 count = (u32)hashtable_get_all(&self->typeConfigs, typeConfigs, 128);
+    u32 count = (u32)hashtable_get_all(&self->typeConfigs, (void**)typeConfigs, 128);
 
     for (u32 i = 0; i < count; ++i) {
         TypeConfig* typeConfig = typeConfigs[i];
@@ -67,13 +67,12 @@ void config_load(const char* filename) {
     newConfig->lastMTime = config_get_mtime(newConfig->path);
 
     hashtable_init(&newConfig->typeConfigs, 32, free);
-
     hashtable_insert(&configTable, filename, (void*)newConfig);
 }
 
 void config_reload_all() {
     Config* configs[128];
-    u32 count = (u32)hashtable_get_all(&configTable, configs, 128);
+    u32 count = (u32)hashtable_get_all(&configTable, (void**)configs, 128);
 
     for (u32 i = 0; i < count; ++i) {
         Config* config = (Config*)configs[i];

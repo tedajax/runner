@@ -145,6 +145,7 @@ void ini_free(Ini* self) {
                         free(self->table[i][j].values.values[v].string);
                     }
                 }
+                free(self->table[i][j].values.values);
             }
         }
         self->sectionKeyCounts[i] = 0;

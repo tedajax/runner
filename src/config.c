@@ -2,6 +2,7 @@
 
 void config_type_free(Config* self) {
     hashtable_free(&self->typeConfigs);
+    ini_free(&self->data);
     free(self->path);
     free(self);
 }
@@ -23,6 +24,7 @@ bool config_type_update_mtime(Config* self) {
 }
 
 void config_type_reload(Config* self) {
+    ini_free(&self->data);
     ini_init(&self->data);
     ini_load(&self->data, self->path);
 

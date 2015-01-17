@@ -3,6 +3,8 @@
 #include "collisionsystem.h"
 #include "aspectsystem.h"
 
+POOL_IMPLEMENTATION(Entity);
+
 void entity_list_init(EntityList* self, u32 capacity) {
     self->list = (Entity *)calloc(capacity, sizeof(Entity));
     self->capacity = capacity;
@@ -26,7 +28,7 @@ void entity_list_free(EntityList* self) {
 EntityManager* entity_manager_new() {
     EntityManager* self = (EntityManager*)calloc(1, sizeof(EntityManager));
 
-    vector_init(&self->entities, 256, NULL);
+    POOL_INIT(Entity)(&self->entities, 1024);
     for (u32 i = 0; i < COMPONENT_LAST; ++i) {
         dict_init(&self->componentsMap[i], 64, component_free_void);
     }
@@ -72,7 +74,7 @@ u32 entities_gen_entity_id(EntityManager* self) {
 Entity* entities_create_entity(EntityManager* self) {
     u32 id = entities_gen_entity_id(self);
     Entity* entity = entity_new(id);
-    vector_add(&self->entities, entity);
+    POOL_INSERT(Entity)(&self->entities, entity);
     return entity;
 }
 
@@ -119,10 +121,10 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
         }
     }
 
-    for (u32 i = 0; i < self->entities.size; ++i) {
-        Entity* e = (Entity *)vector_index(&self->entities, i);
-        if (e->id == entity->id) {
-            Entity* removed = (Entity*)vector_removeAt(&self->entities, i);
+    for (u32 i = 0; i < self->entities.capacity; ++i) {
+        Entity* e = POOL_GET(Entity)(&self->entities, i);
+        if (e && e->id == entity->id) {
+            Entity* removed = POOL_REMOVE_AT(Entity)(&self->entities, i);
             free(removed);
             break;
         }
@@ -130,9 +132,12 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
 }
 
 void entities_remove_all_entities(EntityManager* self) {
-    u32 len = self->entities.size;
+    u32 len = self->entities.capacity;
     for (u32 i = 0; i < len; ++i) {
-        entities_remove_entity(self, (Entity*)vector_index(&self->entities, 0));
+        Entity* e = POOL_GET(Entity)(&self->entities, i);
+        if (e) {
+            entities_remove_entity(self, e);
+        }
     }
 }
 
@@ -170,8 +175,4 @@ void entities_send_message(EntityManager* self, Entity* entity, Message message)
                 message);
         }
     }
-}
-
-u32 entities_entity_count(EntityManager* self) {
-    return self->entities.size;
 }

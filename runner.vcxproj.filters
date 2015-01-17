@@ -189,6 +189,9 @@
     <ClCompile Include="src\configtypes.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\pool.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">
@@ -378,6 +381,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\configtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,8 +2,8 @@
 #define RUNNER_ENTITY_MANAGER_H
 
 #include "core.h"
-#include "vector.h"
 #include "dict.h"
+#include "pool.h"
 #include "entity.h"
 #include "component.h"
 #include "messaging.h"
@@ -25,8 +25,10 @@ void entity_list_free(EntityList* self);
 #define ENTITY_MANAGER_MESSAGE_QUEUE_CAPACITY 100
 #define ENTITY_MANAGER_MAX_SYSTEM_COUNT 5
 
+POOL_REGISTER(Entity);
+
 typedef struct entity_manager_t {
-    Vector entities;
+    POOL(Entity) entities;
     AspectSystem* systems[COMPONENT_LAST][ENTITY_MANAGER_MAX_SYSTEM_COUNT];
     u32 systemCounts[COMPONENT_LAST];
     Dictionary componentsMap[COMPONENT_LAST];
@@ -46,7 +48,6 @@ void entities_remove_entity(EntityManager* self, Entity* entity);
 void entities_remove_all_entities(EntityManager* self);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
 void entities_send_message(EntityManager* self, Entity* entity, Message message);
-u32 entities_entity_count(EntityManager* self);
 
 #define REGISTER_SYSTEM(self, system) \
     entity_manager_register_system(self, (AspectSystem*)system);

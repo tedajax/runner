@@ -19,6 +19,7 @@ typedef enum collider_layer_e {
 
 typedef struct collider_t {
     i32 colliderId;
+    Entity entity;
     ColliderLayer layer;
     BoundingVolume* volume;
     TransformComponent* anchor;

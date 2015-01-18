@@ -20,7 +20,7 @@ typedef struct game_t {
     BgManagerSystem bgManagerSystem;
     EnemySystem enemySystem;
     CollisionSystem collisionSystem;
-    Entity* player;
+    Entity player;
 
     EntityList entities;
 

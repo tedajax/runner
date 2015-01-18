@@ -33,7 +33,7 @@ void game_init(Game* self) {
     int bgTextureHeight;
     SDL_QueryTexture(textures_get("bg_dark_purple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
 
-    Entity* bgManagerEntity = entity_create_bg_manager(self->entityManager,
+    Entity bgManagerEntity = entity_create_bg_manager(self->entityManager,
         (u32)bgTextureWidth,
         (u32)bgTextureHeight);
 
@@ -43,7 +43,7 @@ void game_init(Game* self) {
         bgManagerEntity);
 
     for (u32 i = 0; i < bgManager->capacity; ++i) {
-        Entity* tile = entity_create_bg_tile(self->entityManager,
+        Entity tile = entity_create_bg_tile(self->entityManager,
             textures_get("bg_dark_purple.png"));
 
         TransformComponent* tx =
@@ -74,7 +74,7 @@ void game_init(Game* self) {
         563
     };
 
-    for (u32 i = 0; i < 500; ++i) {
+    for (u32 i = 0; i < 50; ++i) {
         entity_create_basic_enemy(self->entityManager, vec2_init(i * 500.f + 1500.f, randf((f32)globals.world.height - 100.f)));
     }
 
@@ -84,7 +84,7 @@ void game_init(Game* self) {
     debug_hud_add_watch(&self->debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
     debug_hud_add_watch(&self->debugHud, "Frame MS", WATCH_TYPE_INT, &globals.time.per_frame_ms);
     debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
-    //debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.size);
+    debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.count);
     debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
     debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
 }

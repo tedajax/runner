@@ -13,12 +13,12 @@ void gravity_system_update(GravitySystem* self, EntityList* entities) {
         MovementComponent* movement = (MovementComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_MOVEMENT,
-            &entity);
+            entity);
 
         GravityComponent* gravity = (GravityComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_GRAVITY,
-            &entity);
+            entity);
 
         if (!movement || !gravity) {
             continue;

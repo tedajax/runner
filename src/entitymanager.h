@@ -39,15 +39,15 @@ EntityManager* entity_manager_new();
 void entity_manager_free(EntityManager* self);
 void entity_manager_register_system(EntityManager* self, AspectSystem* system);
 u32 entities_gen_entity_id(EntityManager* self);
-Entity* entities_create_entity(EntityManager* self);
-void entities_add_component(EntityManager* self, Component* component, Entity* entity);
-Component* entities_get_component(EntityManager* self, ComponentType type, Entity* entity);
-DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity* entity);
-bool entities_has_component(EntityManager* self, ComponentType type, Entity* entity);
-void entities_remove_entity(EntityManager* self, Entity* entity);
+Entity entities_create_entity(EntityManager* self);
+void entities_add_component(EntityManager* self, Component* component, Entity entity);
+Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity);
+DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity entity);
+bool entities_has_component(EntityManager* self, ComponentType type, Entity entity);
+void entities_remove_entity(EntityManager* self, Entity entity);
 void entities_remove_all_entities(EntityManager* self);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
-void entities_send_message(EntityManager* self, Entity* entity, Message message);
+void entities_send_message(EntityManager* self, Entity entity, Message message);
 
 #define REGISTER_SYSTEM(self, system) \
     entity_manager_register_system(self, (AspectSystem*)system);

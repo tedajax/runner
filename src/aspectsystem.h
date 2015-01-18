@@ -14,7 +14,7 @@
         entities_get_component(                 \
         self->super.entityManager,              \
         comptype,                               \
-        &entity);                               \
+        entity);                                \
 
 #define REQUIRED_COMPONENTS(compexpr) MULTILINE_MACRO_BEGIN()                 \
     ASSERT(compexpr, "Entity does not have required components for system."); \
@@ -31,6 +31,6 @@ typedef struct aspect_system_t {
 
 void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type);
 void aspect_system_entities(AspectSystem* self, EntityList* dest);
-void aspect_system_send_message(AspectSystem* self, Entity* entity, const Message message);
+void aspect_system_send_message(AspectSystem* self, Entity entity, const Message message);
 
 #endif

@@ -28,7 +28,7 @@ void entity_list_free(EntityList* self) {
 EntityManager* entity_manager_new() {
     EntityManager* self = (EntityManager*)calloc(1, sizeof(EntityManager));
 
-    POOL_INIT(Entity)(&self->entities, 1024);
+    POOL_INIT(Entity)(&self->entities, 1024, 0);
     for (u32 i = 0; i < COMPONENT_LAST; ++i) {
         dict_init(&self->componentsMap[i], 64, component_free_void);
     }
@@ -50,6 +50,7 @@ void entity_manager_free(EntityManager* self) {
     for (u32 i = 0; i < COMPONENT_LAST; ++i) {
         dict_clear(&self->componentsMap[i]);
     }
+    POOL_FREE(Entity)(&self->entities);
     free(self->entities.data);
     free(self);
 }
@@ -71,35 +72,34 @@ u32 entities_gen_entity_id(EntityManager* self) {
     return self->lowestEId++;
 }
 
-Entity* entities_create_entity(EntityManager* self) {
-    u32 id = entities_gen_entity_id(self);
-    Entity* entity = entity_new(id);
-    POOL_INSERT(Entity)(&self->entities, entity);
+Entity entities_create_entity(EntityManager* self) {
+    Entity entity = entities_gen_entity_id(self);
+    POOL_INSERT(Entity)(&self->entities, (entity));
     return entity;
 }
 
-void entities_add_component(EntityManager* self, Component* component, Entity* entity) {
+void entities_add_component(EntityManager* self, Component* component, Entity entity) {
     ASSERT(component->type > COMPONENT_INVALID && component->type < COMPONENT_LAST,
         "Invalid component, did you remember to set the component type in the component constructor?");
 
     Dictionary components = self->componentsMap[component->type];
 
-    dict_set(&components, entity->id, component);
+    dict_set(&components, entity, component);
 }
 
-Component* entities_get_component(EntityManager* self, ComponentType type, Entity* entity) {
-    return dict_get(&self->componentsMap[type], entity->id, 0);
+Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity) {
+    return dict_get(&self->componentsMap[type], entity, 0);
 }
 
-DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity* entity) {
-    return dict_get_all(&self->componentsMap[type], entity->id);
+DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity entity) {
+    return dict_get_all(&self->componentsMap[type], entity);
 }
 
-bool entities_has_component(EntityManager* self, ComponentType type, Entity* entity) {
+bool entities_has_component(EntityManager* self, ComponentType type, Entity entity) {
     return entities_get_components(self, type, entity) != NULL;
 }
 
-void entities_remove_entity(EntityManager* self, Entity* entity) {
+void entities_remove_entity(EntityManager* self, Entity entity) {
     Message msg;
     msg.type = MESSAGE_ENTITY_REMOVED;
 
@@ -111,7 +111,7 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
         }
 
         Dictionary components = self->componentsMap[t];
-        DictListNode* clist = (DictListNode*)dict_remove(&components, entity->id);
+        DictListNode* clist = (DictListNode*)dict_remove(&components, entity);
         
         while (clist != NULL) {
             component_free_void(clist->element);
@@ -123,9 +123,8 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
 
     for (u32 i = 0; i < self->entities.capacity; ++i) {
         Entity* e = POOL_GET(Entity)(&self->entities, i);
-        if (e && e->id == entity->id) {
-            Entity* removed = POOL_REMOVE_AT(Entity)(&self->entities, i);
-            free(removed);
+        if (e && *e == entity) {
+            POOL_REMOVE_AT(Entity)(&self->entities, i);
             break;
         }
     }
@@ -134,7 +133,7 @@ void entities_remove_entity(EntityManager* self, Entity* entity) {
 void entities_remove_all_entities(EntityManager* self) {
     u32 len = self->entities.capacity;
     for (u32 i = 0; i < len; ++i) {
-        Entity* e = POOL_GET(Entity)(&self->entities, i);
+        Entity e = *POOL_GET(Entity)(&self->entities, i);
         if (e) {
             entities_remove_entity(self, e);
         }
@@ -155,7 +154,7 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
                 if (dest->size >= dest->capacity) {
                     entity_list_resize(dest, dest->capacity * 2);
                 }
-                dest->list[index++].id = node->key;
+                dest->list[index++] = node->key;
                 ++dest->size;
             }
             node = node->next;
@@ -163,7 +162,7 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
     }
 }
 
-void entities_send_message(EntityManager* self, Entity* entity, Message message) {
+void entities_send_message(EntityManager* self, Entity entity, Message message) {
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
         if (!entities_has_component(self, type, entity)) {
             continue;

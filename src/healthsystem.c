@@ -10,7 +10,7 @@ void health_system_update(HealthSystem* self, EntityList* entities) {
     aspect_system_entities((AspectSystem*)self, entities);
 
     for (u32 i = 0; i < entities->size; ++i) {
-        Entity* entity = &entities->list[i];
+        Entity entity = entities->list[i];
 
         HealthComponent* health = (HealthComponent*)entities_get_component(
             self->super.entityManager,
@@ -25,7 +25,7 @@ void health_system_update(HealthSystem* self, EntityList* entities) {
     }
 }
 
-void health_system_on_damage(AspectSystem* system, Entity* entity, Message message) {
+void health_system_on_damage(AspectSystem* system, Entity entity, Message message) {
     HealthSystem* self = (HealthSystem*)system;
 
     HealthComponent* health =

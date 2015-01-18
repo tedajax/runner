@@ -20,17 +20,17 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_TRANSFORM,
-            &entity);
+            entity);
 
         MovementComponent* movement = (MovementComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_MOVEMENT,
-            &entity);
+            entity);
 
         BulletControllerComponent* bullet = (BulletControllerComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_BULLET_CONTROLLER,
-            &entity);
+            entity);
 
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
@@ -56,12 +56,12 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
         }
 
         if (bullet->destroy) {
-            entities_remove_entity(self->super.entityManager, &entity);
+            entities_remove_entity(self->super.entityManager, entity);
         }
     }
 }
 
-void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* entity, Message message)
+void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity entity, Message message)
 {
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,
@@ -78,10 +78,10 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity* e
     message_init(&damageMsg, MESSAGE_DAMAGE);
     message_add_param(&damageMsg, &damage);
 
-    entities_send_message(system->entityManager, (Entity*)message.params[0], damageMsg);
+    entities_send_message(system->entityManager, *(Entity*)message.params[0], damageMsg);
 }
 
-void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity* entity, Message message)
+void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message)
 {
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,

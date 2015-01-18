@@ -15,19 +15,19 @@ void enemy_system_update(EnemySystem* self, EntityList* entities) {
     for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
 
-        enemy_update(self, &entity, playerTransform);
+        enemy_update(self, entity, playerTransform);
     }
 }
 
-void enemy_update(EnemySystem* self, Entity* entity, TransformComponent* playerTransform) {
+void enemy_update(EnemySystem* self, Entity entity, TransformComponent* playerTransform) {
     EnemyComponent* enemy =
-        (EnemyComponent*)GET_COMPONENT(*entity, COMPONENT_ENEMY);
+        (EnemyComponent*)GET_COMPONENT(entity, COMPONENT_ENEMY);
 
     TransformComponent* transform =
-        (TransformComponent*)GET_COMPONENT(*entity, COMPONENT_TRANSFORM);
+        (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
     MovementComponent* movement =
-        (MovementComponent*)GET_COMPONENT(*entity, COMPONENT_MOVEMENT);
+        (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
     REQUIRED_COMPONENTS(enemy && transform && movement);
     

@@ -16,12 +16,12 @@ void sprite_system_update(SpriteSystem* self, EntityList* entities) {
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_TRANSFORM,
-            &entity);
+            entity);
 
         SpriteComponent* sprite = (SpriteComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_SPRITE,
-            &entity);
+            entity);
 
         REQUIRED_COMPONENTS(transform && sprite);
 
@@ -44,12 +44,12 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
         TransformComponent* transform = (TransformComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_TRANSFORM,
-            &entity);
+            entity);
 
         SpriteComponent* sprite = (SpriteComponent*)entities_get_component(
             self->super.entityManager,
             COMPONENT_SPRITE,
-            &entity);
+            entity);
 
         ASSERT(transform && sprite, "Missing required component for sprite system.");
 
@@ -87,11 +87,11 @@ void sprite_system_render(SpriteSystem* self, EntityList* entities) {
     }
 }
 
-void sprite_system_on_damage(AspectSystem* system, Entity* entity, Message message) {
+void sprite_system_on_damage(AspectSystem* system, Entity entity, Message message) {
     SpriteSystem* self = (SpriteSystem*)system;
 
     SpriteComponent* sprite =
-        (SpriteComponent*)GET_COMPONENT(*entity, COMPONENT_SPRITE);
+        (SpriteComponent*)GET_COMPONENT(entity, COMPONENT_SPRITE);
 
     REQUIRED_COMPONENTS(sprite);
 

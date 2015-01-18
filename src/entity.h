@@ -1,14 +1,8 @@
 #ifndef RUNNER_ENTITY_H
 #define RUNNER_ENTITY_H
 
-#include "core.h"
+#include "types.h"
 
-typedef struct transform_component_t TransformComponent;
-
-typedef struct entity_t {
-    u32 id;
-} Entity;
-
-Entity* entity_new(u32 id);
+typedef u32 Entity;
 
 #endif

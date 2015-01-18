@@ -8,10 +8,9 @@
 #include "texturemanager.h"
 #include "config.h"
 #include "tween.h"
+#include "entity.h"
 
 #include <SDL2/SDL.h>
-
-typedef struct entity_t Entity;
 
 // All globals should exist within the globals struct
 // Try to limit total number of globals
@@ -41,7 +40,7 @@ typedef struct globals {
     TextureManager textures;
 
     //TODO: some sort of named entity system
-    Entity* player;
+    Entity player;
 
     TweenManager tweens;
 

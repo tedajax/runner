@@ -1,7 +1,7 @@
 #include "entityfactory.h"
 
-Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture) {
-    Entity* entity = entities_create_entity(entityManager);
+Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture) {
+    Entity entity = entities_create_entity(entityManager);
 
     TransformComponent* transform = transform_component_new(position,
         0.f,
@@ -50,8 +50,8 @@ Entity* entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Te
     return entity;
 }
 
-Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletConfig, ColliderConfig* colliderConfig, Vec2 position, SDL_Texture* texture) {
-    Entity* entity = entities_create_entity(entityManager);
+Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletConfig, ColliderConfig* colliderConfig, Vec2 position, SDL_Texture* texture) {
+    Entity entity = entities_create_entity(entityManager);
 
     TransformComponent* transform = transform_component_new(position, 0.f, vec2_one());
 
@@ -81,8 +81,8 @@ Entity* entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletC
     return entity;
 }
 
-Entity* entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture) {
-    Entity* entity = entities_create_entity(entityManager);
+Entity entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture) {
+    Entity entity = entities_create_entity(entityManager);
 
     entities_add_component(entityManager,
         (Component*)transform_component_new(vec2_zero(), 0.f, vec2_one()),
@@ -95,8 +95,8 @@ Entity* entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture
     return entity;
 }
 
-Entity* entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 theight) {
-    Entity* entity = entities_create_entity(entityManager);
+Entity entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 theight) {
+    Entity entity = entities_create_entity(entityManager);
 
     entities_add_component(entityManager,
         (Component*)bg_manager_component_new(twidth, theight),
@@ -105,8 +105,8 @@ Entity* entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 t
     return entity;
 }
 
-Entity* entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
-    Entity* entity = entities_create_entity(entityManager);
+Entity entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
+    Entity entity = entities_create_entity(entityManager);
 
     TransformComponent* transform = transform_component_new(position,
         0.f,

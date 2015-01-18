@@ -9,22 +9,22 @@ typedef struct aspect_system_t AspectSystem;
 
 // Each comment refers to the types of the params in the message.
 typedef enum message_type_e {
-    // Entity* source, f32 amount, NULL
+    // Entity source, f32 amount, NULL
     MESSAGE_DAMAGE,
 
-    // Entity* other, NULL, NULL
+    // Entity other, NULL, NULL
     MESSAGE_ON_COLLISION_ENTER,
 
-    // Entity* other, NULL, NULL
+    // Entity other, NULL, NULL
     MESSAGE_ON_COLLISION_STAY,
 
-    // Entity* other, NULL, NULL
+    // Entity other, NULL, NULL
     MESSAGE_ON_COLLISION_EXIT,
 
-    // Entity* created, NULL, NULL
+    // Entity created, NULL, NULL
     MESSAGE_ENTITY_CREATED,
 
-    // Entity* removed, NULL, NULL
+    // Entity removed, NULL, NULL
     MESSAGE_ENTITY_REMOVED,
 
     // N/A
@@ -41,7 +41,7 @@ typedef struct message_t {
 } Message;
 
 typedef void(*message_cb)(Component*, const Message);
-typedef void(*system_message_cb)(AspectSystem*, Entity*, const Message);
+typedef void(*system_message_cb)(AspectSystem*, Entity, const Message);
 
 static inline void message_init(Message* self, MessageType type) {
     self->type = type;

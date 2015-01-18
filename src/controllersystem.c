@@ -81,7 +81,7 @@ void controller_system_update(ControllerSystem* self, EntityList* entities) {
     }
 }
 
-void controller_system_on_entity_removed(AspectSystem* system, Entity* entity, Message message) {
+void controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message) {
     ControllerComponent* controller =
         (ControllerComponent*)entities_get_component(system->entityManager,
         COMPONENT_CONTROLLER,

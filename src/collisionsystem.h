@@ -18,14 +18,14 @@ typedef struct collision_system_t {
 void collision_system_init(CollisionSystem* self, EntityManager* entityManager);
 i32 collision_system_gen_id(CollisionSystem* self);
 void collision_system_start(CollisionSystem* self, EntityList* entities);
-void collision_system_start_single(CollisionSystem* self, Entity* entity);
+void collision_system_start_single(CollisionSystem* self, Entity entity);
 void collision_system_register_collider(CollisionSystem* self, Collider* collider);
 void collision_system_unregister_collider(CollisionSystem* self, i32 id);
 void collision_system_update(CollisionSystem* self, EntityList* entities);
 void collision_system_render(CollisionSystem* self, EntityList* entities);
 void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* collider);
 
-void collision_system_on_entity_removed(AspectSystem* system, Entity* entity, const Message msg);
+void collision_system_on_entity_removed(AspectSystem* system, Entity entity, const Message msg);
 
 void _layer_matrix_set(ColliderLayer l1, ColliderLayer l2, bool value);
 

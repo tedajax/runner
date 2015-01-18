@@ -22,8 +22,10 @@ typedef int(*pool_cmp_f)(void* a, void* b);
 #define POOL_DEFINE(type)                   \
     typedef struct pool_##type##_t {        \
         u32 capacity;                       \
+        u32 count;                          \
         PoolIndexStack indexStack;          \
-        type** data;                        \
+        type* data;                         \
+        type invalidValue;                  \
     } POOL(type);
 
 
@@ -33,46 +35,47 @@ typedef int(*pool_cmp_f)(void* a, void* b);
 #define POOL_REMOVE_AT(type) pool_##type##_remove_at
 #define POOL_FREE(type) pool_##type##_free
 
-#define POOL_INIT_PROTO(type) void POOL_INIT(type)(POOL(type)* self, u32 capacity)
-#define POOL_INSERT_PROTO(type) type* POOL_INSERT(type)(POOL(type)* self, type* element)
+#define POOL_INIT_PROTO(type) void POOL_INIT(type)(POOL(type)* self, u32 capacity, type invalid)
+#define POOL_INSERT_PROTO(type) type* POOL_INSERT(type)(POOL(type)* self, type element)
 #define POOL_GET_PROTO(type) type* POOL_GET(type)(POOL(type)* self, u32 index)
-#define POOL_REMOVE_AT_PROTO(type) type* POOL_REMOVE_AT(type)(POOL(type)* self, u32 index)
+#define POOL_REMOVE_AT_PROTO(type) type POOL_REMOVE_AT(type)(POOL(type)* self, u32 index)
 #define POOL_FREE_PROTO(type) void POOL_FREE(type)(POOL(type)* self)
 
 #define POOL_INIT_IMPL(type) POOL_INIT_PROTO(type) {                            \
     self->capacity = capacity;                                                  \
+    self->count = 0;                                                            \
     pool_index_stack_init(&self->indexStack, self->capacity);                   \
     for (i32 i = self->capacity - 1; i >= 0; --i) {                             \
         pool_index_stack_push(&self->indexStack, i);                            \
-        }                                                                           \
-    self->data = CALLOC(self->capacity, type*);                                 \
+    }                                                                           \
+    self->data = CALLOC(self->capacity, type);                                  \
+    self->invalidValue = invalid;                                               \
 }
 
 #define POOL_INSERT_IMPL(type) POOL_INSERT_PROTO(type) {                        \
     i32 index = pool_index_stack_pop(&self->indexStack);                        \
     ASSERT(index >= 0, "Could not get a valid index");                          \
     self->data[index] = element;                                                \
-    return element;                                                             \
+    ++self->count;                                                              \
+    return &self->data[index];                                                  \
 }
 
 #define POOL_GET_IMPL(type) POOL_GET_PROTO(type) {                              \
     ASSERT(index < self->capacity, "Index out of pool range.");                 \
-    return self->data[index];                                                   \
+    return &self->data[index];                                                  \
 }
 
 #define POOL_REMOVE_AT_IMPL(type) POOL_REMOVE_AT_PROTO(type) {                  \
     ASSERT(index < self->capacity, "Index out of pool range.");                 \
-    type* result = self->data[index];                                           \
-    self->data[index] = NULL;                                                   \
+    type result = self->data[index];                                            \
+    self->data[index] = self->invalidValue;                                     \
     pool_index_stack_push(&self->indexStack, index);                            \
+    --self->count;                                                              \
     return result;                                                              \
 }
 
 #define POOL_FREE_IMPL(type) POOL_FREE_PROTO(type) {                            \
     free(self->indexStack.indices);                                             \
-    for (u32 i = 0; i < self->capacity; ++i) {                                  \
-        if (self->data[i]) { free(self->data[i]); }                             \
-    }                                                                           \
 }
 
 #define POOL_REGISTER(type)     \

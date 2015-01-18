@@ -11,6 +11,6 @@ typedef struct health_system_t {
 void health_system_init(HealthSystem* self, EntityManager* entityManager);
 void health_system_update(HealthSystem* self, EntityList* entities);
 
-void health_system_on_damage(AspectSystem* system, Entity* entity, Message message);
+void health_system_on_damage(AspectSystem* system, Entity entity, Message message);
 
 #endif

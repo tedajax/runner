@@ -45,13 +45,13 @@ void collision_system_start(CollisionSystem* self, EntityList* entities) {
 
     for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
-        collision_system_start_single(self, &entity);
+        collision_system_start_single(self, entity);
     }
 }
 
-void collision_system_start_single(CollisionSystem* self, Entity* entity) {
+void collision_system_start_single(CollisionSystem* self, Entity entity) {
     ColliderComponent* collider =
-        (ColliderComponent*)GET_COMPONENT(*entity, COMPONENT_COLLIDER);
+        (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
 
     REQUIRED_COMPONENTS(collider);
 
@@ -80,10 +80,10 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
     }
 
     for (u32 i = 0; i < entities->size - 1; ++i) {
-        Entity* e1 = &entities->list[i];
+        Entity e1 = entities->list[i];
 
         ColliderComponent* cc1 =
-            (ColliderComponent*)GET_COMPONENT(*e1, COMPONENT_COLLIDER);
+            (ColliderComponent*)GET_COMPONENT(e1, COMPONENT_COLLIDER);
 
         Collider* c1 = &cc1->collider;
 
@@ -97,10 +97,10 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
         }
 
         for (u32 j = i + 1; j < entities->size; ++j) {
-            Entity* e2 = &entities->list[j];
+            Entity e2 = entities->list[j];
 
             ColliderComponent* cc2 =
-                (ColliderComponent*)GET_COMPONENT(*e2, COMPONENT_COLLIDER);
+                (ColliderComponent*)GET_COMPONENT(e2, COMPONENT_COLLIDER);
             
             Collider* c2 = &cc2->collider;
 
@@ -117,10 +117,10 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             }
 
             Message msg1;
-            msg1.params[0] = e2;
+            msg1.params[0] = &e2;
 
             Message msg2;
-            msg2.params[0] = e1;
+            msg2.params[0] = &e1;
 
             if (collider_is_colliding(c1, c2)) {
                 bool inContact = collider_in_contact(c1, c2);
@@ -215,10 +215,10 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
     aspect_system_entities((AspectSystem*)self, &entities);
     
     for (u32 i = 0; i < entities.size; ++i) {
-        Entity* entity = &entities.list[i];
+        Entity entity = entities.list[i];
 
         ColliderComponent* entityCollider =
-            (ColliderComponent*)GET_COMPONENT(*entity, COMPONENT_COLLIDER);
+            (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
 
         for (u32 j = 0; j < collider->collider.inContactCount; ++j) {
             if (entityCollider->collider.colliderId == collider->collider.inContact[j]) {
@@ -241,7 +241,7 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
     free(entities.list);
 }
 
-void collision_system_on_entity_removed(AspectSystem* system, Entity* entity, const Message msg) {
+void collision_system_on_entity_removed(AspectSystem* system, Entity entity, const Message msg) {
     CollisionSystem* self = (CollisionSystem*)system;
 
     ColliderComponent* collider = 

@@ -13,6 +13,6 @@ typedef struct enemy_system_t {
 
 void enemy_system_init(EnemySystem* self, EntityManager* entityManager);
 void enemy_system_update(EnemySystem* self, EntityList* entities);
-void enemy_update(EnemySystem* self, Entity* entity, TransformComponent* playerTransform);
+void enemy_update(EnemySystem* self, Entity entity, TransformComponent* playerTransform);
 
 #endif

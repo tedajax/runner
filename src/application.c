@@ -18,6 +18,7 @@ int app_run(int argc, char* argv[]) {
 
         _app_update(&self);
         _app_render(&self);
+        _app_frame_end(&self);
     }
 
     game_quit(&self.game);
@@ -63,6 +64,10 @@ void _app_render(App* self) {
     game_render(&self->game);
 
     SDL_RenderPresent(globals.renderer);
+}
+
+void _app_frame_end(App* self) {
+    game_frame_end(&self->game);
 }
 
 void app_quit(App* self) {

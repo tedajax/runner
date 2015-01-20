@@ -15,6 +15,8 @@
 // All globals should exist within the globals struct
 // Try to limit total number of globals
 
+typedef struct game_t Game;
+
 typedef struct globals {
     u32 randomSeed;
 
@@ -45,6 +47,8 @@ typedef struct globals {
     TweenManager tweens;
 
     f32 scrollSpeed;
+
+    Game* game;
 } Globals;
 
 // Sets all the values in globals to reasonable defaults (0 most likely)

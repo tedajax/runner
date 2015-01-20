@@ -3,7 +3,33 @@
 #include "collisionsystem.h"
 #include "aspectsystem.h"
 
+void entities_internal_remove_entity(EntityManager* self, Entity entity);
+
 POOL_IMPLEMENTATION(Entity);
+
+void entity_queue_init(EntityQueue* self) {
+    self->length = 0;
+    self->head = 0;
+    self->tail = 0;
+}
+
+void entity_queue_push(EntityQueue* self, Entity entity) {
+    ASSERT(self->length < ENTITY_QUEUE_MAX_LENGTH, "Reached maximum size of entity queue.");
+    self->entities[self->tail] = entity;
+    ++self->tail;
+    ++self->length;
+}
+
+Entity entity_queue_pop(EntityQueue* self) {
+    Entity result = self->entities[self->head];
+    ++self->head;
+    if (self->head == self->tail) {
+        self->head = 0;
+        self->tail = 0;
+    }
+    --self->length;
+    return result;
+}
 
 void entity_list_init(EntityList* self, u32 capacity) {
     self->list = (Entity *)calloc(capacity, sizeof(Entity));
@@ -41,6 +67,8 @@ EntityManager* entity_manager_new() {
         }
         self->systemCounts[c] = 0;
     }
+
+    entity_queue_init(&self->removeQueue);
 
     return self;
 }
@@ -97,7 +125,7 @@ bool entities_has_component(EntityManager* self, ComponentType type, Entity enti
     return entities_get_components(self, type, entity) != NULL;
 }
 
-void entities_remove_entity(EntityManager* self, Entity entity) {
+void entities_internal_remove_entity(EntityManager* self, Entity entity) {
     Message msg;
     msg.type = MESSAGE_ENTITY_REMOVED;
 
@@ -110,7 +138,7 @@ void entities_remove_entity(EntityManager* self, Entity entity) {
 
         Dictionary* components = &self->componentsMap[t];
         DictListNode* clist = (DictListNode*)dict_remove(components, entity);
-        
+
         while (clist != NULL) {
             component_free_void(clist->element);
             DictListNode* prev = clist;
@@ -128,6 +156,10 @@ void entities_remove_entity(EntityManager* self, Entity entity) {
     }
 }
 
+void entities_remove_entity(EntityManager* self, Entity entity) {
+    entity_queue_push(&self->removeQueue, entity);
+}
+
 void entities_remove_all_entities(EntityManager* self) {
     u32 len = self->entities.capacity;
     for (u32 i = 0; i < len; ++i) {
@@ -139,23 +171,35 @@ void entities_remove_all_entities(EntityManager* self) {
 }
 
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest) {
-    Dictionary components = self->componentsMap[type];
 
+    /*
+      Right now this function is doing a LOT of work every frame.
+      This needs to be reduced because every system that gets added
+      increases the call count to here by 2 (1 update, 1 render)
+      
+      Strategies for reducing cost...
+      
+      * Keep dictionary compacted so we don't have to traverse the whole thing.
+        * Increases cost of dict_remove (have to rearrange bucket when an empty spot opens up)
+      * Get rid of linked list of elements on a node, make it a static array.
+        * Less flexible but really should be done.  Would reduce branching here.
+      * Not really an issue but the resize step should be removed and the entity list should just be sized properly.
+    */
+
+    Dictionary* components = &self->componentsMap[type];
     dest->size = 0;
-
     u32 index = 0;
-
     for (u32 b = 0; b < DICT_BUCKET_COUNT; ++b) {
-        DictionaryNode* node = &components.buckets[b];
-        while (node != NULL && node->key != DICT_INVALID_KEY) {
+        for (u32 i = 0; i < DICT_MAX_ELEMENTS_PER_BUCKET; ++i) {
+            DictionaryNode* node = &components->buckets[b][i];
+            
+            // This branch kills the performance
             if (node->list != NULL) {
-                if (dest->size >= dest->capacity) {
-                    entity_list_resize(dest, dest->capacity * 2);
-                }
+                // So does this one
+                ASSERT(dest->size < dest->capacity, "Reached maximum size of entity list.  Make it bigger!");
                 dest->list[index++] = node->key;
                 ++dest->size;
             }
-            node = node->next;
         }
     }
 }
@@ -171,5 +215,11 @@ void entities_send_message(EntityManager* self, Entity entity, Message message) 
                 entity,
                 message);
         }
+    }
+}
+
+void entities_update(EntityManager* self) {
+    while (self->removeQueue.length > 0) {
+        entities_internal_remove_entity(self, entity_queue_pop(&self->removeQueue));
     }
 }

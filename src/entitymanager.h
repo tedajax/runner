@@ -12,6 +12,19 @@
 typedef struct collision_system_t CollisionSystem;
 typedef struct aspect_system_t AspectSystem;
 
+#define ENTITY_QUEUE_MAX_LENGTH 1024
+
+typedef struct entity_queue_t {
+    Entity entities[ENTITY_QUEUE_MAX_LENGTH];
+    u32 length;
+    u32 head;
+    u32 tail;
+} EntityQueue;
+
+void entity_queue_init(EntityQueue* self);
+void entity_queue_push(EntityQueue* self, Entity entity);
+Entity entity_queue_pop(EntityQueue* self);
+
 typedef struct entity_id_list_t {
     Entity* list;
     u32 size;
@@ -33,6 +46,7 @@ typedef struct entity_manager_t {
     u32 systemCounts[COMPONENT_LAST];
     Dictionary componentsMap[COMPONENT_LAST];
     u32 lowestEId;
+    EntityQueue removeQueue;
 } EntityManager;
 
 EntityManager* entity_manager_new();
@@ -48,6 +62,9 @@ void entities_remove_entity(EntityManager* self, Entity entity);
 void entities_remove_all_entities(EntityManager* self);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
 void entities_send_message(EntityManager* self, Entity entity, Message message);
+
+// Should be called AFTER update AND render calls have been made!
+void entities_update(EntityManager* self);
 
 #define REGISTER_SYSTEM(self, system) \
     entity_manager_register_system(self, (AspectSystem*)system);

@@ -1,5 +1,6 @@
 #include "collisionsystem.h"
 #include "primitives.h"
+#include "game.h"
 
 static bool layerMatrix[COLLIDER_LAYER_LAST][COLLIDER_LAYER_LAST];
 
@@ -209,13 +210,11 @@ void collision_system_render(CollisionSystem* self, EntityList* entities) {
 }
 
 void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* collider) {
-    EntityList entities;
-    entities.capacity = 256;
-    entities.list = (Entity*)calloc(entities.capacity, sizeof(Entity));
-    aspect_system_entities((AspectSystem*)self, &entities);
+    EntityList* entities = &globals.game->entities;
+    aspect_system_entities((AspectSystem*)self, entities);
     
-    for (u32 i = 0; i < entities.size; ++i) {
-        Entity entity = entities.list[i];
+    for (u32 i = 0; i < entities->size; ++i) {
+        Entity entity = entities->list[i];
 
         ColliderComponent* entityCollider =
             (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
@@ -237,8 +236,6 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
     }
 
     free(collider->collider.volume);
-
-    free(entities.list);
 }
 
 void collision_system_on_entity_removed(AspectSystem* system, Entity entity, const Message msg) {

@@ -31,6 +31,7 @@ void _app_handle_event(App* self, SDL_Event* event);
 
 void _app_update(App* self);
 void _app_render(App* self);
+void _app_frame_end(App* self);
 
 void _app_init(App* self);
 

@@ -7,6 +7,8 @@ bool drawCollision = false;
 void game_debug_keys(Game* self);
 
 void game_init(Game* self) {  
+    globals.game = self;
+
     textures_init("assets");
 
     textures_load("player_ship.png");
@@ -60,7 +62,7 @@ void game_init(Game* self) {
 
     globals.player = self->player;
 
-    entity_list_init(&self->entities, 512);
+    entity_list_init(&self->entities, 8192);
 
     //TransformComponent* playerTransform =
     //    (TransformComponent*)entities_get_component(self->entityManager,
@@ -153,4 +155,8 @@ void game_render(Game* self) {
     }
 
     debug_hud_render(&self->debugHud, globals.renderer, 5, 5);
+}
+
+void game_frame_end(Game* self) {
+    entities_update(self->entityManager);
 }

@@ -5,11 +5,6 @@
 #include "entitymanager.h"
 #include "messaging.h"
 
-#define GET_ENTITY_LIST()                                       \
-    EntityList entities;                                        \
-    entity_list_init(&entities, 64);                            \
-    aspect_system_entities((AspectSystem*)self, &entities);
-
 #define GET_COMPONENT2(entity, comptype)        \
         entities_get_component(                 \
             self->super.entityManager,          \

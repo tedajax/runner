@@ -16,6 +16,8 @@ void globals_init() {
 
     globals.window = NULL;
     globals.renderer = NULL;
+    
+    globals.game = NULL;
 }
 
 void globals_config(const char* configName) {

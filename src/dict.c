@@ -1,28 +1,17 @@
 #include "dict.h"
 
-const u32 DICT_INVALID_KEY = 0xFFFFFFFF;
+const u32 DICT_INVALID_KEY = 0;
 
-Dictionary* dict_new(u32 buckets, dict_free_f freeFunc) {
+Dictionary* dict_new(dict_free_f freeFunc) {
     Dictionary* self = (Dictionary*)calloc(1, sizeof(Dictionary));
 
-    self->bucketCount = buckets;
-    self->buckets = (DictionaryNode*)calloc(buckets, sizeof(DictionaryNode));
-    for (u32 i = 0; i < self->bucketCount; ++i) {
-        self->buckets[i].key = DICT_INVALID_KEY;
-        self->buckets[i].list = NULL;
-        self->buckets[i].next = NULL;
-    }
-    self->size = 0;
-
-    self->freeFunc = freeFunc;
+    dict_init(self, freeFunc);
 
     return self;
 }
 
-void dict_init(Dictionary* self, u32 buckets, dict_free_f freeFunc) {
-    self->bucketCount = buckets;
-    self->buckets = (DictionaryNode*)calloc(buckets, sizeof(DictionaryNode));
-    for (u32 i = 0; i < self->bucketCount; ++i) {
+void dict_init(Dictionary* self, dict_free_f freeFunc) {
+    for (u32 i = 0; i < DICT_BUCKET_COUNT; ++i) {
         self->buckets[i].key = DICT_INVALID_KEY;
         self->buckets[i].list = NULL;
         self->buckets[i].next = NULL;
@@ -40,20 +29,18 @@ void dict_set(Dictionary* self, u32 key, void* element) {
         return;
     }
 
-    u32 index = key % self->bucketCount;
+    u32 index = key % DICT_BUCKET_COUNT;
 
     DictionaryNode* prev = NULL;
     DictionaryNode* node = &self->buckets[index];
 
     if (node->key == DICT_INVALID_KEY) {
-        DictionaryNode* newNode = (DictionaryNode*)calloc(1, sizeof(DictionaryNode));
-        self->buckets[index] = *newNode;
-        newNode->key = key;
-        newNode->list = NULL;
-        newNode->next = NULL;
-        free(newNode);
-
-        ++self->size;
+        node->key = key;
+        node->next = NULL;
+        node->list = (DictListNode*)calloc(1, sizeof(DictListNode));
+        node->list->next = NULL;
+        node->list->prev = NULL;
+        node->list->element = NULL;
     }
 
     while (node != NULL && node->key != DICT_INVALID_KEY) {
@@ -66,6 +53,7 @@ void dict_set(Dictionary* self, u32 key, void* element) {
             }
             lnode->element = element;
             lnode->prev = prev;
+            ++self->size;
             return;
         }
         prev = node;
@@ -87,7 +75,7 @@ DictListNode* dict_remove(Dictionary* self, u32 key) {
         return NULL;
     }
 
-    u32 index = key % self->bucketCount;
+    u32 index = key % DICT_BUCKET_COUNT;
 
     DictionaryNode* node = &self->buckets[index];
     DictionaryNode* prev = NULL;
@@ -98,11 +86,16 @@ DictListNode* dict_remove(Dictionary* self, u32 key) {
         if (node->key == key) {
             result = node->list;
             if (prev == NULL) {
-                self->buckets[index] = *node->next;
+                if (node->next) {
+                    self->buckets[index] = *node->next;
+                } else {
+                    self->buckets[index].key = DICT_INVALID_KEY;
+                    self->buckets[index].list = NULL;
+                }
             } else {
                 prev->next = node->next;
-            }
-            free(node);
+                free(node);
+            }            
             --self->size;
             break;
         }
@@ -114,7 +107,7 @@ DictListNode* dict_remove(Dictionary* self, u32 key) {
 }
 
 void dict_clear(Dictionary* self) {
-    for (u32 i = 0; i < self->bucketCount; ++i) {
+    for (u32 i = 0; i < DICT_BUCKET_COUNT; ++i) {
         DictionaryNode* node = &self->buckets[i];
 
         while (node != NULL) {
@@ -129,12 +122,13 @@ void dict_clear(Dictionary* self) {
                 }
                 lnode = lnode->next;
             }
-            free(node->list);
+            if (node->list) {
+                free(node->list);
+                node->list = NULL;
+            }
             node = node->next;
         }
     }
-
-    free(self->buckets);
 }
 
 void* dict_get(Dictionary* self, u32 key, u32 index) {
@@ -158,7 +152,7 @@ DictListNode* dict_get_all(Dictionary* self, u32 key) {
         return NULL;
     }
 
-    u32 index = key % self->bucketCount;
+    u32 index = key % DICT_BUCKET_COUNT;
 
     DictionaryNode* node = &self->buckets[index];
 

@@ -30,7 +30,7 @@ EntityManager* entity_manager_new() {
 
     POOL_INIT(Entity)(&self->entities, 1024, 0);
     for (u32 i = 0; i < COMPONENT_LAST; ++i) {
-        dict_init(&self->componentsMap[i], 64, component_free_void);
+        dict_init(&self->componentsMap[i], component_free_void);
     }
     self->lowestEId = 1;
 
@@ -82,9 +82,7 @@ void entities_add_component(EntityManager* self, Component* component, Entity en
     ASSERT(component->type > COMPONENT_INVALID && component->type < COMPONENT_LAST,
         "Invalid component, did you remember to set the component type in the component constructor?");
 
-    Dictionary components = self->componentsMap[component->type];
-
-    dict_set(&components, entity, component);
+    dict_set(&self->componentsMap[component->type], entity, component);
 }
 
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity) {
@@ -110,8 +108,8 @@ void entities_remove_entity(EntityManager* self, Entity entity) {
                 msg);
         }
 
-        Dictionary components = self->componentsMap[t];
-        DictListNode* clist = (DictListNode*)dict_remove(&components, entity);
+        Dictionary* components = &self->componentsMap[t];
+        DictListNode* clist = (DictListNode*)dict_remove(components, entity);
         
         while (clist != NULL) {
             component_free_void(clist->element);
@@ -147,7 +145,7 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
 
     u32 index = 0;
 
-    for (u32 b = 0; b < components.bucketCount; ++b) {
+    for (u32 b = 0; b < DICT_BUCKET_COUNT; ++b) {
         DictionaryNode* node = &components.buckets[b];
         while (node != NULL && node->key != DICT_INVALID_KEY) {
             if (node->list != NULL) {

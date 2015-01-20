@@ -15,6 +15,9 @@ typedef struct dict_list_node_t {
     struct dict_list_node_t* prev;
 } DictListNode;
 
+#define DICT_BUCKET_COUNT 128
+#define DICT_MAX_ELEMENTS_PER_BUCKET 64
+
 typedef struct dict_node_t {
     u32 key;
     DictListNode* list;
@@ -24,14 +27,13 @@ typedef struct dict_node_t {
 typedef void(*dict_free_f)(void*);
 
 typedef struct dict_t {
-    DictionaryNode* buckets;
+    DictionaryNode buckets[DICT_BUCKET_COUNT];
     dict_free_f freeFunc;
-    u32 bucketCount;
     u32 size;
 } Dictionary;
 
-Dictionary* dict_new(u32 buckets, dict_free_f freeFunc);
-void dict_init(Dictionary* self, u32 buckets, dict_free_f freeFunc);
+Dictionary* dict_new(dict_free_f freeFunc);
+void dict_init(Dictionary* self, dict_free_f freeFunc);
 void dict_set(Dictionary* self, u32 key, void* element);
 DictListNode* dict_remove(Dictionary* self, u32 key);
 void dict_clear(Dictionary* self);

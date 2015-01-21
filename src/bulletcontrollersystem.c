@@ -75,8 +75,10 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity en
     i32 damage = bullet->config.damage;
 
     Message damageMsg;
+    MessageOnDamageParams damageParams;
+    damageParams.damage = damage;
     message_init(&damageMsg, MESSAGE_DAMAGE);
-    message_add_param(&damageMsg, &damage);
+    MESSAGE_SET_PARAM_BLOCK(damageMsg, damageParams);
 
     MessageOnCollisionParams* params = (MessageOnCollisionParams*)message.paramBlock;
     Entity target = params->other;

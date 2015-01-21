@@ -35,7 +35,7 @@ void health_system_on_damage(AspectSystem* system, Entity entity, Message messag
 
     REQUIRED_COMPONENTS(health);
 
-    i32 damage = *(i32*)message.params[0];
+    i32 damage = ((MessageOnDamageParams*)message.paramBlock)->damage;
 
     health->currentHealth -= damage;
 }

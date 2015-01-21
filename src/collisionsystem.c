@@ -136,12 +136,12 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             Message msg1;
             MessageOnCollisionParams params1;
             params1.other = e2;
-            memcpy(msg1.paramBlock, ((u8*)((void*)&params1)), MESSAGE_PARAM_BLOCK_SIZE);
+            MESSAGE_SET_PARAM_BLOCK(msg1, params1);
 
             Message msg2;
             MessageOnCollisionParams params2;
             params2.other = e1;
-            memcpy(msg2.paramBlock, ((u8*)((void*)&params2)), MESSAGE_PARAM_BLOCK_SIZE);
+            MESSAGE_SET_PARAM_BLOCK(msg2, params2);
 
             if (collider_is_colliding(c1, c2)) {
                 bool inContact = collider_in_contact(c1, c2);
@@ -322,8 +322,9 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
 
                 Message message;
                 message.type = MESSAGE_ON_COLLISION_EXIT;
-                message.params[0] = collider;
-                message.params[1] = entityCollider;
+                MessageOnCollisionParams params;
+                params.other = entityCollider->collider.entity;
+                MESSAGE_SET_PARAM_BLOCK(message, params);
 
                 entities_send_message(self->super.entityManager, entity, message);
             }

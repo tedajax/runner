@@ -69,6 +69,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
         return;
     }
 
+    profiler_tick("collision_update_colliders");
     for (u32 i = 0; i < entities->size; ++i) {
         Entity entity = entities->list[i];
 
@@ -91,7 +92,9 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
         entry->left = rect_left(&entry->collider->volume->bounds);
         entry->right = rect_right(&entry->collider->volume->bounds);
     }
+    profiler_tock("collision_update_colliders");
 
+    profiler_tick("collision_sort");
     for (u32 i = 1; i < self->colliders.count - 1; ++i) {
         u32 j = i;
         while (j > 0 && self->colliders.entries[j - 1].left > self->colliders.entries[j].left) {
@@ -101,7 +104,9 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             --j;
         }
     }
+    profiler_tock("collision_sort");
 
+    profiler_tick("collision_comparisons");
     for (u32 i = 0; i < self->colliders.count; ++i) {
         ColliderEntry* entry1 = &self->colliders.entries[i];
         Collider* c1 = entry1->collider;
@@ -129,10 +134,14 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             Entity e2 = c2->entity;
 
             Message msg1;
-            msg1.params[0] = &e1;
+            MessageOnCollisionParams params1;
+            params1.other = e2;
+            memcpy(msg1.paramBlock, ((u8*)((void*)&params1)), MESSAGE_PARAM_BLOCK_SIZE);
 
             Message msg2;
-            msg2.params[0] = &e2;
+            MessageOnCollisionParams params2;
+            params2.other = e1;
+            memcpy(msg2.paramBlock, ((u8*)((void*)&params2)), MESSAGE_PARAM_BLOCK_SIZE);
 
             if (collider_is_colliding(c1, c2)) {
                 bool inContact = collider_in_contact(c1, c2);
@@ -164,6 +173,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             }
         }
     }
+    profiler_tock("collision_comparisons");
 
     //for (u32 i = 0; i < entities->size - 1; ++i) {
     //    Entity e1 = entities->list[i];

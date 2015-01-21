@@ -32,12 +32,19 @@ typedef enum message_type_e {
 } MessageType;
 
 #define MESSAGE_MAX_PARAMS 3
+#define MESSAGE_PARAM_BLOCK_SIZE 64
+
+typedef struct message_on_collision_params_t {
+    Entity other;
+    u8 padding[MESSAGE_PARAM_BLOCK_SIZE - 4];
+} MessageOnCollisionParams;
 
 // TODO: Figure out some way of enforcing a schema on message params.  Right now it's really just built on trust.
 typedef struct message_t {
     MessageType type;
     u32 paramCount;
     void* params[MESSAGE_MAX_PARAMS];
+    u8 paramBlock[MESSAGE_PARAM_BLOCK_SIZE];
 } Message;
 
 typedef void(*message_cb)(Component*, const Message);

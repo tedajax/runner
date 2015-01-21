@@ -76,7 +76,7 @@ void game_init(Game* self) {
         563
     };
 
-    for (u32 i = 0; i < 50; ++i) {
+    for (u32 i = 0; i < 500; ++i) {
         entity_create_basic_enemy(self->entityManager, vec2_init(i * 500.f + 1500.f, randf((f32)globals.world.height - 100.f)));
     }
 

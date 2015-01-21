@@ -78,7 +78,10 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity en
     message_init(&damageMsg, MESSAGE_DAMAGE);
     message_add_param(&damageMsg, &damage);
 
-    entities_send_message(system->entityManager, *(Entity*)message.params[0], damageMsg);
+    MessageOnCollisionParams* params = (MessageOnCollisionParams*)message.paramBlock;
+    Entity target = params->other;
+
+    entities_send_message(system->entityManager, target, damageMsg);
 }
 
 void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message)

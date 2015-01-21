@@ -148,8 +148,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                     entities_send_message(self->super.entityManager, e1, msg1);
                     entities_send_message(self->super.entityManager, e2, msg2);
                 }
-            }
-            else {
+            } else {
                 bool inContact = collider_in_contact(c1, c2);
 
                 if (inContact) {

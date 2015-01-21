@@ -28,11 +28,11 @@ typedef struct collider_t {
     u32 inContactCount;
 } Collider;
 
-void collider_init(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2* offset);
-void collider_init_aabb(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height);
-void collider_init_obb(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height, f32 orientation);
-void collider_init_bcircle(Collider* self, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 radius);
-void collider_init_config(Collider* self, ColliderConfig* config, TransformComponent* anchor);
+void collider_init(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2* offset);
+void collider_init_aabb(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height);
+void collider_init_obb(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height, f32 orientation);
+void collider_init_bcircle(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 radius);
+void collider_init_config(Collider* self, Entity entity, ColliderConfig* config, TransformComponent* anchor);
 void collider_copy(const Collider* source, Collider* dest);
 bool collider_on_screen(Collider* self);
 bool collider_is_colliding(Collider* c1, Collider* c2);

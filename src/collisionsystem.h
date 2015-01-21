@@ -5,14 +5,26 @@
 #include "component.h"
 #include "collidercomponent.h"
 #include "collider.h"
+#include "pool.h"
 
 #define COLLISION_MAX_COLLIDERS 1024
+
+typedef struct collider_entry_t {
+    Entity entity;
+    f32 left;
+    f32 right;
+    Collider* collider;
+} ColliderEntry;
+
+typedef struct collider_list_t {
+    ColliderEntry entries[COLLISION_MAX_COLLIDERS];
+    u32 count;
+} ColliderList;
 
 typedef struct collision_system_t {
     AspectSystem super;
     i32 currentId;
-    u32 count;
-    Collider* colliders[COLLISION_MAX_COLLIDERS];
+    ColliderList colliders;
 } CollisionSystem;
 
 void collision_system_init(CollisionSystem* self, EntityManager* entityManager);

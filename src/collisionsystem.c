@@ -11,8 +11,8 @@ void collision_system_init(CollisionSystem* self, EntityManager* entityManager) 
     _layer_matrix_set(COLLIDER_LAYER_PLAYER_PROJECTILE, COLLIDER_LAYER_ENEMY, true);
 
     self->currentId = 0;
-    self->count = 0;
-    memset(self->colliders, 0, sizeof(Collider*) * COLLISION_MAX_COLLIDERS);
+
+    self->colliders.count = 0;
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED,
         collision_system_on_entity_removed);
@@ -23,19 +23,22 @@ i32 collision_system_gen_id(CollisionSystem* self) {
 }
 
 void collision_system_register_collider(CollisionSystem* self, Collider* collider) {
-    ASSERT(self->count < COLLISION_MAX_COLLIDERS, "Reach collider limit.");
     collider->colliderId = collision_system_gen_id(self);
-    self->colliders[self->count] = collider;
-    ++self->count;
+    ColliderEntry entry;
+    entry.entity = collider->entity;
+    entry.collider = collider;
+    entry.left = rect_left(&collider->volume->bounds);
+    entry.right = rect_right(&collider->volume->bounds);
+    self->colliders.entries[self->colliders.count] = entry;
+    ++self->colliders.count;
 }
 
 void collision_system_unregister_collider(CollisionSystem* self, i32 id) {
-    for (u32 i = 0; i < self->count; ++i) {
-        if (self->colliders[i]->colliderId == id) {
-            for (u32 j = i + 1; j < self->count; ++j) {
-                self->colliders[j - 1] = self->colliders[j];
-            }
-            --self->count;
+    for (u32 i = 0; i < self->colliders.count; ++i) {
+        Collider* colliderPtr = self->colliders.entries[i].collider;
+        if (colliderPtr->colliderId == id) {
+            self->colliders.entries[i] = self->colliders.entries[self->colliders.count - 1];
+            --self->colliders.count;
             break;
         }
     }
@@ -56,7 +59,7 @@ void collision_system_start_single(CollisionSystem* self, Entity entity) {
 
     REQUIRED_COMPONENTS(collider);
 
-    collider->collider.colliderId = collision_system_gen_id(self);
+    collision_system_register_collider(self, &collider->collider);
 }
 
 void collision_system_update(CollisionSystem* self, EntityList* entities) {
@@ -74,40 +77,43 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
 
         REQUIRED_COMPONENTS(collider);
 
+        if (collider->collider.colliderId < 0) {
+            collision_system_register_collider(self, &collider->collider);
+        }
+
         Vec2 anchored;
         collider_anchored_center(&collider->collider, &anchored);
-
         physics_volume_update(collider->collider.volume, &anchored, collider->collider.anchor->rotation, &collider->collider.anchor->scale);
     }
 
-    for (u32 i = 0; i < entities->size - 1; ++i) {
-        Entity e1 = entities->list[i];
+    for (u32 i = 0; i < self->colliders.count; ++i) {
+        ColliderEntry* entry = &self->colliders.entries[i];
+        entry->left = rect_left(&entry->collider->volume->bounds);
+        entry->right = rect_right(&entry->collider->volume->bounds);
+    }
 
-        ColliderComponent* cc1 =
-            (ColliderComponent*)GET_COMPONENT(e1, COMPONENT_COLLIDER);
-
-        Collider* c1 = &cc1->collider;
-
-        // Generate new id for new collision systems
-        if (c1->colliderId < 0) {
-            c1->colliderId = collision_system_gen_id(self);
+    for (u32 i = 1; i < self->colliders.count - 1; ++i) {
+        u32 j = i;
+        while (j > 0 && self->colliders.entries[j - 1].left > self->colliders.entries[j].left) {
+            ColliderEntry temp = self->colliders.entries[j - 1];
+            self->colliders.entries[j - 1] = self->colliders.entries[j];
+            self->colliders.entries[j] = temp;
+            --j;
         }
+    }
+
+    for (u32 i = 0; i < self->colliders.count; ++i) {
+        ColliderEntry* entry1 = &self->colliders.entries[i];
+        Collider* c1 = entry1->collider;
 
         if (!collider_on_screen(c1)) {
             continue;
         }
 
-        for (u32 j = i + 1; j < entities->size; ++j) {
-            Entity e2 = entities->list[j];
-
-            ColliderComponent* cc2 =
-                (ColliderComponent*)GET_COMPONENT(e2, COMPONENT_COLLIDER);
-            
-            Collider* c2 = &cc2->collider;
-
-            if (c2->colliderId < 0) {
-                c2->colliderId = collision_system_gen_id(self);
-            }
+        u32 j = i + 1;
+        while (j < self->colliders.count && self->colliders.entries[j].left < entry1->right) {
+            ColliderEntry* entry2 = &self->colliders.entries[j];
+            Collider* c2 = entry2->collider;
 
             if (!collider_on_screen(c2)) {
                 continue;
@@ -117,11 +123,14 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                 continue;
             }
 
+            Entity e1 = c1->entity;
+            Entity e2 = c2->entity;
+
             Message msg1;
-            msg1.params[0] = &e2;
+            msg1.params[0] = &c1->entity;
 
             Message msg2;
-            msg2.params[0] = &e1;
+            msg2.params[0] = &c2->entity;
 
             if (collider_is_colliding(c1, c2)) {
                 bool inContact = collider_in_contact(c1, c2);
@@ -132,13 +141,15 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                     msg2.type = MESSAGE_ON_COLLISION_ENTER;
                     entities_send_message(self->super.entityManager, e1, msg1);
                     entities_send_message(self->super.entityManager, e2, msg2);
-                } else {
+                }
+                else {
                     msg1.type = MESSAGE_ON_COLLISION_STAY;
                     msg2.type = MESSAGE_ON_COLLISION_STAY;
                     entities_send_message(self->super.entityManager, e1, msg1);
                     entities_send_message(self->super.entityManager, e2, msg2);
                 }
-            } else {
+            }
+            else {
                 bool inContact = collider_in_contact(c1, c2);
 
                 if (inContact) {
@@ -150,8 +161,83 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                     entities_send_message(self->super.entityManager, e2, msg2);
                 }
             }
+
+            ++j;
         }
     }
+
+    //for (u32 i = 0; i < entities->size - 1; ++i) {
+    //    Entity e1 = entities->list[i];
+
+    //    ColliderComponent* cc1 =
+    //        (ColliderComponent*)GET_COMPONENT(e1, COMPONENT_COLLIDER);
+
+    //    Collider* c1 = &cc1->collider;
+
+    //    // Generate new id for new collision systems
+    //    if (c1->colliderId < 0) {
+    //        c1->colliderId = collision_system_gen_id(self);
+    //    }
+
+    //    if (!collider_on_screen(c1)) {
+    //        continue;
+    //    }
+
+    //    for (u32 j = i + 1; j < entities->size; ++j) {
+    //        Entity e2 = entities->list[j];
+
+    //        ColliderComponent* cc2 =
+    //            (ColliderComponent*)GET_COMPONENT(e2, COMPONENT_COLLIDER);
+    //        
+    //        Collider* c2 = &cc2->collider;
+
+    //        if (c2->colliderId < 0) {
+    //            c2->colliderId = collision_system_gen_id(self);
+    //        }
+
+    //        if (!collider_on_screen(c2)) {
+    //            continue;
+    //        }
+
+    //        if (!layerMatrix[c1->layer][c2->layer]) {
+    //            continue;
+    //        }
+
+    //        Message msg1;
+    //        msg1.params[0] = &e2;
+
+    //        Message msg2;
+    //        msg2.params[0] = &e1;
+
+    //        if (collider_is_colliding(c1, c2)) {
+    //            bool inContact = collider_in_contact(c1, c2);
+
+    //            if (!inContact) {
+    //                collider_set_in_contact(c1, c2, true);
+    //                msg1.type = MESSAGE_ON_COLLISION_ENTER;
+    //                msg2.type = MESSAGE_ON_COLLISION_ENTER;
+    //                entities_send_message(self->super.entityManager, e1, msg1);
+    //                entities_send_message(self->super.entityManager, e2, msg2);
+    //            } else {
+    //                msg1.type = MESSAGE_ON_COLLISION_STAY;
+    //                msg2.type = MESSAGE_ON_COLLISION_STAY;
+    //                entities_send_message(self->super.entityManager, e1, msg1);
+    //                entities_send_message(self->super.entityManager, e2, msg2);
+    //            }
+    //        } else {
+    //            bool inContact = collider_in_contact(c1, c2);
+
+    //            if (inContact) {
+    //                collider_set_in_contact(c1, c2, false);
+
+    //                msg1.type = MESSAGE_ON_COLLISION_EXIT;
+    //                msg2.type = MESSAGE_ON_COLLISION_EXIT;
+    //                entities_send_message(self->super.entityManager, e1, msg1);
+    //                entities_send_message(self->super.entityManager, e2, msg2);
+    //            }
+    //        }
+    //    }
+    //}
 }
 
 void collision_system_render(CollisionSystem* self, EntityList* entities) {
@@ -234,6 +320,8 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
             }
         }
     }
+
+    collision_system_unregister_collider(self, collider->collider.colliderId);
 
     free(collider->collider.volume);
 }

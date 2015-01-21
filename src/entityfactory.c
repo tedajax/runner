@@ -37,6 +37,7 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
 
     Collider collider;
     collider_init_aabb(&collider,
+        entity,
         COLLIDER_LAYER_PLAYER,
         transform,
         vec2_init(37.5f, 56.f),
@@ -72,7 +73,7 @@ Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletCo
         entity);
 
     Collider collider;
-    collider_init_config(&collider, colliderConfig, transform);
+    collider_init_config(&collider, entity, colliderConfig, transform);
 
     entities_add_component(entityManager,
         (Component*)collider_component_new(&collider),
@@ -134,6 +135,7 @@ Entity entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
 
     Collider collider;
     collider_init_aabb(&collider,
+        entity,
         COLLIDER_LAYER_ENEMY,
         transform,
         vec2_init(42.f, 51.5f),

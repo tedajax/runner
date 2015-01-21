@@ -115,6 +115,8 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             ColliderEntry* entry2 = &self->colliders.entries[j];
             Collider* c2 = entry2->collider;
 
+            ++j;
+
             if (!collider_on_screen(c2)) {
                 continue;
             }
@@ -127,10 +129,10 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
             Entity e2 = c2->entity;
 
             Message msg1;
-            msg1.params[0] = &c1->entity;
+            msg1.params[0] = &e1;
 
             Message msg2;
-            msg2.params[0] = &c2->entity;
+            msg2.params[0] = &e2;
 
             if (collider_is_colliding(c1, c2)) {
                 bool inContact = collider_in_contact(c1, c2);
@@ -160,8 +162,6 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
                     entities_send_message(self->super.entityManager, e2, msg2);
                 }
             }
-
-            ++j;
         }
     }
 

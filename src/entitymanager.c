@@ -208,7 +208,6 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
 
 
 void entities_internal_send_message(EntityManager* self, TargetedMessage message) {
-    printf("%d\n", message.message.type);
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
         if (!entities_has_component(self, type, message.target)) {
             continue;
@@ -231,7 +230,6 @@ void entities_send_message_deferred(EntityManager* self, Entity entity, Message 
 }
 
 void entities_update(EntityManager* self) {
-
     const i32 maxMessages = 0xFFFFFF;
     i32 messageCount = 0;
     message_event_queue_processing_lock(&self->eventQueue);

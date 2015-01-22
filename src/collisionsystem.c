@@ -95,7 +95,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
     profiler_tock("collision_update_colliders");
 
     profiler_tick("collision_sort");
-    for (u32 i = 1; i < self->colliders.count - 1; ++i) {
+    for (u32 i = 1; i < self->colliders.count; ++i) {
         u32 j = i;
         while (j > 0 && self->colliders.entries[j - 1].left > self->colliders.entries[j].left) {
             ColliderEntry temp = self->colliders.entries[j - 1];

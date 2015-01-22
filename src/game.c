@@ -145,6 +145,10 @@ void game_debug_keys(Game* self) {
     if (input_key_down(SDL_SCANCODE_EQUALS)) {
         globals.time.timescale += 0.1f;
     }
+
+    if (input_key_down(SDL_SCANCODE_F12)) {
+        DEBUG_BREAKPOINT();
+    }
 }
 
 void game_render(Game* self) {

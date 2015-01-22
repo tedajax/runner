@@ -83,12 +83,16 @@ void game_init(Game* self) {
     camera_init(&globals.camera, NULL, &cameraConstraints);
 
     debug_hud_init(&self->debugHud, "assets/fonts/terminus.ttf", 12);
-    debug_hud_add_watch(&self->debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
-    debug_hud_add_watch(&self->debugHud, "Frame MS", WATCH_TYPE_INT, &globals.time.per_frame_ms);
+    DebugHudWatch* fpsWatch = debug_hud_add_watch(&self->debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
+        debug_hud_watch_set_warnings(fpsWatch, false, 120, 60);
+    DebugHudWatch* frameTimeWatch = debug_hud_add_watch(&self->debugHud, "Frame MS", WATCH_TYPE_INT, &globals.time.per_frame_ms);
+        debug_hud_watch_set_warnings(frameTimeWatch, true, 14, 16);
     debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
-    debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.count);
+    DebugHudWatch* entityWatch = debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.count);
+        debug_hud_watch_set_warnings(entityWatch, true, 900, 1000);
     debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
-    debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
+    DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
+        debug_hud_watch_set_warnings(tweenWatch, true, 2500, 4000);
 }
 
 void game_quit(Game* self) {

@@ -89,8 +89,8 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
 
     for (u32 i = 0; i < self->colliders.count; ++i) {
         ColliderEntry* entry = &self->colliders.entries[i];
-        entry->left = rect_left(&entry->collider->volume->bounds);
-        entry->right = rect_right(&entry->collider->volume->bounds);
+        entry->left = rect_left(&entry->collider->volume->bounds) - COLLISION_RANGE_FUDGE;
+        entry->right = rect_right(&entry->collider->volume->bounds) + COLLISION_RANGE_FUDGE;
     }
     profiler_tock("collision_update_colliders");
 
@@ -116,7 +116,7 @@ void collision_system_update(CollisionSystem* self, EntityList* entities) {
         }
 
         u32 j = i + 1;
-        while (j < self->colliders.count && self->colliders.entries[j].left < entry1->right) {
+        while (j < self->colliders.count && self->colliders.entries[j].left <= entry1->right) {
             ColliderEntry* entry2 = &self->colliders.entries[j];
             Collider* c2 = entry2->collider;
 

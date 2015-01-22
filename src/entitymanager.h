@@ -12,10 +12,10 @@
 typedef struct collision_system_t CollisionSystem;
 typedef struct aspect_system_t AspectSystem;
 
-#define ENTITY_QUEUE_MAX_LENGTH 1024
+#define MAX_ENTITIES 4192
 
 typedef struct entity_queue_t {
-    Entity entities[ENTITY_QUEUE_MAX_LENGTH];
+    Entity entities[MAX_ENTITIES];
     u32 length;
     u32 head;
     u32 tail;

@@ -118,6 +118,10 @@ f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d) {
     return ((-4.f * (f - i)) / (d * d)) * t * (t - d) + i;
 }
 
+f32 tween_random(f32 t, f32 i, f32 f, f32 d) {
+    return randf_range(i, f);
+}
+
 #pragma endregion
 
 void tween_init(Tween* self, TweenConfig* config) {

@@ -7,7 +7,9 @@
 #include "collider.h"
 #include "pool.h"
 
-#define COLLISION_MAX_COLLIDERS 1024
+#define COLLISION_MAX_COLLIDERS (MAX_ENTITIES * 4)
+
+#define COLLISION_RANGE_FUDGE 8.f
 
 typedef struct collider_entry_t {
     Entity entity;

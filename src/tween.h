@@ -35,6 +35,7 @@ f32 tween_bounce_in_out(f32 t, f32 i, f32 f, f32 d);
 f32 tween_sin_wave(f32 t, f32 i, f32 f, f32 d);
 f32 tween_cos_wave(f32 t, f32 i, f32 f, f32 d);
 f32 tween_parabolic(f32 t, f32 i, f32 f, f32 d);
+f32 tween_random(f32 t, f32 i, f32 f, f32 d);
 
 Hashtable tweenFunctions;
 
@@ -63,6 +64,7 @@ MULTILINE_MACRO_BEGIN()									\
     TWEEN_REGISTER_FUNCTION(tween_sin_wave);		\
     TWEEN_REGISTER_FUNCTION(tween_cos_wave);		\
     TWEEN_REGISTER_FUNCTION(tween_parabolic);       \
+    TWEEN_REGISTER_FUNCTION(tween_random);          \
 MULTILINE_MACRO_END()
 
 enum tween_loop_e {

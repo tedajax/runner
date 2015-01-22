@@ -15,7 +15,7 @@ void entity_queue_init(EntityQueue* self) {
 }
 
 void entity_queue_push(EntityQueue* self, Entity entity) {
-    ASSERT(self->length < ENTITY_QUEUE_MAX_LENGTH, "Reached maximum size of entity queue.");
+    ASSERT(self->length < MAX_ENTITIES, "Reached maximum size of entity queue.");
     self->entities[self->tail] = entity;
     ++self->tail;
     ++self->length;
@@ -55,7 +55,7 @@ void entity_list_free(EntityList* self) {
 EntityManager* entity_manager_new() {
     EntityManager* self = (EntityManager*)calloc(1, sizeof(EntityManager));
 
-    POOL_INIT(Entity)(&self->entities, 1024, 0);
+    POOL_INIT(Entity)(&self->entities, MAX_ENTITIES, 0);
     for (u32 i = 0; i < COMPONENT_LAST; ++i) {
         dict_init(&self->componentsMap[i], component_free_void);
     }

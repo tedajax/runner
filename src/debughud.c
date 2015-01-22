@@ -1,6 +1,56 @@
 #include "debughud.h"
 #include "snprintf.h"
 
+int debug_hud_watch_internal_to_int(DebugHudWatch* self);
+SDL_Color debug_hud_watch_internal_get_color(DebugHudWatch* self);
+
+int debug_hud_watch_internal_to_int(DebugHudWatch* self) {
+    switch (self->type) {
+        default:
+        case WATCH_TYPE_INT:
+            return *self->value.i;
+
+        case WATCH_TYPE_FLOAT:
+            return (int)*self->value.f;
+
+        case WATCH_TYPE_BOOL:
+            return (*self->value.b) ? 1 : 0;
+    }
+}
+
+SDL_Color debug_hud_watch_internal_get_color(DebugHudWatch* self) {
+    const SDL_Color white = { 255, 255, 255, 255 };
+    const SDL_Color green = { 0, 255, 0, 255 };
+    const SDL_Color yellow = { 255, 255, 0, 255 };
+    const SDL_Color red = { 255, 0, 0, 255 };
+    
+    int intVal = debug_hud_watch_internal_to_int(self);
+
+    switch (self->warningType) {
+        default:
+        case DEBUG_HUD_WATCH_WARNING_NONE:
+            return white;
+
+        case DEBUG_HUD_WATCH_WARNING_ADDITIVE:
+            if (intVal >= self->errorThreshold) {
+                return red;
+            } else if (intVal >= self->warningThreshold) {
+                return yellow;
+            } else {
+                return green;
+            }
+
+        case DEBUG_HUD_WATCH_WARNING_SUBTRACTIVE:
+            if (intVal <= self->errorThreshold) {
+                return red;
+            } else if (intVal <= self->warningThreshold) {
+                return yellow;
+            } else {
+                return green;
+            }
+    }
+}
+
 void debug_hud_watch_build_string(DebugHudWatch* self, char* dest, u32 max) {
     switch (self->type) {
         case WATCH_TYPE_INT:
@@ -47,7 +97,7 @@ void debug_hud_free(DebugHud* self) {
     TTF_CloseFont(self->debugFont);
 }
 
-void debug_hud_add_watch(DebugHud* self, char* name, DebugHudWatchType type, void* value) {
+DebugHudWatch* debug_hud_add_watch(DebugHud* self, char* name, DebugHudWatchType type, void* value) {
     if (self->count >= self->capacity) {
         self->capacity <<= 1;
         self->watches = (DebugHudWatch*)realloc(self->watches, self->capacity * sizeof(DebugHudWatch));
@@ -57,6 +107,9 @@ void debug_hud_add_watch(DebugHud* self, char* name, DebugHudWatchType type, voi
     watch->texture = NULL;
     watch->displayName = name;
     watch->type = type;
+    watch->warningType = DEBUG_HUD_WATCH_WARNING_NONE;
+    watch->warningThreshold = 0;
+    watch->errorThreshold = 0;
     
     switch (watch->type) {
         case WATCH_TYPE_INT:
@@ -75,6 +128,14 @@ void debug_hud_add_watch(DebugHud* self, char* name, DebugHudWatchType type, voi
     }
 
     ++self->count;
+
+    return watch;
+}
+
+void debug_hud_watch_set_warnings(DebugHudWatch* self, bool additiveWarnings, int warning, int error) {
+    self->warningType = (additiveWarnings) ? DEBUG_HUD_WATCH_WARNING_ADDITIVE : DEBUG_HUD_WATCH_WARNING_SUBTRACTIVE;
+    self->warningThreshold = warning;
+    self->errorThreshold = error;
 }
 
 void debug_hud_update_surfaces(DebugHud* self, SDL_Renderer* renderer) {
@@ -89,7 +150,7 @@ void debug_hud_update_surfaces(DebugHud* self, SDL_Renderer* renderer) {
         char watchOut[128];
         debug_hud_watch_build_string(watch, watchOut, 128);
 
-        SDL_Color color = { 255, 255, 255, 255 };
+        SDL_Color color = debug_hud_watch_internal_get_color(watch);
         SDL_Surface* surface = TTF_RenderText_Solid(self->debugFont, watchOut, color);
         watch->texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);

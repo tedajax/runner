@@ -192,6 +192,9 @@
     <ClCompile Include="src\pool.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\messaging.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\window.h">

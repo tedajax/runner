@@ -214,6 +214,7 @@
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\log.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\messaging.c" />
     <ClCompile Include="src\movementcomponent.c" />
     <ClCompile Include="src\movementsystem.c" />
     <ClCompile Include="src\particles.c" />

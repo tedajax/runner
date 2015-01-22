@@ -4,6 +4,7 @@
 #include "aspectsystem.h"
 
 void entities_internal_remove_entity(EntityManager* self, Entity entity);
+void entities_internal_send_message(EntityManager* self, TargetedMessage message);
 
 POOL_IMPLEMENTATION(Entity);
 
@@ -69,6 +70,7 @@ EntityManager* entity_manager_new() {
     }
 
     entity_queue_init(&self->removeQueue);
+    message_event_queue_init(&self->eventQueue);
 
     return self;
 }
@@ -204,21 +206,42 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
     }
 }
 
-void entities_send_message(EntityManager* self, Entity entity, Message message) {
+
+void entities_internal_send_message(EntityManager* self, TargetedMessage message) {
+    printf("%d\n", message.message.type);
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
-        if (!entities_has_component(self, type, entity)) {
+        if (!entities_has_component(self, type, message.target)) {
             continue;
         }
 
         for (u32 i = 0; i < self->systemCounts[type]; ++i) {
             aspect_system_send_message((AspectSystem*)self->systems[type][i],
-                entity,
-                message);
+                message.target,
+                message.message);
         }
     }
 }
 
+void entities_send_message(EntityManager* self, Entity entity, Message message) {
+    message_event_queue_push(&self->eventQueue, entity, message);
+}
+
+void entities_send_message_deferred(EntityManager* self, Entity entity, Message message) {
+    message_event_queue_push_deferred(&self->eventQueue, entity, message);
+}
+
 void entities_update(EntityManager* self) {
+
+    const i32 maxMessages = 0xFFFFFF;
+    i32 messageCount = 0;
+    message_event_queue_processing_lock(&self->eventQueue);
+    while (message_event_queue_size(&self->eventQueue) > 0 && messageCount < maxMessages) {
+        TargetedMessage message = message_event_queue_pop(&self->eventQueue);
+        entities_internal_send_message(self, message);
+        ++messageCount;
+    }
+    message_event_queue_processing_unlock(&self->eventQueue);
+
     while (self->removeQueue.length > 0) {
         entities_internal_remove_entity(self, entity_queue_pop(&self->removeQueue));
     }

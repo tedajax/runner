@@ -32,6 +32,8 @@ typedef enum message_type_e {
 } MessageType;
 
 #define MESSAGE_PARAM_BLOCK_SIZE 64
+#define MESSAGE_QUEUE_CAPACITY 64
+#define MESSAGE_IMMEDIATE_QUEUE_CAPACITY 64
 
 typedef struct message_on_collision_params_t {
     Entity other;
@@ -48,6 +50,40 @@ typedef struct message_t {
     MessageType type;
     u8 paramBlock[MESSAGE_PARAM_BLOCK_SIZE];
 } Message;
+
+typedef struct targeted_message_t {
+    Entity target;
+    Message message;
+} TargetedMessage;
+
+typedef struct message_queue_t {
+    TargetedMessage messages[MESSAGE_QUEUE_CAPACITY];
+    i32 size;
+    i32 head;
+    i32 tail;
+} MessageQueue;
+
+typedef struct message_event_queue_t {
+    MessageQueue messageQueue;
+    MessageQueue immediateQueue;
+    MessageType processingType;
+    bool processingLock;
+} MessageEventQueue;
+
+void message_queue_init(MessageQueue* self);
+
+void message_queue_push(MessageQueue* self, TargetedMessage message);
+TargetedMessage message_queue_pop(MessageQueue* self);
+TargetedMessage message_queue_peek(MessageQueue* self, i32 index);
+
+void message_event_queue_init(MessageEventQueue* self);
+void message_event_queue_push(MessageEventQueue* self, Entity entity, Message message);
+void message_event_queue_push_deferred(MessageEventQueue* self, Entity entity, Message message);
+TargetedMessage message_event_queue_pop(MessageEventQueue* self);
+
+static inline i32 message_event_queue_size(MessageEventQueue* self) { return self->messageQueue.size + self->immediateQueue.size; }
+static inline void message_event_queue_processing_lock(MessageEventQueue* self) { self->processingLock = true; }
+static inline void message_event_queue_processing_unlock(MessageEventQueue* self) { self->processingLock = false; }
 
 #define MESSAGE_SET_PARAM_BLOCK(msg, params)                    \
     memcpy(msg.paramBlock, ((u8*)((void*)&params)), MESSAGE_PARAM_BLOCK_SIZE)

@@ -47,6 +47,7 @@ typedef struct entity_manager_t {
     Dictionary componentsMap[COMPONENT_LAST];
     u32 lowestEId;
     EntityQueue removeQueue;
+    MessageEventQueue eventQueue;
 } EntityManager;
 
 EntityManager* entity_manager_new();
@@ -62,6 +63,7 @@ void entities_remove_entity(EntityManager* self, Entity entity);
 void entities_remove_all_entities(EntityManager* self);
 void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
 void entities_send_message(EntityManager* self, Entity entity, Message message);
+void entities_send_message_deferred(EntityManager* self, Entity entity, Message message);
 
 // Should be called AFTER update AND render calls have been made!
 void entities_update(EntityManager* self);

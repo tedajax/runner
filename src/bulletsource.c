@@ -6,11 +6,14 @@
 void bullet_source_init(BulletSource* self, BulletSourceConfig* config) {
     self->active = false;
     self->fireTimer = 0.f;
+    self->burstTimer = 0.f;
+    self->burstShotsRemaining = 0;
     self->level = 0;
     self->config = config;
 }
 
 void bullet_source_release(BulletSource* self) {
+    dynf32_release(&self->config->burstDelay);
     dynf32_release(&self->config->spread);
     dynf32_release(&self->config->lifetime);
     dynf32_release(&self->config->speed);
@@ -21,17 +24,35 @@ void bullet_source_release(BulletSource* self) {
 }
 
 void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManager, Vec2* anchor) {
-    if (self->fireTimer > 0.f) {
-        self->fireTimer -= dt;
-    }
+    if (self->burstShotsRemaining > 0) {
+        if (!self->active) {
+            self->burstShotsRemaining = 0;
+        }
 
-    if (!self->active) {
-        return;
-    }
+        if (self->burstTimer > 0.f) {
+            self->burstTimer -= dt;
+        }
 
-    if (self->fireTimer <= 0.f) {
-        self->fireTimer = dynf32_get(&self->config->fireDelay);
-        bullet_source_fire(self, entityManager, anchor);
+        if (self->burstTimer <= 0.f) {
+            bullet_source_fire(self, entityManager, anchor);
+            --self->burstShotsRemaining;
+            if (self->burstShotsRemaining > 0) {
+                self->burstTimer = dynf32_get(&self->config->burstDelay);
+            }
+        }
+    } else {
+        if (self->fireTimer > 0.f) {
+            self->fireTimer -= dt;
+        }
+
+        if (!self->active) {
+            return;
+        }
+
+        if (self->fireTimer <= 0.f) {
+            self->fireTimer = dynf32_get(&self->config->fireDelay);
+            self->burstShotsRemaining = self->config->burstCount;
+        }
     }
 }
 

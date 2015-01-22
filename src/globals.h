@@ -23,6 +23,7 @@ typedef struct globals {
     struct screen_t {
         u32 width;
         u32 height;
+        bool fullscreen;
     } screen;
 
     struct world_t {

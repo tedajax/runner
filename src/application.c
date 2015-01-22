@@ -95,12 +95,17 @@ bool _app_initialize(App* self) {
         return false;
     }
 
+    u32 windowFlags = SDL_WINDOW_SHOWN;
+    if (globals.screen.fullscreen) {
+        windowFlags |= SDL_WINDOW_FULLSCREEN;
+    }
+
     globals.window = window_create("Runner",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         globals.screen.width,
         globals.screen.height,
-        SDL_WINDOW_SHOWN);
+        windowFlags);
 
     if (!globals.window) {
         return false;

@@ -206,7 +206,6 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
     }
 }
 
-
 void entities_internal_send_message(EntityManager* self, TargetedMessage message) {
     for (u32 type = COMPONENT_INVALID + 1; type < COMPONENT_LAST; ++type) {
         if (!entities_has_component(self, type, message.target)) {

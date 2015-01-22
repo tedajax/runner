@@ -8,6 +8,7 @@ void globals_init() {
 
     globals.screen.width = 0;
     globals.screen.height = 0;
+    globals.screen.fullscreen = false;
 
     globals.world.width = 0;
     globals.world.height = 0;
@@ -32,6 +33,7 @@ void globals_config(const char* configName) {
 
     globals.screen.width = (u32)config_try_get_int(config, "screen", "width", 1280);
     globals.screen.height = (u32)config_try_get_int(config, "screen", "height", 720);
+    globals.screen.fullscreen = config_try_get_bool(config, "screen", "fullscreen", false);
 
     globals.world.width = (u32)config_try_get_int(config, "world", "width", 1280);
     globals.world.height = (u32)config_try_get_int(config, "world", "height", 720);

@@ -113,4 +113,10 @@ CONFIG_REGISTER_TYPE_NAMED(TweenConfig*, TweenConfig);
         CONFIG_TYPE_CONFIG_GET_AT_BODY(configtype, typeenum, true);     \
     }
 
+/* Hack to get around the fact that bool is actually a macro that expands to _Bool */
+#define config_get_bool config_get__Bool
+#define config_try_get_bool config_try_get__Bool
+#define config_get_at_bool config_get_at__Bool
+#define config_try_get_at_bool config_try_get_at__Bool
+
 #endif

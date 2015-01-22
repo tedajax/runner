@@ -56,6 +56,9 @@ void bullet_source_config_deserialize(TypeConfig* super, Config* config, char* t
     self->offset = config_get_Vec2(config, table, "offset");
     self->count = config_get_int(config, table, "count");
     
+    self->burstCount = config_try_get_int(config, table, "burst_count", 1);
+    dynf32 defaultBurstDelay = { 0.f, DYN_F32_VALUE, NULL, NULL };
+    self->burstDelay = config_try_get_dynf32(config, table, "burst_delay", defaultBurstDelay);
     self->spread = config_get_dynf32(config, table, "spread");
     self->lifetime = config_get_dynf32(config, table, "lifetime");
     self->speed = config_get_dynf32(config, table, "speed");
@@ -66,6 +69,7 @@ void bullet_source_config_deserialize(TypeConfig* super, Config* config, char* t
     
     self->textureName = config_get_string(config, table, "texture_name");
 
+    dynf32_restart(&self->burstDelay, &globals.tweens);
     dynf32_restart(&self->spread, &globals.tweens);
     dynf32_restart(&self->lifetime, &globals.tweens);
     dynf32_restart(&self->speed, &globals.tweens);

@@ -66,7 +66,7 @@ TargetedMessage message_event_queue_pop(MessageEventQueue* self) {
         self->processingType = result.message.type;
         return result;
     } else {
-        if (message_queue_peek(&self->messageQueue, 0).message.type != self->processingType) {
+        if (self->messageQueue.size > 0 && message_queue_peek(&self->messageQueue, 0).message.type != self->processingType) {
             return message_queue_pop(&self->messageQueue);
         } else {
             return message_queue_pop(&self->immediateQueue);

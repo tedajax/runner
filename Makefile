@@ -34,7 +34,7 @@ SOURCES		:= $(wildcard $(SRCDIR)/*.c)
 INCLUDES	:= $(wildcard $(SRCDIR)/*.h)
 OBJECTS		:= $(SOURCES:$(SRCDIR)%.c=$(OBJDIR)/%.o)
 
-all: $(BINDIR)/$(TARGET)
+all: $(BINDIR)/$(TARGET) post-build
 	@echo Done!
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
@@ -56,3 +56,6 @@ remove: clean
 .PHONEY: run
 run: all
 	./$(TARGET)
+
+post-build:
+	.\copy_dll_32.bat

@@ -16,378 +16,444 @@
     <Filter Include="Configs">
       <UniqueIdentifier>{0bc2f3b1-add4-4f48-9af6-dd78c056803d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{6d3acb35-a76b-4a71-ab94-17816a6ad025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{ff4440ce-7a5f-4938-973f-7167edb07258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Components">
+      <UniqueIdentifier>{57f9d226-4858-43e7-bfb5-6925a9cc7012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Systems">
+      <UniqueIdentifier>{3f6d3d7b-6e7f-4f35-b824-098a6c4fe0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entity">
+      <UniqueIdentifier>{09c4d873-977b-400d-b876-c9aee3784e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Utility">
+      <UniqueIdentifier>{1c38852a-a613-4a21-ab07-82f22a9450e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Physics">
+      <UniqueIdentifier>{5fbe5600-eb86-4c5e-ad34-692494a128b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\DataStructures">
+      <UniqueIdentifier>{817e64af-3187-42cf-bfd2-b491e910a62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Math">
+      <UniqueIdentifier>{db0d68bb-b620-4b03-8af0-37a80c1b2016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Application">
+      <UniqueIdentifier>{7e22a870-66c3-49ac-a44f-c78c536e8b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Config">
+      <UniqueIdentifier>{05484ad0-82ba-4870-939a-56946853981a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{8aa27cdc-d755-4cef-a2fd-8399285fcb6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{14e40d61-faaa-46a5-a50b-6397e9433dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\DataStructures">
+      <UniqueIdentifier>{4aa8d719-6631-46b1-8530-7be529b9cb3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Math">
+      <UniqueIdentifier>{fc2e9a46-ba86-46d6-b33d-e5c56889200e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Application">
+      <UniqueIdentifier>{2a5ca99b-6ddf-4ea0-baf0-9b42b562e05c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Config">
+      <UniqueIdentifier>{4766b1a9-edcb-4686-b873-f79e713ce20b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components">
+      <UniqueIdentifier>{1b490c22-29e5-42a1-871a-e38dcfb6d4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems">
+      <UniqueIdentifier>{26c9c260-0fac-4b9c-bfbb-94fdc6192468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Physics">
+      <UniqueIdentifier>{b2bfb431-b41f-4bae-ad5a-a8e8610de081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Utility">
+      <UniqueIdentifier>{3c9c9fbb-084f-4a4f-adae-5020234f35b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entity">
+      <UniqueIdentifier>{f9a615c8-9b66-4bc9-ba37-95dd666b76ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\algebra.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\aspectsystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\bulletcontrollercomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\bulletcontrollersystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\controllercomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\controllersystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\debug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dict.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entityfactory.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entitymanager.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gametime.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\globals.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gravitycomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gravitysystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hashset.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hashtable.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\healthcomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\healthsystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\input.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\log.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\movementcomponent.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\algebra.c">
+      <Filter>Source Files\Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\movementsystem.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application.c">
+      <Filter>Source Files\Core\Application</Filter>
     </ClCompile>
-    <ClCompile Include="src\spritecomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\spritesystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\transformcomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vector.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\window.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stackallocator.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texturemanager.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\aspectsystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
     </ClCompile>
     <ClCompile Include="src\bgmanagercomponent.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\bgmanagersystem.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemycomponent.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\bulletcontrollercomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemysystem.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collidercomponent.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\component.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\list.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\bulletcontrollersystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
     </ClCompile>
     <ClCompile Include="src\collider.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collidercomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\collisionsystem.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\particles.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ini.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\component.c">
+      <Filter>Source Files\Game\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\config.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\path.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tween.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\curves.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\range.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\primitives.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\debughud.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\bulletsource.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\physics.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\profiler.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynf32.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Core\Config</Filter>
     </ClCompile>
     <ClCompile Include="src\configtypes.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Core\Config</Filter>
     </ClCompile>
-    <ClCompile Include="src\pool.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\controllercomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controllersystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemysystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gravitysystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\healthsystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\movementsystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemycomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gravitycomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\healthcomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\movementcomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spritecomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transformcomponent.c">
+      <Filter>Source Files\Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\curves.c">
+      <Filter>Source Files\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debughud.c">
+      <Filter>Source Files\Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug.c">
+      <Filter>Source Files\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynf32.c">
+      <Filter>Source Files\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dict.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entity.c">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entityfactory.c">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entitymanager.c">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gametime.c">
+      <Filter>Source Files\Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\globals.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hashset.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hashtable.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ini.c">
+      <Filter>Source Files\Core\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input.c">
+      <Filter>Source Files\Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\list.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\log.c">
+      <Filter>Source Files\Core\Application</Filter>
     </ClCompile>
     <ClCompile Include="src\messaging.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\physics.c">
+      <Filter>Source Files\Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\path.c">
+      <Filter>Source Files\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pool.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives.c">
+      <Filter>Source Files\Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\profiler.c">
+      <Filter>Source Files\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\range.c">
+      <Filter>Source Files\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spritesystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stackallocator.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texturemanager.c">
+      <Filter>Source Files\Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tween.c">
+      <Filter>Source Files\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vector.c">
+      <Filter>Source Files\Core\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window.c">
+      <Filter>Source Files\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bulletsource.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles.c">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\transformcomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\systems.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\spritesystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\spritecomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\movementsystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\movementcomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\healthsystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\healthcomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hashtable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hashset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gravitysystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gravitycomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gametime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entitymanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entityfactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dict.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\controllersystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\controllercomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\bulletcontrollersystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\bulletcontrollercomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\aspectsystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\algebra.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stackallocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\texturemanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\bgmanagercomponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\bgmanagersystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\enemycomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\enemysystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collidercomponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\messaging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\list.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\bulletcontrollersystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\collisionsystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\inline.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\controllersystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\particles.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\enemysystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\ini.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\gravitysystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\config.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\healthsystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\path.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\movementsystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\curves.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\spritesystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\tween.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\bgmanagercomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\range.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\bulletcontrollercomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\collidercomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controllercomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\component.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemycomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gravitycomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\healthcomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\movementcomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\spritecomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\transformcomponent.h">
+      <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entitymanager.h">
+      <Filter>Header Files\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entityfactory.h">
+      <Filter>Header Files\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entity.h">
+      <Filter>Header Files\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\systems.h">
+      <Filter>Header Files\Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider.h">
+      <Filter>Header Files\Game\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\debughud.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="src\snprintf.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\dict.h">
+      <Filter>Header Files\Core\DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="src\bulletsource.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hashset.h">
+      <Filter>Header Files\Core\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\globals.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gametime.h">
+      <Filter>Header Files\Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hashtable.h">
+      <Filter>Header Files\Core\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>Header Files\Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\list.h">
+      <Filter>Header Files\Core\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\messaging.h">
+      <Filter>Header Files\Game\Utility</Filter>
     </ClInclude>
     <ClInclude Include="src\physics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\profiler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dynf32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\configtypes.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\pool.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algebra.h">
+      <Filter>Header Files\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dynf32.h">
+      <Filter>Header Files\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\curves.h">
+      <Filter>Header Files\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tween.h">
+      <Filter>Header Files\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\types.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stackallocator.h">
+      <Filter>Header Files\Core\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vector.h">
+      <Filter>Header Files\Core\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\debug.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config.h">
+      <Filter>Header Files\Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\configtypes.h">
+      <Filter>Header Files\Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ini.h">
+      <Filter>Header Files\Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\log.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\path.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snprintf.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\profiler.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\range.h">
+      <Filter>Header Files\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texturemanager.h">
+      <Filter>Header Files\Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives.h">
+      <Filter>Header Files\Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\window.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inline.h">
+      <Filter>Header Files\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bulletsource.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

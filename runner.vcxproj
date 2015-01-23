@@ -173,6 +173,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\aicontroller.c" />
     <ClCompile Include="src\algebra.c" />
     <ClCompile Include="src\application.c" />
     <ClCompile Include="src\aspectsystem.c" />
@@ -234,6 +235,7 @@
     <ClCompile Include="src\window.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\aicontroller.h" />
     <ClInclude Include="src\algebra.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\aspectsystem.h" />

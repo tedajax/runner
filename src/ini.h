@@ -8,8 +8,8 @@
 #include "log.h"
 #include "inline.h"
 
-#define INI_MAX_SECTIONS 128
-#define INI_MAX_KEYS_PER_SECTION 128
+#define INI_MAX_SECTIONS 1024
+#define INI_MAX_KEYS_PER_SECTION 64
 
 #define INI_MAX_SECTION_NAME_LENGTH 256
 

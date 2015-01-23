@@ -261,6 +261,9 @@
     <ClCompile Include="src\particles.c">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\aicontroller.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="src\camera.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\aicontroller.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

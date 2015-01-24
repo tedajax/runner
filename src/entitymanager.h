@@ -45,7 +45,7 @@ typedef struct entity_manager_t {
     AspectSystem* systems[COMPONENT_LAST][ENTITY_MANAGER_MAX_SYSTEM_COUNT];
     u32 systemCounts[COMPONENT_LAST];
     Dictionary componentsMap[COMPONENT_LAST];
-    u32 lowestEId;
+    i32 lowestEId;
     EntityQueue removeQueue;
     MessageEventQueue eventQueue;
 } EntityManager;
@@ -53,7 +53,7 @@ typedef struct entity_manager_t {
 EntityManager* entity_manager_new();
 void entity_manager_free(EntityManager* self);
 void entity_manager_register_system(EntityManager* self, AspectSystem* system);
-u32 entities_gen_entity_id(EntityManager* self);
+i32 entities_gen_entity_id(EntityManager* self);
 Entity entities_create_entity(EntityManager* self);
 void entities_add_component(EntityManager* self, Component* component, Entity entity);
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity);

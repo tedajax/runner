@@ -264,6 +264,9 @@
     <ClCompile Include="src\aicontroller.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\componentlist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -459,6 +462,9 @@
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="src\aicontroller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\componentlist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

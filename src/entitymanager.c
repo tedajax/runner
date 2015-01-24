@@ -36,7 +36,6 @@ void entity_list_init(EntityList* self, u32 capacity) {
     self->list = (Entity *)calloc(capacity, sizeof(Entity));
     self->capacity = capacity;
     self->size = 0;
-
 }
 
 void entity_list_resize(EntityList* self, u32 capacity) {
@@ -97,7 +96,7 @@ void entity_manager_register_system(EntityManager* self, AspectSystem* system) {
     ++self->systemCounts[type];
 }
 
-u32 entities_gen_entity_id(EntityManager* self) {
+i32 entities_gen_entity_id(EntityManager* self) {
     ASSERT(self->lowestEId < 0xFFFFFFFF, "How the fuck?");
     return self->lowestEId++;
 }

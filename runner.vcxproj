@@ -187,6 +187,7 @@
     <ClCompile Include="src\collidercomponent.c" />
     <ClCompile Include="src\collisionsystem.c" />
     <ClCompile Include="src\component.c" />
+    <ClCompile Include="src\componentlist.c" />
     <ClCompile Include="src\config.c" />
     <ClCompile Include="src\configtypes.c" />
     <ClCompile Include="src\controllercomponent.c" />
@@ -249,6 +250,7 @@
     <ClInclude Include="src\collidercomponent.h" />
     <ClInclude Include="src\collisionsystem.h" />
     <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\componentlist.h" />
     <ClInclude Include="src\components.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\configtypes.h" />

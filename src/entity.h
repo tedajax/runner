@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-typedef u32 Entity;
+typedef i32 Entity;
 
 #endif

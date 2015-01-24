@@ -28,10 +28,15 @@ typedef enum component_type_e {
 
 typedef struct component_t {
     ComponentType type;
+    Entity entity;
 } Component;
 
 void component_init(Component* self, ComponentType type);
 void component_free(Component* self);
 void component_free_void(void* self);
+
+static inline int component_entity_compare(Component* c1, Component* c2) {
+    return c1->entity - c2->entity;
+}
 
 #endif

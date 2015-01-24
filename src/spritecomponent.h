@@ -17,7 +17,7 @@ typedef struct sprite_component_t {
     f32 redTimer;
 } SpriteComponent;
 
-SpriteComponent* sprite_component_new(SDL_Texture* texture, u32 layer);
+SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, u32 layer);
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest);
 void sprite_component_on_collision_enter(Component* component, Message message);
 

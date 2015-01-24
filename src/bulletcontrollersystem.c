@@ -2,35 +2,23 @@
 #include "collidercomponent.h"
 #include "physics.h"
 
-void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* entityManager)
-{
+void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_BULLET_CONTROLLER);
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_ON_COLLISION_ENTER, bullet_controller_system_on_collision_enter);
     REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED, bullet_controller_system_on_entity_removed);
 }
 
-void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities)
-{
-    aspect_system_entities((AspectSystem*)self, entities);
+void bullet_controller_system_update(BulletControllerSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        BulletControllerComponent* bullet = (BulletControllerComponent*)GET_SYSTEM_COMPONENT(i);
 
-        TransformComponent* transform = (TransformComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_TRANSFORM,
-            entity);
+        TransformComponent* transform = (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
-        MovementComponent* movement = (MovementComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_MOVEMENT,
-            entity);
-
-        BulletControllerComponent* bullet = (BulletControllerComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_BULLET_CONTROLLER,
-            entity);
+        MovementComponent* movement = (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
         REQUIRED_COMPONENTS(transform && movement && bullet);
 
@@ -61,8 +49,7 @@ void bullet_controller_system_update(BulletControllerSystem* self, EntityList* e
     }
 }
 
-void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity entity, Message message)
-{
+void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity entity, Message message) {
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,
         COMPONENT_BULLET_CONTROLLER,
@@ -86,8 +73,7 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity en
     entities_send_message(system->entityManager, target, damageMsg);
 }
 
-void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message)
-{
+void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message) {
     BulletControllerComponent* bullet =
         (BulletControllerComponent*)entities_get_component(system->entityManager,
         COMPONENT_BULLET_CONTROLLER,

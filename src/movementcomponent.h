@@ -11,7 +11,7 @@ typedef struct movement_component_t {
     bool constrainToCamera;
 } MovementComponent;
 
-MovementComponent* movement_component_new_zero();
-MovementComponent* movement_component_new(Vec2 velocity, f32 angularVelocity);
+MovementComponent* movement_component_new_zero(Entity entity);
+MovementComponent* movement_component_new(Entity entity, Vec2 velocity, f32 angularVelocity);
 
 #endif

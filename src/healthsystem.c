@@ -6,17 +6,14 @@ void health_system_init(HealthSystem* self, EntityManager* entityManager) {
     REGISTER_SYSTEM_HANDLER(MESSAGE_DAMAGE, health_system_on_damage);
 }
 
-void health_system_update(HealthSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void health_system_update(HealthSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
 
-        HealthComponent* health = (HealthComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_HEALTH,
-            entity);
-        
+        HealthComponent* health = (HealthComponent*)GET_SYSTEM_COMPONENT(i);
+
         REQUIRED_COMPONENTS(health);
 
         if (health->currentHealth <= 0) {
@@ -29,9 +26,7 @@ void health_system_on_damage(AspectSystem* system, Entity entity, Message messag
     HealthSystem* self = (HealthSystem*)system;
 
     HealthComponent* health =
-        (HealthComponent*)entities_get_component(self->super.entityManager,
-        COMPONENT_HEALTH,
-        entity);
+        (HealthComponent*)GET_COMPONENT(entity, COMPONENT_HEALTH);
 
     REQUIRED_COMPONENTS(health);
 

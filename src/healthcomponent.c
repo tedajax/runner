@@ -1,9 +1,9 @@
 #include "healthcomponent.h"
 
-HealthComponent* health_component_new(i32 maxHealth) {
+HealthComponent* health_component_new(Entity entity, i32 maxHealth) {
     HealthComponent* self = CALLOC(1, HealthComponent);
 
-    component_init((Component*)self, COMPONENT_HEALTH);
+    component_init((Component*)self, COMPONENT_HEALTH, entity);
 
     self->maxHealth = maxHealth;
     self->currentHealth = maxHealth;

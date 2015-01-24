@@ -5,7 +5,16 @@
 #include "entitymanager.h"
 #include "messaging.h"
 
-#define GET_COMPONENT2(entity, comptype)        \
+#define GET_SYSTEM_COMPONENTS(self)                 \
+    ComponentList* components = aspect_system_components((AspectSystem*)self)
+
+#define GET_ENTITY(index)                   \
+    components->components[index]->entity
+
+#define GET_SYSTEM_COMPONENT(index)         \
+    components->components[index]
+
+#define GET_COMPONENT2(entity, comptype)                \
         entities_get_component(                 \
             self->super.entityManager,          \
             comptype,                           \
@@ -42,7 +51,7 @@ typedef struct aspect_system_t {
 } AspectSystem;
 
 void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type);
-void aspect_system_entities(AspectSystem* self, EntityList* dest);
+ComponentList* aspect_system_components(AspectSystem* self);
 void aspect_system_send_message(AspectSystem* self, Entity entity, const Message message);
 
 #endif

@@ -1,10 +1,10 @@
 #include "bulletcontrollercomponent.h"
 
-BulletControllerComponent* bullet_controller_component_new(BulletConfig* config) {
+BulletControllerComponent* bullet_controller_component_new(Entity entity, BulletConfig* config) {
     BulletControllerComponent* self = (BulletControllerComponent*)calloc(1,
         sizeof(BulletControllerComponent));
 
-    component_init((Component*)self, COMPONENT_BULLET_CONTROLLER);
+    component_init((Component*)self, COMPONENT_BULLET_CONTROLLER, entity);
 
     self->config = *config;
     self->speed = self->config.speed;

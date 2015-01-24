@@ -18,6 +18,6 @@ typedef struct enemy_component_t {
     i32 state;
 } EnemyComponent;
 
-EnemyComponent* enemy_component_new(EnemyType enemyType);
+EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType);
 
 #endif

@@ -10,7 +10,7 @@ typedef struct health_component_t {
     i32 currentHealth;
 } HealthComponent;
 
-HealthComponent* health_component_new(i32 maxHealth);
+HealthComponent* health_component_new(Entity entity, i32 maxHealth);
 
 void health_component_on_collision_enter(Component* component, const Message msg);
 

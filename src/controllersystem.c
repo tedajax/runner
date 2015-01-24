@@ -7,17 +7,15 @@ void controller_system_init(ControllerSystem* self, EntityManager* entityManager
     REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED, controller_system_on_entity_removed);
 }
 
-void controller_system_update(ControllerSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void controller_system_update(ControllerSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        ControllerComponent* controller = (ControllerComponent*)GET_SYSTEM_COMPONENT(i);
 
         MovementComponent* movement =
             (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
-
-        ControllerComponent* controller =
-            (ControllerComponent*)GET_COMPONENT(entity, COMPONENT_CONTROLLER);
 
         TransformComponent* transform =
             (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);

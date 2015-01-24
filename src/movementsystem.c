@@ -4,17 +4,16 @@ void movement_system_init(MovementSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_MOVEMENT);
 }
 
-void movement_system_update(MovementSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void movement_system_update(MovementSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        MovementComponent* movement =
+            (MovementComponent*)GET_SYSTEM_COMPONENT(i);
 
         TransformComponent* transform =
             (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
-
-        MovementComponent* movement =
-            (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
         REQUIRED_COMPONENTS(transform && movement);
 

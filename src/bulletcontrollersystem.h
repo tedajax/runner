@@ -12,7 +12,7 @@ typedef struct bullet_controller_system_t {
 } BulletControllerSystem;
 
 void bullet_controller_system_init(BulletControllerSystem* self, EntityManager* entityManager);
-void bullet_controller_system_update(BulletControllerSystem* self, EntityList* entities);
+void bullet_controller_system_update(BulletControllerSystem* self);
 
 void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity entity, Message message);
 void bullet_controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message);

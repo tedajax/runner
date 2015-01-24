@@ -11,8 +11,8 @@ void aspect_system_init(AspectSystem* self, EntityManager* entityManager, Compon
     }
 }
 
-void aspect_system_entities(AspectSystem* self, EntityList* dest) {
-    entities_get_all_of(self->entityManager, self->systemType, dest);
+ComponentList* aspect_system_components(AspectSystem* self) {
+    return entities_get_all_components(self->entityManager, self->systemType);
 }
 
 void aspect_system_send_message(AspectSystem* self, Entity entity, const Message message) {

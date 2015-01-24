@@ -6,13 +6,12 @@
 #include "pool.h"
 #include "entity.h"
 #include "component.h"
+#include "componentlist.h"
 #include "messaging.h"
 
 // Forward declarations
 typedef struct collision_system_t CollisionSystem;
 typedef struct aspect_system_t AspectSystem;
-
-#define MAX_ENTITIES 4192
 
 typedef struct entity_queue_t {
     Entity entities[MAX_ENTITIES];
@@ -44,7 +43,7 @@ typedef struct entity_manager_t {
     POOL(Entity) entities;
     AspectSystem* systems[COMPONENT_LAST][ENTITY_MANAGER_MAX_SYSTEM_COUNT];
     u32 systemCounts[COMPONENT_LAST];
-    Dictionary componentsMap[COMPONENT_LAST];
+    ComponentList componentsMap[COMPONENT_LAST];
     i32 lowestEId;
     EntityQueue removeQueue;
     MessageEventQueue eventQueue;
@@ -57,11 +56,11 @@ i32 entities_gen_entity_id(EntityManager* self);
 Entity entities_create_entity(EntityManager* self);
 void entities_add_component(EntityManager* self, Component* component, Entity entity);
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity);
-DictListNode* entities_get_components(EntityManager* self, ComponentType type, Entity entity);
+ComponentList* entities_get_all_components(EntityManager* self, ComponentType type);
 bool entities_has_component(EntityManager* self, ComponentType type, Entity entity);
 void entities_remove_entity(EntityManager* self, Entity entity);
 void entities_remove_all_entities(EntityManager* self);
-void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
+//void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* dest);
 void entities_send_message(EntityManager* self, Entity entity, Message message);
 void entities_send_message_deferred(EntityManager* self, Entity entity, Message message);
 

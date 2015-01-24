@@ -31,12 +31,9 @@ typedef struct component_t {
     Entity entity;
 } Component;
 
-void component_init(Component* self, ComponentType type);
+void component_init(Component* self, ComponentType type, Entity entity);
 void component_free(Component* self);
 void component_free_void(void* self);
 
-static inline int component_entity_compare(Component* c1, Component* c2) {
-    return c1->entity - c2->entity;
-}
-
+int component_entity_compare(Component* c1, Component* c2);
 #endif

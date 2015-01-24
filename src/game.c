@@ -102,23 +102,23 @@ void game_quit(Game* self) {
 }
 
 void game_start(Game* self) {
-    bg_manager_system_start(&self->bgManagerSystem, &self->entities);
-    collision_system_start(&self->collisionSystem, &self->entities);
+    bg_manager_system_start(&self->bgManagerSystem);
+    collision_system_start(&self->collisionSystem);
 }
 
 void game_update(Game* self) {
-    health_system_update(&self->healthSystem, &self->entities);
-    sprite_system_update(&self->backgroundSpriteSystem, &self->entities);
-    sprite_system_update(&self->spriteSystem, &self->entities);
-    controller_system_update(&self->controllerSystem, &self->entities);
-    bullet_controller_system_update(&self->bulletControllerSystem, &self->entities);
-    gravity_system_update(&self->gravitySystem, &self->entities);
-    enemy_system_update(&self->enemySystem, &self->entities);
-    movement_system_update(&self->movementSystem, &self->entities);
-    bg_manager_system_update(&self->bgManagerSystem, &self->entities);
+    health_system_update(&self->healthSystem);
+    sprite_system_update(&self->backgroundSpriteSystem);
+    sprite_system_update(&self->spriteSystem);
+    controller_system_update(&self->controllerSystem);
+    bullet_controller_system_update(&self->bulletControllerSystem);
+    gravity_system_update(&self->gravitySystem);
+    enemy_system_update(&self->enemySystem);
+    movement_system_update(&self->movementSystem);
+    bg_manager_system_update(&self->bgManagerSystem);
 
     profiler_tick("collision");
-    collision_system_update(&self->collisionSystem, &self->entities);
+    collision_system_update(&self->collisionSystem);
     profiler_tock("collision");
 
     camera_update(&globals.camera);
@@ -156,10 +156,10 @@ void game_debug_keys(Game* self) {
 }
 
 void game_render(Game* self) {
-    sprite_system_render(&self->backgroundSpriteSystem, &self->entities);
-    sprite_system_render(&self->spriteSystem, &self->entities);
+    sprite_system_render(&self->backgroundSpriteSystem);
+    sprite_system_render(&self->spriteSystem);
     if (drawCollision) {
-        collision_system_render(&self->collisionSystem, &self->entities);
+        collision_system_render(&self->collisionSystem);
     }
 
     debug_hud_render(&self->debugHud, globals.renderer, 5, 5);

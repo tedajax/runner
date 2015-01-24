@@ -7,21 +7,14 @@ void sprite_system_init(SpriteSystem* self, EntityManager* entityManager, u32 la
     REGISTER_SYSTEM_HANDLER(MESSAGE_DAMAGE, sprite_system_on_damage);
 }
 
-void sprite_system_update(SpriteSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void sprite_system_update(SpriteSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        SpriteComponent* sprite = (SpriteComponent*)GET_SYSTEM_COMPONENT(i);
 
-        TransformComponent* transform = (TransformComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_TRANSFORM,
-            entity);
-
-        SpriteComponent* sprite = (SpriteComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_SPRITE,
-            entity);
+        TransformComponent* transform = (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
         REQUIRED_COMPONENTS(transform && sprite);
 
@@ -35,21 +28,14 @@ void sprite_system_update(SpriteSystem* self, EntityList* entities) {
     }
 }
 
-void sprite_system_render(SpriteSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void sprite_system_render(SpriteSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        SpriteComponent* sprite = (SpriteComponent*)GET_SYSTEM_COMPONENT(i);
 
-        TransformComponent* transform = (TransformComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_TRANSFORM,
-            entity);
-
-        SpriteComponent* sprite = (SpriteComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_SPRITE,
-            entity);
+        TransformComponent* transform = (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
         ASSERT(transform && sprite, "Missing required component for sprite system.");
 

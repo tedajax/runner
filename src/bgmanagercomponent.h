@@ -18,7 +18,7 @@ typedef struct bg_manager_component_t {
     u32 count;
 } BgManagerComponent;
 
-BgManagerComponent* bg_manager_component_new(u32 twidth, u32 theight);
+BgManagerComponent* bg_manager_component_new(Entity entity, u32 twidth, u32 theight);
 bool bg_manager_component_add_entity(BgManagerComponent* self, TransformComponent* transform);
 
 #endif

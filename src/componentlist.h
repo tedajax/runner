@@ -3,7 +3,6 @@
 
 #include "core.h"
 #include "component.h"
-#include "entitymanager.h"
 
 typedef int(*component_compare_f)(Component*, Component*);
 

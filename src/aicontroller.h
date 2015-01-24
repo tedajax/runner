@@ -16,6 +16,6 @@ typedef struct ai_controller_t {
 
 void ai_controller_init(AIController* self);
 void ai_controller_set_state_transition(AIController* self, u32 state, state_transition_f transitionFunc);
-bool ai_controller_update_state(AIController* self);
+bool ai_controller_update_state(AIController* self, Component* component);
 
 #endif

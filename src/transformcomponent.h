@@ -11,7 +11,8 @@ typedef struct transform_component_t {
     f32 rotation;
 } TransformComponent;
 
-TransformComponent* transform_component_new(Vec2 position,
+TransformComponent* transform_component_new(Entity entity,
+    Vec2 position,
     f32 rotation,
     Vec2 scale);
 

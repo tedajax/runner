@@ -12,6 +12,6 @@ typedef struct controller_component_t {
     u32 bulletSourceCount;
 } ControllerComponent;
 
-ControllerComponent* controller_component_new(char* config, char* section);
+ControllerComponent* controller_component_new(Entity entity, char* config, char* section);
 
 #endif

@@ -1,9 +1,9 @@
 #include "spritecomponent.h"
 
-SpriteComponent* sprite_component_new(SDL_Texture* texture, u32 layer) {
+SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, u32 layer) {
     SpriteComponent* self = (SpriteComponent*)calloc(1, sizeof(SpriteComponent));
 
-    component_init((Component*)self, COMPONENT_SPRITE);
+    component_init((Component*)self, COMPONENT_SPRITE, entity);
 
     self->texture = texture;
 

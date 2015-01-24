@@ -1,11 +1,12 @@
 #include "transformcomponent.h"
 
-TransformComponent* transform_component_new(Vec2 position,
+TransformComponent* transform_component_new(Entity entity,
+    Vec2 position,
     f32 rotation,
     Vec2 scale) {
     TransformComponent* self = (TransformComponent*)calloc(1, sizeof(TransformComponent));
 
-    component_init((Component*)self, COMPONENT_TRANSFORM);
+    component_init((Component*)self, COMPONENT_TRANSFORM, entity);
 
     self->position = position;
     self->rotation = rotation;

@@ -10,7 +10,7 @@ typedef struct gravity_component_t {
     Vec2 gravAccel;
 } GravityComponent;
 
-GravityComponent* gravity_component_new(const Vec2* acceleration);
-GravityComponent* gravity_component_world();
+GravityComponent* gravity_component_new(Entity entity, const Vec2* acceleration);
+GravityComponent* gravity_component_world(Entity entity);
 
 #endif

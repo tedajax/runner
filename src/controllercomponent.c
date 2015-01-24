@@ -1,10 +1,10 @@
 #include "controllercomponent.h"
 #include "config.h"
 
-ControllerComponent* controller_component_new(char* config, char* section) {
+ControllerComponent* controller_component_new(Entity entity, char* config, char* section) {
     ControllerComponent* self = (ControllerComponent*)calloc(1, sizeof(ControllerComponent));
 
-    component_init((Component*)self, COMPONENT_CONTROLLER);
+    component_init((Component*)self, COMPONENT_CONTROLLER, entity);
 
     Config* cfg = config_get(config);
 

@@ -12,7 +12,7 @@ typedef struct enemy_system_t {
 } EnemySystem;
 
 void enemy_system_init(EnemySystem* self, EntityManager* entityManager);
-void enemy_system_update(EnemySystem* self, EntityList* entities);
-void enemy_update(EnemySystem* self, Entity entity, TransformComponent* playerTransform);
+void enemy_system_update(EnemySystem* self);
+void enemy_update(EnemySystem* self, EnemyComponent* enemy, TransformComponent* playerTransform);
 
 #endif

@@ -4,25 +4,17 @@ void gravity_system_init(GravitySystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_GRAVITY);
 }
 
-void gravity_system_update(GravitySystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void gravity_system_update(GravitySystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
 
-        MovementComponent* movement = (MovementComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_MOVEMENT,
-            entity);
+        GravityComponent* gravity = (GravityComponent*)GET_SYSTEM_COMPONENT(i);
 
-        GravityComponent* gravity = (GravityComponent*)entities_get_component(
-            self->super.entityManager,
-            COMPONENT_GRAVITY,
-            entity);
+        MovementComponent* movement = (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
-        if (!movement || !gravity) {
-            continue;
-        }
+        REQUIRED_COMPONENTS(gravity && movement);
 
         Vec2 gravScale;
         vec2_copy_to(&gravity->gravAccel, &gravScale);

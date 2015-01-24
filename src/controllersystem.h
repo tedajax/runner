@@ -12,7 +12,7 @@ typedef struct controller_system_t {
 } ControllerSystem;
 
 void controller_system_init(ControllerSystem* self, EntityManager* entityManager);
-void controller_system_update(ControllerSystem* self, EntityList* entities);
+void controller_system_update(ControllerSystem* self);
 
 void controller_system_on_entity_removed(AspectSystem* system, Entity entity, Message message);
 

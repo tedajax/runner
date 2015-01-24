@@ -23,7 +23,7 @@ typedef struct bullet_controller_component_t {
     bool destroy;
 } BulletControllerComponent;
 
-BulletControllerComponent* bullet_controller_component_new(BulletConfig* config);
+BulletControllerComponent* bullet_controller_component_new(Entity entity, BulletConfig* config);
 void bullet_controller_on_collision_enter(Component* component, Message message);
 
 #endif

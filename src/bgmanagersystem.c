@@ -4,18 +4,14 @@ void bg_manager_system_init(BgManagerSystem* self, EntityManager* entityManager)
     aspect_system_init(&self->super, entityManager, COMPONENT_BG_MANAGER);
 }
 
-void bg_manager_system_start(BgManagerSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void bg_manager_system_start(BgManagerSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        BgManagerComponent* bg = (BgManagerComponent*)GET_SYSTEM_COMPONENT(i);
 
-        BgManagerComponent* bg =
-            (BgManagerComponent*)GET_COMPONENT(entity, COMPONENT_BG_MANAGER);
-
-        if (!bg) {
-            continue;
-        }
+        REQUIRED_COMPONENTS(bg);
 
         for (u32 j = 0; j < bg->count; ++j) {
             TransformComponent* tx = bg->transforms[j];
@@ -28,18 +24,14 @@ void bg_manager_system_start(BgManagerSystem* self, EntityList* entities) {
     }
 }
 
-void bg_manager_system_update(BgManagerSystem* self, EntityList* entities) {
-    aspect_system_entities((AspectSystem*)self, entities);
+void bg_manager_system_update(BgManagerSystem* self) {
+    GET_SYSTEM_COMPONENTS(self);
 
-    for (u32 i = 0; i < entities->size; ++i) {
-        Entity entity = entities->list[i];
+    for (u32 i = 0; i < components->count; ++i) {
+        Entity entity = GET_ENTITY(i);
+        BgManagerComponent* bg = (BgManagerComponent*)GET_SYSTEM_COMPONENT(i);
 
-        BgManagerComponent* bg =
-            (BgManagerComponent*)GET_COMPONENT(entity, COMPONENT_BG_MANAGER);
-
-        if (!bg) {
-            continue;
-        }
+        REQUIRED_COMPONENTS(bg);
 
         f32 left = globals.camera.position.x - (f32)bg->tileWidth;
         f32 right = globals.camera.position.x + globals.world.width + (f32)bg->tileWidth;

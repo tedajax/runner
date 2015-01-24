@@ -3,7 +3,8 @@
 Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture) {
     Entity entity = entities_create_entity(entityManager);
 
-    TransformComponent* transform = transform_component_new(position,
+    TransformComponent* transform = transform_component_new(entity,
+        position,
         0.f,
         vec2_one());
 
@@ -16,7 +17,7 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
     //     (Component*)gravity_component_world(),
     //     entity);
 
-    MovementComponent* movement = movement_component_new(vec2_zero(), 0.f);
+    MovementComponent* movement = movement_component_new(entity, vec2_zero(), 0.f);
     movement->constrainToCamera = true;
 
     entities_add_component(entityManager,
@@ -24,15 +25,15 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
         entity);
 
     entities_add_component(entityManager,
-        (Component*)controller_component_new("player.ini", "player"),
+        (Component*)controller_component_new(entity, "player.ini", "player"),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)health_component_new(100000),
+        (Component*)health_component_new(entity, 100000),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(texture, 1),
+        (Component*)sprite_component_new(entity, texture, 1),
         entity);
 
     Collider collider;
@@ -45,7 +46,7 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
         112.f);
 
     entities_add_component(entityManager,
-        (Component*)collider_component_new(&collider),
+        (Component*)collider_component_new(entity, &collider),
         entity);
 
     return entity;
@@ -54,29 +55,29 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
 Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletConfig, ColliderConfig* colliderConfig, Vec2 position, SDL_Texture* texture) {
     Entity entity = entities_create_entity(entityManager);
 
-    TransformComponent* transform = transform_component_new(position, 0.f, vec2_one());
+    TransformComponent* transform = transform_component_new(entity, position, 0.f, vec2_one());
 
     entities_add_component(entityManager,
         (Component*)transform,
         entity);
 
     entities_add_component(entityManager,
-        (Component*)movement_component_new(vec2_zero(), 0.f),
+        (Component*)movement_component_new(entity, vec2_zero(), 0.f),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)bullet_controller_component_new(bulletConfig),
+        (Component*)bullet_controller_component_new(entity, bulletConfig),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(texture, 1),
+        (Component*)sprite_component_new(entity, texture, 1),
         entity);
 
     Collider collider;
     collider_init_config(&collider, entity, colliderConfig, transform);
 
     entities_add_component(entityManager,
-        (Component*)collider_component_new(&collider),
+        (Component*)collider_component_new(entity, &collider),
         entity);
 
     return entity;
@@ -86,11 +87,11 @@ Entity entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture)
     Entity entity = entities_create_entity(entityManager);
 
     entities_add_component(entityManager,
-        (Component*)transform_component_new(vec2_zero(), 0.f, vec2_one()),
+        (Component*)transform_component_new(entity, vec2_zero(), 0.f, vec2_one()),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(texture, 0),
+        (Component*)sprite_component_new(entity, texture, 0),
         entity);
 
     return entity;
@@ -100,7 +101,7 @@ Entity entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 th
     Entity entity = entities_create_entity(entityManager);
 
     entities_add_component(entityManager,
-        (Component*)bg_manager_component_new(twidth, theight),
+        (Component*)bg_manager_component_new(entity, twidth, theight),
         entity);
 
     return entity;
@@ -109,7 +110,8 @@ Entity entity_create_bg_manager(EntityManager* entityManager, u32 twidth, u32 th
 Entity entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
     Entity entity = entities_create_entity(entityManager);
 
-    TransformComponent* transform = transform_component_new(position,
+    TransformComponent* transform = transform_component_new(entity,
+        position,
         0.f,
         vec2_one());
 
@@ -118,19 +120,19 @@ Entity entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
         entity);
 
     entities_add_component(entityManager,
-        (Component*)movement_component_new(vec2_zero(), 0.f),
+        (Component*)movement_component_new(entity, vec2_zero(), 0.f),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)enemy_component_new(ENEMY_TYPE_BASIC),
+        (Component*)enemy_component_new(entity, ENEMY_TYPE_BASIC),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)health_component_new(100),
+        (Component*)health_component_new(entity, 100),
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(textures_get("enemy_red_1.png"), 1),
+        (Component*)sprite_component_new(entity, textures_get("enemy_red_1.png"), 1),
         entity);
 
     Collider collider;
@@ -143,7 +145,7 @@ Entity entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
         103.f);
 
     entities_add_component(entityManager,
-        (Component*)collider_component_new(&collider),
+        (Component*)collider_component_new(entity, &collider),
         entity);
 
     return entity;

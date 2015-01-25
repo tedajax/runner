@@ -10,7 +10,6 @@ void sprite_system_update(SpriteSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         SpriteComponent* sprite = (SpriteComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(sprite);
@@ -32,7 +31,7 @@ void sprite_system_render(SpriteSystem* self) {
 
         TransformComponent* transform = (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
-        ASSERT(transform && sprite, "Missing required component for sprite system.");
+        REQUIRED_COMPONENTS(transform, sprite);
 
         if (sprite->texture) {
             SDL_Rect dest;

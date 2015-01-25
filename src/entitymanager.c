@@ -110,10 +110,6 @@ EntityManager* entity_manager_new() {
 
 void entity_manager_free(EntityManager* self) {
     entities_remove_all_entities(self);
-    for (u32 i = 0; i < COMPONENT_LAST; ++i) {
-        //dict_clear(&self->componentsMap[i]);
-        // Todo component_list_free
-    }
     POOL_FREE(Entity)(&self->entities);
     free(self->entities.data);
     free(self);
@@ -194,7 +190,7 @@ void entities_remove_all_entities(EntityManager* self) {
     for (u32 i = 0; i < len; ++i) {
         Entity e = *POOL_GET(Entity)(&self->entities, i);
         if (e) {
-            entities_remove_entity(self, e);
+            entities_internal_remove_entity(self, e);
         }
     }
 }

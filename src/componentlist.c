@@ -106,8 +106,6 @@ i32 component_list_binary_search_worker(ComponentList* self, Entity entity, i32 
     while (imin < imax) {
         i32 imid = (imax + imin) / 2;
 
-        ASSERT(imid < imax, "Something has gone wrong!");
-
         if (self->components[imid]->entity < entity) {
             imin = imid + 1;
         } else {

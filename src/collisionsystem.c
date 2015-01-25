@@ -6,6 +6,7 @@ static bool layerMatrix[COLLIDER_LAYER_LAST][COLLIDER_LAYER_LAST];
 
 void collision_system_init(CollisionSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_COLLIDER);
+    SET_SYSTEM_COMPARISON(entityManager, self, collider_component_compare);
 
     _layer_matrix_set(COLLIDER_LAYER_PLAYER, COLLIDER_LAYER_ENEMY, true);
     _layer_matrix_set(COLLIDER_LAYER_PLAYER_PROJECTILE, COLLIDER_LAYER_ENEMY, true);

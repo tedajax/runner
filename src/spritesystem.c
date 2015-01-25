@@ -2,6 +2,7 @@
 
 void sprite_system_init(SpriteSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_SPRITE);
+    SET_SYSTEM_COMPARISON(entityManager, self, sprite_component_layer_compare);
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_DAMAGE, sprite_system_on_damage);
 }

@@ -4,43 +4,6 @@
 #include "collisionsystem.h"
 #include "aspectsystem.h"
 
-
-//typedef enum component_type_e {
-//    COMPONENT_INVALID,
-//
-//    COMPONENT_TRANSFORM,
-//    COMPONENT_MOVEMENT,
-//
-//    COMPONENT_CONTROLLER,
-//    COMPONENT_BULLET_CONTROLLER,
-//    COMPONENT_GRAVITY,
-//
-//    COMPONENT_HEALTH,
-//    COMPONENT_SPRITE,
-//
-//    COMPONENT_BG_MANAGER,
-//
-//    COMPONENT_ENEMY,
-//
-//    COMPONENT_COLLIDER,
-//
-//    COMPONENT_LAST,
-//} ComponentType;
-
-component_compare_f componentCompareFunctions[COMPONENT_LAST] = {
-    NULL,
-    component_entity_compare,
-    component_entity_compare,
-    component_entity_compare,
-    component_entity_compare,
-    component_entity_compare,
-    component_entity_compare,
-    sprite_component_layer_compare,
-    component_entity_compare,
-    component_entity_compare,
-    collider_component_compare
-};
-
 void entities_internal_remove_entity(EntityManager* self, Entity entity);
 void entities_internal_send_message(EntityManager* self, TargetedMessage message);
 
@@ -94,7 +57,7 @@ EntityManager* entity_manager_new() {
 
     POOL_INIT(Entity)(&self->entities, MAX_ENTITIES, 0);
     for (u32 i = 0; i < COMPONENT_LAST; ++i) {
-        component_list_init(&self->componentsMap[i], componentCompareFunctions[i]);
+        component_list_init(&self->componentsMap[i], component_entity_compare);
     }
     self->lowestEId = 1;
 
@@ -123,6 +86,11 @@ void entity_manager_register_system(EntityManager* self, AspectSystem* system) {
     ASSERT(self->systems[type] == NULL, "System of that type already registered!");
 
     self->systems[type] = system;
+}
+
+void entity_manager_set_system_compare_function(EntityManager* self, AspectSystem* system, component_compare_f compareFunc) {
+    ComponentType type = system->systemType;
+    self->componentsMap[type].compareFunc = compareFunc;
 }
 
 i32 entities_gen_entity_id(EntityManager* self) {

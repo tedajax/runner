@@ -99,10 +99,7 @@ EntityManager* entity_manager_new() {
     self->lowestEId = 1;
 
     for (u32 c = 0; c < COMPONENT_LAST; ++c) {
-        for (u32 i = 0; i < ENTITY_MANAGER_MAX_SYSTEM_COUNT; ++i) {
-            self->systems[c][i] = NULL;
-        }
-        self->systemCounts[c] = 0;
+        self->systems[c] = NULL;
     }
 
     entity_queue_init(&self->removeQueue);
@@ -127,11 +124,9 @@ void entity_manager_register_system(EntityManager* self, AspectSystem* system) {
     
     ComponentType type = system->systemType;
 
-    ASSERT(self->systemCounts[type] < ENTITY_MANAGER_MAX_SYSTEM_COUNT - 1, "");
+    ASSERT(self->systems[type] == NULL, "System of that type already registered!");
 
-    u32 count = self->systemCounts[type];
-    self->systems[type][count] = system;
-    ++self->systemCounts[type];
+    self->systems[type] = system;
 }
 
 i32 entities_gen_entity_id(EntityManager* self) {
@@ -169,8 +164,8 @@ void entities_internal_remove_entity(EntityManager* self, Entity entity) {
     msg.type = MESSAGE_ENTITY_REMOVED;
 
     for (u32 t = COMPONENT_INVALID + 1; t < COMPONENT_LAST; ++t) {
-        for (u32 i = 0; i < self->systemCounts[t]; ++i) {
-            aspect_system_send_message((AspectSystem*)self->systems[t][i],
+        if (self->systems[t]) {
+            aspect_system_send_message((AspectSystem*)self->systems[t],
                 entity,
                 msg);
         }
@@ -256,8 +251,8 @@ void entities_internal_send_message(EntityManager* self, TargetedMessage message
             continue;
         }
 
-        for (u32 i = 0; i < self->systemCounts[type]; ++i) {
-            aspect_system_send_message((AspectSystem*)self->systems[type][i],
+        if (self->systems[type]) {
+            aspect_system_send_message((AspectSystem*)self->systems[type],
                 message.target,
                 message.message);
         }

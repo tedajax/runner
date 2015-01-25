@@ -34,15 +34,13 @@ void entity_list_init(EntityList* self, u32 capacity);
 void entity_list_resize(EntityList* self, u32 capacity);
 void entity_list_free(EntityList* self);
 
-#define ENTITY_MANAGER_MESSAGE_QUEUE_CAPACITY 100
-#define ENTITY_MANAGER_MAX_SYSTEM_COUNT 5
+#define ENTITY_MANAGER_MESSAGE_QUEUE_CAPACITY 128
 
 POOL_REGISTER(Entity);
 
 typedef struct entity_manager_t {
     POOL(Entity) entities;
-    AspectSystem* systems[COMPONENT_LAST][ENTITY_MANAGER_MAX_SYSTEM_COUNT];
-    u32 systemCounts[COMPONENT_LAST];
+    AspectSystem* systems[COMPONENT_LAST];
     ComponentList componentsMap[COMPONENT_LAST];
     i32 lowestEId;
     EntityQueue removeQueue;

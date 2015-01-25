@@ -1,5 +1,6 @@
 #include "entitymanager.h"
 #include "collidercomponent.h"
+#include "spritecomponent.h"
 #include "collisionsystem.h"
 #include "aspectsystem.h"
 
@@ -34,7 +35,7 @@ component_compare_f componentCompareFunctions[COMPONENT_LAST] = {
     component_entity_compare,
     component_entity_compare,
     component_entity_compare,
-    component_entity_compare,
+    sprite_component_layer_compare,
     component_entity_compare,
     component_entity_compare,
     collider_component_compare

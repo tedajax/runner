@@ -21,8 +21,7 @@ void game_init(Game* self) {
 
     self->entityManager = entity_manager_new();
     health_system_init(&self->healthSystem, self->entityManager);
-    sprite_system_init(&self->spriteSystem, self->entityManager, 1);
-    sprite_system_init(&self->backgroundSpriteSystem, self->entityManager, 0);
+    sprite_system_init(&self->spriteSystem, self->entityManager);
     movement_system_init(&self->movementSystem, self->entityManager);
     gravity_system_init(&self->gravitySystem, self->entityManager);
     controller_system_init(&self->controllerSystem, self->entityManager);
@@ -108,7 +107,6 @@ void game_start(Game* self) {
 
 void game_update(Game* self) {
     health_system_update(&self->healthSystem);
-    sprite_system_update(&self->backgroundSpriteSystem);
     sprite_system_update(&self->spriteSystem);
     controller_system_update(&self->controllerSystem);
     bullet_controller_system_update(&self->bulletControllerSystem);
@@ -156,7 +154,6 @@ void game_debug_keys(Game* self) {
 }
 
 void game_render(Game* self) {
-    sprite_system_render(&self->backgroundSpriteSystem);
     sprite_system_render(&self->spriteSystem);
     if (drawCollision) {
         collision_system_render(&self->collisionSystem);

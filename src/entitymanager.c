@@ -3,24 +3,41 @@
 #include "collisionsystem.h"
 #include "aspectsystem.h"
 
+
+//typedef enum component_type_e {
+//    COMPONENT_INVALID,
+//
+//    COMPONENT_TRANSFORM,
+//    COMPONENT_MOVEMENT,
+//
+//    COMPONENT_CONTROLLER,
+//    COMPONENT_BULLET_CONTROLLER,
+//    COMPONENT_GRAVITY,
+//
+//    COMPONENT_HEALTH,
+//    COMPONENT_SPRITE,
+//
+//    COMPONENT_BG_MANAGER,
+//
+//    COMPONENT_ENEMY,
+//
+//    COMPONENT_COLLIDER,
+//
+//    COMPONENT_LAST,
+//} ComponentType;
+
 component_compare_f componentCompareFunctions[COMPONENT_LAST] = {
     NULL,
-
-    component_entity_compare,
-    component_entity_compare,
-
     component_entity_compare,
     component_entity_compare,
     component_entity_compare,
-
     component_entity_compare,
     component_entity_compare,
-
     component_entity_compare,
-
     component_entity_compare,
-
-    collider_compare
+    component_entity_compare,
+    component_entity_compare,
+    collider_component_compare
 };
 
 void entities_internal_remove_entity(EntityManager* self, Entity entity);

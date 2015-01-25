@@ -1,8 +1,7 @@
 #include "spritesystem.h"
 
-void sprite_system_init(SpriteSystem* self, EntityManager* entityManager, u32 layer) {
+void sprite_system_init(SpriteSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_SPRITE);
-    self->layer = layer;
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_DAMAGE, sprite_system_on_damage);
 }
@@ -16,10 +15,6 @@ void sprite_system_update(SpriteSystem* self) {
 
         REQUIRED_COMPONENTS(sprite);
 
-        if (sprite->layer != self->layer) {
-            continue;
-        }
-
         if (sprite->redTimer > 0.f) {
             sprite->redTimer -= globals.time.delta;
         }
@@ -29,6 +24,8 @@ void sprite_system_update(SpriteSystem* self) {
 void sprite_system_render(SpriteSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
+    component_list_insertion_sort(components);
+
     for (u32 i = 0; i < components->count; ++i) {
         Entity entity = GET_ENTITY(i);
         SpriteComponent* sprite = (SpriteComponent*)GET_SYSTEM_COMPONENT(i);
@@ -36,10 +33,6 @@ void sprite_system_render(SpriteSystem* self) {
         TransformComponent* transform = (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
         ASSERT(transform && sprite, "Missing required component for sprite system.");
-
-        if (sprite->layer != self->layer) {
-            continue;
-        }
 
         if (sprite->texture) {
             SDL_Rect dest;

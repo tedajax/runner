@@ -91,7 +91,7 @@ Entity entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture)
         entity);
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(entity, texture, 0),
+        (Component*)sprite_component_new(entity, texture, -10),
         entity);
 
     return entity;

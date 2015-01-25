@@ -11,6 +11,6 @@ typedef struct collider_component_t {
 } ColliderComponent;
 
 ColliderComponent* collider_component_new(Entity entity, Collider* collider);
-int collider_compare(Component* c1, Component* c2);
+int collider_component_compare(Component* c1, Component* c2);
 
 #endif

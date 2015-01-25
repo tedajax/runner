@@ -1,6 +1,6 @@
 #include "spritecomponent.h"
 
-SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, u32 layer) {
+SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, i32 layer) {
     SpriteComponent* self = (SpriteComponent*)calloc(1, sizeof(SpriteComponent));
 
     component_init((Component*)self, COMPONENT_SPRITE, entity);
@@ -41,4 +41,8 @@ void sprite_component_on_collision_enter(Component* component, Message message) 
     SpriteComponent* self = (SpriteComponent*)component;
     
     self->redTimer = 0.05f;
+}
+
+int sprite_component_layer_compare(Component* c1, Component* c2) {
+    return ((SpriteComponent*)c1)->layer - ((SpriteComponent*)c2)->layer;
 }

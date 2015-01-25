@@ -20,41 +20,18 @@
             comptype,                           \
             entity);
 
-#define REQUIRED_COMPONENTS9(_1, _2, _3, _4, _5, _6, _7, _8, _9) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3 && _4 && _5 && _6 && _7 && _8 && _9, "Entity does not have required components.");    \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS8(_1, _2, _3, _4, _5, _6, _7, _8) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3 && _4 && _5 && _6 && _7 && _8, "Entity does not have required components.");      \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS7(_1, _2, _3, _4, _5, _6, _7) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3 && _4 && _5 && _6 && _7, "Entity does not have required components.");        \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS6(_1, _2, _3, _4, _5, _6) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3 && _4 && _5 && _6, "Entity does not have required components.");          \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS5(_1, _2, _3, _4, _5) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3 && _4 && _5, "Entity does not have required components.");            \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS4(_1, _2, _3, _4) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3 && _4, "Entity does not have required components.");              \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS3(_1, _2, _3) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2 && _3, "Entity does not have required components.");                \
-    MULTILINE_MACRO_END()
-
-#define REQUIRED_COMPONENTS2(_1, _2) MULTILINE_MACRO_BEGIN()                        \
-    ASSERT(_1 && _2, "Entity does not have required components.");                  \
-    MULTILINE_MACRO_END()
-
 #define REQUIRED_COMPONENTS1(_1) MULTILINE_MACRO_BEGIN()                        \
     ASSERT(_1, "Entity does not have required components.");                    \
     MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS2(_1, _2) REQUIRED_COMPONENTS1(_1 && _2)
+#define REQUIRED_COMPONENTS3(_1, _2, _3) REQUIRED_COMPONENTS1(_1 && _2 && _3)
+#define REQUIRED_COMPONENTS4(_1, _2, _3, _4) REQUIRED_COMPONENTS1(_1 && _2 && _3 && _4)
+#define REQUIRED_COMPONENTS5(_1, _2, _3, _4, _5) REQUIRED_COMPONENTS1(_1 && _2 && _3 && _4 && _5)
+#define REQUIRED_COMPONENTS6(_1, _2, _3, _4, _5, _6) REQUIRED_COMPONENTS1(_1 && _2 && _3 && _4 && _5 && _6)
+#define REQUIRED_COMPONENTS7(_1, _2, _3, _4, _5, _6, _7) REQUIRED_COMPONENTS1(_1 && _2 && _3 && _4 && _5 && _6 && _7)
+#define REQUIRED_COMPONENTS8(_1, _2, _3, _4, _5, _6, _7, _8) REQUIRED_COMPONENTS1(_1 && _2 && _3 && _4 && _5 && _6 && _7 && _8)
+#define REQUIRED_COMPONENTS9(_1, _2, _3, _4, _5, _6, _7, _8, _9) REQUIRED_COMPONENTS1(_1 && _2 && _3 && _4 && _5 && _6 && _7 && _8 && _9)
 
 #define GET_REQUIRED_COMPONENTS_MACRO(_1, _2, _3, _4, _5, _6, _7, _8, _9, NAME, ...) NAME
 

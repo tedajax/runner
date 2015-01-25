@@ -15,7 +15,7 @@ void movement_system_update(MovementSystem* self) {
         TransformComponent* transform =
             (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
-        REQUIRED_COMPONENTS(transform && movement);
+        REQUIRED_COMPONENTS(transform, movement);
 
         Vec2 timeVel;
         vec2_scale(&movement->velocity, globals.time.delta, &timeVel);

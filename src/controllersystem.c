@@ -20,7 +20,7 @@ void controller_system_update(ControllerSystem* self) {
         TransformComponent* transform =
             (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
 
-        REQUIRED_COMPONENTS(transform && movement && controller);
+        REQUIRED_COMPONENTS(transform, movement, controller);
 
         f32 x = 0;
         f32 y = 0;

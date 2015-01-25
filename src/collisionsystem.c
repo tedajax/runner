@@ -47,8 +47,6 @@ void collision_system_update(CollisionSystem* self) {
 
     profiler_tick("collision_update_colliders");
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
-
         ColliderComponent* collider =
             (ColliderComponent*)GET_SYSTEM_COMPONENT(i);
 
@@ -71,8 +69,6 @@ void collision_system_update(CollisionSystem* self) {
 
     profiler_tick("collision_comparisons");
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
-
         ColliderComponent* cc1 =
             (ColliderComponent*)GET_SYSTEM_COMPONENT(i);
 
@@ -148,87 +144,12 @@ void collision_system_update(CollisionSystem* self) {
         }
     }
     profiler_tock("collision_comparisons");
-
-    //for (u32 i = 0; i < entities->size - 1; ++i) {
-    //    Entity e1 = entities->list[i];
-
-    //    ColliderComponent* cc1 =
-    //        (ColliderComponent*)GET_COMPONENT(e1, COMPONENT_COLLIDER);
-
-    //    Collider* c1 = &cc1->collider;
-
-    //    // Generate new id for new collision systems
-    //    if (c1->colliderId < 0) {
-    //        c1->colliderId = collision_system_gen_id(self);
-    //    }
-
-    //    if (!collider_on_screen(c1)) {
-    //        continue;
-    //    }
-
-    //    for (u32 j = i + 1; j < entities->size; ++j) {
-    //        Entity e2 = entities->list[j];
-
-    //        ColliderComponent* cc2 =
-    //            (ColliderComponent*)GET_COMPONENT(e2, COMPONENT_COLLIDER);
-    //        
-    //        Collider* c2 = &cc2->collider;
-
-    //        if (c2->colliderId < 0) {
-    //            c2->colliderId = collision_system_gen_id(self);
-    //        }
-
-    //        if (!collider_on_screen(c2)) {
-    //            continue;
-    //        }
-
-    //        if (!layerMatrix[c1->layer][c2->layer]) {
-    //            continue;
-    //        }
-
-    //        Message msg1;
-    //        msg1.params[0] = &e2;
-
-    //        Message msg2;
-    //        msg2.params[0] = &e1;
-
-    //        if (collider_is_colliding(c1, c2)) {
-    //            bool inContact = collider_in_contact(c1, c2);
-
-    //            if (!inContact) {
-    //                collider_set_in_contact(c1, c2, true);
-    //                msg1.type = MESSAGE_ON_COLLISION_ENTER;
-    //                msg2.type = MESSAGE_ON_COLLISION_ENTER;
-    //                entities_send_message(self->super.entityManager, e1, msg1);
-    //                entities_send_message(self->super.entityManager, e2, msg2);
-    //            } else {
-    //                msg1.type = MESSAGE_ON_COLLISION_STAY;
-    //                msg2.type = MESSAGE_ON_COLLISION_STAY;
-    //                entities_send_message(self->super.entityManager, e1, msg1);
-    //                entities_send_message(self->super.entityManager, e2, msg2);
-    //            }
-    //        } else {
-    //            bool inContact = collider_in_contact(c1, c2);
-
-    //            if (inContact) {
-    //                collider_set_in_contact(c1, c2, false);
-
-    //                msg1.type = MESSAGE_ON_COLLISION_EXIT;
-    //                msg2.type = MESSAGE_ON_COLLISION_EXIT;
-    //                entities_send_message(self->super.entityManager, e1, msg1);
-    //                entities_send_message(self->super.entityManager, e2, msg2);
-    //            }
-    //        }
-    //    }
-    //}
 }
 
 void collision_system_render(CollisionSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
-
         ColliderComponent* collider =
             (ColliderComponent*)GET_SYSTEM_COMPONENT(i);
 

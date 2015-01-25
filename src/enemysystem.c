@@ -27,7 +27,7 @@ void enemy_update(EnemySystem* self, EnemyComponent* enemy, TransformComponent* 
     MovementComponent* movement =
         (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
-    REQUIRED_COMPONENTS(enemy && transform && movement);
+    REQUIRED_COMPONENTS(enemy, transform, movement);
     
     switch (enemy->enemyType) {
         default:

@@ -20,7 +20,7 @@ void bullet_controller_system_update(BulletControllerSystem* self) {
 
         MovementComponent* movement = (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
-        REQUIRED_COMPONENTS(transform && movement && bullet);
+        REQUIRED_COMPONENTS(transform, movement, bullet);
 
         transform->position.x += globals.scrollSpeed * globals.time.delta;
 

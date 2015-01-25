@@ -12,7 +12,7 @@ else
 	POST_BUILD =
 endif
 
-MODE = DEBUG
+MODE = RELEASE
 
 ifeq ($(MODE),DEBUG)
     DEBUG_FLAGS = -g -DDEBUG

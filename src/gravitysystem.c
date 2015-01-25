@@ -14,7 +14,7 @@ void gravity_system_update(GravitySystem* self) {
 
         MovementComponent* movement = (MovementComponent*)GET_COMPONENT(entity, COMPONENT_MOVEMENT);
 
-        REQUIRED_COMPONENTS(gravity && movement);
+        REQUIRED_COMPONENTS(gravity, movement);
 
         Vec2 gravScale;
         vec2_copy_to(&gravity->gravAccel, &gravScale);

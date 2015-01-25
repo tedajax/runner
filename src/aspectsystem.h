@@ -37,9 +37,51 @@
     #define GET_COMPONENT(...) GET_GET_COMPONENT_MACRO(__VA_ARGS__, GET_COMPONENT3, GET_COMPONENT2, GET_COMPONENT1)(__VA_ARGS__)
 #endif
 
-#define REQUIRED_COMPONENTS(compexpr) MULTILINE_MACRO_BEGIN()                 \
-    ASSERT(compexpr, "Entity does not have required components."); \
+#define REQUIRED_COMPONENTS9(_1, _2, _3, _4, _5, _6, _7, _8, _9) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3 && _4 && _5 && _6 && _7 && _8 && _9, "Entity does not have required components.");    \
     MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS8(_1, _2, _3, _4, _5, _6, _7, _8) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3 && _4 && _5 && _6 && _7 && _8, "Entity does not have required components.");      \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS7(_1, _2, _3, _4, _5, _6, _7) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3 && _4 && _5 && _6 && _7, "Entity does not have required components.");        \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS6(_1, _2, _3, _4, _5, _6) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3 && _4 && _5 && _6, "Entity does not have required components.");          \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS5(_1, _2, _3, _4, _5) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3 && _4 && _5, "Entity does not have required components.");            \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS4(_1, _2, _3, _4) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3 && _4, "Entity does not have required components.");              \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS3(_1, _2, _3) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2 && _3, "Entity does not have required components.");                \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS2(_1, _2) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1 && _2, "Entity does not have required components.");                  \
+    MULTILINE_MACRO_END()
+
+#define REQUIRED_COMPONENTS1(_1) MULTILINE_MACRO_BEGIN()                        \
+    ASSERT(_1, "Entity does not have required components.");                    \
+    MULTILINE_MACRO_END()
+
+#define GET_REQUIRED_COMPONENTS_MACRO(_1, _2, _3, _4, _5, _6, _7, _8, _9, NAME, ...) NAME
+
+#ifdef _MSC_VER
+    // Microsoft is retarded and decided that their implementation of __VA_ARGS__ is correct
+    // despite all other compilers doing exactly the opposite of what they do so we have to do this stupid work around.
+    #define REQUIRED_COMPONENTS(...) EXPAND(GET_REQUIRED_COMPONENTS_MACRO(__VA_ARGS__, REQUIRED_COMPONENTS9, REQUIRED_COMPONENTS8, REQUIRED_COMPONENTS7, REQUIRED_COMPONENTS6, REQUIRED_COMPONENTS5, REQUIRED_COMPONENTS4, REQUIRED_COMPONENTS3, REQUIRED_COMPONENTS2, REQUIRED_COMPONENTS1))EXPAND((__VA_ARGS__))
+#else
+    #define REQUIRED_COMPONENTS(...) GET_REQUIRED_COMPONENTS_MACRO(__VA_ARGS__, REQUIRED_COMPONENTS9, REQUIRED_COMPONENTS8, REQUIRED_COMPONENTS7, REQUIRED_COMPONENTS6, REQUIRED_COMPONENTS5, REQUIRED_COMPONENTS4, REQUIRED_COMPONENTS3, REQUIRED_COMPONENTS2, REQUIRED_COMPONENTS1)(__VA_ARGS__)
+#endif
 
 #define REGISTER_SYSTEM_HANDLER(type, func) \
     ((AspectSystem*)self)->handlers[type] = func

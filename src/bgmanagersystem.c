@@ -8,7 +8,6 @@ void bg_manager_system_start(BgManagerSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         BgManagerComponent* bg = (BgManagerComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(bg);
@@ -28,7 +27,6 @@ void bg_manager_system_update(BgManagerSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         BgManagerComponent* bg = (BgManagerComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(bg);

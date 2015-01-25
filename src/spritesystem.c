@@ -14,9 +14,7 @@ void sprite_system_update(SpriteSystem* self) {
         Entity entity = GET_ENTITY(i);
         SpriteComponent* sprite = (SpriteComponent*)GET_SYSTEM_COMPONENT(i);
 
-        TransformComponent* transform = (TransformComponent*)GET_COMPONENT(entity, COMPONENT_TRANSFORM);
-
-        REQUIRED_COMPONENTS(transform && sprite);
+        REQUIRED_COMPONENTS(sprite);
 
         if (sprite->layer != self->layer) {
             continue;

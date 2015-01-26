@@ -229,10 +229,10 @@ void rect_copy_to(const Rect* source, Rect* dest) {
 }
 
 void rect_to_sdl_rect(const Rect* source, SDL_Rect* dest) {
-    dest->x = (i16)source->position.x;
-    dest->y = (i16)source->position.y;
-    dest->w = (i16)source->width;
-    dest->h = (i16)source->height;
+    dest->x = (int)source->position.x;
+    dest->y = (int)source->position.y;
+    dest->w = (int)source->width;
+    dest->h = (int)source->height;
 }
 
 bool rect_contains(const Rect* self, const Vec2* point) {

@@ -79,7 +79,7 @@ void collision_system_update(CollisionSystem* self) {
             continue;
         }
 
-        f32 right = rect_right(&c1->volume->bounds);
+        f32 right = rect_right(&c1->volume->bounds) + COLLISION_RANGE_FUDGE;
         u32 j = i + 1;
         while (j < components->count) {
             ColliderComponent* cc2 =
@@ -87,7 +87,7 @@ void collision_system_update(CollisionSystem* self) {
 
             Collider* c2 = &cc2->collider;
 
-            if (rect_left(&c2->volume->bounds) > right) {
+            if (rect_left(&c2->volume->bounds) - COLLISION_RANGE_FUDGE > right) {
                 break;
             }
 

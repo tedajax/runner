@@ -108,7 +108,7 @@ void entities_add_component(EntityManager* self, Component* component, Entity en
     ASSERT(component->type > COMPONENT_INVALID && component->type < COMPONENT_LAST,
         "Invalid component, did you remember to set the component type in the component constructor?");
 
-    component_list_insert(&self->componentsMap[component->type], component);
+    component_list_append(&self->componentsMap[component->type], component);
 }
 
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity) {

@@ -16,32 +16,6 @@ void component_list_append(ComponentList* self, Component* component) {
     ++self->count;
 }
 
-void component_list_insert(ComponentList* self, Component* component) {
-    ASSERT(self->count < MAX_ENTITIES, "Maximum component count reached.");
-
-    if (self->compareFunc != component_entity_compare) {
-        component_list_append(self, component);
-        return;
-    }
-
-    for (u32 i = 0; i < self->count; ++i) {
-        int cmp = self->compareFunc(component, self->components[i]);
-        if (cmp == 0) {
-            ASSERT(false, "This entity already has this type of component.");
-        } else if (cmp < 0) {
-            u32 index = (i > 0) ? i - 1 : 0;
-            for (u32 j = self->count; j >= index + 1; --j) {
-                self->components[j] = self->components[j - 1];
-            }
-            self->components[index] = component;
-            ++self->count;
-            return;
-        }
-    }
-
-    component_list_append(self, component);
-}
-
 Component* component_list_get(ComponentList* self, Entity entity) {
     if (self->compareFunc == component_entity_compare) {
         return component_list_get_binary_search(self, entity);

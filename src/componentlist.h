@@ -14,7 +14,6 @@ typedef struct component_list_t {
 
 void component_list_init(ComponentList* self, component_compare_f compareFunc);
 void component_list_append(ComponentList* self, Component* component);
-void component_list_insert(ComponentList* self, Component* component);
 Component* component_list_get(ComponentList* self, Entity entity);
 i32 component_list_get_index(ComponentList* self, Entity entity);
 Component* component_list_get_at(ComponentList* self, u32 index);

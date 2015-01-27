@@ -21,8 +21,6 @@ typedef struct game_t {
     CollisionSystem collisionSystem;
     Entity player;
 
-    EntityList entities;
-
     DebugHud debugHud;
 } Game;
 

@@ -61,13 +61,6 @@ void game_init(Game* self) {
 
     globals.player = self->player;
 
-    entity_list_init(&self->entities, 8192);
-
-    //TransformComponent* playerTransform =
-    //    (TransformComponent*)entities_get_component(self->entityManager,
-    //        COMPONENT_TRANSFORM,
-    //        self->player);
-
     SDL_Rect cameraConstraints = {
         32,
         32,
@@ -103,7 +96,6 @@ void game_init(Game* self) {
 }
 
 void game_quit(Game* self) {
-    entity_list_free(&self->entities);
     entity_manager_free(self->entityManager);
     debug_hud_free(&self->debugHud);
 }

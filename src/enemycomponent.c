@@ -7,6 +7,7 @@ EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType) {
 
     self->enemyType = enemyType;
     self->state = 0;
+    self->destroyFlag = false;
 
     return self;
 }

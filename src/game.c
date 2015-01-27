@@ -76,22 +76,30 @@ void game_init(Game* self) {
     };
 
     for (u32 i = 0; i < 500; ++i) {
-        entity_create_basic_enemy(self->entityManager, vec2_init(i * 500.f + 1500.f, randf((f32)globals.world.height - 100.f)));
+        entity_create_basic_enemy(self->entityManager, vec2_init(i * 100.f, randf((f32)globals.world.height - 100.f)));
     }
 
     camera_init(&globals.camera, NULL, &cameraConstraints);
 
-    debug_hud_init(&self->debugHud, "assets/fonts/terminus.ttf", 12);
-    DebugHudWatch* fpsWatch = debug_hud_add_watch(&self->debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
+    {
+        debug_hud_init(&self->debugHud, "assets/fonts/terminus.ttf", 12);
+
+        DebugHudWatch* fpsWatch = debug_hud_add_watch(&self->debugHud, "FPS", WATCH_TYPE_INT, &globals.time.fps);
         debug_hud_watch_set_warnings(fpsWatch, false, 120, 60);
-    DebugHudWatch* frameTimeWatch = debug_hud_add_watch(&self->debugHud, "Frame MS", WATCH_TYPE_INT, &globals.time.per_frame_ms);
+
+        DebugHudWatch* frameTimeWatch = debug_hud_add_watch(&self->debugHud, "Frame MS", WATCH_TYPE_INT, &globals.time.per_frame_ms);
         debug_hud_watch_set_warnings(frameTimeWatch, true, 14, 16);
-    debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
-    DebugHudWatch* entityWatch = debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.count);
+
+        debug_hud_add_watch(&self->debugHud, "Timescale", WATCH_TYPE_FLOAT, &globals.time.timescale);
+
+        DebugHudWatch* entityWatch = debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.count);
         debug_hud_watch_set_warnings(entityWatch, true, 900, 1000);
-    debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
-    DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
+
+        debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
+
+        DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
         debug_hud_watch_set_warnings(tweenWatch, true, 2500, 4000);
+    }
 }
 
 void game_quit(Game* self) {
@@ -106,6 +114,8 @@ void game_start(Game* self) {
 }
 
 void game_update(Game* self) {
+    globals.gamePosition += globals.scrollSpeed * globals.time.delta;
+
     health_system_update(&self->healthSystem);
     sprite_system_update(&self->spriteSystem);
     controller_system_update(&self->controllerSystem);

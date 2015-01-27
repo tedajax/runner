@@ -16,6 +16,7 @@ typedef struct enemy_component_t {
     Component super;
     EnemyType enemyType;
     i32 state;
+    bool destroyFlag;
 } EnemyComponent;
 
 EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType);

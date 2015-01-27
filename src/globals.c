@@ -39,6 +39,7 @@ void globals_config(const char* configName) {
     globals.world.height = (u32)config_try_get_int(config, "world", "height", 720);
 
     globals.scrollSpeed = config_try_get_float(config, "game", "scroll_speed", 0.f);
+    globals.gamePosition = 0.f;
 
     tween_manager_init(&globals.tweens, 4192);
 }

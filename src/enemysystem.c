@@ -44,6 +44,10 @@ void enemy_update(EnemySystem* self, EnemyComponent* enemy, TransformComponent* 
                     }
                     break;
             }
+
+            if (transform->position.x < globals.levelPosition - 256.f) {
+                enemy->destroyFlag = true;
+            }
             break;
     }
 

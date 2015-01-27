@@ -92,3 +92,9 @@ void tween_config_deserialize(TypeConfig* super, Config* config, char* table) {
     self->timescale = config_try_get_float(config, table, "timescale", 1.f);
     self->loops = config_try_get_int(config, table, "loops", TWEEN_LOOP_INFINITE);
 }
+
+void level_config_deserialize(TypeConfig* super, Config* config, char* table) {
+    LevelConfig* self = (LevelConfig*)super;
+
+    self->remove_this_later = 0;
+}

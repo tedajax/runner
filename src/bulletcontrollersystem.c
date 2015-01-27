@@ -36,14 +36,14 @@ void bullet_controller_system_update(BulletControllerSystem* self) {
         bullet->lifeTimer -= globals.time.delta;
 
         if (bullet->lifeTimer <= 0) {
-            bullet->destroy = true;
+            bullet->destroyFlag = true;
         }
 
         if (transform->position.x > globals.camera.position.x + globals.world.width) {
-            bullet->destroy = true;
+            bullet->destroyFlag = true;
         }
 
-        if (bullet->destroy) {
+        if (bullet->destroyFlag) {
             entities_remove_entity(self->super.entityManager, entity);
         }
     }
@@ -57,7 +57,7 @@ void bullet_controller_system_on_collision_enter(AspectSystem* system, Entity en
 
     REQUIRED_COMPONENTS(bullet);
 
-    bullet->destroy = true;
+    bullet->destroyFlag = true;
 
     i32 damage = bullet->config.damage;
 

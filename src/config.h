@@ -74,6 +74,7 @@ CONFIG_REGISTER_TYPE_NAMED(char*, string);
 CONFIG_REGISTER_TYPE_NAMED(ColliderConfig*, ColliderConfig);
 CONFIG_REGISTER_TYPE_NAMED(BulletSourceConfig*, BulletSourceConfig);
 CONFIG_REGISTER_TYPE_NAMED(TweenConfig*, TweenConfig);
+CONFIG_REGISTER_TYPE_NAMED(LevelConfig*, LevelConfig);
 
 #define CONFIG_GET_KEY(charptr, data, section, key, index) \
     charptr = ini_get_string_at(data, section, key, index);

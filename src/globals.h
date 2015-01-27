@@ -48,7 +48,7 @@ typedef struct globals {
     TweenManager tweens;
 
     f32 scrollSpeed;
-    f32 gamePosition;
+    f32 levelPosition;
 
     Game* game;
 } Globals;

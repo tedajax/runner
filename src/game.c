@@ -106,7 +106,7 @@ void game_start(Game* self) {
 }
 
 void game_update(Game* self) {
-    globals.gamePosition += globals.scrollSpeed * globals.time.delta;
+    globals.levelPosition += globals.scrollSpeed * globals.time.delta;
 
     health_system_update(&self->healthSystem);
     sprite_system_update(&self->spriteSystem);

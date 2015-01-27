@@ -53,8 +53,7 @@ void camera_update(Camera* self) {
         self->position.y = self->target->y - (self->constraints.y + self->constraints.h);
     }*/
 
-    self->position.x = globals.gamePosition;
-    //self->position.x += globals.scrollSpeed * globals.time.delta;
+    self->position.x = globals.levelPosition;
 
     rect_set(&self->worldView, &self->position,
         (f32)globals.world.width,

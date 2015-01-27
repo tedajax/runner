@@ -11,7 +11,7 @@ BulletControllerComponent* bullet_controller_component_new(Entity entity, Bullet
     self->angle = self->config.angle;
     self->baseAngle = self->config.baseAngle;
     self->lifeTimer = self->config.lifetime;
-    self->destroy = false;
+    self->destroyFlag = false;
 
     dynf32_copy(&self->config.speed, &self->speed);
     dynf32_copy(&self->config.angle, &self->angle);
@@ -24,5 +24,5 @@ BulletControllerComponent* bullet_controller_component_new(Entity entity, Bullet
 
 void bullet_controller_on_collision_enter(Component* component, Message message) {
     BulletControllerComponent* self = (BulletControllerComponent*)component;
-    self->destroy = true;
+    self->destroyFlag = true;
 }

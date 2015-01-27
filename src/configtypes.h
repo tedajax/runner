@@ -79,4 +79,10 @@ typedef struct tween_config_t {
 
 void tween_config_deserialize(TypeConfig* super, Config* config, char* table);
 
+typedef struct level_config_t {
+    u8 remove_this_later;
+} LevelConfig;
+
+void level_config_deserialize(TypeConfig* super, Config* config, char* table);
+
 #endif

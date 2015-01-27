@@ -20,7 +20,7 @@ typedef struct bullet_controller_component_t {
     dynf32 angle;
     f32 baseAngle;
     f32 lifeTimer;
-    bool destroy;
+    bool destroyFlag;
 } BulletControllerComponent;
 
 BulletControllerComponent* bullet_controller_component_new(Entity entity, BulletConfig* config);

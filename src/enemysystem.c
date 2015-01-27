@@ -51,10 +51,6 @@ void enemy_update(EnemySystem* self, EnemyComponent* enemy, TransformComponent* 
             break;
     }
 
-    if (transform->position.x < globals.gamePosition - 256.f) {
-        enemy->destroyFlag = true;
-    }
-
     if (enemy->destroyFlag) {
         entities_remove_entity(self->super.entityManager, entity);
     }

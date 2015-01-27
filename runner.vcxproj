@@ -279,6 +279,7 @@
     <ClInclude Include="src\ini.h" />
     <ClInclude Include="src\inline.h" />
     <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\levelcontroller.h" />
     <ClInclude Include="src\list.h" />
     <ClInclude Include="src\log.h" />
     <ClInclude Include="src\messaging.h" />

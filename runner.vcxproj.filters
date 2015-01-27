@@ -265,7 +265,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\componentlist.c">
-      <Filter>Source Files\Game\Components</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,7 +465,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\componentlist.h">
-      <Filter>Header Files\Game\Components</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\levelcontroller.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

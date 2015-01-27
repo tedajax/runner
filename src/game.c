@@ -9,7 +9,7 @@ void game_debug_keys(Game* self);
 void game_init(Game* self) {  
     globals.game = self;
 
-    textures_init("assets");
+    textures_init("assets/textures");
 
     textures_load("player_ship.png");
     textures_load("player_bullet_1.png");

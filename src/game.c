@@ -68,7 +68,7 @@ void game_init(Game* self) {
         563
     };
 
-    for (u32 i = 0; i < 500; ++i) {
+    for (u32 i = 0; i < 50; ++i) {
         entity_create_basic_enemy(self->entityManager, vec2_init(i * 100.f, randf((f32)globals.world.height - 100.f)));
     }
 
@@ -88,7 +88,7 @@ void game_init(Game* self) {
         DebugHudWatch* entityWatch = debug_hud_add_watch(&self->debugHud, "Entities", WATCH_TYPE_INT, &self->entityManager->entities.count);
         debug_hud_watch_set_warnings(entityWatch, true, 900, 1000);
 
-        debug_hud_add_watch(&self->debugHud, "Camera X", WATCH_TYPE_FLOAT, &globals.camera.position.x);
+        debug_hud_add_watch(&self->debugHud, "Level Position", WATCH_TYPE_FLOAT, &globals.levelPosition);
 
         DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
         debug_hud_watch_set_warnings(tweenWatch, true, 2500, 4000);

@@ -9,6 +9,8 @@ void collision_system_init(CollisionSystem* self, EntityManager* entityManager) 
     SET_SYSTEM_COMPARISON(entityManager, self, collider_component_compare);
 
     _layer_matrix_set(COLLIDER_LAYER_PLAYER, COLLIDER_LAYER_ENEMY, true);
+    _layer_matrix_set(COLLIDER_LAYER_PLAYER, COLLIDER_LAYER_TRIGGERS, true);
+    _layer_matrix_set(COLLIDER_LAYER_PLAYER, COLLIDER_LAYER_ENEMY_PROJECTILE, true);
     _layer_matrix_set(COLLIDER_LAYER_PLAYER_PROJECTILE, COLLIDER_LAYER_ENEMY, true);
 
     self->currentId = 0;

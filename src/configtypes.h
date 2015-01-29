@@ -50,8 +50,9 @@ typedef struct bullet_source_config_t {
     TypeConfig super;
     Vec2 offset;		// offset from parent
     i32 count;          // how many bullets to fire from this source
-    i32 burstCount;     // number of shots fired in a burst (defaults to 1)
-    dynf32 burstDelay;     // amount of time between shots in burst (defaults to 0)
+    i32 burstShotCount;     // number of shots fired in a burst (defaults to 1)
+    i32 burstCount;         // number of bursts fired before requiring a release of fire button.
+    dynf32 burstShotDelay;     // amount of time between shots in burst (defaults to 0)
     dynf32 spread;         // the spread angle of this source
     dynf32 lifetime;       // how long the bullet lives before they are destroyed
     dynf32 speed;          // how fast the bullet moves

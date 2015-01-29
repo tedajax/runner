@@ -82,6 +82,9 @@
     <Filter Include="Source Files\Game\Entity">
       <UniqueIdentifier>{f9a615c8-9b66-4bc9-ba37-95dd666b76ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{030af783-5fc1-49c7-94b1-5217b14a895b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -470,6 +473,9 @@
     <ClInclude Include="src\levelcontroller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\tdjxlua.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\data\game.ini">
@@ -483,6 +489,9 @@
     </None>
     <None Include="assets\data\player.ini">
       <Filter>Configs</Filter>
+    </None>
+    <None Include="assets\scripts\test.lua">
+      <Filter>Scripts</Filter>
     </None>
   </ItemGroup>
 </Project>

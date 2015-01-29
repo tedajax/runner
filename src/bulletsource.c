@@ -28,10 +28,6 @@ void bullet_source_update(BulletSource* self, f32 dt, EntityManager* entityManag
     if (self->burstsRemaining <= 0) { return; }
 
     if (self->burstShotsRemaining > 0) {
-        if (!self->active) {
-            self->burstShotsRemaining = 0;
-        }
-
         if (self->burstTimer > 0.f) {
             self->burstTimer -= dt;
         }

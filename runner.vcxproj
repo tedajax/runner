@@ -226,6 +226,7 @@
     <ClCompile Include="src\primitives.c" />
     <ClCompile Include="src\profiler.c" />
     <ClCompile Include="src\range.c" />
+    <ClCompile Include="src\scriptapi.c" />
     <ClCompile Include="src\spritecomponent.c" />
     <ClCompile Include="src\spritesystem.c" />
     <ClCompile Include="src\stackallocator.c" />
@@ -292,6 +293,7 @@
     <ClInclude Include="src\primitives.h" />
     <ClInclude Include="src\profiler.h" />
     <ClInclude Include="src\range.h" />
+    <ClInclude Include="src\scriptapi.h" />
     <ClInclude Include="src\snprintf.h" />
     <ClInclude Include="src\spritecomponent.h" />
     <ClInclude Include="src\spritesystem.h" />
@@ -310,6 +312,7 @@
     <None Include="assets\data\particles.ini" />
     <None Include="assets\data\player.ini" />
     <None Include="assets\data\test.ini" />
+    <None Include="assets\scripts\api.lua" />
     <None Include="assets\scripts\test.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

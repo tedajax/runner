@@ -270,6 +270,9 @@
     <ClCompile Include="src\componentlist.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scriptapi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -476,6 +479,9 @@
     <ClInclude Include="src\tdjxlua.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\scriptapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\data\game.ini">
@@ -491,6 +497,9 @@
       <Filter>Configs</Filter>
     </None>
     <None Include="assets\scripts\test.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="assets\scripts\api.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

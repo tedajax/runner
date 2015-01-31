@@ -273,6 +273,9 @@
     <ClCompile Include="src\scriptapi.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\luabind.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -480,6 +483,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\scriptapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\luabind.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\luacomponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

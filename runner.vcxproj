@@ -215,6 +215,7 @@
     <ClCompile Include="src\input.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\log.c" />
+    <ClCompile Include="src\luabind.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\messaging.c" />
     <ClCompile Include="src\movementcomponent.c" />
@@ -283,6 +284,8 @@
     <ClInclude Include="src\levelcontroller.h" />
     <ClInclude Include="src\list.h" />
     <ClInclude Include="src\log.h" />
+    <ClInclude Include="src\luabind.h" />
+    <ClInclude Include="src\luacomponent.h" />
     <ClInclude Include="src\messaging.h" />
     <ClInclude Include="src\movementcomponent.h" />
     <ClInclude Include="src\movementsystem.h" />

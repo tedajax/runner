@@ -23,6 +23,8 @@ typedef enum component_type_e {
 
     COMPONENT_COLLIDER,
 
+    COMPONENT_LUA,
+
     COMPONENT_LAST,
 } ComponentType;
 

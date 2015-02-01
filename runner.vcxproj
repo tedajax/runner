@@ -218,6 +218,8 @@
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\log.c" />
     <ClCompile Include="src\luabind.c" />
+    <ClCompile Include="src\luacomponent.c" />
+    <ClCompile Include="src\luasystem.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\messaging.c" />
     <ClCompile Include="src\movementcomponent.c" />
@@ -234,6 +236,7 @@
     <ClCompile Include="src\spritesystem.c" />
     <ClCompile Include="src\stackallocator.c" />
     <ClCompile Include="src\texturemanager.c" />
+    <ClCompile Include="src\timer.c" />
     <ClCompile Include="src\transformcomponent.c" />
     <ClCompile Include="src\tween.c" />
     <ClCompile Include="src\vector.c" />
@@ -288,6 +291,7 @@
     <ClInclude Include="src\log.h" />
     <ClInclude Include="src\luabind.h" />
     <ClInclude Include="src\luacomponent.h" />
+    <ClInclude Include="src\luasystem.h" />
     <ClInclude Include="src\messaging.h" />
     <ClInclude Include="src\movementcomponent.h" />
     <ClInclude Include="src\movementsystem.h" />
@@ -306,6 +310,7 @@
     <ClInclude Include="src\systems.h" />
     <ClInclude Include="src\tdjxlua.h" />
     <ClInclude Include="src\texturemanager.h" />
+    <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\transformcomponent.h" />
     <ClInclude Include="src\tween.h" />
     <ClInclude Include="src\types.h" />
@@ -318,7 +323,9 @@
     <None Include="assets\data\player.ini" />
     <None Include="assets\data\test.ini" />
     <None Include="assets\scripts\api.lua" />
+    <None Include="assets\scripts\component.lua" />
     <None Include="assets\scripts\test.lua" />
+    <None Include="assets\scripts\test_component.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

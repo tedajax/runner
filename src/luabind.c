@@ -1,7 +1,8 @@
 #include "luabind.h"
+#include <stdlib.h>
 
 void lua_bind_init(LuaBind* self, const char* function, int argc, ...) {
-    self->functionName = function;
+    self->functionName = (char*)function;
     self->argc = argc;
 
     self->argt = CALLOC(argc, LuaBindArgTypes);

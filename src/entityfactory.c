@@ -49,6 +49,10 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
         (Component*)collider_component_new(entity, &collider),
         entity);
 
+    entities_add_component(entityManager,
+        (Component*)lua_component_new(entity, "assets/scripts/test_component.lua"),
+        entity);
+
     return entity;
 }
 

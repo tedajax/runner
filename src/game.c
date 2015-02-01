@@ -29,6 +29,7 @@ void game_init(Game* self) {
     bg_manager_system_init(&self->bgManagerSystem, self->entityManager);
     enemy_system_init(&self->enemySystem, self->entityManager);
     collision_system_init(&self->collisionSystem, self->entityManager);
+    lua_system_init(&self->luaSystem, self->entityManager);
 
     int bgTextureWidth;
     int bgTextureHeight;
@@ -103,6 +104,7 @@ void game_quit(Game* self) {
 void game_start(Game* self) {
     bg_manager_system_start(&self->bgManagerSystem);
     collision_system_start(&self->collisionSystem);
+    lua_system_start(&self->luaSystem);
 }
 
 void game_update(Game* self) {
@@ -116,6 +118,7 @@ void game_update(Game* self) {
     enemy_system_update(&self->enemySystem);
     movement_system_update(&self->movementSystem);
     bg_manager_system_update(&self->bgManagerSystem);
+    lua_system_update(&self->luaSystem);
 
     profiler_tick("collision");
     collision_system_update(&self->collisionSystem);
@@ -160,6 +163,7 @@ void game_render(Game* self) {
     if (drawCollision) {
         collision_system_render(&self->collisionSystem);
     }
+    lua_system_render(&self->luaSystem);
 
     debug_hud_render(&self->debugHud, globals.renderer, 5, 5);
 }

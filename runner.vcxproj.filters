@@ -276,6 +276,15 @@
     <ClCompile Include="src\luabind.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\luacomponent.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\luasystem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -491,6 +500,12 @@
     <ClInclude Include="src\luacomponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\luasystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\data\game.ini">
@@ -509,6 +524,12 @@
       <Filter>Scripts</Filter>
     </None>
     <None Include="assets\scripts\api.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="assets\scripts\test_component.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="assets\scripts\component.lua">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

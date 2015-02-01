@@ -19,6 +19,7 @@ typedef struct game_t {
     BgManagerSystem bgManagerSystem;
     EnemySystem enemySystem;
     CollisionSystem collisionSystem;
+    LuaSystem luaSystem;
     Entity player;
 
     DebugHud debugHud;

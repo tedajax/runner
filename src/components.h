@@ -9,3 +9,4 @@
 #include "bgmanagercomponent.h"
 #include "enemycomponent.h"
 #include "collidercomponent.h"
+#include "luacomponent.h"

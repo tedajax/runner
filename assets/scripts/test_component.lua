@@ -1,17 +1,18 @@
 require("assets/scripts/component")
 
-local timer = 1
-local counter = 0
-
 start = function(entity)
     counter = 100
 end
 
+local r, g, b = 0, 0, 0
+
 update = function(dt)
-    timer = timer - dt
-    if timer <= 0 then
-        print("alright cool stuff "..counter)
-        counter = counter + 10
-        timer = 0.1
-    end
+    r = r + 33 * dt
+    g = g + 57 * dt
+    b = b + 100 * dt
+end
+
+render = function()
+    ffi.C.draw_rectangle_rgba(Vec2(300, 200), 100, 50, r, g, b, 255)
+    
 end

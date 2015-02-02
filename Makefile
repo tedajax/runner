@@ -1,15 +1,17 @@
 ifeq ($(OS),Windows_NT) # If windows
 	LIB_ROOT = C:/dev/lib/x86
-	INC_ROOT = C:/dev/include
 	SDL_LFLAGS = -L$(LIB_ROOT) -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
 	CC = gcc
 	STD = c99
 	POST_BUILD = .\copy_dll_32.bat
+	LFLAGS = 
+	INCLUDE_FLAGS = -IC:/dev/include
 else
 	SDL_LFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
 	CC = clang
 	STD = c11
 	POST_BUILD =
+	INCLUDE_FLAGS = -I/usr/include/luajit-2.0
 endif
 
 MODE = DEBUG
@@ -25,10 +27,10 @@ endif
 EXPLICIT_OPTIMIZATIONS =
 
 TARGET		= runner
-CFLAGS		= -std=$(STD) -O$(OPT_LEVEL) $(EXPLICIT_OPTIMIZATIONS) -Wall -I. -I$(INC_ROOT) $(DEBUG_FLAGS) -Wno-unknown-pragmas
+CFLAGS		= -std=$(STD) -O$(OPT_LEVEL) $(EXPLICIT_OPTIMIZATIONS) -Wall -I. $(INCLUDE_FLAGS) $(DEBUG_FLAGS) -Wno-unknown-pragmas
 
 LINKER		= $(CC) -o
-LFLAGS		= -Wall -I. -lm
+LFLAGS		= -Wall -I. -lm -lluajit-5.1
 
 SRCDIR		= src
 OBJDIR		= obj
@@ -42,8 +44,8 @@ all: $(BINDIR)/$(TARGET) post-build
 	@echo Done!
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@echo @$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
-	@$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS)
+	@echo @$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS) $(LFLAGS)
+	@$(LINKER) $@ $(ALFLAGS) $(OBJECTS) $(SDL_LFLAGS) $(LFLAGS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@echo @$(CC) $(CFLAGS) -c $< -o $@

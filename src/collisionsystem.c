@@ -32,17 +32,9 @@ void collision_system_start(CollisionSystem* self) {
 
     for (u32 i = 0; i < components->count; ++i) {
         Entity entity = GET_ENTITY(i);
-        collision_system_start_single(self, entity);
+        ColliderComponent* collider = (ColliderComponent*)GET_SYSTEM_COMPONENT(i);
+        collision_system_register_collider(self, &collider->collider);
     }
-}
-
-void collision_system_start_single(CollisionSystem* self, Entity entity) {
-    ColliderComponent* collider =
-        (ColliderComponent*)GET_COMPONENT(entity, COMPONENT_COLLIDER);
-
-    REQUIRED_COMPONENTS(collider);
-
-    collision_system_register_collider(self, &collider->collider);
 }
 
 void collision_system_update(CollisionSystem* self) {

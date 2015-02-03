@@ -23,9 +23,7 @@ int app_run(int argc, char* argv[]) {
 
     game_quit(&self.game);
 
-    FILE* profileOut = fopen("profile.txt", "w");
-    profiler_dump(profileOut);
-    fclose(profileOut);
+    profiler_dump_log();
 
     _app_terminate(&self);
 

@@ -1,5 +1,7 @@
 #include "profiler.h"
 #include "gametime.h"
+#include "snprintf.h"
+#include <time.h>
 
 Profile* add_profile(const char* name) {
     if (count == capacity) {
@@ -58,9 +60,17 @@ void profile_add_sample(Profile* p, u64 time) {
     p->average = avg / p->count;
 }
 
-void profile_dump(Profile* p, FILE* file) {
+void profile_dump(Profile* p, FILE* file, bool full) {
     fprintf(file, "%s:\n", p->name);
-    fprintf(file, "\taverage: %lluns\n\tpeak: %lluns\n\n", p->average, p->peak);
+    fprintf(file, "\taverage: %lluns\n\tpeak: %lluns\n", p->average, p->peak);
+
+    if (full) {
+        fprintf(file, "\tsample count: %u\n", p->count);
+        for (u32 i = 0; i < p->count; ++i) {
+            fprintf(file, "\t[%u]: %llu\n", i, p->recent[i]);
+        }
+    }
+    fprintf(file, "\n");
 }
 
 void profiler_init() {
@@ -80,13 +90,23 @@ void profiler_terminate() {
 #endif
 }
 
-void profiler_dump(FILE* file) {
+void profiler_dump(FILE* file, bool full) {
 #if TDJX_DEBUG
     fprintf(file, "Runner Profile Dump:\n\n");
 
     for (u32 i = 0; i < count; ++i) {
-        profile_dump(&profiles[i], file);
+        profile_dump(&profiles[i], file, full);
     }
+#endif
+}
+
+void profiler_dump_log() {
+#if TDJX_DEBUG
+    char buffer[128];
+    snprintf(buffer, 128, "profiler_%d.profile", time(NULL));
+    FILE* fp = fopen(buffer, "w");
+    profiler_dump(fp, true);
+    fclose(fp);
 #endif
 }
 

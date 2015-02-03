@@ -56,6 +56,7 @@ void game_time_update(GameTime* self) {
 }
 
 u64 game_time_now() {
+    
     u64 ticks = SDL_GetPerformanceCounter();
     u64 frequency = SDL_GetPerformanceFrequency();
 

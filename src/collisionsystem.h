@@ -19,7 +19,6 @@ typedef struct collision_system_t {
 void collision_system_init(CollisionSystem* self, EntityManager* entityManager);
 i32 collision_system_gen_id(CollisionSystem* self);
 void collision_system_start(CollisionSystem* self);
-void collision_system_start_single(CollisionSystem* self, Entity entity);
 void collision_system_register_collider(CollisionSystem* self, Collider* collider);
 void collision_system_update(CollisionSystem* self);
 void collision_system_render(CollisionSystem* self);

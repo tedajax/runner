@@ -112,7 +112,10 @@ void entities_add_component(EntityManager* self, Component* component, Entity en
 }
 
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity) {
-    return component_list_get(&self->componentsMap[type], entity);
+    profiler_tick("get_component");
+    Component* result = component_list_get(&self->componentsMap[type], entity);
+    profiler_tock("get_component");
+    return result;
 }
 
 ComponentList* entities_get_all_components(EntityManager* self, ComponentType type) {

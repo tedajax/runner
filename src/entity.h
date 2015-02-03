@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-#define MAX_ENTITIES 4192
+#define MAX_ENTITIES 512
 
 typedef i32 Entity;
 

@@ -7,7 +7,7 @@
 
 #include "types.h"
 
-#define PROFILER_STORED_SAMPLES 1024
+#define PROFILER_STORED_SAMPLES 4096
 
 typedef struct profile_t {
     char* name;
@@ -26,6 +26,7 @@ u32 count;
 void profiler_init();
 void profiler_terminate();
 void profiler_dump(FILE* file);
+void profiler_dump_log();
 void profiler_tick(const char* name);
 void profiler_tock(const char* name);
 

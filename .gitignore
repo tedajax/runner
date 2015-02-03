@@ -10,3 +10,4 @@ Release/
 *.suo
 /*.dll
 profile.txt
+*.profile

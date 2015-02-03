@@ -285,6 +285,9 @@
     <ClCompile Include="src\timer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\prefab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -504,6 +507,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\prefab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

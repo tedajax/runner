@@ -228,6 +228,7 @@
     <ClCompile Include="src\path.c" />
     <ClCompile Include="src\physics.c" />
     <ClCompile Include="src\pool.c" />
+    <ClCompile Include="src\prefab.c" />
     <ClCompile Include="src\primitives.c" />
     <ClCompile Include="src\profiler.c" />
     <ClCompile Include="src\range.c" />
@@ -299,6 +300,7 @@
     <ClInclude Include="src\path.h" />
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\pool.h" />
+    <ClInclude Include="src\prefab.h" />
     <ClInclude Include="src\primitives.h" />
     <ClInclude Include="src\profiler.h" />
     <ClInclude Include="src\range.h" />

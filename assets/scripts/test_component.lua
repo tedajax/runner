@@ -14,5 +14,4 @@ end
 
 render = function()
     ffi.C.draw_rectangle_rgba(Vec2(300, 200), 100, 50, r, g, b, 255)
-    
 end

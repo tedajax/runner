@@ -326,7 +326,6 @@
     <None Include="assets\data\test.ini" />
     <None Include="assets\scripts\api.lua" />
     <None Include="assets\scripts\component.lua" />
-    <None Include="assets\scripts\test.lua" />
     <None Include="assets\scripts\test_component.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

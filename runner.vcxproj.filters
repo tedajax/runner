@@ -526,9 +526,6 @@
     <None Include="assets\data\player.ini">
       <Filter>Configs</Filter>
     </None>
-    <None Include="assets\scripts\test.lua">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="assets\scripts\api.lua">
       <Filter>Scripts</Filter>
     </None>

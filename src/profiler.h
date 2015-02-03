@@ -9,6 +9,8 @@
 
 #define PROFILER_STORED_SAMPLES 4096
 
+#define PROFILING_ENABLED 1
+
 typedef struct profile_t {
     char* name;
     u64* recent;
@@ -22,10 +24,11 @@ typedef struct profile_t {
 Profile* profiles;
 u32 capacity;
 u32 count;
+bool profilingEnabled;
 
-void profiler_init();
+void profiler_init(bool enabled);
 void profiler_terminate();
-void profiler_dump(FILE* file);
+void profiler_dump(FILE* file, bool full);
 void profiler_dump_log();
 void profiler_tick(const char* name);
 void profiler_tock(const char* name);

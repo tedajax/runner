@@ -73,8 +73,12 @@ void profile_dump(Profile* p, FILE* file, bool full) {
     fprintf(file, "\n");
 }
 
-void profiler_init() {
-#if TDJX_DEBUG
+void profiler_init(bool enabled) {
+#if PROFILING_ENABLED
+    profilingEnabled = enabled;
+    if (!enabled) {
+        return;
+    }
     capacity = 64;
     count = 0;
     profiles = (Profile*)calloc(capacity, sizeof(Profile));
@@ -82,7 +86,7 @@ void profiler_init() {
 }
 
 void profiler_terminate() {
-#if TDJX_DEBUG
+#if PROFILING_ENABLED
     for (u32 i = 0; i < count; ++i) {
         free(profiles[i].recent);
     }
@@ -91,7 +95,7 @@ void profiler_terminate() {
 }
 
 void profiler_dump(FILE* file, bool full) {
-#if TDJX_DEBUG
+#if PROFILING_ENABLED
     fprintf(file, "Runner Profile Dump:\n\n");
 
     for (u32 i = 0; i < count; ++i) {
@@ -101,7 +105,7 @@ void profiler_dump(FILE* file, bool full) {
 }
 
 void profiler_dump_log() {
-#if TDJX_DEBUG
+#if PROFILING_ENABLED
     char buffer[128];
     snprintf(buffer, 128, "profiler_%d.profile", time(NULL));
     FILE* fp = fopen(buffer, "w");
@@ -111,7 +115,10 @@ void profiler_dump_log() {
 }
 
 void profiler_tick(const char* name) {
-#if TDJX_DEBUG
+#if PROFILING_ENABLED
+    if (!profilingEnabled) {
+        return;
+    }
     Profile* p = find_profile(name);
 
     p->tick = game_time_now();
@@ -119,7 +126,10 @@ void profiler_tick(const char* name) {
 }
 
 void profiler_tock(const char* name) {
-#if TDJX_DEBUG
+#if PROFILING_ENABLED
+    if (!profilingEnabled) {
+        return;
+    }
     Profile* p = find_profile(name);
 
     u64 tock = game_time_now();

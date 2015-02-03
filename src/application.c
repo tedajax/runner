@@ -122,7 +122,7 @@ bool _app_initialize(App* self) {
 
     input_initialize();
 
-    profiler_init();
+    profiler_init(config_try_get_bool(config_get("game.ini"), "game", "enable_profiling", true));
     globals.time.on_second = config_reload_all;
 
     return true;

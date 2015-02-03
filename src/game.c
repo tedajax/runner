@@ -138,7 +138,7 @@ void game_debug_keys(Game* self) {
     }
 
     if (input_key_down(SDL_SCANCODE_F2)) {
-        profiler_dump(stdout);
+        profiler_dump(stdout, false);
     }
 
     if (input_key_down(SDL_SCANCODE_F3)) {

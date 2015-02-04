@@ -37,7 +37,7 @@ void config_reload_all();
 Config* config_get(const char* name);
 time_t config_get_mtime(const char* path);
 
-static inline config_get_array_count(Config* self, const char* section, const char* key) { return ini_get_array_count(&self->data, section, key); }
+static inline int config_get_array_count(Config* self, const char* section, const char* key) { return ini_get_array_count(&self->data, section, key); }
 
 #define STR_ENUM_CMP(str, enumval) (strcmp(str, #enumval) == 0)
 

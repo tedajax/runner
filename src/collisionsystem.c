@@ -31,7 +31,6 @@ void collision_system_start(CollisionSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         ColliderComponent* collider = (ColliderComponent*)GET_SYSTEM_COMPONENT(i);
         collision_system_register_collider(self, &collider->collider);
         TransformComponent* tx = (TransformComponent*)GET_COMPONENT(GET_ENTITY(i), COMPONENT_TRANSFORM);

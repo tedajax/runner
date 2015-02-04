@@ -21,7 +21,6 @@ void lua_system_start(LuaSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         LuaComponent* lua = (LuaComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(lua);
@@ -37,7 +36,6 @@ void lua_system_update(LuaSystem* self) {
     timer_tick(&self->reloadTimer, globals.time.delta, (void*)self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         LuaComponent* lua = (LuaComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(lua);
@@ -55,7 +53,6 @@ void lua_system_render(LuaSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
 
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         LuaComponent* lua = (LuaComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(lua);
@@ -72,7 +69,6 @@ void lua_system_check_and_reload_void(void* system) {
 void lua_system_check_and_reload(LuaSystem* self) {
     GET_SYSTEM_COMPONENTS(self);
     for (u32 i = 0; i < components->count; ++i) {
-        Entity entity = GET_ENTITY(i);
         LuaComponent* lua = (LuaComponent*)GET_SYSTEM_COMPONENT(i);
 
         REQUIRED_COMPONENTS(lua);

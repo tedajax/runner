@@ -12,6 +12,7 @@ else
 	STD = c11
 	POST_BUILD =
 	INCLUDE_FLAGS = -I/usr/include/luajit-2.0
+    SYSTEM_FLAGS = -rdynamic
 endif
 
 MODE = DEBUG
@@ -44,8 +45,8 @@ all: $(BINDIR)/$(TARGET) post-build
 	@echo Done!
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@echo @$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS) $(LFLAGS)
-	@$(LINKER) $@ $(ALFLAGS) $(OBJECTS) $(SDL_LFLAGS) $(LFLAGS)
+	@echo @$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(SDL_LFLAGS) $(LFLAGS) $(SYSTEM_FLAGS)
+	@$(LINKER) $@ $(ALFLAGS) $(OBJECTS) $(SDL_LFLAGS) $(LFLAGS) $(SYSTEM_FLAGS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@echo @$(CC) $(CFLAGS) -c $< -o $@

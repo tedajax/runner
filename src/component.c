@@ -39,12 +39,17 @@ void component_system_terminate() {
         return;
     }
 
-    hashset_free(&COMPONENT_NAME_TABLE);
+    hashtable_free_contents(&COMPONENT_NAME_TABLE);
 }
 
-void component_init(Component* self, ComponentType type, Entity entity) {
+void component_init(Component* self, ComponentType type, u64 size, Entity entity) {
     self->type = type;
+    self->size = size;
     self->entity = entity;
+}
+
+void component_copy(const Component* source, Component* dest) {
+    memcpy(dest, source, source->size);
 }
 
 void component_set_entity(Component* self, Entity entity) {
@@ -73,7 +78,7 @@ int component_entity_compare(Component* c1, Component* c2) {
 }
 
 ComponentType component_parse_type(char* str) {
-    void* pdata = hashtable_get(&COMPONENT_VALUE_TABLE, str);
+    void* pdata = hashtable_get(&COMPONENT_NAME_TABLE, str);
     if (pdata) {
         return *(ComponentType*)pdata;
     }
@@ -93,4 +98,26 @@ Component* component_deserialize(Config* config, const char* table) {
         default:
             return NULL;
     }
+}
+
+////////////////////////
+//// ComponentBatch ////
+////////////////////////
+
+void component_batch_init(ComponentBatch* self, u32 capacity) {
+    self->components = CALLOC(capacity, Component*);
+    self->count = 0;
+    self->capacity = capacity;
+}
+
+void component_batch_zero(ComponentBatch* self) {
+    self->components = NULL;
+    self->count = 0;
+    self->capacity = 0;
+}
+
+void component_batch_add(ComponentBatch* self, Component* component) {
+    ASSERT(self->count < self->capacity, "Maximum capacity reached.");
+    self->components[self->count] = component;
+    ++self->count;
 }

@@ -3,7 +3,7 @@
 HealthComponent* health_component_new(Entity entity, i32 maxHealth) {
     HealthComponent* self = CALLOC(1, HealthComponent);
 
-    component_init((Component*)self, COMPONENT_HEALTH, entity);
+    component_init((Component*)self, COMPONENT_HEALTH, sizeof(HealthComponent), entity);
 
     self->maxHealth = maxHealth;
     self->currentHealth = maxHealth;

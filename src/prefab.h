@@ -16,8 +16,7 @@ typedef char PrefabString[PREFAB_MAX_COMPONENT_NAME_LENGTH];
 
 typedef struct prefab_t {
     Config* config;
-    PrefabString* componentNames;
-    u32 componentCount;
+    ComponentBatch components;
 } Prefab;
 
 void prefab_init(Prefab* self, char* filename);

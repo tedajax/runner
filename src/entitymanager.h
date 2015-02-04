@@ -12,6 +12,7 @@
 // Forward declarations
 typedef struct collision_system_t CollisionSystem;
 typedef struct aspect_system_t AspectSystem;
+typedef struct prefab_t Prefab;
 
 typedef struct entity_queue_t {
     Entity entities[MAX_ENTITIES];
@@ -53,7 +54,8 @@ void entity_manager_register_system(EntityManager* self, AspectSystem* system);
 void entity_manager_set_system_compare_function(EntityManager* self, AspectSystem* system, component_compare_f compareFunc);
 i32 entities_gen_entity_id(EntityManager* self);
 Entity entities_create_entity(EntityManager* self);
-void entities_add_component(EntityManager* self, Component* component, Entity entity);
+Entity entities_instantiate_prefab(EntityManager* self, Prefab* prefab, Vec2 position, f32 rotation);
+void entities_add_component(EntityManager* self, Component* component);
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity);
 ComponentList* entities_get_all_components(EntityManager* self, ComponentType type);
 bool entities_has_component(EntityManager* self, ComponentType type, Entity entity);

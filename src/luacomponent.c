@@ -25,7 +25,7 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
     self->file.lastMTime = 0;
     lua_file_update_mtime(&self->file);
 
-    component_init(&self->super, COMPONENT_LUA, entity);
+    component_init(&self->super, COMPONENT_LUA, sizeof(LuaComponent), entity);
 
     // TODO: error handling
     self->L = lua_open();

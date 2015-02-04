@@ -3,6 +3,7 @@
 #include "spritecomponent.h"
 #include "collisionsystem.h"
 #include "aspectsystem.h"
+#include "prefab.h"
 
 void entities_internal_remove_entity(EntityManager* self, Entity entity);
 void entities_internal_send_message(EntityManager* self, TargetedMessage message);
@@ -104,7 +105,36 @@ Entity entities_create_entity(EntityManager* self) {
     return entity;
 }
 
-void entities_add_component(EntityManager* self, Component* component, Entity entity) {
+Entity entities_instantiate_prefab(EntityManager* self, Prefab* prefab, Vec2 position, f32 rotation) {
+    Entity entity = entities_create_entity(self);
+
+    for (u32 i = 0; i < prefab->components.count; ++i) {
+        Component* source = prefab->components.components[i];
+        
+        // Copy into newly allocated block that will actually go into entity manager
+        Component* component = (Component*)malloc(source->size);
+        component_copy(source, component);
+
+        // TODO: generalize these special cases somewhat?
+        if (component->type == COMPONENT_TRANSFORM) {
+            TransformComponent* tx = (TransformComponent*)component;
+            tx->position = position;
+            tx->rotation = rotation;
+        } else if (component->type == COMPONENT_COLLIDER) {
+            ColliderComponent* collider = (ColliderComponent*)component;
+            collider->collider.entity = entity;
+        }
+
+        // Set the entity
+        component->entity = entity;
+
+        entities_add_component(self, component);
+    }
+
+    return entity;
+}
+
+void entities_add_component(EntityManager* self, Component* component) {
     ASSERT(component->type > COMPONENT_INVALID && component->type < COMPONENT_LAST,
         "Invalid component, did you remember to set the component type in the component constructor?");
 

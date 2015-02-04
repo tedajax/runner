@@ -1,10 +1,10 @@
 #include "collider.h"
 
-void collider_init(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2* offset) {
+void collider_init(Collider* self, Entity entity, ColliderLayer layer, Vec2* offset) {
     self->colliderId = -1;
     self->entity = entity;
     self->layer = layer;
-    self->anchor = anchor;
+    self->anchor = NULL;
     vec2_copy_to(offset, &self->offset);
     self->inContactCount = 0;
     self->volume = NULL;
@@ -14,49 +14,43 @@ void collider_init(Collider* self, Entity entity, ColliderLayer layer, Transform
     }
 }
 
-void collider_init_aabb(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height) {
-    collider_init(self, entity, layer, anchor, &offset);
+void collider_init_aabb(Collider* self, Entity entity, ColliderLayer layer, Vec2 offset, f32 width, f32 height) {
+    collider_init(self, entity, layer, &offset);
 
     self->volume = (BoundingVolume*)CALLOC(1, AABoundingBox);
 
-    Vec2 position;
-    collider_anchored_center(self, &position);
-    aabbox_init((AABoundingBox*)self->volume, position, width, height);
+    aabbox_init((AABoundingBox*)self->volume, vec2_zero(), width, height);
 }
 
-void collider_init_obb(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 width, f32 height, f32 orientation) {
-    collider_init(self, entity, layer, anchor, &offset);
+void collider_init_obb(Collider* self, Entity entity, ColliderLayer layer, Vec2 offset, f32 width, f32 height, f32 orientation) {
+    collider_init(self, entity, layer, &offset);
 
     self->volume = (BoundingVolume*)CALLOC(1, OBoundingBox);
 
-    Vec2 position;
-    collider_anchored_center(self, &position);
-    obbox_init((OBoundingBox*)self->volume, position, width, height, orientation);
+    obbox_init((OBoundingBox*)self->volume, vec2_zero(), width, height, orientation);
 }
 
-void collider_init_bcircle(Collider* self, Entity entity, ColliderLayer layer, TransformComponent* anchor, Vec2 offset, f32 radius) {
-    collider_init(self, entity, layer, anchor, &offset);
+void collider_init_bcircle(Collider* self, Entity entity, ColliderLayer layer, Vec2 offset, f32 radius) {
+    collider_init(self, entity, layer, &offset);
 
     self->volume = (BoundingVolume*)CALLOC(1, BoundingCircle);
 
-    Vec2 position;
-    collider_anchored_center(self, &position);
-    bcircle_init((BoundingCircle*)self->volume, position, radius);
+    bcircle_init((BoundingCircle*)self->volume, vec2_zero(), radius);
 }
 
-void collider_init_config(Collider* self, Entity entity, ColliderConfig* config, TransformComponent* anchor) {
+void collider_init_config(Collider* self, Entity entity, ColliderConfig* config) {
     switch (config->type) {
         default:
         case BOUNDING_VOLUME_AA_BOX:
-            collider_init_aabb(self, entity, config->layer, anchor, config->offset, config->width, config->height);
+            collider_init_aabb(self, entity, config->layer, config->offset, config->width, config->height);
             break;
 
         case BOUNDING_VOLUME_O_BOX:
-            collider_init_obb(self, entity, config->layer, anchor, config->offset, config->width, config->height, config->orientation);
+            collider_init_obb(self, entity, config->layer, config->offset, config->width, config->height, config->orientation);
             break;
 
         case BOUNDING_VOLUME_CIRCLE:
-            collider_init_bcircle(self, entity, config->layer, anchor, config->offset, config->radius);
+            collider_init_bcircle(self, entity, config->layer, config->offset, config->radius);
             break;
     }
 }

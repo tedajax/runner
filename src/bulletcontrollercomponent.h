@@ -10,7 +10,6 @@ typedef struct bullet_config_t {
     f32 baseAngle;
     f32 lifetime;
     i32 damage;
-    char* colliderKey;
 } BulletConfig;
 
 typedef struct bullet_controller_component_t {
@@ -24,6 +23,7 @@ typedef struct bullet_controller_component_t {
 } BulletControllerComponent;
 
 BulletControllerComponent* bullet_controller_component_new(Entity entity, BulletConfig* config);
+BulletControllerComponent* bullet_controller_component_deserialize(Config* config, const char* table);
 void bullet_controller_on_collision_enter(Component* component, Message message);
 
 #endif

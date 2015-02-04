@@ -144,6 +144,11 @@ void hashtable_clear(Hashtable* self) {
 }
 
 void hashtable_free(Hashtable *self) {
+    hashtable_free_contents(self);
+    free(self);
+}
+
+void hashtable_free_contents(Hashtable* self) {
     assert(self);
 
     for (u32 i = 0; i < self->bucketCount; ++i) {
@@ -162,7 +167,6 @@ void hashtable_free(Hashtable *self) {
     }
 
     free(self->buckets);
-    free(self);
 }
 
 u64 _hashtable_djb2(const char *key) {

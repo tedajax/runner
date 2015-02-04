@@ -40,6 +40,7 @@ size_t hashtable_get_all(Hashtable* self, void** data, size_t n);
 
 void hashtable_clear(Hashtable* self);
 void hashtable_free(Hashtable *self);
+void hashtable_free_contents(Hashtable* self);
 
 u64 _hashtable_djb2(const char *key);
 u32 _hashtable_index(Hashtable *self, const char *key);

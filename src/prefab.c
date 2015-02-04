@@ -1,29 +1,26 @@
 #include "prefab.h"
+#include "entitymanager.h"
+#include "game.h"
 
 void prefab_init(Prefab* self, char* filename) {
     self->config = config_get(filename);
-    self->componentNames = NULL;
-    self->componentCount = 0;
+    component_batch_zero(&self->components);
 }
 
 void prefab_free(Prefab* self) {
-    if (self->componentNames) {
-        free(self->componentNames);
+    if (self->components.components) {
+        free(self->components.components);
     }
 }
 
 void prefab_reload(Prefab* self) {
-    int count = config_get_array_count(self->config, CONFIG_DEFAULT_SECTION, "components");
-    self->componentCount = (u32)count;
-    
-    if (self->componentNames) {
-        free(self->componentNames);
-    }
+    u32 count = (u32)config_get_array_count(self->config, CONFIG_DEFAULT_SECTION, "components");
+    component_batch_init(&self->components, count);
 
-    self->componentNames = CALLOC(self->componentCount, PrefabString);
-    for (u32 i = 0; i < self->componentCount; ++i) {
+    for (u32 i = 0; i < count; ++i) {
         char* name = config_get_string_at(self->config, CONFIG_DEFAULT_SECTION, "components", i);
-        strncpy(self->componentNames[i], name, PREFAB_MAX_COMPONENT_NAME_LENGTH);
+        Component* component = component_deserialize(self->config, name);
+        component_batch_add(&self->components, component);
     }
 }
 
@@ -32,5 +29,5 @@ void prefab_instantiate(Prefab* self) {
 }
 
 void prefab_instantiate_at(Prefab* self, Vec2 position, f32 rotation) {
-    
+    entities_instantiate_prefab(globals.game->entityManager, self, position, rotation);
 }

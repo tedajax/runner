@@ -34,6 +34,8 @@ void collision_system_start(CollisionSystem* self) {
         Entity entity = GET_ENTITY(i);
         ColliderComponent* collider = (ColliderComponent*)GET_SYSTEM_COMPONENT(i);
         collision_system_register_collider(self, &collider->collider);
+        TransformComponent* tx = (TransformComponent*)GET_COMPONENT(GET_ENTITY(i), COMPONENT_TRANSFORM);
+        collider->collider.anchor = tx;
     }
 }
 
@@ -49,6 +51,8 @@ void collision_system_update(CollisionSystem* self) {
 
         if (collider->collider.colliderId < 0) {
             collision_system_register_collider(self, &collider->collider);
+            TransformComponent* tx = (TransformComponent*)GET_COMPONENT(GET_ENTITY(i), COMPONENT_TRANSFORM);
+            collider->collider.anchor = tx;
         }
 
         Vec2 anchored;

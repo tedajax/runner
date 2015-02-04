@@ -16,4 +16,6 @@ TransformComponent* transform_component_new(Entity entity,
     f32 rotation,
     Vec2 scale);
 
+TransformComponent* transform_component_deserialize(Entity entity, Config* config, const char* table);
+
 #endif

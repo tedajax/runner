@@ -1,33 +1,30 @@
 #include "prefab.h"
 
 void prefab_init(Prefab* self, char* filename) {
-    //TODO root pathing
-    self->path = filename;
-    self->lastMTime = 0;
+    self->config = config_get(filename);
+    self->componentNames = NULL;
+    self->componentCount = 0;
 }
 
-bool prefab_update_mtime(Prefab* self) {
-    struct stat buffer;
-
-    if (stat(self->path, &buffer) != 0) {
-        return false;
+void prefab_free(Prefab* self) {
+    if (self->componentNames) {
+        free(self->componentNames);
     }
-
-    time_t mtime = buffer.st_mtime;
-    if (mtime > self->lastMTime) {
-        self->lastMTime = mtime;
-        return true;
-    }
-
-    return false;
 }
 
-bool prefab_check_and_reload(Prefab* self) {
-    if (prefab_update_mtime(self)) {
-        // TODO: reload things
-        return true;
+void prefab_reload(Prefab* self) {
+    int count = config_get_array_count(self->config, CONFIG_DEFAULT_SECTION, "components");
+    self->componentCount = (u32)count;
+    
+    if (self->componentNames) {
+        free(self->componentNames);
     }
-    return false;
+
+    self->componentNames = CALLOC(self->componentCount, PrefabString);
+    for (u32 i = 0; i < self->componentCount; ++i) {
+        char* name = config_get_string_at(self->config, CONFIG_DEFAULT_SECTION, "components", i);
+        strncpy(self->componentNames[i], name, PREFAB_MAX_COMPONENT_NAME_LENGTH);
+    }
 }
 
 void prefab_instantiate(Prefab* self) {
@@ -35,5 +32,5 @@ void prefab_instantiate(Prefab* self) {
 }
 
 void prefab_instantiate_at(Prefab* self, Vec2 position, f32 rotation) {
-
+    
 }

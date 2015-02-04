@@ -13,6 +13,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#define CONFIG_DEFAULT_SECTION INI_DEFAULT_SECTION
+
 typedef struct config_t {
     Ini data;
     Hashtable typeConfigs;
@@ -34,6 +36,8 @@ void config_load(const char* filename);
 void config_reload_all();
 Config* config_get(const char* name);
 time_t config_get_mtime(const char* path);
+
+static inline config_get_array_count(Config* self, const char* section, const char* key) { return ini_get_array_count(&self->data, section, key); }
 
 #define STR_ENUM_CMP(str, enumval) (strcmp(str, #enumval) == 0)
 

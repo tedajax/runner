@@ -3,14 +3,21 @@
 Hashset *hashset_new(u32 buckets) {
     Hashset *self = (Hashset *)calloc(1, sizeof(Hashset));
 
+    hashset_init(self, buckets);
+
+    return self;
+}
+
+void hashset_init(Hashset* self, u32 buckets) {
     self->bucketCount = buckets;
     self->buckets = (Vector **)calloc(buckets, sizeof(Vector *));
 
-    for (u32 i = 0; i < self->bucketCount; ++i) {
+    for (u32 i = 0; i < self->bucketCount; ++i)
+    {
         self->buckets[i] = NULL;
     }
 
-    return self;
+    self->size = 0;
 }
 
 void hashset_add(Hashset *self, const char *key) {
@@ -34,6 +41,9 @@ void hashset_add(Hashset *self, const char *key) {
 
         // key already exists in hashset, set it to true and return success
         if (kvp->key == hash) {
+            if (!kvp->value) {
+                ++self->size;
+            }
             kvp->value = true;
             return;
         }
@@ -43,6 +53,7 @@ void hashset_add(Hashset *self, const char *key) {
     kvp->key = hash;
     kvp->value = true;
     vector_add(bucket, kvp);
+    ++self->size;
 }
 
 bool hashset_contains(Hashset *self, const char *key) {
@@ -84,6 +95,9 @@ void hashset_remove(Hashset *self, const char *key) {
         void *pkvp = vector_index(bucket, i);
         HashsetNode *kvp = (HashsetNode *)pkvp;
         if (kvp->key == hash) {
+            if (kvp->value) {
+                --self->size;
+            }
             kvp->value = false;
         }
     }

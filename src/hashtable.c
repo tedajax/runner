@@ -3,14 +3,7 @@
 Hashtable *hashtable_new(u32 buckets, hashtable_free_f freeFunc) {
     Hashtable *self = (Hashtable *)calloc(1, sizeof(Hashtable));
 
-    self->bucketCount = buckets;
-    self->buckets = (Vector **)calloc(buckets, sizeof(Vector *));
-
-    for (u32 i = 0; i < self->bucketCount; ++i) {
-        self->buckets[i] = NULL;
-    }
-
-    self->freeFunc = freeFunc;
+    hashtable_init(self, buckets, freeFunc);
 
     return self;
 }
@@ -24,6 +17,8 @@ void hashtable_init(Hashtable* self, u32 buckets, hashtable_free_f freeFunc) {
     }
 
     self->freeFunc = freeFunc;
+
+    self->size = 0;
 }
 
 bool hashtable_insert(Hashtable *self, const char *key, void *data) {
@@ -57,6 +52,7 @@ bool hashtable_insert(Hashtable *self, const char *key, void *data) {
     kvp->key = hash;
     kvp->value = data;
     vector_add(bucket, kvp);
+    ++self->size;
 
     return true;
 }
@@ -102,6 +98,7 @@ void *hashtable_remove(Hashtable *self, const char *key) {
         if (kvp->key == hash) {
             void *presult = kvp->value;
             vector_removeAt(bucket, i);
+            --self->size;
             return presult;
         }
     }

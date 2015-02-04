@@ -19,6 +19,7 @@ typedef struct hashtable_t {
     u32 bucketCount;
     hashtable_free_f freeFunc;
     Vector **buckets;
+    u32 size;
 } Hashtable;
 
 Hashtable *hashtable_new(u32 buckets, hashtable_free_f freeFunc);

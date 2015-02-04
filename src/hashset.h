@@ -16,9 +16,11 @@ typedef struct hashset_node_t {
 typedef struct hashset_t {
     u32 bucketCount;
     Vector **buckets;
+    u32 size;
 } Hashset;
 
 Hashset *hashset_new(u32 buckets);
+void hashset_init(Hashset* self, u32 buckets);
 
 void hashset_add(Hashset *self, const char *key);
 bool hashset_contains(Hashset *self, const char *key);

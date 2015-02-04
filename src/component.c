@@ -1,8 +1,53 @@
 #include "component.h"
 #include "components.h"
 
+ComponentType COMPONENT_VALUE_TABLE[COMPONENT_LAST];
+Hashtable COMPONENT_NAME_TABLE;
+bool componentNameTableInitialized = false;
+
+void component_system_init() {
+    if (componentNameTableInitialized) {
+        return;
+    }
+
+    componentNameTableInitialized = true;
+
+    for (ComponentType t = COMPONENT_INVALID; t < COMPONENT_LAST; ++t) {
+        COMPONENT_VALUE_TABLE[t] = t;
+    }
+
+    hashtable_init(&COMPONENT_NAME_TABLE, 32, NULL);
+
+    COMPONENT_REGISTER(COMPONENT_INVALID);
+    COMPONENT_REGISTER(COMPONENT_TRANSFORM);
+    COMPONENT_REGISTER(COMPONENT_MOVEMENT);
+    COMPONENT_REGISTER(COMPONENT_CONTROLLER);
+    COMPONENT_REGISTER(COMPONENT_BULLET_CONTROLLER);
+    COMPONENT_REGISTER(COMPONENT_GRAVITY);
+    COMPONENT_REGISTER(COMPONENT_HEALTH);
+    COMPONENT_REGISTER(COMPONENT_SPRITE);
+    COMPONENT_REGISTER(COMPONENT_BG_MANAGER);
+    COMPONENT_REGISTER(COMPONENT_ENEMY);
+    COMPONENT_REGISTER(COMPONENT_COLLIDER);
+    COMPONENT_REGISTER(COMPONENT_LUA);
+
+    ASSERT(COMPONENT_NAME_TABLE.size == COMPONENT_LAST, "Unregistered component type detected.  Did you add a new component recently?");
+}
+
+void component_system_terminate() {
+    if (!componentNameTableInitialized) {
+        return;
+    }
+
+    hashset_free(&COMPONENT_NAME_TABLE);
+}
+
 void component_init(Component* self, ComponentType type, Entity entity) {
     self->type = type;
+    self->entity = entity;
+}
+
+void component_set_entity(Component* self, Entity entity) {
     self->entity = entity;
 }
 
@@ -25,4 +70,27 @@ void component_free_void(void* self) {
 
 int component_entity_compare(Component* c1, Component* c2) {
     return c1->entity - c2->entity;
+}
+
+ComponentType component_parse_type(char* str) {
+    void* pdata = hashtable_get(&COMPONENT_VALUE_TABLE, str);
+    if (pdata) {
+        return *(ComponentType*)pdata;
+    }
+    return COMPONENT_INVALID;
+}
+
+Component* component_deserialize(Config* config, const char* table) {
+    char* typeStr = config_get_string(config, table, "component_type");
+    ComponentType type = component_parse_type(typeStr);
+
+    ASSERT(type > COMPONENT_INVALID && type < COMPONENT_LAST, "Invalid component deserialization!");
+
+    switch (type) {
+        case COMPONENT_TRANSFORM:
+            return (Component*)transform_component_deserialize(config, table);
+
+        default:
+            return NULL;
+    }
 }

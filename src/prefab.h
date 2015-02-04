@@ -10,19 +10,19 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-typedef struct prefab_component_t {
-    ComponentType type;
-} PrefabComponent;
+#define PREFAB_MAX_COMPONENT_NAME_LENGTH 64
+
+typedef char PrefabString[PREFAB_MAX_COMPONENT_NAME_LENGTH];
 
 typedef struct prefab_t {
-    char* path;
-    time_t lastMTime;
-    
+    Config* config;
+    PrefabString* componentNames;
+    u32 componentCount;
 } Prefab;
 
 void prefab_init(Prefab* self, char* filename);
-bool prefab_update_mtime(Prefab* self);
-bool prefab_check_and_reload(Prefab* self);
+void prefab_free(Prefab* self);
+void prefab_reload(Prefab* self);
 void prefab_instantiate(Prefab* self);
 void prefab_instantiate_at(Prefab* self, Vec2 position, f32 rotation);
 

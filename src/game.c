@@ -9,6 +9,8 @@ void game_debug_keys(Game* self);
 void game_init(Game* self) {  
     globals.game = self;
 
+    component_system_init();
+
     textures_init("assets/textures");
 
     textures_load("player_ship.png");
@@ -99,6 +101,7 @@ void game_init(Game* self) {
 void game_quit(Game* self) {
     entity_manager_free(self->entityManager);
     debug_hud_free(&self->debugHud);
+    component_system_terminate();
 }
 
 void game_start(Game* self) {

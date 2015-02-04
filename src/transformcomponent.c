@@ -14,3 +14,10 @@ TransformComponent* transform_component_new(Entity entity,
 
     return self;
 }
+
+TransformComponent* transform_component_deserialize(Config* config, const char* table) {
+    Vec2 position = CONFIG_TRY_GET(Vec2)(config, table, "position", vec2_zero());
+    f32 rotation = CONFIG_TRY_GET(float)(config, table, "rotation", 0.f);
+    Vec2 scale = CONFIG_TRY_GET(Vec2)(config, table, "scale", vec2_one());
+    return transform_component_new(0, position, rotation, scale);
+}

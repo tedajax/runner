@@ -11,7 +11,7 @@ void config_system_terminate(ConfigSystem* self) {
 }
 
 void config_type_free(Config* self) {
-    hashtable_free(&self->typeConfigs);
+    hashtable_free_contents(&self->typeConfigs);
     ini_free(&self->data);
     free(self->path);
     free(self);

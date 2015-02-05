@@ -161,7 +161,7 @@ void hashtable_free_contents(Hashtable* self) {
                 }
                 free(kvp);
             }
-
+            bucket->size = 0;
             vector_free(bucket);
         }
     }

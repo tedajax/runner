@@ -7,7 +7,7 @@ Directory* directory_open(const char* path) {
 void directory_close(Directory* self) {
     free(self->path);
     for (int i = 0; i < self->count; ++i) {
-        free(self->files->filename);
+        free(self->files[i].filename);
     }
     free(self->files);
     free(self);

@@ -14,6 +14,7 @@ void prefab_system_init(EntityManager* entityManager, const char* prefabRoot) {
     FileDescriptor* currentFile;
     while (currentFile = directory_next(prefabDir)) {
         printf("%s\n", currentFile->filename);
+        config_system_load(&prefabConfigs, currentFile->filename);
     }
     directory_close(prefabDir);
 }

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "prefab.h"
 
 #include <SDL2/SDL_image.h>
 
@@ -96,9 +97,12 @@ void game_init(Game* self) {
         DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
         debug_hud_watch_set_warnings(tweenWatch, true, 2500, 4000);
     }
+
+    prefab_system_init(self->entityManager, "assets/prefabs");
 }
 
 void game_quit(Game* self) {
+    prefab_system_terminate();
     entity_manager_free(self->entityManager);
     debug_hud_free(&self->debugHud);
     component_system_terminate();

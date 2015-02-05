@@ -22,6 +22,11 @@ SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, i32 l
     return self;
 }
 
+COMPONENT_DESERIALIZE(COMPONENT_SPRITE) {
+    //TODO
+    return NULL;
+}
+
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest) {
     f32 px = transform->position.x - globals.camera.position.x;
     f32 py = transform->position.y - globals.camera.position.y;

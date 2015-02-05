@@ -5,6 +5,12 @@ ComponentType COMPONENT_VALUE_TABLE[COMPONENT_LAST];
 Hashtable COMPONENT_NAME_TABLE;
 bool componentNameTableInitialized = false;
 
+component_deserialize_f COMPONENT_DESERIALIZE_FUNCS[COMPONENT_LAST] = { NULL };
+
+#define COMPONENT_REGISTER(type) \
+    hashtable_insert(&COMPONENT_NAME_TABLE, #type, &COMPONENT_VALUE_TABLE[type]); \
+    COMPONENT_DESERIALIZE_FUNCS[type] = COMPONENT_DESERIALIZE_FUNC(type);
+
 void component_system_init() {
     if (componentNameTableInitialized) {
         return;
@@ -18,7 +24,6 @@ void component_system_init() {
 
     hashtable_init(&COMPONENT_NAME_TABLE, 32, NULL);
 
-    COMPONENT_REGISTER(COMPONENT_INVALID);
     COMPONENT_REGISTER(COMPONENT_TRANSFORM);
     COMPONENT_REGISTER(COMPONENT_MOVEMENT);
     COMPONENT_REGISTER(COMPONENT_CONTROLLER);
@@ -49,7 +54,7 @@ void component_init(Component* self, ComponentType type, u64 size, Entity entity
 }
 
 void component_copy(const Component* source, Component* dest) {
-    memcpy(dest, source, source->size);
+    memcpy(dest, source, (size_t)source->size);
 }
 
 void component_set_entity(Component* self, Entity entity) {
@@ -91,13 +96,9 @@ Component* component_deserialize(Config* config, const char* table) {
 
     ASSERT(type > COMPONENT_INVALID && type < COMPONENT_LAST, "Invalid component deserialization!");
 
-    switch (type) {
-        case COMPONENT_TRANSFORM:
-            return (Component*)transform_component_deserialize(config, table);
-
-        default:
-            return NULL;
-    }
+    ASSERT(COMPONENT_DESERIALIZE_FUNCS[type], "No component deserialization function could be found.  Did you register one with this component?");
+    
+    return COMPONENT_DESERIALIZE_FUNCS[type](config, table);
 }
 
 ////////////////////////

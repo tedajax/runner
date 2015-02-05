@@ -21,13 +21,13 @@ BgManagerComponent* bg_manager_component_new(Entity entity, u32 twidth, u32 thei
     return self;
 }
 
-BgManagerComponent* bg_manager_component_deserialize(Config* self, const char* table) {
-    char* textureName = CONFIG_GET(string)(self, table, "texture");
+COMPONENT_DESERIALIZE(COMPONENT_BG_MANAGER) {
+    char* textureName = CONFIG_GET(string)(config, table, "texture");
     SDL_Texture* texture = textures_get(textureName);
     ASSERT(texture, "Failed to load texture.");
     int width, height;
     SDL_QueryTexture(texture, NULL, NULL, &width, &height);
-    return bg_manager_component_new(0, (u32)width, (u32)height);
+    return (Component*)bg_manager_component_new(0, (u32)width, (u32)height);
 }
 
 bool bg_manager_component_add_entity(BgManagerComponent* self, TransformComponent* transform) {

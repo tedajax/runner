@@ -112,7 +112,7 @@ Entity entities_instantiate_prefab(EntityManager* self, Prefab* prefab, Vec2 pos
         Component* source = prefab->components.components[i];
         
         // Copy into newly allocated block that will actually go into entity manager
-        Component* component = (Component*)malloc(source->size);
+        Component* component = (Component*)malloc((size_t)source->size);
         component_copy(source, component);
 
         // TODO: generalize these special cases somewhat?

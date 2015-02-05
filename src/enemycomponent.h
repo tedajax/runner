@@ -20,5 +20,6 @@ typedef struct enemy_component_t {
 } EnemyComponent;
 
 EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType);
+COMPONENT_DESERIALIZE(COMPONENT_ENEMY);
 
 #endif

@@ -13,5 +13,6 @@ typedef struct controller_component_t {
 } ControllerComponent;
 
 ControllerComponent* controller_component_new(Entity entity, char* config, char* section);
+COMPONENT_DESERIALIZE(COMPONENT_CONTROLLER);
 
 #endif

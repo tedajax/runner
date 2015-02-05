@@ -11,3 +11,7 @@ EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType) {
 
     return self;
 }
+
+COMPONENT_DESERIALIZE(COMPONENT_ENEMY) {
+    return NULL;
+}

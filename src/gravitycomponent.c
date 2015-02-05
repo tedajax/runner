@@ -9,6 +9,7 @@ GravityComponent* gravity_component_new(Entity entity, const Vec2* acceleration)
     return self;
 }
 
-GravityComponent* gravity_component_world(Entity entity) {
-    return gravity_component_new(entity, &globals.gravity);
+COMPONENT_DESERIALIZE(COMPONENT_GRAVITY) {
+    // TODO
+    return NULL;
 }

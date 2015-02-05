@@ -11,6 +11,11 @@ HealthComponent* health_component_new(Entity entity, i32 maxHealth) {
     return self;
 }
 
+COMPONENT_DESERIALIZE(COMPONENT_HEALTH) {
+    //TODO
+    return NULL;
+}
+
 void health_component_on_collision_enter(Component* component, const Message msg) {
     HealthComponent* self = (HealthComponent*)component;
 

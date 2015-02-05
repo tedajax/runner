@@ -11,6 +11,6 @@ typedef struct gravity_component_t {
 } GravityComponent;
 
 GravityComponent* gravity_component_new(Entity entity, const Vec2* acceleration);
-GravityComponent* gravity_component_world(Entity entity);
+COMPONENT_DESERIALIZE(COMPONENT_GRAVITY);
 
 #endif

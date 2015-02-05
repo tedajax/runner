@@ -29,7 +29,10 @@ typedef enum component_type_e {
     COMPONENT_LAST,
 } ComponentType;
 
-#define COMPONENT_REGISTER(type) hashtable_insert(&COMPONENT_NAME_TABLE, #type, &COMPONENT_VALUE_TABLE[type]);
+typedef Component*(*component_deserialize_f)(Config*, const char*);
+
+#define COMPONENT_DESERIALIZE_FUNC(type) type##_deserialize
+#define COMPONENT_DESERIALIZE(type) Component* COMPONENT_DESERIALIZE_FUNC(type)(Config* config, const char* table)
 
 typedef struct component_t {
     ComponentType type;

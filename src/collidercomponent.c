@@ -10,12 +10,12 @@ ColliderComponent* collider_component_new(Entity entity, Collider* collider) {
     return self;
 }
 
-ColliderComponent* collider_component_deserialize(Config* config, const char* table) {
+COMPONENT_DESERIALIZE(COMPONENT_COLLIDER) {
     ColliderConfig colliderConfig;
     collider_config_deserialize((TypeConfig*)&colliderConfig, config, (char*)table);
     Collider collider;
     collider_init_config(&collider, 0, &colliderConfig);
-    return collider_component_new(0, &collider);
+    return (Component*)collider_component_new(0, &collider);
 }
 
 int collider_component_compare(Component* c1, Component* c2) {

@@ -20,3 +20,8 @@ ControllerComponent* controller_component_new(Entity entity, char* config, char*
 
     return self;
 }
+
+COMPONENT_DESERIALIZE(COMPONENT_CONTROLLER) {
+    //TODO
+    return NULL;
+}

@@ -52,6 +52,11 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
     return self;
 }
 
+COMPONENT_DESERIALIZE(COMPONENT_LUA) {
+    // TODO
+    return NULL;
+}
+
 void lua_component_check_and_reload(LuaComponent* self) {
     if (lua_file_update_mtime(&self->file)) {
         profiler_tick("reload lua file");

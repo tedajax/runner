@@ -16,7 +16,7 @@ MovementComponent* movement_component_new(Entity entity, Vec2 velocity, f32 angu
     return self;
 }
 
-MovementComponent* movement_component_deserialize(Config* config, const char* table) {
+COMPONENT_DESERIALIZE(COMPONENT_MOVEMENT) {
     Vec2 velocity = CONFIG_TRY_GET(Vec2)(config, table, "velocity", vec2_zero());
     f32 angularVelocity = CONFIG_TRY_GET(float)(config, table, "angular_velocity", 0.f);
     bool constrain = CONFIG_TRY_GET(bool)(config, table, "constrain_to_camera", false);
@@ -24,5 +24,5 @@ MovementComponent* movement_component_deserialize(Config* config, const char* ta
     MovementComponent* result = movement_component_new(0, velocity, angularVelocity);
     result->constrainToCamera = constrain;
 
-    return result;
+    return (Component*)result;
 }

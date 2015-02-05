@@ -1,5 +1,15 @@
 #include "config.h"
 
+void config_system_init(ConfigSystem* self, char* rootDir) {
+    self->rootDir = rootDir;
+    hashtable_init(&self->configTable, 32, config_type_free_void);
+}
+
+void config_system_terminate(ConfigSystem* self) {
+    self->rootDir = NULL;
+    hashtable_free_contents(&self->configTable);
+}
+
 void config_type_free(Config* self) {
     hashtable_free(&self->typeConfigs);
     ini_free(&self->data);
@@ -38,9 +48,7 @@ void config_type_reload(Config* self) {
 }
 
 void config_init() {
-    hashtable_init(&configTable, 32, config_type_free_void);
-
-    rootDir = "assets/data/";
+    config_system_init(&defaultConfigs, "assets/data/");
 
     REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_COLLIDER, collider_config_deserialize);
     REGISTER_DESERIALIZE_FUNCTION(TYPE_CONFIG_BULLET_SOURCE, bullet_source_config_deserialize);
@@ -48,19 +56,30 @@ void config_init() {
 }
 
 void config_terminate() {
-    hashtable_free(&configTable);
-    rootDir = NULL;
+    config_system_terminate(&defaultConfigs);
 }
 
 void config_load(const char* filename) {
-    ASSERT(rootDir, "Call config_init() before attempting to load configs!");
+    config_system_load(&defaultConfigs, filename);
+}
+
+void config_reload_all() {
+    config_system_reload_all(&defaultConfigs);
+}
+
+Config* config_get(const char* name) {
+    return config_system_get(&defaultConfigs, name);
+}
+
+void config_system_load(ConfigSystem* self, const char* filename) {
+    ASSERT(self->rootDir, "Call config_init() before attempting to load configs!");
 
     char fullPath[256];
-    IF_DEBUG(bool concatResult = )path_concat(rootDir, filename, fullPath, 256);
+    IF_DEBUG(bool concatResult = )path_concat(self->rootDir, filename, fullPath, 256);
     ASSERT(concatResult, "Failed to concatenate paths, destination string not long enough.");
-    
-    IF_DEBUG(void* element = hashtable_get(&configTable, filename);)
-    ASSERT(element == NULL, "Config already loaded.");
+
+    IF_DEBUG(void* element = hashtable_get(&self->configTable, filename);)
+        ASSERT(element == NULL, "Config already loaded.");
 
     Config* newConfig = CALLOC(1, Config);
     ini_load(&newConfig->data, fullPath);
@@ -69,24 +88,26 @@ void config_load(const char* filename) {
     newConfig->lastMTime = config_get_mtime(newConfig->path);
 
     hashtable_init(&newConfig->typeConfigs, 32, free);
-    hashtable_insert(&configTable, filename, (void*)newConfig);
+    hashtable_insert(&self->configTable, filename, (void*)newConfig);
 }
 
-void config_reload_all() {
+void config_system_reload_all(ConfigSystem* self) {
     Config* configs[128];
-    u32 count = (u32)hashtable_get_all(&configTable, (void**)configs, 128);
+    u32 count = (u32)hashtable_get_all(&self->configTable, (void**)configs, 128);
 
-    for (u32 i = 0; i < count; ++i) {
+    for (u32 i = 0; i < count; ++i)
+    {
         Config* config = (Config*)configs[i];
 
-        if (config_type_update_mtime(config)) {
+        if (config_type_update_mtime(config))
+        {
             config_type_reload(config);
         }
     }
 }
 
-Config* config_get(const char* name) {
-    Config* cfg = (Config*)hashtable_get(&configTable, name);
+Config* config_system_get(ConfigSystem* self, const char* name) {
+    Config* cfg = (Config*)hashtable_get(&self->configTable, name);
     ASSERT(cfg, "Config has not been loaded");
     return cfg;
 }

@@ -85,6 +85,12 @@
     <Filter Include="Scripts">
       <UniqueIdentifier>{030af783-5fc1-49c7-94b1-5217b14a895b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Application\Win">
+      <UniqueIdentifier>{76328fc1-6a3d-43c5-8fbe-2ad2ea4fd2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Application\Posix">
+      <UniqueIdentifier>{48d42dde-50da-436d-8b20-2856d2911623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -287,6 +293,15 @@
     </ClCompile>
     <ClCompile Include="src\prefab.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\directory.c">
+      <Filter>Source Files\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Win\windirectory.c">
+      <Filter>Source Files\Core\Application\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Posix\posixdirectory.c">
+      <Filter>Source Files\Core\Application\Posix</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -511,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="src\prefab.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\directory.h">
+      <Filter>Header Files\Core\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

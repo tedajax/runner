@@ -15,6 +15,16 @@
 
 #define CONFIG_DEFAULT_SECTION INI_DEFAULT_SECTION
 
+typedef struct config_system_t {
+    Hashtable configTable;
+    char* rootDir;
+} ConfigSystem;
+
+void config_system_init(ConfigSystem* self, char* rootDir);
+void config_system_terminate(ConfigSystem* self);
+
+ConfigSystem defaultConfigs;
+
 typedef struct config_t {
     Ini data;
     Hashtable typeConfigs;
@@ -27,14 +37,14 @@ void config_type_free_void(void* pself);
 bool config_type_update_mtime(Config* self);
 void config_type_reload(Config* self);
 
-char* rootDir;
-Hashtable configTable;
-
 void config_init();
 void config_terminate();
 void config_load(const char* filename);
 void config_reload_all();
 Config* config_get(const char* name);
+void config_system_load(ConfigSystem* self, const char* filename);
+void config_system_reload_all(ConfigSystem* self);
+Config* config_system_get(ConfigSystem* self, const char* name);
 time_t config_get_mtime(const char* path);
 
 static inline int config_get_array_count(Config* self, const char* section, const char* key) { return ini_get_array_count(&self->data, section, key); }

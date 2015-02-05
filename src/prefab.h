@@ -6,13 +6,10 @@
 #include "log.h"
 #include "config.h"
 #include "component.h"
+#include "entitymanager.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#define PREFAB_MAX_COMPONENT_NAME_LENGTH 64
-
-typedef char PrefabString[PREFAB_MAX_COMPONENT_NAME_LENGTH];
+void prefab_system_init(EntityManager* entityManager, const char* prefabRoot);
+void prefab_system_terminate();
 
 typedef struct prefab_t {
     Config* config;

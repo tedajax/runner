@@ -1,4 +1,5 @@
 #include "application.h"
+#include "prefab.h"
 
 int app_run(int argc, char* argv[]) {
     App self;
@@ -8,6 +9,8 @@ int app_run(int argc, char* argv[]) {
     ASSERT(appInit, "Application failed to initialize");
 
     game_init(&self.game);
+    prefab_system_init(self.game.entityManager, "assets/prefabs");
+
     game_start(&self.game);
 
     while (!self.shouldQuit) {
@@ -130,6 +133,9 @@ bool _app_initialize(App* self) {
 
 void _app_terminate(App* self) {
     profiler_terminate();
+
+    prefab_system_terminate();
+    config_terminate();
 
     SDL_DestroyWindow(globals.window);
     SDL_DestroyRenderer(globals.renderer);

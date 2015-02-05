@@ -1,4 +1,5 @@
 #include "luacomponent.h"
+#include "snprintf.h"
 
 bool lua_file_update_mtime(LuaFile* self) {
     profiler_tick("update lua mtime");
@@ -30,7 +31,10 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
     // TODO: error handling
     self->L = lua_open();
     luaL_openlibs(self->L);
-    luaL_dofile(self->L, self->file.path);
+    if (luaL_dofile(self->L, self->file.path))
+    {
+        printf("%s\n", lua_tostring(self->L, -1));
+    }
 
     {
         LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_START];
@@ -53,8 +57,11 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_LUA) {
-    char* filename = CONFIG_GET(string)(config, table, "filename");
-    return (Component*)lua_component_new(0, filename);
+    char* filename = CONFIG_GET(string)(config, table, "file");
+    //TODO: This scripts path should be pulled from elsewhere
+    char path[128];
+    snprintf(path, 128, "%s/%s", "assets/scripts", filename);
+    return (Component*)lua_component_new(0, path);
 }
 
 void lua_component_check_and_reload(LuaComponent* self) {

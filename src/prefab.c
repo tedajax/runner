@@ -15,6 +15,11 @@ void prefab_system_init(EntityManager* entityManager, const char* prefabRoot) {
     while ((currentFile = directory_next(prefabDir))) {
         printf("%s\n", currentFile->filename);
         config_system_load(&prefabConfigs, currentFile->filename);
+        Config* cfg = config_system_get(&prefabConfigs, currentFile->filename);
+        Prefab* newPrefab = CALLOC(1, Prefab);
+        newPrefab->config = cfg;
+        prefab_reload(newPrefab);
+        hashtable_insert(&prefabTable, currentFile->filename, (void*)newPrefab);
     }
     directory_close(prefabDir);
 }
@@ -55,6 +60,10 @@ void prefab_reload(Prefab* self) {
         Component* component = component_deserialize(self->config, name);
         component_batch_add(&self->components, component);
     }
+}
+
+Prefab* prefab_get(char* name) {
+    return (Prefab*)hashtable_get(&prefabTable, name);
 }
 
 void prefab_instantiate(Prefab* self) {

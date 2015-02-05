@@ -50,6 +50,7 @@ void lua_bind_callv(LuaBind* self, lua_State* L, va_list argv) {
     }
 
     if (lua_pcall(L, self->argc, 0, 0) != 0) {
+        fprintf(stderr, "Lua error -- %s:%d -- %s: %s\n", __FILE__, __LINE__, self->functionName, lua_tostring(L, -1));
         LUA_ERROR(L);
     }
 }

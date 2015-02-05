@@ -91,6 +91,9 @@
     <Filter Include="Source Files\Core\Application\Posix">
       <UniqueIdentifier>{48d42dde-50da-436d-8b20-2856d2911623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prefabs">
+      <UniqueIdentifier>{66e7ba1a-1bd9-43ca-b6ae-9836e723fd09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -552,6 +555,12 @@
     </None>
     <None Include="assets\scripts\component.lua">
       <Filter>Scripts</Filter>
+    </None>
+    <None Include="assets\scripts\prefab_test.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="assets\prefabs\test.prefab">
+      <Filter>Prefabs</Filter>
     </None>
   </ItemGroup>
 </Project>

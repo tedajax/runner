@@ -22,6 +22,8 @@ void game_init(Game* self) {
     textures_load("fireparticle.png");
     textures_load("bullet.png");    
 
+    prefab_system_init(self->entityManager, "assets/prefabs");
+
     self->entityManager = entity_manager_new();
     health_system_init(&self->healthSystem, self->entityManager);
     sprite_system_init(&self->spriteSystem, self->entityManager);
@@ -97,8 +99,6 @@ void game_init(Game* self) {
         DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
         debug_hud_watch_set_warnings(tweenWatch, true, 2500, 4000);
     }
-
-    prefab_system_init(self->entityManager, "assets/prefabs");
 }
 
 void game_quit(Game* self) {
@@ -112,6 +112,8 @@ void game_start(Game* self) {
     bg_manager_system_start(&self->bgManagerSystem);
     collision_system_start(&self->collisionSystem);
     lua_system_start(&self->luaSystem);
+
+    prefab_instantiate(prefab_get("test.prefab"));
 }
 
 void game_update(Game* self) {

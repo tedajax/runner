@@ -333,8 +333,10 @@
     <None Include="assets\data\particles.ini" />
     <None Include="assets\data\player.ini" />
     <None Include="assets\data\test.ini" />
+    <None Include="assets\prefabs\test.prefab" />
     <None Include="assets\scripts\api.lua" />
     <None Include="assets\scripts\component.lua" />
+    <None Include="assets\scripts\prefab_test.lua" />
     <None Include="assets\scripts\test_component.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

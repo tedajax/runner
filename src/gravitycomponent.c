@@ -10,6 +10,6 @@ GravityComponent* gravity_component_new(Entity entity, const Vec2* acceleration)
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_GRAVITY) {
-    // TODO
-    return NULL;
+    Vec2 gravity = CONFIG_TRY_GET(Vec2)(config, table, "gravity", globals.gravity);
+    return (Component*)gravity_component_new(0, &gravity);
 }

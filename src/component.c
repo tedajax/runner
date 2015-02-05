@@ -36,7 +36,7 @@ void component_system_init() {
     COMPONENT_REGISTER(COMPONENT_COLLIDER);
     COMPONENT_REGISTER(COMPONENT_LUA);
 
-    ASSERT(COMPONENT_NAME_TABLE.size == COMPONENT_LAST, "Unregistered component type detected.  Did you add a new component recently?");
+    ASSERT(COMPONENT_NAME_TABLE.size == COMPONENT_LAST - 1, "Unregistered component type detected.  Did you add a new component recently?");
 }
 
 void component_system_terminate() {

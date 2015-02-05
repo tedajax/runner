@@ -53,8 +53,8 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_LUA) {
-    // TODO
-    return NULL;
+    char* filename = CONFIG_GET(string)(config, table, "filename");
+    return (Component*)lua_component_new(0, filename);
 }
 
 void lua_component_check_and_reload(LuaComponent* self) {

@@ -5,8 +5,6 @@
 #include "component.h"
 
 typedef enum enemy_type_e {
-    ENEMY_TYPE_INVALID,
-
     ENEMY_TYPE_BASIC,
 
     ENEMY_TYPE_LAST,
@@ -21,5 +19,7 @@ typedef struct enemy_component_t {
 
 EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType);
 COMPONENT_DESERIALIZE(COMPONENT_ENEMY);
+
+EnemyType enemy_type_parse(const char* str);
 
 #endif

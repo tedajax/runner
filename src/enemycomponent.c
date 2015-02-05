@@ -13,5 +13,14 @@ EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType) {
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_ENEMY) {
-    return NULL;
+    char* enemyTypeStr = CONFIG_TRY_GET(string)(config, table, "enemy_type", "ENEMY_TYPE_BASIC");
+    return (Component*)enemy_component_new(0, enemy_type_parse(enemyTypeStr));
+}
+
+EnemyType enemy_type_parse(const char* str) {
+    if (strcmp(str, "ENEMY_TYPE_BASIC") == 0) {
+        return ENEMY_TYPE_BASIC;
+    } else {
+        return ENEMY_TYPE_BASIC;
+    }
 }

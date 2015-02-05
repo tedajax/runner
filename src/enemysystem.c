@@ -31,7 +31,6 @@ void enemy_update(EnemySystem* self, EnemyComponent* enemy, TransformComponent* 
     
     switch (enemy->enemyType) {
         default:
-        case ENEMY_TYPE_INVALID:
         case ENEMY_TYPE_LAST:
             return;
 

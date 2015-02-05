@@ -23,8 +23,9 @@ SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, i32 l
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_SPRITE) {
-    //TODO
-    return NULL;
+    char* textureStr = CONFIG_GET(string)(config, table, "texture");
+    i32 layer = (i32)CONFIG_TRY_GET(int)(config, table, "layer", 0);
+    return (Component*)sprite_component_new(0, textures_get(textureStr), layer);
 }
 
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest) {

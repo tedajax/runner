@@ -25,7 +25,7 @@ COMPONENT_DESERIALIZE(COMPONENT_BG_MANAGER) {
     char* textureName = CONFIG_GET(string)(config, table, "texture");
     SDL_Texture* texture = textures_get(textureName);
     ASSERT(texture, "Failed to load texture.");
-    int width, height;
+    int width = 1, height = 1;
     SDL_QueryTexture(texture, NULL, NULL, &width, &height);
     return (Component*)bg_manager_component_new(0, (u32)width, (u32)height);
 }

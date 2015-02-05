@@ -12,8 +12,8 @@ HealthComponent* health_component_new(Entity entity, i32 maxHealth) {
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_HEALTH) {
-    //TODO
-    return NULL;
+    i32 max = CONFIG_GET(int)(config, table, "max_health");
+    return (Component*)health_component_new(0, max);
 }
 
 void health_component_on_collision_enter(Component* component, const Message msg) {

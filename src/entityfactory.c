@@ -18,7 +18,7 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
         (Component*)movement);
 
     entities_add_component(entityManager,
-        (Component*)controller_component_new(entity, "player.ini", "player"));
+        (Component*)controller_component_new(entity, config_get("player.ini"), "player"));
 
     entities_add_component(entityManager,
         (Component*)health_component_new(entity, 100000));

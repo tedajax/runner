@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT) # If windows
 else
 	SDL_LFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
 	CC = clang
-	STD = c11
+	STD = gnu11
 	POST_BUILD =
 	INCLUDE_FLAGS = -I/usr/include/luajit-2.0
     SYSTEM_FLAGS = -rdynamic

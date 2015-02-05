@@ -8,11 +8,11 @@ Hashtable prefabTable;
 
 void prefab_system_init(EntityManager* entityManager, const char* prefabRoot) {
     config_system_init(&prefabConfigs, (char*)prefabRoot);
-    hashtable_init(&prefabTable, 32, prefab_free);
+    hashtable_init(&prefabTable, 32, prefab_free_void);
 
     Directory* prefabDir = directory_open(prefabRoot);
     FileDescriptor* currentFile;
-    while (currentFile = directory_next(prefabDir)) {
+    while ((currentFile = directory_next(prefabDir))) {
         printf("%s\n", currentFile->filename);
         config_system_load(&prefabConfigs, currentFile->filename);
     }
@@ -40,6 +40,10 @@ void prefab_free(Prefab* self) {
         free(self->components.components);
     }
     free(self);
+}
+
+void prefab_free_void(void* self) {
+    prefab_free((Prefab*)self);
 }
 
 void prefab_reload(Prefab* self) {

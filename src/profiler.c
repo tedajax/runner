@@ -62,12 +62,12 @@ void profile_add_sample(Profile* p, u64 time) {
 
 void profile_dump(Profile* p, FILE* file, bool full) {
     fprintf(file, "%s:\n", p->name);
-    fprintf(file, "\taverage: %lluns\n\tpeak: %lluns\n", p->average, p->peak);
+    fprintf(file, "\taverage: %luns\n\tpeak: %luns\n", p->average, p->peak);
 
     if (full) {
         fprintf(file, "\tsample count: %u\n", p->count);
         for (u32 i = 0; i < p->count; ++i) {
-            fprintf(file, "\t[%u]: %llu\n", i, p->recent[i]);
+            fprintf(file, "\t[%u]: %lu\n", i, p->recent[i]);
         }
     }
     fprintf(file, "\n");
@@ -107,7 +107,7 @@ void profiler_dump(FILE* file, bool full) {
 void profiler_dump_log() {
 #if PROFILING_ENABLED
     char buffer[128];
-    snprintf(buffer, 128, "profiler_%d.profile", time(NULL));
+    snprintf(buffer, 128, "profiler_%ld.profile", time(NULL));
     FILE* fp = fopen(buffer, "w");
     profiler_dump(fp, true);
     fclose(fp);

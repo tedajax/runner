@@ -1,4 +1,5 @@
 obj/*.o
+obj/Posix/*.o
 runner.exe
 runner
 Debug/

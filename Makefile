@@ -13,6 +13,7 @@ else
 	POST_BUILD =
 	INCLUDE_FLAGS = -I/usr/include/luajit-2.0
     SYSTEM_FLAGS = -rdynamic
+    PLATFORM_DIR = Posix
 endif
 
 MODE = DEBUG
@@ -37,9 +38,9 @@ SRCDIR		= src
 OBJDIR		= obj
 BINDIR		= .
 
-SOURCES		:= $(wildcard $(SRCDIR)/*.c)
+SOURCES		:= $(wildcard $(SRCDIR)/*.c $(SRCDIR)/$(PLATFORM_DIR)/*.c)
 INCLUDES	:= $(wildcard $(SRCDIR)/*.h)
-OBJECTS		:= $(SOURCES:$(SRCDIR)%.c=$(OBJDIR)/%.o)
+OBJECTS		:= $(SOURCES:$(SRCDIR)%.c=$(OBJDIR)/%.o)$($(SRCDIR)/$(PLATFORM_DIR)%.c=$(OBJDIR)/$(PLATFORM_DIR)/%.o)
 
 all: $(BINDIR)/$(TARGET) post-build
 	@echo Done!

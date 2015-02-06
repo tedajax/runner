@@ -37,7 +37,7 @@ function hsv_to_rgb(h, s, v)
 end
 
 update = function(dt)
-    h = h + 120 * dt
+    h = h + 60 * dt
     s = 1
     v = 1
 end

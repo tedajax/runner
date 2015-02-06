@@ -22,7 +22,8 @@ bool lua_file_update_mtime(LuaFile* self) {
 LuaComponent* lua_component_new(Entity entity, const char* filename) {
     LuaComponent* self = CALLOC(1, LuaComponent);
 
-    self->file.path = (char*)filename;
+    self->file.path = CALLOC(strlen(filename) + 1, char);
+    strcpy(self->file.path, filename);
     self->file.lastMTime = 0;
     lua_file_update_mtime(&self->file);
 
@@ -78,5 +79,6 @@ void lua_component_check_and_reload(LuaComponent* self) {
 
 void lua_component_free(LuaComponent* self) {
     lua_close(self->L);
+    free(self->file.path);
     free(self);
 }

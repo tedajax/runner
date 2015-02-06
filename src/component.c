@@ -7,9 +7,10 @@ bool componentNameTableInitialized = false;
 
 component_deserialize_f COMPONENT_DESERIALIZE_FUNCS[COMPONENT_LAST] = { NULL };
 
-#define COMPONENT_REGISTER(type) \
+#define COMPONENT_REGISTER(type, datatype) \
     hashtable_insert(&COMPONENT_NAME_TABLE, #type, &COMPONENT_VALUE_TABLE[type]); \
-    COMPONENT_DESERIALIZE_FUNCS[type] = COMPONENT_DESERIALIZE_FUNC(type);
+    COMPONENT_DESERIALIZE_FUNCS[type] = COMPONENT_DESERIALIZE_FUNC(type); \
+    COMPONENT_SIZE_TABLE[type] = sizeof(datatype);
 
 void component_system_init() {
     if (componentNameTableInitialized) {
@@ -24,17 +25,17 @@ void component_system_init() {
 
     hashtable_init(&COMPONENT_NAME_TABLE, 32, NULL);
 
-    COMPONENT_REGISTER(COMPONENT_TRANSFORM);
-    COMPONENT_REGISTER(COMPONENT_MOVEMENT);
-    COMPONENT_REGISTER(COMPONENT_CONTROLLER);
-    COMPONENT_REGISTER(COMPONENT_BULLET_CONTROLLER);
-    COMPONENT_REGISTER(COMPONENT_GRAVITY);
-    COMPONENT_REGISTER(COMPONENT_HEALTH);
-    COMPONENT_REGISTER(COMPONENT_SPRITE);
-    COMPONENT_REGISTER(COMPONENT_BG_MANAGER);
-    COMPONENT_REGISTER(COMPONENT_ENEMY);
-    COMPONENT_REGISTER(COMPONENT_COLLIDER);
-    COMPONENT_REGISTER(COMPONENT_LUA);
+    COMPONENT_REGISTER(COMPONENT_TRANSFORM, TransformComponent);
+    COMPONENT_REGISTER(COMPONENT_MOVEMENT, MovementComponent);
+    COMPONENT_REGISTER(COMPONENT_CONTROLLER, ControllerComponent);
+    COMPONENT_REGISTER(COMPONENT_BULLET_CONTROLLER, BulletControllerComponent);
+    COMPONENT_REGISTER(COMPONENT_GRAVITY, GravityComponent);
+    COMPONENT_REGISTER(COMPONENT_HEALTH, HealthComponent);
+    COMPONENT_REGISTER(COMPONENT_SPRITE, SpriteComponent);
+    COMPONENT_REGISTER(COMPONENT_BG_MANAGER, BgManagerComponent);
+    COMPONENT_REGISTER(COMPONENT_ENEMY, EnemyComponent);
+    COMPONENT_REGISTER(COMPONENT_COLLIDER, ColliderComponent);
+    COMPONENT_REGISTER(COMPONENT_LUA, LuaComponent);
 
     ASSERT(COMPONENT_NAME_TABLE.size == COMPONENT_LAST - 1, "Unregistered component type detected.  Did you add a new component recently?");
 }
@@ -64,12 +65,10 @@ void component_set_entity(Component* self, Entity entity) {
 void component_free(Component* self) {
     switch (self->type) {
         default:
-            free(self);
             break;
 
         case COMPONENT_BG_MANAGER:
             free(((BgManagerComponent*)self)->transforms);
-            free(self);
             break;
     }
 }

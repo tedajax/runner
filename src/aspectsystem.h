@@ -9,10 +9,10 @@
     ComponentList* components = aspect_system_components((AspectSystem*)self)
 
 #define GET_ENTITY(index)                   \
-    components->components[index]->entity
+    component_list_get_at(components, index)->entity
 
 #define GET_SYSTEM_COMPONENT(index)         \
-    components->components[index]
+    component_list_get_at(components, index)
 
 #define GET_COMPONENT(entity, comptype)                \
         entities_get_component(                 \

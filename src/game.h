@@ -22,6 +22,8 @@ typedef struct game_t {
     LuaSystem luaSystem;
     Entity player;
 
+    u64 ticks;
+
     DebugHud debugHud;
 } Game;
 

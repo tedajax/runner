@@ -34,6 +34,8 @@ typedef Component*(*component_deserialize_f)(Config*, const char*);
 #define COMPONENT_DESERIALIZE_FUNC(type) type##_deserialize
 #define COMPONENT_DESERIALIZE(type) Component* COMPONENT_DESERIALIZE_FUNC(type)(Config* config, const char* table)
 
+size_t COMPONENT_SIZE_TABLE[COMPONENT_LAST];
+
 typedef struct component_t {
     ComponentType type;
     u64 size;

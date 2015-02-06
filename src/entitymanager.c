@@ -57,8 +57,8 @@ EntityManager* entity_manager_new() {
     EntityManager* self = (EntityManager*)calloc(1, sizeof(EntityManager));
 
     POOL_INIT(Entity)(&self->entities, MAX_ENTITIES, 0);
-    for (u32 i = 0; i < COMPONENT_LAST; ++i) {
-        component_list_init(&self->componentsMap[i], component_entity_compare);
+    for (ComponentType i = COMPONENT_INVALID + 1; i < COMPONENT_LAST; ++i) {
+        component_list_init(&self->componentsMap[i], (u32)COMPONENT_SIZE_TABLE[i], component_entity_compare);
     }
     self->lowestEId = 1;
 
@@ -206,7 +206,7 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
     dest->size = 0;
     for (u32 i = 0; i < components->count; ++i) {
         ASSERT(dest->size < dest->capacity, "Reached maximum size of entity list.  Make it bigger!");
-        dest->list[i] = components->components[i]->entity;
+        dest->list[i] = components->components[i].entity;
         ++dest->size;
     }
 

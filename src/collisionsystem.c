@@ -173,7 +173,7 @@ void collision_system_render(CollisionSystem* self) {
                     r.position.y = aabb.center.y - aabb.height / 2.f - globals.camera.position.y;
                     r.width = aabb.width;
                     r.height = aabb.height;
-                    prim_rect_color(globals.renderer, &r, color);
+                    prim_box_color(globals.renderer, &r, color);
                 }
                 break;
 

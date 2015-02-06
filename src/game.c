@@ -99,6 +99,8 @@ void game_init(Game* self) {
         DebugHudWatch* tweenWatch = debug_hud_add_watch(&self->debugHud, "Tweens", WATCH_TYPE_INT, &globals.tweens.count);
         debug_hud_watch_set_warnings(tweenWatch, true, 2500, 4000);
     }
+
+    self->ticks = 0;
 }
 
 void game_quit(Game* self) {
@@ -130,7 +132,7 @@ void game_update(Game* self) {
     lua_system_update(&self->luaSystem);
 
     profiler_tick("collision");
-    collision_system_update(&self->collisionSystem);
+    //collision_system_update(&self->collisionSystem);
     profiler_tock("collision");
 
     camera_update(&globals.camera);
@@ -139,6 +141,8 @@ void game_update(Game* self) {
     tween_manager_update(&globals.tweens, globals.time.delta);
 
     game_debug_keys(self);
+
+    ++self->ticks;
 }
 
 void game_debug_keys(Game* self) {

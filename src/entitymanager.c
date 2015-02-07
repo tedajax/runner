@@ -144,7 +144,7 @@ void entities_add_component(EntityManager* self, Component* component) {
 Component* entities_get_component(EntityManager* self, ComponentType type, Entity entity) {
     profiler_tick("get_component");
     Component* result = component_list_get(&self->componentsMap[type], entity);
-    profiler_tock("get_component");
+    profiler_tock_context("get_component", component_type_get_name(type));
     return result;
 }
 

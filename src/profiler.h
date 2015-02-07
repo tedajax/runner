@@ -11,11 +11,17 @@
 
 #define PROFILING_ENABLED 1
 
+typedef struct profile_tick_t {
+    char context[64];
+    u64 time;
+} ProfileTick;
+
 typedef struct profile_t {
     char* name;
-    u64* recent;
+    ProfileTick* recent;
     u32 capacity;
     u32 count;
+    u32 index;
     u64 average;
     u64 peak;
     u64 tick;
@@ -32,5 +38,6 @@ void profiler_dump(FILE* file, bool full);
 void profiler_dump_log();
 void profiler_tick(const char* name);
 void profiler_tock(const char* name);
+void profiler_tock_context(const char* name, char* context);
 
 #endif

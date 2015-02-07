@@ -29,6 +29,8 @@ typedef enum component_type_e {
     COMPONENT_LAST,
 } ComponentType;
 
+char* component_type_get_name(ComponentType type);
+
 typedef Component*(*component_deserialize_f)(Config*, const char*);
 
 #define COMPONENT_DESERIALIZE_FUNC(type) type##_deserialize

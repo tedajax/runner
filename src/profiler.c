@@ -14,8 +14,9 @@ Profile* add_profile(const char* name) {
     p->name = (char*)name;
 
     p->capacity = PROFILER_STORED_SAMPLES;
-    p->recent = (u64*)calloc(p->capacity, sizeof(u64));
+    p->recent = (ProfileTick*)calloc(p->capacity, sizeof(ProfileTick));
     p->count = 0;
+    p->index = 0;
 
     p->peak = 0;
     p->average = 0;
@@ -38,16 +39,20 @@ Profile* find_profile(const char* name) {
     return add_profile(name);
 }
 
-void profile_add_sample(Profile* p, u64 time) {
-    if (p->count >= p->capacity) {
-        for (u32 i = 0; i < p->capacity - 1; ++i) {
-            p->recent[i] = p->recent[i + 1];
-        }
-        p->recent[p->capacity - 1] = time;
-    } else {
-        p->recent[p->count] = time;
+void profile_add_sample(Profile* p, u64 time, char* context) {
+    if (p->count < p->capacity) {
         ++p->count;
     }
+
+    ++p->index;
+    if (p->index >= p->capacity) {
+        p->index = 0;
+    }
+
+    if (context) {
+        strcpy(p->recent[p->index].context, context);
+    }
+    p->recent[p->index].time = time;
 
     if (time > p->peak) {
         p->peak = time;
@@ -55,7 +60,7 @@ void profile_add_sample(Profile* p, u64 time) {
 
     u64 avg = 0;
     for (u32 i = 0; i < p->count; ++i) {
-        avg += p->recent[i];
+        avg += p->recent[i].time;
     }
     p->average = avg / p->count;
 }
@@ -67,7 +72,7 @@ void profile_dump(Profile* p, FILE* file, bool full) {
     if (full) {
         fprintf(file, "\tsample count: %u\n", p->count);
         for (u32 i = 0; i < p->count; ++i) {
-            fprintf(file, "\t[%u]: %lu\n", i, p->recent[i]);
+            fprintf(file, "\t[%u]: %s -- %lu\n", i, p->recent[i].context, p->recent[i].time);
         }
     }
     fprintf(file, "\n");
@@ -126,14 +131,19 @@ void profiler_tick(const char* name) {
 }
 
 void profiler_tock(const char* name) {
+    profiler_tock_context(name, NULL);
+}
+
+void profiler_tock_context(const char* name, char* context) {
 #if PROFILING_ENABLED
-    if (!profilingEnabled) {
+    if (!profilingEnabled)
+    {
         return;
     }
     Profile* p = find_profile(name);
 
     u64 tock = game_time_now();
     u64 ns = tock - p->tick;
-    profile_add_sample(p, ns);
+    profile_add_sample(p, ns, context);
 #endif
 }

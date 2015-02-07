@@ -1,6 +1,7 @@
 #include "component.h"
 #include "components.h"
 
+char* COMPONENT_TYPE_STRING_TABLE[COMPONENT_LAST];
 ComponentType COMPONENT_VALUE_TABLE[COMPONENT_LAST];
 Hashtable COMPONENT_NAME_TABLE;
 bool componentNameTableInitialized = false;
@@ -9,7 +10,12 @@ component_deserialize_f COMPONENT_DESERIALIZE_FUNCS[COMPONENT_LAST] = { NULL };
 
 #define COMPONENT_REGISTER(type) \
     hashtable_insert(&COMPONENT_NAME_TABLE, #type, &COMPONENT_VALUE_TABLE[type]); \
-    COMPONENT_DESERIALIZE_FUNCS[type] = COMPONENT_DESERIALIZE_FUNC(type);
+    COMPONENT_DESERIALIZE_FUNCS[type] = COMPONENT_DESERIALIZE_FUNC(type); \
+    COMPONENT_TYPE_STRING_TABLE[type] = #type;
+
+char* component_type_get_name(ComponentType type) {
+    return COMPONENT_TYPE_STRING_TABLE[type];
+}
 
 void component_system_init() {
     if (componentNameTableInitialized) {

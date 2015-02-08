@@ -22,3 +22,15 @@ ControllerComponent* controller_component_new(Entity entity, Config* config, cha
 COMPONENT_DESERIALIZE(COMPONENT_CONTROLLER) {
     return (Component*)controller_component_new(0, config, (char*)table);
 }
+
+COMPONENT_FREE(COMPONENT_CONTROLLER) {
+    ControllerComponent* self = (ControllerComponent*)component;
+    for (u32 i = 0; i < self->bulletSourceCount; ++i) {
+        bullet_source_release(&self->bulletSources[i]);
+    }
+    free(self->bulletSources);
+}
+
+COMPONENT_COPY(COMPONENT_CONTROLLER) {
+    //TODO
+}

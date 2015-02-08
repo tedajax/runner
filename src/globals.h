@@ -1,6 +1,7 @@
 #ifndef RUNNER_GLOBALS_H
 #define RUNNER_GLOBALS_H
 
+#include "memory.h"
 #include "types.h"
 #include "gametime.h"
 #include "algebra.h"

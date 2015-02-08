@@ -13,6 +13,6 @@ render = function()
     g = 127
     b = 0
     
-    ffi.C.draw_rectangle_rgba(Vec2(640, 360), 1280, 720, r, g, b, ((math.sin(a) + 1) / 2) * 0.5 * 255)
+    -- ffi.C.draw_rectangle_rgba(Vec2(640, 360), 1280, 720, r, g, b, ((math.sin(a) + 1) / 2) * 0.5 * 255)
 end
 

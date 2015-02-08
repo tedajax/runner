@@ -65,14 +65,42 @@ void profile_add_sample(Profile* p, u64 time, char* context) {
     p->average = avg / p->count;
 }
 
+void pduration(FILE* file, u64 time) {
+    const char* ns = "ns";
+    const char* us = "us";
+    const char* ms = "ms";
+
+    char* units;
+    u64 t;
+
+    if (time < 1000) {
+        units = (char*)ns;
+        t = time;
+    } else if (time < 1000000) {
+        units = (char*)us;
+        t = time / 1000;
+    } else {
+        units = (char*)ms;
+        t = time / 1000000;
+    }
+
+    fprintf(file, "%lu%s", t, units);
+}
+
 void profile_dump(Profile* p, FILE* file, bool full) {
     fprintf(file, "%s:\n", p->name);
-    fprintf(file, "\taverage: %luns\n\tpeak: %luns\n", p->average, p->peak);
+    fprintf(file, "\taverage: ");
+    pduration(file, p->average);
+    fprintf(file, "\n\tpeak: ");
+    pduration(file, p->peak);
+    fprintf(file, "\n");
 
     if (full) {
         fprintf(file, "\tsample count: %u\n", p->count);
         for (u32 i = 0; i < p->count; ++i) {
-            fprintf(file, "\t[%u]: %s -- %lu\n", i, p->recent[i].context, p->recent[i].time);
+            fprintf(file, "\t[%u]: %s -- ", i, p->recent[i].context);
+            pduration(file, p->recent[i].time);
+            fprintf(file, "\n");
         }
     }
     fprintf(file, "\n");

@@ -11,7 +11,7 @@ typedef struct health_component_t {
 } HealthComponent;
 
 HealthComponent* health_component_new(Entity entity, i32 maxHealth);
-COMPONENT_DESERIALIZE(COMPONENT_HEALTH);
+COMPONENT_DEFINE(COMPONENT_HEALTH);
 
 void health_component_on_collision_enter(Component* component, const Message msg);
 

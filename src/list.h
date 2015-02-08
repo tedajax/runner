@@ -1,7 +1,7 @@
 #ifndef RUNNER_LIST_H
 #define RUNNER_LIST_H
 
-#include <stdlib.h>
+#include "memory.h"
 #include "types.h"
 
 //double linked list

@@ -1,12 +1,13 @@
 #ifndef RUNNER_ALGEBRA_H
 #define RUNNER_ALGEBRA_H
 
+#include "memory.h"
+
 #include "types.h"
 #include "debug.h"
 #include "log.h"
 #include "inline.h"
 
-#include <stdlib.h>
 #include <math.h>
 #include <float.h>
 

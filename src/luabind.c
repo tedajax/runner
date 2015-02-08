@@ -1,5 +1,5 @@
 #include "luabind.h"
-#include <stdlib.h>
+#include "memory.h"
 
 void lua_bind_init(LuaBind* self, const char* function, int argc, ...) {
     self->functionName = (char*)function;

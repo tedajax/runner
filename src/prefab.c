@@ -41,9 +41,7 @@ void prefab_init(Prefab* self, char* filename) {
 }
 
 void prefab_free(Prefab* self) {
-    if (self->components.components) {
-        free(self->components.components);
-    }
+    component_batch_free(&self->components);
     free(self);
 }
 

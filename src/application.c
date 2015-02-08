@@ -1,6 +1,11 @@
 #include "application.h"
 
 int app_run(int argc, char* argv[]) {
+
+#ifdef _CRTDBG_MAP_ALLOC
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
     App self;
     _app_init(&self);
 
@@ -16,8 +21,14 @@ int app_run(int argc, char* argv[]) {
             _app_handle_event(&self, &event);
         }
 
+        profiler_tick("update");
         _app_update(&self);
+        profiler_tock("update");
+
+        profiler_tick("render");
         _app_render(&self);
+        profiler_tock("render");
+
         _app_frame_end(&self);
     }
 
@@ -61,7 +72,9 @@ void _app_render(App* self) {
 
     game_render(&self->game);
 
+    profiler_tick("buffer swap");
     SDL_RenderPresent(globals.renderer);
+    profiler_tock("buffer swap");
 }
 
 void _app_frame_end(App* self) {

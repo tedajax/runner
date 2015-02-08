@@ -1,3 +1,4 @@
+#include "memory.h"
 #include "types.h"
 #include "dynf32.h"
 #include "debug.h"

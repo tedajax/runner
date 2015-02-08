@@ -5,7 +5,7 @@
 #include <tchar.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include "memory.h"
 
 Directory* platform_directory_open(const char* path) {
     WIN32_FIND_DATA fdFile;

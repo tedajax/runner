@@ -29,11 +29,43 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
 
     component_init(&self->super, COMPONENT_LUA, sizeof(LuaComponent), entity);
 
+    lua_component_load(self);
+
+    self->state = LUA_STATE_NEW;
+
+    return self;
+}
+
+COMPONENT_DESERIALIZE(COMPONENT_LUA) {
+    char* filename = CONFIG_GET(string)(config, table, "file");
+    //TODO: This scripts path should be pulled from elsewhere
+    char path[128];
+    snprintf(path, 128, "%s/%s", "assets/scripts", filename);
+    return (Component*)lua_component_new(0, path);
+}
+
+COMPONENT_FREE(COMPONENT_LUA) {
+    LuaComponent* self = (LuaComponent*)component;
+    lua_close(self->L);
+    free(self->file.path);
+}
+
+COMPONENT_COPY(COMPONENT_LUA) {
+    LuaComponent* luaSrc = (LuaComponent*)source;
+    LuaComponent* luaDest = (LuaComponent*)dest;
+
+    size_t len = strlen(luaSrc->file.path) + 1;
+    luaDest->file.path = CALLOC(len, char);
+    strcpy(luaDest->file.path, luaSrc->file.path);
+
+    lua_component_load(luaDest);
+}
+
+void lua_component_load(LuaComponent* self) {
     // TODO: error handling
     self->L = lua_open();
     luaL_openlibs(self->L);
-    if (luaL_dofile(self->L, self->file.path))
-    {
+    if (luaL_dofile(self->L, self->file.path)) {
         printf("%s\n", lua_tostring(self->L, -1));
     }
 
@@ -51,18 +83,6 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
         LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_RENDER];
         lua_bind_init(bind, "render", 0);
     }
-
-    self->state = LUA_STATE_NEW;
-
-    return self;
-}
-
-COMPONENT_DESERIALIZE(COMPONENT_LUA) {
-    char* filename = CONFIG_GET(string)(config, table, "file");
-    //TODO: This scripts path should be pulled from elsewhere
-    char path[128];
-    snprintf(path, 128, "%s/%s", "assets/scripts", filename);
-    return (Component*)lua_component_new(0, path);
 }
 
 void lua_component_check_and_reload(LuaComponent* self) {
@@ -75,10 +95,4 @@ void lua_component_check_and_reload(LuaComponent* self) {
         self->state = LUA_STATE_NEW;
         profiler_tock("reload lua file");
     }
-}
-
-void lua_component_free(LuaComponent* self) {
-    lua_close(self->L);
-    free(self->file.path);
-    free(self);
 }

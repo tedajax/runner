@@ -1,7 +1,7 @@
 #ifndef _HASHSET_H_
 #define _HASHSET_H_
 
-#include <stdlib.h>
+#include "memory.h"
 #include <string.h>
 #include <assert.h>
 

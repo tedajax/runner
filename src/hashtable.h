@@ -1,7 +1,7 @@
 #ifndef _HASHTABLE_H_
 #define _HASHTABLE_H_
 
-#include <stdlib.h>
+#include "memory.h"
 #include <string.h>
 #include <assert.h>
 

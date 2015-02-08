@@ -18,7 +18,7 @@ typedef struct enemy_component_t {
 } EnemyComponent;
 
 EnemyComponent* enemy_component_new(Entity entity, EnemyType enemyType);
-COMPONENT_DESERIALIZE(COMPONENT_ENEMY);
+COMPONENT_DEFINE(COMPONENT_ENEMY);
 
 EnemyType enemy_type_parse(const char* str);
 

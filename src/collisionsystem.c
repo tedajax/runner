@@ -222,8 +222,6 @@ void collision_system_remove_collider(CollisionSystem* self, ColliderComponent* 
             }
         }
     }
-
-    free(collider->collider.volume);
 }
 
 void collision_system_on_entity_removed(AspectSystem* system, Entity entity, const Message msg) {

@@ -30,6 +30,19 @@ COMPONENT_DESERIALIZE(COMPONENT_BG_MANAGER) {
     return (Component*)bg_manager_component_new(0, (u32)width, (u32)height);
 }
 
+COMPONENT_FREE(COMPONENT_BG_MANAGER) {
+    BgManagerComponent* self = (BgManagerComponent*)component;
+    free(self->transforms);
+}
+
+COMPONENT_COPY(COMPONENT_BG_MANAGER) {
+    BgManagerComponent* bgSrc = (BgManagerComponent*)source;
+    BgManagerComponent* bgDest = (BgManagerComponent*)dest;
+
+    bgDest->transforms = CALLOC(bgDest->capacity, TransformComponent*);
+    memcpy(bgDest->transforms, bgSrc->transforms, bgSrc->count * sizeof(TransformComponent*));
+}
+
 bool bg_manager_component_add_entity(BgManagerComponent* self, TransformComponent* transform) {
     if (self->count >= self->capacity) {
         return false;

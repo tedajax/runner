@@ -17,6 +17,10 @@ COMPONENT_DESERIALIZE(COMPONENT_ENEMY) {
     return (Component*)enemy_component_new(0, enemy_type_parse(enemyTypeStr));
 }
 
+COMPONENT_FREE(COMPONENT_ENEMY) {}
+
+COMPONENT_COPY(COMPONENT_ENEMY) {}
+
 EnemyType enemy_type_parse(const char* str) {
     if (strcmp(str, "ENEMY_TYPE_BASIC") == 0) {
         return ENEMY_TYPE_BASIC;

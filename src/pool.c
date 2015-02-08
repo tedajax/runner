@@ -1,6 +1,6 @@
 #include "pool.h"
 #include <memory.h>
-#include <stdlib.h>
+#include "memory.h"
 
 void pool_index_stack_resize(PoolIndexStack* self, u32 capacity);
 

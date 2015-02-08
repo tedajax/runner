@@ -34,7 +34,10 @@ COMPONENT_DESERIALIZE(COMPONENT_BULLET_CONTROLLER) {
     return (Component*)bullet_controller_component_new(0, &bulletConfig);
 }
 
-void bullet_controller_on_collision_enter(Component* component, Message message) {
+COMPONENT_FREE(COMPONENT_BULLET_CONTROLLER) {
     BulletControllerComponent* self = (BulletControllerComponent*)component;
-    self->destroyFlag = true;
+    dynf32_release(&self->speed);
+    dynf32_release(&self->angle);
 }
+
+COMPONENT_COPY(COMPONENT_BULLET_CONTROLLER) {}

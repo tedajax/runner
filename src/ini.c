@@ -142,7 +142,8 @@ void ini_free(Ini* self) {
             if (self->table[i][j].key > 0) {
                 for (u32 v = 0; v < self->table[i][j].values.count; ++i) {
                     if (self->table[i][j].values.type == INI_VALUE_STRING) {
-                        free(self->table[i][j].values.values[v].string);
+                        char* str = self->table[i][j].values.values[v].string;
+                        free(str);
                     }
                 }
                 free(self->table[i][j].values.values);

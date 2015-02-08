@@ -16,6 +16,6 @@ TransformComponent* transform_component_new(Entity entity,
     f32 rotation,
     Vec2 scale);
 
-COMPONENT_DESERIALIZE(COMPONENT_TRANSFORM);
+COMPONENT_DEFINE(COMPONENT_TRANSFORM);
 
 #endif

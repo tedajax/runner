@@ -23,7 +23,6 @@ typedef struct bullet_controller_component_t {
 } BulletControllerComponent;
 
 BulletControllerComponent* bullet_controller_component_new(Entity entity, BulletConfig* config);
-COMPONENT_DESERIALIZE(COMPONENT_BULLET_CONTROLLER);
-void bullet_controller_on_collision_enter(Component* component, Message message);
+COMPONENT_DEFINE(COMPONENT_BULLET_CONTROLLER);
 
 #endif

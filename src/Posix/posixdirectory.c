@@ -3,7 +3,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include "memory.h"
 
 //TODO: need to implement this on the linux side and get the makefile ignoring the \Win directory
 

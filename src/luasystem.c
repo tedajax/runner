@@ -78,5 +78,16 @@ void lua_system_check_and_reload(LuaSystem* self) {
 }
 
 void lua_system_on_entity_removed(AspectSystem* system, Entity entity, Message message) {
+    LuaSystem* self = (LuaSystem*)system;
 
+    LuaComponent* lua =
+        (LuaComponent*)entities_get_component(self->super.entityManager,
+        COMPONENT_LUA,
+        entity);
+
+    if (lua) {
+        for (LuaComponentCallbacks cb = 0; cb < LUA_CALLBACK_LAST; ++cb) {
+            free(lua->callbackBinds[cb].argt);
+        }
+    }
 }

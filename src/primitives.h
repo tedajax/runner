@@ -12,6 +12,7 @@
  *      - Some unnecessary primitive stuff like antialiased lines and stuff like that.  I don't need those this is just for debug output.
 */
 
+#include "memory.h"
 #include <SDL2/SDL.h>
 #include "types.h"
 #include "algebra.h"

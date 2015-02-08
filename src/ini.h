@@ -1,12 +1,11 @@
 #ifndef RUNNER_INI_H
 #define RUNNER_INI_H
 
-#include <stdlib.h>
-
 #include "types.h"
 #include "debug.h"
 #include "log.h"
 #include "inline.h"
+#include "memory.h"
 
 #define INI_MAX_SECTIONS 1024
 #define INI_MAX_KEYS_PER_SECTION 64

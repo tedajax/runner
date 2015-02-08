@@ -1,7 +1,7 @@
 #ifndef _DYN_ARR_H_
 #define _DYN_ARR_H_
 
-#include <stdlib.h>
+#include "memory.h"
 #include <assert.h>
 #include <stdbool.h>
 #include "types.h"

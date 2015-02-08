@@ -1,7 +1,7 @@
 #ifndef RUNNER_DIRECTORY_H
 #define RUNNER_DIRECTORY_H
 
-#include <stdlib.h>
+#include "memory.h"
 
 typedef struct file_descriptor_t {
     int index;

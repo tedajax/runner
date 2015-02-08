@@ -16,6 +16,10 @@ COMPONENT_DESERIALIZE(COMPONENT_HEALTH) {
     return (Component*)health_component_new(0, max);
 }
 
+COMPONENT_FREE(COMPONENT_HEALTH) {}
+
+COMPONENT_COPY(COMPONENT_HEALTH) {}
+
 void health_component_on_collision_enter(Component* component, const Message msg) {
     HealthComponent* self = (HealthComponent*)component;
 

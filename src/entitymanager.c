@@ -169,7 +169,7 @@ void entities_internal_remove_entity(EntityManager* self, Entity entity) {
 
         Component* toRemove = component_list_remove(&self->componentsMap[t], entity);
         if (toRemove != NULL) {
-            component_free_void(toRemove);
+            component_free(toRemove);
         }
     }
 

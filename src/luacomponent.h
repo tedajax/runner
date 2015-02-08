@@ -35,8 +35,8 @@ typedef struct lua_component_t {
 } LuaComponent;
 
 LuaComponent* lua_component_new(Entity entity, const char* filename);
-COMPONENT_DESERIALIZE(COMPONENT_LUA);
+COMPONENT_DEFINE(COMPONENT_LUA);
+void lua_component_load(LuaComponent* self);
 void lua_component_check_and_reload(LuaComponent* self);
-void lua_component_free(LuaComponent* self);
 
 #endif

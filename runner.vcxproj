@@ -302,6 +302,7 @@
     <ClInclude Include="src\luabind.h" />
     <ClInclude Include="src\luacomponent.h" />
     <ClInclude Include="src\luasystem.h" />
+    <ClInclude Include="src\memory.h" />
     <ClInclude Include="src\messaging.h" />
     <ClInclude Include="src\movementcomponent.h" />
     <ClInclude Include="src\movementsystem.h" />

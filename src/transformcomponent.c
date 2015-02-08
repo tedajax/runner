@@ -21,3 +21,7 @@ COMPONENT_DESERIALIZE(COMPONENT_TRANSFORM) {
     Vec2 scale = CONFIG_TRY_GET(Vec2)(config, table, "scale", vec2_one());
     return (Component*)transform_component_new(0, position, rotation, scale);
 }
+
+COMPONENT_FREE(COMPONENT_TRANSFORM) {}
+
+COMPONENT_COPY(COMPONENT_TRANSFORM) {}

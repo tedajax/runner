@@ -7,11 +7,16 @@ Hashtable COMPONENT_NAME_TABLE;
 bool componentNameTableInitialized = false;
 
 component_deserialize_f COMPONENT_DESERIALIZE_FUNCS[COMPONENT_LAST] = { NULL };
+component_free_f COMPONENT_FREE_FUNCS[COMPONENT_LAST] = { NULL };
+component_copy_f COMPONENT_COPY_FUNCS[COMPONENT_LAST] = { NULL };
 
 #define COMPONENT_REGISTER(type) \
     hashtable_insert(&COMPONENT_NAME_TABLE, #type, &COMPONENT_VALUE_TABLE[type]); \
+    COMPONENT_TYPE_STRING_TABLE[type] = #type; \
     COMPONENT_DESERIALIZE_FUNCS[type] = COMPONENT_DESERIALIZE_FUNC(type); \
-    COMPONENT_TYPE_STRING_TABLE[type] = #type;
+    COMPONENT_FREE_FUNCS[type] = COMPONENT_FREE_FUNC(type); \
+    COMPONENT_COPY_FUNCS[type] = COMPONENT_COPY_FUNC(type);
+    
 
 char* component_type_get_name(ComponentType type) {
     return COMPONENT_TYPE_STRING_TABLE[type];
@@ -61,6 +66,7 @@ void component_init(Component* self, ComponentType type, u64 size, Entity entity
 
 void component_copy(const Component* source, Component* dest) {
     memcpy(dest, source, (size_t)source->size);
+    COMPONENT_COPY_FUNCS[source->type](source, dest);
 }
 
 void component_set_entity(Component* self, Entity entity) {
@@ -68,16 +74,8 @@ void component_set_entity(Component* self, Entity entity) {
 }
 
 void component_free(Component* self) {
-    switch (self->type) {
-        default:
-            free(self);
-            break;
-
-        case COMPONENT_BG_MANAGER:
-            free(((BgManagerComponent*)self)->transforms);
-            free(self);
-            break;
-    }
+    COMPONENT_FREE_FUNCS[self->type](self);
+    free(self);
 }
 
 void component_free_void(void* self) {
@@ -127,4 +125,11 @@ void component_batch_add(ComponentBatch* self, Component* component) {
     ASSERT(self->count < self->capacity, "Maximum capacity reached.");
     self->components[self->count] = component;
     ++self->count;
+}
+
+void component_batch_free(ComponentBatch* self) {
+    for (u32 i = 0; i < self->count; ++i) {
+        component_free(self->components[i]);
+    }
+    free(self->components);
 }

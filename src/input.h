@@ -1,12 +1,13 @@
 #ifndef RUNNER_INPUT_H
 #define RUNNER_INPUT_H
 
+#include "memory.h"
+
 #include <SDL2/SDL.h>
 
 #include "types.h"
 #include "debug.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 bool oldKeyStates[SDL_NUM_SCANCODES];

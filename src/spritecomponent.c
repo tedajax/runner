@@ -28,6 +28,10 @@ COMPONENT_DESERIALIZE(COMPONENT_SPRITE) {
     return (Component*)sprite_component_new(0, textures_get(textureStr), layer);
 }
 
+COMPONENT_FREE(COMPONENT_SPRITE) {}
+
+COMPONENT_COPY(COMPONENT_SPRITE) {}
+
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest) {
     f32 px = transform->position.x - globals.camera.position.x;
     f32 py = transform->position.y - globals.camera.position.y;

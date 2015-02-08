@@ -2,7 +2,7 @@
 #define DICT_H
 
 #include "types.h"
-#include <stdlib.h>
+#include "memory.h"
 
 // Really barebones key, value store
 // Keys must be uint32_t, values are stored in a void*

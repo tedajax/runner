@@ -1,6 +1,8 @@
 #ifndef RUNNER_APPLICATION_H
 #define RUNNER_APPLICATION_H
 
+#include "memory.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 

@@ -13,6 +13,6 @@ typedef struct movement_component_t {
 
 MovementComponent* movement_component_new_zero(Entity entity);
 MovementComponent* movement_component_new(Entity entity, Vec2 velocity, f32 angularVelocity);
-COMPONENT_DESERIALIZE(COMPONENT_MOVEMENT);
+COMPONENT_DEFINE(COMPONENT_MOVEMENT);
 
 #endif

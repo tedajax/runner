@@ -1,7 +1,7 @@
 #ifndef RUNNER_STACK_ALLOCATOR_H
 #define RUNNER_STACK_ALLOCATOR_H
 
-#include <stdlib.h>
+#include "memory.h"
 #include "types.h"
 #include "debug.h"
 

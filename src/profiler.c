@@ -88,6 +88,10 @@ void pduration(FILE* file, u64 time) {
 }
 
 void profile_dump(Profile* p, FILE* file, bool full) {
+    if (!profilingEnabled) {
+        return;
+    }
+
     fprintf(file, "%s:\n", p->name);
     fprintf(file, "\taverage: ");
     pduration(file, p->average);

@@ -140,7 +140,7 @@ void ini_free(Ini* self) {
     for (u32 i = 0; i < INI_MAX_SECTIONS; ++i) {
         for (u32 j = 0; j < INI_MAX_KEYS_PER_SECTION; ++j) {
             if (self->table[i][j].key > 0) {
-                for (u32 v = 0; v < self->table[i][j].values.count; ++i) {
+                for (u32 v = 0; v < self->table[i][j].values.count; ++v) {
                     if (self->table[i][j].values.type == INI_VALUE_STRING) {
                         char* str = self->table[i][j].values.values[v].string;
                         free(str);

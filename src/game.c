@@ -11,6 +11,7 @@ void game_init(Game* self) {
     globals.game = self;
 
     component_system_init();
+    tween_manager_init(&globals.tweens, 4192);
 
     textures_init("assets/textures");
 
@@ -104,6 +105,8 @@ void game_init(Game* self) {
 void game_quit(Game* self) {
     prefab_system_terminate();
     entity_manager_free(self->entityManager);
+    textures_terminate();
+    tween_manager_terminate(&globals.tweens);
     debug_hud_free(&self->debugHud);
     component_system_terminate();
 }

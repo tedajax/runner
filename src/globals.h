@@ -60,7 +60,7 @@ void globals_init();
 void globals_config(const char* configName);
 
 void textures_init(const char* rootDir);
-void textures_free();
+void textures_terminate();
 bool textures_load(const char* filename);
 bool textures_unload(const char* filename);
 bool textures_unload_all();

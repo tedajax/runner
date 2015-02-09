@@ -9,7 +9,7 @@ void texture_manager_init(TextureManager* self, const char* rootDir) {
 }
 
 void texture_manager_free(TextureManager* self) {
-    hashtable_free(&self->textureTable);
+    hashtable_free_contents(&self->textureTable);
     free(self->rootDir);
 }
 

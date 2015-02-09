@@ -20,6 +20,4 @@ void lua_system_render(LuaSystem* self);
 void lua_system_check_and_reload_void(void* system);
 void lua_system_check_and_reload(LuaSystem* self);
 
-void lua_system_on_entity_removed(AspectSystem* system, Entity entity, Message message);
-
 #endif

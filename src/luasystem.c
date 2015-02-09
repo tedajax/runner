@@ -6,8 +6,6 @@ void lua_system_init(LuaSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_LUA);
 
     timer_init(&self->reloadTimer, 1.f, -1, lua_system_check_and_reload_void);
-
-    REGISTER_SYSTEM_HANDLER(MESSAGE_ENTITY_REMOVED, lua_system_on_entity_removed);
 }
 
 void lua_system_start_component(LuaSystem* self, LuaComponent* lua) {
@@ -74,20 +72,5 @@ void lua_system_check_and_reload(LuaSystem* self) {
         REQUIRED_COMPONENTS(lua);
 
         lua_component_check_and_reload(lua);
-    }
-}
-
-void lua_system_on_entity_removed(AspectSystem* system, Entity entity, Message message) {
-    LuaSystem* self = (LuaSystem*)system;
-
-    LuaComponent* lua =
-        (LuaComponent*)entities_get_component(self->super.entityManager,
-        COMPONENT_LUA,
-        entity);
-
-    if (lua) {
-        for (LuaComponentCallbacks cb = 0; cb < LUA_CALLBACK_LAST; ++cb) {
-            free(lua->callbackBinds[cb].argt);
-        }
     }
 }

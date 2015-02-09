@@ -229,6 +229,12 @@ void tween_manager_init(TweenManager* self, u32 capacity) {
     self->freeHead = self->capacity - 1;
 }
 
+void tween_manager_terminate(TweenManager* self) {
+    hashtable_free_contents(&tweenFunctions);
+    free(self->tweens);
+    free(self->freeIndices);
+}
+
 void tween_manager_update(TweenManager* self, f32 dt) {
     for (u32 i = 0; i < self->capacity; ++i) {
         Tween* tween = &self->tweens[i];

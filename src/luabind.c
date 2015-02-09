@@ -3,9 +3,12 @@
 
 void lua_bind_init(LuaBind* self, const char* function, int argc, ...) {
     self->functionName = (char*)function;
+    self->argt = NULL;
     self->argc = argc;
 
-    self->argt = CALLOC(argc, LuaBindArgTypes);
+    if (self->argc > 0) {
+        self->argt = CALLOC(argc, LuaBindArgTypes);
+    }
 
     va_list argv;
     va_start(argv, argc);
@@ -56,6 +59,7 @@ void lua_bind_callv(LuaBind* self, lua_State* L, va_list argv) {
 }
 
 void lua_bind_free(LuaBind* self) {
-    free(self->argt);
-    free(self);
+    if (self->argt) {
+        free(self->argt);
+    }
 }

@@ -40,12 +40,10 @@ void globals_config(const char* configName) {
 
     globals.scrollSpeed = config_try_get_float(config, "game", "scroll_speed", 0.f);
     globals.levelPosition = 0.f;
-
-    tween_manager_init(&globals.tweens, 4192);
 }
 
 void textures_init(const char* rootDir) { texture_manager_init(&globals.textures, rootDir); }
-void textures_free() { texture_manager_free(&globals.textures); }
+void textures_terminate() { texture_manager_free(&globals.textures); }
 bool textures_load(const char* filename) { return texture_manager_load(&globals.textures, globals.renderer, filename); }
 bool textures_unload(const char* filename) { return texture_manager_unload(&globals.textures, filename); }
 bool textures_unload_all() { return texture_manager_unload_all(&globals.textures); }

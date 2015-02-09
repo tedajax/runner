@@ -48,6 +48,9 @@ COMPONENT_FREE(COMPONENT_LUA) {
     LuaComponent* self = (LuaComponent*)component;
     lua_close(self->L);
     free(self->file.path);
+    for (LuaComponentCallbacks cb = 0; cb < LUA_CALLBACK_LAST; ++cb) {
+        lua_bind_free(&self->callbackBinds[cb]);
+    }
 }
 
 COMPONENT_COPY(COMPONENT_LUA) {

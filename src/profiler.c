@@ -88,10 +88,6 @@ void pduration(FILE* file, u64 time) {
 }
 
 void profile_dump(Profile* p, FILE* file, bool full) {
-    if (!profilingEnabled) {
-        return;
-    }
-
     fprintf(file, "%s:\n", p->name);
     fprintf(file, "\taverage: ");
     pduration(file, p->average);
@@ -143,6 +139,9 @@ void profiler_dump(FILE* file, bool full) {
 
 void profiler_dump_log() {
 #if PROFILING_ENABLED
+    if (!profilingEnabled) {
+        return;
+    }
     char buffer[128];
     snprintf(buffer, 128, "profiler_%ld.profile", time(NULL));
     FILE* fp = fopen(buffer, "w");

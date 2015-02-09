@@ -21,8 +21,7 @@ static inline int c99_vsnprintf(char* str, size_t size, const char* format, va_l
     return count;
 }
 
-static inline int c99_snprintf(char* str, size_t size, const char* format, ...)
-{
+static inline int c99_snprintf(char* str, size_t size, const char* format, ...) {
     int count;
     va_list ap;
 

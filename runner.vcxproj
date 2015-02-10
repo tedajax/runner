@@ -205,8 +205,10 @@
   <ItemGroup>
     <ClCompile Include="src\aicontroller.c" />
     <ClCompile Include="src\algebra.c" />
+    <ClCompile Include="src\animation.c" />
     <ClCompile Include="src\application.c" />
     <ClCompile Include="src\aspectsystem.c" />
+    <ClCompile Include="src\atlas.c" />
     <ClCompile Include="src\bgmanagercomponent.c" />
     <ClCompile Include="src\bgmanagersystem.c" />
     <ClCompile Include="src\bulletcontrollercomponent.c" />
@@ -283,8 +285,10 @@
   <ItemGroup>
     <ClInclude Include="src\aicontroller.h" />
     <ClInclude Include="src\algebra.h" />
+    <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\aspectsystem.h" />
+    <ClInclude Include="src\atlas.h" />
     <ClInclude Include="src\bgmanagercomponent.h" />
     <ClInclude Include="src\bgmanagersystem.h" />
     <ClInclude Include="src\bulletcontrollercomponent.h" />

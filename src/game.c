@@ -1,5 +1,6 @@
 #include "game.h"
 #include "prefab.h"
+#include "atlas.h"
 
 #include <SDL2/SDL_image.h>
 
@@ -14,14 +15,9 @@ void game_init(Game* self) {
     tween_manager_init(&globals.tweens, 128);
 
     textures_init("assets/textures");
+    atlases_init();
 
-    textures_load("player_ship.png");
-    textures_load("player_bullet_1.png");
-    textures_load("player_bullet_2.png");
-    textures_load("bg_dark_purple.png");
-    textures_load("enemy_red_1.png");
-    textures_load("fireparticle.png");
-    textures_load("bullet.png");    
+    atlas_load("atlas1");
 
     prefab_system_init(self->entityManager, "assets/prefabs");
 
@@ -106,6 +102,7 @@ void game_init(Game* self) {
 void game_quit(Game* self) {
     prefab_system_terminate();
     entity_manager_free(self->entityManager);
+    atlases_terminate();
     textures_terminate();
     tween_manager_terminate(&globals.tweens);
     debug_hud_free(&self->debugHud);

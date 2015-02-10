@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:1873bd58f98bf646959dbf713364f58d:629ead5e30c5151fe2dfc9df30a61d05:6e8b9a77246f5d0993e4e1efb176f461$ -->
+<!-- $TexturePacker:SmartUpdate:00d45ad7d849a0727e257c3330013290:629ead5e30c5151fe2dfc9df30a61d05:6e8b9a77246f5d0993e4e1efb176f461$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -15,7 +15,7 @@ oW => sprite's original width (only available if trimmed)
 oH => sprite's original height (only available if trimmed)
 r => 'y' only set if sprite is rotated
 -->
-<TextureAtlas imagePath="C:\Users\ajax\Projects\runner\assets\textures\atlas1.png/atlas1.png" width="260" height="421">
+<TextureAtlas imagePath="atlas1.png" width="260" height="421">
     <sprite n="bg_dark_purple" x="2" y="2" w="256" h="256" pX="0.5" pY="0.5"/>
     <sprite n="bullet" x="41" y="374" w="8" h="8" pX="0.5" pY="0.5"/>
     <sprite n="enemy_red_1" x="79" y="260" w="84" h="103" pX="0.5" pY="0.5"/>

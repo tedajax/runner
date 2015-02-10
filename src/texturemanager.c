@@ -18,6 +18,10 @@ bool texture_manager_load(TextureManager* self, SDL_Renderer* renderer, const ch
     IF_DEBUG(bool concatResult = )path_concat(self->rootDir, filename, fullPath, 256);
     ASSERT(concatResult, "Failed to concatenate paths, destination string not long enough.");
 
+    if (hashtable_get(&self->textureTable, filename)) {
+        return true;
+    }
+
     SDL_Surface* loadedSurface = IMG_Load(fullPath);
     if (!loadedSurface) {
         return false;

@@ -19,7 +19,7 @@ void atlases_terminate();
 
 void atlas_free(Atlas* self);
 
-void atlas_load(const char* textureFile, const char* dataFile, const char* name);
+void atlas_load(const char* name);
 void atlas_unload(const char* name);
 Atlas* atlas_get(const char* name);
 SpriteFrame* atlas_get_frame(Atlas* self, const char* spriteName);

@@ -102,8 +102,15 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>bs.txt</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -122,8 +129,15 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>bs.txt</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -147,8 +161,15 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>bs.txt</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -171,8 +192,15 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>bs.txt</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\aicontroller.c" />

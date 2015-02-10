@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:1873bd58f98bf646959dbf713364f58d:629ead5e30c5151fe2dfc9df30a61d05:6e8b9a77246f5d0993e4e1efb176f461$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="C:\Users\ajax\Projects\runner\assets\textures\atlas1.png/atlas1.png" width="260" height="421">
+    <sprite n="bg_dark_purple" x="2" y="2" w="256" h="256" pX="0.5" pY="0.5"/>
+    <sprite n="bullet" x="41" y="374" w="8" h="8" pX="0.5" pY="0.5"/>
+    <sprite n="enemy_red_1" x="79" y="260" w="84" h="103" pX="0.5" pY="0.5"/>
+    <sprite n="fireparticle" x="165" y="355" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="player_bullet_1" x="2" y="389" w="54" h="9" pX="0.5" pY="0.5"/>
+    <sprite n="player_bullet_2" x="2" y="374" w="37" h="13" pX="0.5" pY="0.5"/>
+    <sprite n="player_ship" x="2" y="260" w="75" h="112" pX="0.5" pY="0.5"/>
+    <sprite n="test" x="165" y="260" w="84" h="93" pX="0.5" pY="0.5"/>
+</TextureAtlas>

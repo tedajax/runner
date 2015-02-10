@@ -1,4 +1,4 @@
-components = [transform]
+components = [transform, luacomponent]
 
 [transform]
 component_type = COMPONENT_TRANSFORM

@@ -1,6 +1,7 @@
 require("assets/scripts/component")
 
 start = function(entity)
+    entity = entity
     a = 0
 end
 

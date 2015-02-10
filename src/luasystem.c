@@ -24,7 +24,7 @@ void lua_system_start(LuaSystem* self) {
         REQUIRED_COMPONENTS(lua);
 
         //TODO: handle not having the function
-        lua_system_start_component(self, lua);
+        lua_system_start_component(self, lua, GET_ENTITY(i));
     }
 }
 
@@ -39,7 +39,7 @@ void lua_system_update(LuaSystem* self) {
         REQUIRED_COMPONENTS(lua);
 
         if (lua->state == LUA_STATE_NEW) {
-            lua_system_start_component(self, lua);
+            lua_system_start_component(self, lua, GET_ENTITY(i));
         }
 
         //TODO: handle not having the function

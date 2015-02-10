@@ -36,6 +36,31 @@ LuaComponent* lua_component_new(Entity entity, const char* filename) {
     return self;
 }
 
+void lua_component_load(LuaComponent* self) {
+    // TODO: error handling
+    self->L = lua_open();
+    luaL_openlibs(self->L);
+    if (luaL_dofile(self->L, self->file.path)) {
+        printf("%s\n", lua_tostring(self->L, -1));
+    }
+
+    {
+        LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_START];
+        lua_bind_init(bind, "start", 1, LUA_ARG_INTEGER);
+    }
+
+    {
+        LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_UPDATE];
+        lua_bind_init(bind, "update", 1, LUA_ARG_FLOAT);
+    }
+
+    {
+        LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_RENDER];
+        lua_bind_init(bind, "render", 0);
+    }
+}
+
+
 COMPONENT_DESERIALIZE(COMPONENT_LUA) {
     char* filename = CONFIG_GET(string)(config, table, "file");
     //TODO: This scripts path should be pulled from elsewhere
@@ -62,30 +87,6 @@ COMPONENT_COPY(COMPONENT_LUA) {
     strcpy(luaDest->file.path, luaSrc->file.path);
 
     lua_component_load(luaDest);
-}
-
-void lua_component_load(LuaComponent* self) {
-    // TODO: error handling
-    self->L = lua_open();
-    luaL_openlibs(self->L);
-    if (luaL_dofile(self->L, self->file.path)) {
-        printf("%s\n", lua_tostring(self->L, -1));
-    }
-
-    {
-        LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_START];
-        lua_bind_init(bind, "start", 0);
-    }
-
-    {
-        LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_UPDATE];
-        lua_bind_init(bind, "update", 1, LUA_ARG_FLOAT);
-    }
-
-    {
-        LuaBind* bind = &self->callbackBinds[LUA_CALLBACK_RENDER];
-        lua_bind_init(bind, "render", 0);
-    }
 }
 
 void lua_component_check_and_reload(LuaComponent* self) {

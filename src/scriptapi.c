@@ -1,6 +1,7 @@
 #include "scriptapi.h"
 #include "gametime.h"
 #include "primitives.h"
+#include "prefab.h"
 #include "globals.h"
 
 LUA_EXPORT void quit() {
@@ -22,4 +23,19 @@ LUA_EXPORT void draw_rectangle_rgba(Vec2 center, f32 width, f32 height, u8 r, u8
     rect.width = width;
     rect.height = height;
     prim_box_rgba(globals.renderer, &rect, r, g, b, a);
+}
+
+LUA_EXPORT void instantiate(const char* name) {
+    instantiate_at(name, vec2_zero(), 0.f);
+}
+
+LUA_EXPORT void instantiate_at(const char* name, Vec2 position, f32 rotation) {
+    Prefab* prefab = prefab_get(name);
+    if (prefab) {
+        prefab_instantiate_at(prefab, position, rotation);
+    }
+}
+
+LUA_EXPORT void get_transform(Entity entity) {
+    
 }

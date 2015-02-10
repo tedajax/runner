@@ -67,22 +67,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>.\External\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\External\Lib\Win32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>External\Lib\$(Configuration)\$(Platform);$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>.\External\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\External\Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>External\Lib\$(Configuration)\$(Platform);$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>.\External\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\External\Lib\Win32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>External\Lib\$(Configuration)\$(Platform);$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>.\External\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\External\Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>External\Lib\$(Configuration)\$(Platform);$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -102,7 +102,7 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy_dll_32.bat</Command>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -122,7 +122,7 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy_dll_64.bat</Command>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,7 +147,7 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy_dll_32.bat</Command>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -171,7 +171,7 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy_dll_64.bat</Command>
+      <Command>.\copy_dlls.bat $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

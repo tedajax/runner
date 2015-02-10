@@ -1,1 +1,0 @@
-xcopy External\Lib\x64\*.dll . /y

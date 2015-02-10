@@ -2,8 +2,9 @@ obj/*.o
 obj/Posix/*.o
 runner.exe
 runner
-Debug/
-Release/
+/Debug/
+/Release/
+/x64
 *.opensdf
 *.sdf
 *.psess

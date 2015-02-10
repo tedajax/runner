@@ -1,10 +1,10 @@
 #include "aspectsystem.h"
 
-void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type) {
+void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type, u32 capacity) {
     self->entityManager = entityManager;
     self->systemType = type;
 
-    REGISTER_SYSTEM(self->entityManager, self);
+    REGISTER_SYSTEM(self->entityManager, self, capacity);
 
     for (u32 i = 0; i < MESSAGE_LAST; ++i) {
         self->handlers[i] = NULL;

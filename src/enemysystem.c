@@ -1,7 +1,7 @@
 #include "enemysystem.h"
 
 void enemy_system_init(EnemySystem* self, EntityManager* entityManager) {
-    aspect_system_init(&self->super, entityManager, COMPONENT_ENEMY);
+    aspect_system_init(&self->super, entityManager, COMPONENT_ENEMY, 64);
 }
 
 void enemy_system_update(EnemySystem* self) {

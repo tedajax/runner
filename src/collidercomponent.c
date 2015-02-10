@@ -28,6 +28,6 @@ COMPONENT_COPY(COMPONENT_COLLIDER) {}
 int collider_component_compare(Component* c1, Component* c2) {
     ColliderComponent* cc1 = (ColliderComponent*)c1;
     ColliderComponent* cc2 = (ColliderComponent*)c2;
-    f32 diff = rect_left(&cc1->collider.volume->bounds) - rect_left(&cc2->collider.volume->bounds);
+    f32 diff = cc1->collider.volume->bounds.position.x - cc2->collider.volume->bounds.position.x;
     return (diff > 0.f) - (diff < 0.f);
 }

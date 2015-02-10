@@ -1,7 +1,7 @@
 #include "healthsystem.h"
 
 void health_system_init(HealthSystem* self, EntityManager* entityManager) {
-    aspect_system_init(&self->super, entityManager, COMPONENT_HEALTH);
+    aspect_system_init(&self->super, entityManager, COMPONENT_HEALTH, 64);
 
     REGISTER_SYSTEM_HANDLER(MESSAGE_DAMAGE, health_system_on_damage);
 }

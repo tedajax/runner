@@ -1,4 +1,5 @@
 #include "aspectsystem.h"
+#include "transformsystem.h"
 #include "movementsystem.h"
 #include "controllersystem.h"
 #include "bulletcontrollersystem.h"

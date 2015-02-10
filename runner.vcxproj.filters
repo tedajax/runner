@@ -306,6 +306,9 @@
     <ClCompile Include="src\luacomponent.c">
       <Filter>Source Files\Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\transformsystem.c">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\aspectsystem.h">
@@ -535,6 +538,9 @@
     </ClInclude>
     <ClInclude Include="src\luacomponent.h">
       <Filter>Header Files\Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\transformsystem.h">
+      <Filter>Header Files\Game\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

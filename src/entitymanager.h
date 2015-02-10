@@ -50,7 +50,7 @@ typedef struct entity_manager_t {
 
 EntityManager* entity_manager_new();
 void entity_manager_free(EntityManager* self);
-void entity_manager_register_system(EntityManager* self, AspectSystem* system);
+void entity_manager_register_system(EntityManager* self, AspectSystem* system, u32 capacity);
 void entity_manager_set_system_compare_function(EntityManager* self, AspectSystem* system, component_compare_f compareFunc);
 i32 entities_gen_entity_id(EntityManager* self);
 Entity entities_create_entity(EntityManager* self);
@@ -68,8 +68,8 @@ void entities_send_message_deferred(EntityManager* self, Entity entity, Message 
 // Should be called AFTER update AND render calls have been made!
 void entities_update(EntityManager* self);
 
-#define REGISTER_SYSTEM(self, system) \
-    entity_manager_register_system(self, (AspectSystem*)system)
+#define REGISTER_SYSTEM(self, system, capacity) \
+    entity_manager_register_system(self, (AspectSystem*)system, capacity)
 
 #define SET_SYSTEM_COMPARISON(entitymanager, system, compare) \
     entity_manager_set_system_compare_function(entitymanager, (AspectSystem*)system, compare)

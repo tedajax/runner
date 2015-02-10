@@ -53,7 +53,7 @@ typedef struct aspect_system_t {
     system_message_cb handlers[MESSAGE_LAST];
 } AspectSystem;
 
-void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type);
+void aspect_system_init(AspectSystem* self, EntityManager* entityManager, ComponentType type, u32 capacity);
 ComponentList* aspect_system_components(AspectSystem* self);
 void aspect_system_send_message(AspectSystem* self, Entity entity, const Message message);
 

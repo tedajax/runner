@@ -11,7 +11,7 @@ void game_init(Game* self) {
     globals.game = self;
 
     component_system_init();
-    tween_manager_init(&globals.tweens, 4192);
+    tween_manager_init(&globals.tweens, 128);
 
     textures_init("assets/textures");
 
@@ -26,6 +26,7 @@ void game_init(Game* self) {
     prefab_system_init(self->entityManager, "assets/prefabs");
 
     self->entityManager = entity_manager_new();
+    transform_system_init(&self->transformSystem, self->entityManager);
     health_system_init(&self->healthSystem, self->entityManager);
     sprite_system_init(&self->spriteSystem, self->entityManager);
     movement_system_init(&self->movementSystem, self->entityManager);

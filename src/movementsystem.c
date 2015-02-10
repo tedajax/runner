@@ -1,7 +1,7 @@
 #include "movementsystem.h"
 
 void movement_system_init(MovementSystem* self, EntityManager* entityManager) {
-    aspect_system_init(&self->super, entityManager, COMPONENT_MOVEMENT);
+    aspect_system_init(&self->super, entityManager, COMPONENT_MOVEMENT, MAX_ENTITIES);
 }
 
 void movement_system_update(MovementSystem* self) {

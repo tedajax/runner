@@ -57,9 +57,9 @@ EntityManager* entity_manager_new() {
     EntityManager* self = (EntityManager*)calloc(1, sizeof(EntityManager));
 
     POOL_INIT(Entity)(&self->entities, MAX_ENTITIES, 0);
-    for (u32 i = 0; i < COMPONENT_LAST; ++i) {
+    /*for (u32 i = 0; i < COMPONENT_LAST; ++i) {
         component_list_init(&self->componentsMap[i], component_entity_compare);
-    }
+    }*/
     self->lowestEId = 1;
 
     for (u32 c = 0; c < COMPONENT_LAST; ++c) {
@@ -74,12 +74,15 @@ EntityManager* entity_manager_new() {
 
 void entity_manager_free(EntityManager* self) {
     entities_remove_all_entities(self);
+    for (ComponentType t = COMPONENT_INVALID + 1; t < COMPONENT_LAST; ++t) {
+        component_list_free(&self->componentsMap[t]);
+    }
     POOL_FREE(Entity)(&self->entities);
     free(self->entities.data);
     free(self);
 }
 
-void entity_manager_register_system(EntityManager* self, AspectSystem* system) {
+void entity_manager_register_system(EntityManager* self, AspectSystem* system, u32 capacity) {
     ASSERT(self && system, "");
     
     ComponentType type = system->systemType;
@@ -87,6 +90,7 @@ void entity_manager_register_system(EntityManager* self, AspectSystem* system) {
     ASSERT(self->systems[type] == NULL, "System of that type already registered!");
 
     self->systems[type] = system;
+    component_list_init(&self->componentsMap[type], capacity, component_entity_compare);
 }
 
 void entity_manager_set_system_compare_function(EntityManager* self, AspectSystem* system, component_compare_f compareFunc) {
@@ -209,37 +213,6 @@ void entities_get_all_of(EntityManager* self, ComponentType type, EntityList* de
         dest->list[i] = components->components[i]->entity;
         ++dest->size;
     }
-
-    ///*
-    //  Right now this function is doing a LOT of work every frame.
-    //  This needs to be reduced because every system that gets added
-    //  increases the call count to here by 2 (1 update, 1 render)
-    //  
-    //  Strategies for reducing cost...
-    //  
-    //  * Keep dictionary compacted so we don't have to traverse the whole thing.
-    //    * Increases cost of dict_remove (have to rearrange bucket when an empty spot opens up)
-    //  * Get rid of linked list of elements on a node, make it a static array.
-    //    * Less flexible but really should be done.  Would reduce branching here.
-    //  * Not really an issue but the resize step should be removed and the entity list should just be sized properly.
-    //*/
-
-    //Dictionary* components = &self->componentsMap[type];
-    //dest->size = 0;
-    //u32 index = 0;
-    //for (u32 b = 0; b < DICT_BUCKET_COUNT; ++b) {
-    //    for (u32 i = 0; i < DICT_MAX_ELEMENTS_PER_BUCKET; ++i) {
-    //        DictionaryNode* node = &components->buckets[b][i];
-    //        
-    //        // This branch kills the performance
-    //        if (node->list != NULL) {
-    //            // So does this one
-    //            ASSERT(dest->size < dest->capacity, "Reached maximum size of entity list.  Make it bigger!");
-    //            dest->list[index++] = node->key;
-    //            ++dest->size;
-    //        }
-    //    }
-    //}
 }
 
 void entities_internal_send_message(EntityManager* self, TargetedMessage message) {

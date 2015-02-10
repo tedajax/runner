@@ -4,13 +4,19 @@ Component* component_list_get_binary_search(ComponentList* self, Entity entity);
 i32 component_list_get_binary_search_index(ComponentList* self, Entity entity);
 i32 component_list_binary_search_worker(ComponentList* self, Entity entity, i32 imin, i32 imax);
 
-void component_list_init(ComponentList* self, component_compare_f compareFunc) {
+void component_list_init(ComponentList* self, u32 capacity, component_compare_f compareFunc) {
     self->compareFunc = compareFunc;
     self->count = 0;
-    for (u32 i = 0; i < MAX_ENTITIES; ++i) { self->components[i] = NULL; }
+    self->capacity = capacity;
+    self->components = CALLOC(self->capacity, Component*);
 }
+
+void component_list_free(ComponentList* self) {
+    free(self->components);
+}
+
 void component_list_append(ComponentList* self, Component* component) {
-    ASSERT(self->count < MAX_ENTITIES, "Maximum component count reached.");
+    ASSERT(self->count < self->capacity, "Maximum component count reached.");
 
     self->components[self->count] = component;
     ++self->count;

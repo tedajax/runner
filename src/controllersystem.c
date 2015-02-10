@@ -2,7 +2,7 @@
 #include "entityfactory.h"
 
 void controller_system_init(ControllerSystem* self, EntityManager* entityManager) {
-    aspect_system_init(&self->super, entityManager, COMPONENT_CONTROLLER);
+    aspect_system_init(&self->super, entityManager, COMPONENT_CONTROLLER, 1);
 }
 
 void controller_system_update(ControllerSystem* self) {

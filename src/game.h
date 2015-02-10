@@ -10,6 +10,7 @@
 
 typedef struct game_t {
     EntityManager* entityManager;
+    TransformSystem transformSystem;
     MovementSystem movementSystem;
     ControllerSystem controllerSystem;
     BulletControllerSystem bulletControllerSystem;

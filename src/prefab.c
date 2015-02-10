@@ -13,7 +13,6 @@ void prefab_system_init(EntityManager* entityManager, const char* prefabRoot) {
     Directory* prefabDir = directory_open(prefabRoot);
     FileDescriptor* currentFile;
     while ((currentFile = directory_next(prefabDir))) {
-        printf("%s\n", currentFile->filename);
         config_system_load(&prefabConfigs, currentFile->filename);
         Config* cfg = config_system_get(&prefabConfigs, currentFile->filename);
         Prefab* newPrefab = CALLOC(1, Prefab);

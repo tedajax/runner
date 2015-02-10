@@ -3,7 +3,7 @@
 void lua_system_start_component(LuaSystem* self, LuaComponent* lua);
 
 void lua_system_init(LuaSystem* self, EntityManager* entityManager) {
-    aspect_system_init(&self->super, entityManager, COMPONENT_LUA);
+    aspect_system_init(&self->super, entityManager, COMPONENT_LUA, 64);
 
     timer_init(&self->reloadTimer, 1.f, -1, lua_system_check_and_reload_void);
 }

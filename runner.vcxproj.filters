@@ -82,17 +82,23 @@
     <Filter Include="Source Files\Game\Entity">
       <UniqueIdentifier>{f9a615c8-9b66-4bc9-ba37-95dd666b76ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{030af783-5fc1-49c7-94b1-5217b14a895b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Core\Application\Win">
       <UniqueIdentifier>{76328fc1-6a3d-43c5-8fbe-2ad2ea4fd2da}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Core\Application\Posix">
       <UniqueIdentifier>{48d42dde-50da-436d-8b20-2856d2911623}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Prefabs">
+    <Filter Include="Assets">
+      <UniqueIdentifier>{3e0207f1-d1df-418f-8494-98541b3bf229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Prefabs">
       <UniqueIdentifier>{66e7ba1a-1bd9-43ca-b6ae-9836e723fd09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Scripts">
+      <UniqueIdentifier>{030af783-5fc1-49c7-94b1-5217b14a895b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{28ac0209-9b94-4ceb-987c-fa65c4de5985}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -569,19 +575,29 @@
       <Filter>Configs</Filter>
     </None>
     <None Include="assets\scripts\api.lua">
-      <Filter>Scripts</Filter>
+      <Filter>Assets\Scripts</Filter>
     </None>
     <None Include="assets\scripts\test_component.lua">
-      <Filter>Scripts</Filter>
+      <Filter>Assets\Scripts</Filter>
     </None>
     <None Include="assets\scripts\component.lua">
-      <Filter>Scripts</Filter>
+      <Filter>Assets\Scripts</Filter>
     </None>
     <None Include="assets\scripts\prefab_test.lua">
-      <Filter>Scripts</Filter>
+      <Filter>Assets\Scripts</Filter>
     </None>
     <None Include="assets\prefabs\test.prefab">
-      <Filter>Prefabs</Filter>
+      <Filter>Assets\Prefabs</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\atlas1.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="assets\textures\atlas1.xml">
+      <Filter>Assets\Textures</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

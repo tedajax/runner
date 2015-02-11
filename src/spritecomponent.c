@@ -1,53 +1,49 @@
 #include "spritecomponent.h"
 
-SpriteComponent* sprite_component_new(Entity entity, Atlas* atlas, i32 layer, ...) {
-    va_list args;
-    va_start(layer, args);
-    
-    SpriteComponent* result = sprite_component_newv(entity, atlas, layer, args);
-
-    va_end(args);
-
-    return result;
-}
-
-SpriteComponent* sprite_component_newv(Entity entity, Atlas* atlas, i32 layer, va_list args) {
+SpriteComponent* sprite_component_new(Entity entity, Atlas* atlas, char* spriteName, i32 layer) {
     SpriteComponent* self = (SpriteComponent*)calloc(1, sizeof(SpriteComponent));
 
     component_init((Component*)self, COMPONENT_SPRITE, sizeof(SpriteComponent), entity);
 
-    animation_init()
-
-    self->texture = texture;
-
+    self->atlas = atlas;
     self->layer = layer;
 
-    SDL_QueryTexture(self->texture,
-        NULL,
-        NULL,
-        &self->width,
-        &self->height);
-
-    //TODO: pull actual values from texture
-
     self->redTimer = 0.f;
+
+    sprite_component_set_sprite(self, spriteName);
 
     return self;
 }
 
+void sprite_component_set_sprite(SpriteComponent* self, char* spriteName) {
+    SpriteFrame* frame = atlas_get_frame(self->atlas, spriteName);
+    ASSERT(frame, "Unable to find sprite.");
+    self->currentFrame = *frame;
+    self->width = self->currentFrame.frame.width;
+    self->height = self->currentFrame.frame.height;
+}
+
 COMPONENT_DESERIALIZE(COMPONENT_SPRITE) {
-    char* textureStr = CONFIG_GET(string)(config, table, "texture");
+    /*char* textureStr = CONFIG_GET(string)(config, table, "texture");
     i32 layer = (i32)CONFIG_TRY_GET(int)(config, table, "layer", 0);
-    return (Component*)sprite_component_new(0, textures_get(textureStr), layer);
+    return (Component*)sprite_component_new(0, textures_get(textureStr), layer);*/
+    return NULL;
 }
 
 COMPONENT_FREE(COMPONENT_SPRITE) {}
 
 COMPONENT_COPY(COMPONENT_SPRITE) {}
 
+void sprite_component_source(SpriteComponent* self, SDL_Rect* source) {
+    source->x = (int)self->currentFrame.frame.position.x;
+    source->y = (int)self->currentFrame.frame.position.y;
+    source->w = (int)self->currentFrame.frame.width;
+    source->h = (int)self->currentFrame.frame.height;
+}
+
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest) {
-    f32 px = transform->position.x - globals.camera.position.x;
-    f32 py = transform->position.y - globals.camera.position.y;
+    f32 px = transform->position.x - globals.camera.position.x + self->currentFrame.offset.x;
+    f32 py = transform->position.y - globals.camera.position.y + self->currentFrame.offset.y;
 
     int x = (int)px;
     int y = (int)py;

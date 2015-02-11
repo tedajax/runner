@@ -12,8 +12,13 @@
 
 typedef struct sprite_component_t {
     Component super;
-    SDL_Texture* texture;
-    Hashtable animationTable;
+    Atlas* atlas;
+    
+    //TODO: need an animation controller or something
+    //Hashtable animationTable;
+    //Animation* currentAnimation;
+    
+    SpriteFrame currentFrame;
     i32 layer;
     int width;
     int height;
@@ -23,9 +28,9 @@ typedef struct sprite_component_t {
 
 COMPONENT_DEFINE(COMPONENT_SPRITE);
 
-SpriteComponent* sprite_component_new(Entity entity, Atlas* atlas, i32 layer, ...);
-SpriteComponent* sprite_component_newv(Entity entity, Atlas* atlas, i32 layer, va_list args);
-void sprite_component_add_animation(SpriteComponent* self, char* animationName);
+SpriteComponent* sprite_component_new(Entity entity, Atlas* atlas, char* spriteName, i32 layer);
+void sprite_component_set_sprite(SpriteComponent* self, char* spriteName);
+void sprite_component_source(SpriteComponent* self, SDL_Rect* source);
 void sprite_component_destination(SpriteComponent* self, TransformComponent* transform, SDL_Rect* dest);
 void sprite_component_on_collision_enter(Component* component, Message message);
 int sprite_component_layer_compare(Component* c1, Component* c2);

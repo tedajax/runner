@@ -1,6 +1,6 @@
 #include "entityfactory.h"
 
-Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Texture* texture) {
+Entity entity_create_player(EntityManager* entityManager, Vec2 position, Atlas* atlas, char* spriteName) {
     Entity entity = entities_create_entity(entityManager);
 
     // Transform
@@ -24,7 +24,7 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
         (Component*)health_component_new(entity, 100000));
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(entity, texture, 1));
+        (Component*)sprite_component_new(entity, atlas, spriteName, 1));
 
     Collider collider;
     collider_init_aabb(&collider,
@@ -43,7 +43,7 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, SDL_Tex
     return entity;
 }
 
-Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletConfig, ColliderConfig* colliderConfig, Vec2 position, SDL_Texture* texture) {
+Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletConfig, ColliderConfig* colliderConfig, Vec2 position, Atlas* atlas, char* spriteName) {
     Entity entity = entities_create_entity(entityManager);
 
     entities_add_component(entityManager,
@@ -56,7 +56,7 @@ Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletCo
         (Component*)bullet_controller_component_new(entity, bulletConfig));
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(entity, texture, 1));
+        (Component*)sprite_component_new(entity, atlas, spriteName, 1));
 
     Collider collider;
     collider_init_config(&collider, entity, colliderConfig);
@@ -67,14 +67,14 @@ Entity entity_create_bullet(EntityManager* entityManager, BulletConfig* bulletCo
     return entity;
 }
 
-Entity entity_create_bg_tile(EntityManager* entityManager, SDL_Texture* texture) {
+Entity entity_create_bg_tile(EntityManager* entityManager, Atlas* atlas, char* spriteName) {
     Entity entity = entities_create_entity(entityManager);
 
     entities_add_component(entityManager,
         (Component*)transform_component_new(entity, vec2_zero(), 0.f, vec2_one()));
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(entity, texture, -10));
+        (Component*)sprite_component_new(entity, atlas, spriteName, -10));
 
     return entity;
 }
@@ -104,7 +104,7 @@ Entity entity_create_basic_enemy(EntityManager* entityManager, Vec2 position) {
         (Component*)health_component_new(entity, 100));
 
     entities_add_component(entityManager,
-        (Component*)sprite_component_new(entity, textures_get("enemy_red_1.png"), 1));
+        (Component*)sprite_component_new(entity, atlas_get("atlas1"), "enemy_red_1", 1));
 
     Collider collider;
     collider_init_aabb(&collider,

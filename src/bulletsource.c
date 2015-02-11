@@ -69,6 +69,6 @@ void bullet_source_fire(BulletSource* self, EntityManager* entityManager, Vec2* 
         config.baseAngle = sa;
         config.lifetime = dynf32_get(&self->config->lifetime);
         config.damage = (i32)dynf32_get(&self->config->damage);
-        entity_create_bullet(entityManager, &config, self->config->colliderConfig, pos, textures_get(self->config->textureName));
+        entity_create_bullet(entityManager, &config, self->config->colliderConfig, pos, atlas_get("atlas1"), self->config->textureName);
     }
 }

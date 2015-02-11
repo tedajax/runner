@@ -34,7 +34,9 @@ void sprite_system_render(SpriteSystem* self) {
 
         REQUIRED_COMPONENTS(transform, sprite);
 
-        if (sprite->texture) {
+        if (sprite->atlas->texture) {
+            SDL_Rect source;
+            sprite_component_source(sprite, &source);
             SDL_Rect dest;
             sprite_component_destination(sprite, transform, &dest);
 
@@ -46,19 +48,19 @@ void sprite_system_render(SpriteSystem* self) {
             }
 
             if (sprite->redTimer > 0.f) {
-                SDL_SetTextureColorMod(sprite->texture, 255, 0, 0);
+                SDL_SetTextureColorMod(sprite->atlas->texture, 255, 0, 0);
             }
 
             SDL_RenderCopyEx(globals.renderer,
-                sprite->texture,
-                NULL, //source
+                sprite->atlas->texture,
+                &source, //source
                 &dest, //destination
                 transform->rotation,
                 NULL,
                 SDL_FLIP_NONE);
 
             if (sprite->redTimer > 0.f ) {
-                SDL_SetTextureColorMod(sprite->texture, 255, 255, 255);
+                SDL_SetTextureColorMod(sprite->atlas->texture, 255, 255, 255);
             }            
         }
     }

@@ -374,6 +374,12 @@
     <None Include="assets\scripts\prefab_test.lua" />
     <None Include="assets\scripts\test_component.lua" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\atlas1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="assets\textures\atlas1.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

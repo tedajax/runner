@@ -34,13 +34,11 @@ void game_init(Game* self) {
     collision_system_init(&self->collisionSystem, self->entityManager);
     lua_system_init(&self->luaSystem, self->entityManager);
 
-    int bgTextureWidth;
-    int bgTextureHeight;
-    SDL_QueryTexture(textures_get("bg_dark_purple.png"), NULL, NULL, &bgTextureWidth, &bgTextureHeight);
+    SpriteFrame* bgFrame = atlas_get_frame(atlas_get("atlas1"), "bg_dark_purple");
 
     Entity bgManagerEntity = entity_create_bg_manager(self->entityManager,
-        (u32)bgTextureWidth,
-        (u32)bgTextureHeight);
+        (u32)bgFrame->frame.width,
+        (u32)bgFrame->frame.height);
 
     BgManagerComponent* bgManager = 
         (BgManagerComponent*)entities_get_component(self->entityManager,
@@ -49,7 +47,8 @@ void game_init(Game* self) {
 
     for (u32 i = 0; i < bgManager->capacity; ++i) {
         Entity tile = entity_create_bg_tile(self->entityManager,
-            textures_get("bg_dark_purple.png"));
+            atlas_get("atlas1"),
+            "bg_dark_purple");
 
         TransformComponent* tx =
             (TransformComponent*)entities_get_component(self->entityManager,
@@ -61,7 +60,8 @@ void game_init(Game* self) {
 
     self->player = entity_create_player(self->entityManager,
         vec2_init(32.f, 320.f),
-        textures_get("player_ship.png"));
+        atlas_get("atlas1"),
+        "player_ship");
 
     globals.player = self->player;
 

@@ -1,9 +1,22 @@
 #include "spritecomponent.h"
 
-SpriteComponent* sprite_component_new(Entity entity, SDL_Texture* texture, i32 layer) {
+SpriteComponent* sprite_component_new(Entity entity, Atlas* atlas, i32 layer, ...) {
+    va_list args;
+    va_start(layer, args);
+    
+    SpriteComponent* result = sprite_component_newv(entity, atlas, layer, args);
+
+    va_end(args);
+
+    return result;
+}
+
+SpriteComponent* sprite_component_newv(Entity entity, Atlas* atlas, i32 layer, va_list args) {
     SpriteComponent* self = (SpriteComponent*)calloc(1, sizeof(SpriteComponent));
 
     component_init((Component*)self, COMPONENT_SPRITE, sizeof(SpriteComponent), entity);
+
+    animation_init()
 
     self->texture = texture;
 

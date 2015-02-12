@@ -126,9 +126,10 @@ void game_update(Game* self) {
     bullet_controller_system_update(&self->bulletControllerSystem);
     gravity_system_update(&self->gravitySystem);
     enemy_system_update(&self->enemySystem);
-    movement_system_update(&self->movementSystem);
     bg_manager_system_update(&self->bgManagerSystem);
     lua_system_update(&self->luaSystem);
+
+    movement_system_update(&self->movementSystem);
 
     profiler_tick("collision");
     collision_system_update(&self->collisionSystem);

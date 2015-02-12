@@ -192,9 +192,6 @@
     <ClCompile Include="src\dynf32.c">
       <Filter>Source Files\Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\dict.c">
-      <Filter>Source Files\Core\DataStructures</Filter>
-    </ClCompile>
     <ClCompile Include="src\entity.c">
       <Filter>Source Files\Game\Entity</Filter>
     </ClCompile>
@@ -254,9 +251,6 @@
     </ClCompile>
     <ClCompile Include="src\spritesystem.c">
       <Filter>Source Files\Game\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stackallocator.c">
-      <Filter>Source Files\Core\DataStructures</Filter>
     </ClCompile>
     <ClCompile Include="src\texturemanager.c">
       <Filter>Source Files\Game\Utility</Filter>
@@ -407,9 +401,6 @@
     <ClInclude Include="src\debughud.h">
       <Filter>Header Files\Game\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="src\dict.h">
-      <Filter>Header Files\Core\DataStructures</Filter>
-    </ClInclude>
     <ClInclude Include="src\game.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
@@ -454,9 +445,6 @@
     </ClInclude>
     <ClInclude Include="src\types.h">
       <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stackallocator.h">
-      <Filter>Header Files\Core\DataStructures</Filter>
     </ClInclude>
     <ClInclude Include="src\vector.h">
       <Filter>Header Files\Core\DataStructures</Filter>

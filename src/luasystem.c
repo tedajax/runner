@@ -1,6 +1,6 @@
 #include "luasystem.h"
 
-void lua_system_start_component(LuaSystem* self, LuaComponent* lua);
+void lua_system_start_component(LuaSystem* self, LuaComponent* lua, Entity entity);
 
 void lua_system_init(LuaSystem* self, EntityManager* entityManager) {
     aspect_system_init(&self->super, entityManager, COMPONENT_LUA, 64);
@@ -8,9 +8,9 @@ void lua_system_init(LuaSystem* self, EntityManager* entityManager) {
     timer_init(&self->reloadTimer, 1.f, -1, lua_system_check_and_reload_void);
 }
 
-void lua_system_start_component(LuaSystem* self, LuaComponent* lua) {
+void lua_system_start_component(LuaSystem* self, LuaComponent* lua, Entity entity) {
     if (lua->state == LUA_STATE_NEW) {
-        lua_bind_call(&lua->callbackBinds[LUA_CALLBACK_START], lua->L);
+        lua_bind_call(&lua->callbackBinds[LUA_CALLBACK_START], lua->L, entity);
         lua->state = LUA_STATE_RUNNING;
     }
 }

@@ -20,7 +20,7 @@ void prefab_init(Prefab* self, char* filename);
 void prefab_free(Prefab* self);
 void prefab_free_void(void* self);
 void prefab_reload(Prefab* self);
-Prefab* prefab_get(char* name);
+Prefab* prefab_get(const char* name);
 void prefab_instantiate(Prefab* self);
 void prefab_instantiate_at(Prefab* self, Vec2 position, f32 rotation);
 

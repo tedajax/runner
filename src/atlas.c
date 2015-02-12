@@ -27,7 +27,7 @@ void atlas_free_void(void* pself) {
 }
 
 int get_attr_int(mxml_node_t* node, const char* name) {
-    char* v = mxmlElementGetAttr(node, name);
+    const char* v = mxmlElementGetAttr(node, name);
     if (v) {
         return strtol(v, NULL, 10);
     }
@@ -60,7 +60,7 @@ void atlas_load_data(Atlas* self, const char* dataFile) {
     mxml_node_t* root = mxmlLoadFile(NULL, pdata, MXML_TEXT_CALLBACK);
     mxml_node_t* atlasRoot = mxmlFindElement(root, root, "TextureAtlas", NULL, NULL, MXML_DESCEND);
 
-    char* textureName = mxmlElementGetAttr(atlasRoot, "imagePath");
+    const char* textureName = mxmlElementGetAttr(atlasRoot, "imagePath");
     ASSERT(textureName, "Could not find texture name in atlas.");
     textures_load(textureName);
     self->texture = textures_get(textureName);
@@ -68,7 +68,7 @@ void atlas_load_data(Atlas* self, const char* dataFile) {
 
     mxml_node_t* spriteNode = atlasRoot->child->next;
     while (spriteNode) {
-        char* name = mxmlElementGetAttr(spriteNode, "n");
+        const char* name = mxmlElementGetAttr(spriteNode, "n");
         ASSERT(name, "Failed to parse name.");
 
         SpriteFrame* spriteFrame = CALLOC(1, SpriteFrame);

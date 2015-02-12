@@ -19,8 +19,8 @@ void sprite_component_set_sprite(SpriteComponent* self, char* spriteName) {
     SpriteFrame* frame = atlas_get_frame(self->atlas, spriteName);
     ASSERT(frame, "Unable to find sprite.");
     self->currentFrame = *frame;
-    self->width = self->currentFrame.frame.width;
-    self->height = self->currentFrame.frame.height;
+    self->width = (int)self->currentFrame.frame.width;
+    self->height = (int)self->currentFrame.frame.height;
 }
 
 COMPONENT_DESERIALIZE(COMPONENT_SPRITE) {

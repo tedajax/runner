@@ -59,7 +59,7 @@ void prefab_reload(Prefab* self) {
     }
 }
 
-Prefab* prefab_get(char* name) {
+Prefab* prefab_get(const char* name) {
     return (Prefab*)hashtable_get(&prefabTable, name);
 }
 

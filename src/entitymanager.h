@@ -2,7 +2,7 @@
 #define RUNNER_ENTITY_MANAGER_H
 
 #include "core.h"
-#include "dict.h"
+
 #include "pool.h"
 #include "entity.h"
 #include "component.h"

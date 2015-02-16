@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "prefab.h"
 #include "globals.h"
+#include "snprintf.h"
 
 LUA_EXPORT void quit() {
     exit(0);
@@ -30,7 +31,9 @@ LUA_EXPORT void instantiate(const char* name) {
 }
 
 LUA_EXPORT void instantiate_at(const char* name, Vec2 position, f32 rotation) {
-    Prefab* prefab = prefab_get(name);
+    char prefabName[128];
+    snprintf(prefabName, 128, "%s.prefab", name);
+    Prefab* prefab = prefab_get(prefabName);
     if (prefab) {
         prefab_instantiate_at(prefab, position, rotation);
     }

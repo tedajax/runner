@@ -6,7 +6,7 @@ start = function(entity)
 end
 
 update = function(dt)
-    a = a + 2 * dt
+    a = a + 1 * dt
 end
 
 render = function()

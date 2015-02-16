@@ -13,12 +13,16 @@ void prefab_system_init(EntityManager* entityManager, const char* prefabRoot) {
     Directory* prefabDir = directory_open(prefabRoot);
     FileDescriptor* currentFile;
     while ((currentFile = directory_next(prefabDir))) {
-        config_system_load(&prefabConfigs, currentFile->filename);
-        Config* cfg = config_system_get(&prefabConfigs, currentFile->filename);
-        Prefab* newPrefab = CALLOC(1, Prefab);
-        newPrefab->config = cfg;
-        prefab_reload(newPrefab);
-        hashtable_insert(&prefabTable, currentFile->filename, (void*)newPrefab);
+        size_t len = strlen(currentFile->filename);
+        // Only add the file if it has the '.prefab' extensions
+        if (len > 7 && strcmp(&currentFile->filename[len - 7], ".prefab") == 0) {
+            config_system_load(&prefabConfigs, currentFile->filename);
+            Config* cfg = config_system_get(&prefabConfigs, currentFile->filename);
+            Prefab* newPrefab = CALLOC(1, Prefab);
+            newPrefab->config = cfg;
+            prefab_reload(newPrefab);
+            hashtable_insert(&prefabTable, currentFile->filename, (void*)newPrefab);
+        }
     }
     directory_close(prefabDir);
 }

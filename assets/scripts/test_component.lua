@@ -3,7 +3,6 @@ require("assets/scripts/component")
 start = function(entity)
     entity = entity
     counter = 100
-    ffi.C.instantiate("test.prefab")
 end
 
 local h, s, v = 0, 0, 0

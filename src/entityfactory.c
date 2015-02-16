@@ -37,8 +37,8 @@ Entity entity_create_player(EntityManager* entityManager, Vec2 position, Atlas* 
     entities_add_component(entityManager,
         (Component*)collider_component_new(entity, &collider));
 
-    entities_add_component(entityManager,
-        (Component*)lua_component_new(entity, "assets/scripts/test_component.lua"));
+    //entities_add_component(entityManager,
+    //    (Component*)lua_component_new(entity, "assets/scripts/test_component.lua"));
 
     return entity;
 }

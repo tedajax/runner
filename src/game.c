@@ -113,8 +113,6 @@ void game_start(Game* self) {
     bg_manager_system_start(&self->bgManagerSystem);
     collision_system_start(&self->collisionSystem);
     lua_system_start(&self->luaSystem);
-
-    prefab_instantiate(prefab_get("test.prefab"));
 }
 
 void game_update(Game* self) {
